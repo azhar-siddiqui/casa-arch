@@ -1,0 +1,176 @@
+.main {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(73, 73, 73, 0.6);
+  z-index: 11111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.small_dev {
+  display: none;
+}
+
+.card {
+  background: var(--color-white);
+  /* min-width: 20.6875rem; */
+  min-width: 28.6875rem;
+  height: 9.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  padding: 19px;
+}
+.header {
+  transform: translate(0%, -74%);
+  position: absolute;
+  width: 6.25rem;
+  height: 6.25rem;
+  background: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+  border-radius: 50%;
+  font-size: 3rem;
+  border: 0.1875rem solid var(--color-primary-light);
+}
+
+.tick {
+  transform: rotate(39deg);
+  background-color: var(--color-primary);
+  height: 2.938rem;
+  width: 1.75rem;
+  position: relative;
+  top: -0.438rem;
+}
+
+.tick::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 0.0625rem;
+  width: 0;
+  animation: tick linear forwards 0.6s;
+}
+
+@keyframes tick {
+  0% {
+    border-width: 0.438rem;
+    height: 0;
+    width: 0;
+  }
+  50% {
+    height: 0;
+    width: 100%;
+    border-bottom: 0.438rem solid white;
+  }
+
+  100% {
+    height: 100%;
+    width: 100%;
+    border-bottom: 0.438rem solid white;
+    border-right: 0.438rem solid white;
+  }
+}
+
+.loader_div {
+  position: absolute;
+  width: 8rem;
+  left: 6.75rem;
+  height: 5rem;
+  top: 5.3rem;
+}
+
+.body {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #7c8691;
+  margin-top: 48px;
+}
+
+.heading {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.light_txt {
+  font-size: 0.875rem;
+  color: #d3dae0;
+  margin-top: 16px;
+}
+
+@media screen and (max-width: 425px) {
+  .card {
+    background: var(--color-white);
+    width: 18.125rem;
+    height: 7.6875rem;
+  }
+
+  .loader_div {
+    width: 7rem;
+    left: 3.75rem;
+    height: 5rem;
+    top: 61px;
+  }
+
+  .tick {
+    transform: rotate(38deg);
+    background-color: var(--color-primary);
+    height: 1.8125rem;
+    width: 1.125rem;
+    position: relative;
+    top: -0.3125rem;
+  }
+
+  .tick::before {
+    animation: tick2 linear forwards 0.6s;
+  }
+  @keyframes tick2 {
+    0% {
+      border-width: 4px;
+      height: 0;
+      width: 0;
+    }
+    50% {
+      height: 0;
+      width: 100%;
+      border-bottom: 0.25rem solid white;
+    }
+
+    100% {
+      height: 100%;
+      width: 100%;
+      border-bottom: 0.25rem solid white;
+      border-right: 0.25rem solid white;
+    }
+  }
+
+  .big_dev {
+    display: none;
+  }
+
+  .small_dev {
+    display: initial;
+  }
+
+  .header {
+    width: 4rem;
+    height: 4rem;
+    transform: translate(0%, -87%);
+  }
+  .heading {
+    font-size: 1rem;
+  }
+  .body {
+    margin-top: 2.3rem;
+  }
+}

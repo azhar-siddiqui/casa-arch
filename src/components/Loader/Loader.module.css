@@ -1,0 +1,10 @@
+.loading_img {
+  width: 100%;
+}
+
+@media screen and (max-width: 425px) {
+  /* .loading_img {
+    left: 1.25rem;
+    top: 3.175rem;
+  } */
+}
