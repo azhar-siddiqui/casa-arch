@@ -1,0 +1,241 @@
+a {
+  text-decoration: none;
+}
+
+.footerMainContainer {
+  background: #08090a;
+  width: 100%;
+  height: 400px;
+  /* height: 386px; */
+  padding: 20px 108px;
+}
+
+.footerContainer {
+  color: #ffffff;
+}
+
+.contactDetailsContainer {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  border-bottom: 1px solid #ced4da;
+  padding-bottom: 10px;
+}
+
+.locationDetails {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 0;
+}
+
+.locationDetails > img {
+  height: 28px;
+  width: 22px;
+}
+
+.contactContainer {
+  padding-left: 29px;
+}
+
+.contactContainer > h3 {
+  font-weight: 600;
+  font-size: 20px;
+  color: #ffffff;
+}
+.contactContainer > p {
+  font-weight: 500;
+  font-size: 16px;
+  color: #ced4da;
+  padding-top: 10px;
+}
+
+.center {
+  justify-content: center;
+}
+/* Secons Css */
+
+.contactDetailsContainerSecond {
+  padding-top: 20px;
+  display: flex;
+  /* justify-content: space-evenly; */
+  /* align-items: flex-start; */
+  color: #ffffff;
+}
+
+.footerLogo img {
+  width: 82px;
+}
+.footerLogo p {
+  font-weight: 500;
+  font-size: 14.0399px;
+  letter-spacing: 5.61597px;
+  color: #ffffff;
+}
+
+.secFooter > p {
+  font-weight: 500;
+  font-size: 14px;
+  color: #ced4da;
+  padding: 20px 0;
+  width: 410px;
+}
+
+.webLinks.second {
+  margin: 0 auto;
+}
+
+.webLinks.second {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+.webLinks h5 {
+  font-weight: 600;
+  font-size: 20px;
+  color: #ffffff;
+  padding-bottom: 10px;
+}
+.subscrition2 h5 {
+  font-weight: 600;
+  font-size: 20px;
+  color: #ffffff;
+}
+
+.webLinks a {
+  font-weight: 500;
+  font-size: 16px;
+  color: #ced4da;
+  padding-top: 10px;
+}
+.contactDetailsContainerSecond {
+  position: relative;
+}
+
+.network {
+  position: absolute;
+  left: 0;
+  top: 85%;
+}
+
+.network h5 {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.FollowUs a {
+  margin-right: 35px;
+}
+
+.respod {
+  margin: 0 auto 0 150px;
+}
+
+.subscrition2 p {
+  font-weight: 500;
+  align-items: center;
+  color: #ced4da;
+  padding: 20px 0;
+}
+
+.subscriptionContainer {
+  position: relative;
+}
+
+.subscriptionContainer input {
+  background: #4e4e4e;
+  width: 286px;
+  height: 50px;
+  border: none;
+  padding-left: 24px;
+  font-weight: 500;
+  font-size: 14px;
+  outline: none;
+  color: #939ca3;
+}
+
+.subscriptionContainer > .subscriptionBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  z-index: 1;
+  background: #f36c25;
+  margin: 0;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.footerLogo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+}
+
+.subscriptionBtn img {
+  margin-left: 15px;
+}
+
+@media screen and (max-width: 1000px) {
+  .footerMainContainer {
+    padding: 20px 20px;
+    height: auto;
+  }
+
+  .contactDetailsContainer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .contactContainer > .call {
+    padding-top: 20px;
+  }
+
+  .contactContainer > h3 {
+    font-size: 16px;
+  }
+
+  .contactDetailsContainerSecond {
+    display: block;
+  }
+
+  .respod {
+    display: flex;
+    justify-content: space-between;
+  }
+  .webLinks.second {
+    margin: 0;
+  }
+  .network {
+    position: relative;
+  }
+  .subscrition2 {
+    display: none;
+  }
+  .respod {
+    margin: 0;
+  }
+
+  .footerLogo > img {
+    width: 34.05px;
+    height: 25.71px;
+  }
+
+  .footerLogo > p {
+    font-size: 5.77076px;
+    letter-spacing: 2.30831px;
+  }
+  .FollowUs a {
+    margin-right: 20px;
+  }
+  .secFooter > p {
+    width: 100%;
+  }
+  .webLinks a {
+    font-size: 14px;
+  }
+}

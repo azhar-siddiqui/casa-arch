@@ -1,0 +1,9 @@
+.border-0.shadow-lg.relative.flex.flex-col.bg-white.outline-none {
+  width: 601px;
+}
+
+@media screen and (max-width: 650px) {
+  .border-0.shadow-lg.relative.flex.flex-col.bg-white.outline-none {
+    width: 328px;
+  }
+}

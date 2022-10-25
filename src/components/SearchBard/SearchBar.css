@@ -1,0 +1,89 @@
+.SearchDropDownList {
+  position: relative;
+  /* max-width: 497px; */
+}
+
+.SearchDropDownList .DropList {
+  background-color: #fff;
+  cursor: pointer;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  transition: all;
+}
+
+.SearchDropDownList .DropList .listItem {
+  padding: 10px 0 10px 45px;
+}
+
+.SearchDropDownList .DropList .listItem:hover {
+  background-color: #f1f1f1;
+}
+
+.searchField {
+  display: flex;
+  align-content: center;
+  position: relative;
+  margin-top: 10px;
+}
+
+.searchField .disable {
+  border: 1px solid #939ca3;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  cursor: pointer;
+}
+
+.search {
+  padding: 13px 42px;
+  gap: 16px;
+  width: 497px;
+  background: #ffffff;
+  outline: none;
+  width: 100%;
+}
+
+.inputActive {
+  border: 1px solid var(--color-primary);
+}
+
+.searchtbn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 12px 24px;
+  width: 127px;
+  gap: 10px;
+  height: 51px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.btnDisable {
+  background: #ffae83;
+}
+
+.btnActive {
+  background-color: var(--color-primary);
+}
+
+@media screen and (max-width: 1024px) {
+  .search {
+    padding: 12px 0 12px 40px;
+  }
+  .searchtbn {
+    position: unset;
+    width: 100%;
+  }
+  .SearchDropDownList .DropList {
+    top: 50px;
+  }
+}
