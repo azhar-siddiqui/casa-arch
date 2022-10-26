@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ButtonField from "../ButtonsFields/ButtonField";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import CasaLogo from "../../assets/HeaderIcon/CasaLogo.svg";
 import MenuIcon from "../../assets/HeaderIcon/Menu.svg";
 import { Formik } from "formik";
@@ -13,57 +13,12 @@ import Check from "../../assets/ModalIcon/Right.svg";
 import ProfessionalLoginFrame from "../../screens/Frame/ProfessionalLoginFrame/ProfessionalLoginFrame";
 import SelectLoginFrame from "../../screens/Frame/SelectLoginFrame/SelectLoginFrame";
 import ProfessionalSignUp from "../../screens/Frame/ProfessionalSignUpFrame/ProfessionalSignUp";
-// import Loc from "../../assets/ModalIcon/loc.svg";
+import SuccessModal from "../../components/SuccessModal/SuccessModal";
+import Loc from "../../assets/ModalIcon/loc.svg";
+import { CCheckbox } from "../CircularCheckbox/CCheckbox";
+import styles from "./Header.module.css";
+import Corss from "../../assets/ModalIcon/Cross.svg";
 // import SelectLoginFrame from "../../screens/Frame/SelectLoginFrame/SelectLoginFrame";
-
-const initialValues = {
-  name: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
-  companyName: "",
-  companyWebsite: "",
-};
-
-const SignUpSchema = Yup.object({
-  name: Yup.string().required("This field is required."),
-  email: Yup.string()
-    .email("Please Enter Valid Email")
-    .required("This field is required."),
-  password: Yup.string()
-    .min(8, "Minimum 8 digits required.")
-    .required("This field is required.")
-    .matches(
-      /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
-      "Password must contain at least 8 characters, one uppercase, one number and one special case character Abc@1234"
-    ),
-  confirmPassword: Yup.string().oneOf(
-    [Yup.ref("password"), null],
-    "Passwords must match"
-  ),
-  companyName: Yup.string().required("This field is required."),
-});
-
-const LoginSchema = Yup.object({
-  email: Yup.string()
-    .email("Please Enter Valid Email")
-    .required("This field is required."),
-  password: Yup.string()
-    .min(8, "Minimum 8 digits required.")
-    .required("This field is required.")
-    .matches(
-      /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
-      "Password must contain at least 8 characters, one uppercase, one number and one special case character Abc@1234"
-    ),
-});
-
-const initialValuesLocation = {
-  area: "",
-};
-
-const LocationSchema = Yup.object({
-  area: Yup.string().required("This field is required."),
-});
 
 const stepper = [
   {
@@ -72,37 +27,38 @@ const stepper = [
     placeholder: "Area,City,State...",
     type: "text",
     name: "text",
+    value: "Aurangabad",
   },
   {
     step: 2,
     title: "Enter your pincode",
-    type: "text",
+    type: "number",
     placeholder: "Pincode",
     name: "pincode",
+    value: "431111",
   },
   {
     step: 3,
     title: "Do you prefer meeting remotely",
     type: "radio",
-    name: "pincode",
     preference: ["Yes", "No"],
+    value: "Yes",
   },
 ];
 
 const Header = () => {
-  const [vpass, setVPass] = useState("password");
-  const [vpassConfirm, setVPassConfirm] = useState("password");
   let [openMenu, setOpenMenu] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [currentStep, setCurrentStep] = useState(0);
-  const [currentStepValue, setCurrentStepValue] = useState(stepper);
-
+  const [professionalsAccSwitchingMsg, setProfessionalsAccSwitchingMsg] =
+    useState(false);
   const [proButtonVisible, setProButtonVisible] = useState(true);
-  const [rememberMeCheck, setRememberMeCheck] = useState(false);
   const [visibleForProfessionalLogin, setVisibleForProfessionalLogin] =
     useState(false);
   const [visibleForProfessionalSignUp, setVisibleForProfessionalSignUp] =
     useState(false);
+  const [successModalVisible, setSuccessModalVisible] = useState(false);
+  const [proVisible, setProVisible] = useState(false);
+
   const location = useLocation();
 
   let LinksUrl = [
@@ -116,22 +72,88 @@ const Header = () => {
   useEffect(() => {
     if (location.pathname === "/professionals") {
       setProButtonVisible(false);
+      setProfessionalsAccSwitchingMsg(true);
+      setTimeout(() => {
+        setProfessionalsAccSwitchingMsg(false);
+      }, 1000);
     } else {
       setProButtonVisible(true);
     }
   }, [location]);
 
-  useEffect(() => {
-    console.log(currentStepValue[currentStep]);
-    // console.log(currentStepValue[currentStep].title);
-  }, [currentStep, currentStepValue]);
+  //  New Changes Start
 
-  const handleStepperIncrement = () => {
-    setCurrentStep(currentStep + 1);
+  const [fields, setFields] = useState({
+    loc: "",
+    pincode: "",
+    preference: "",
+  });
+  const [count, setCount] = useState(0);
+  const [currData, setCurrData] = useState({
+    heading: "",
+    type: "",
+    name: "",
+    options: [],
+    imgLink: "",
+    placeholder: "",
+  });
+
+  const data = [
+    {
+      heading: "Where do you serve your customers",
+      placeholder: "Area,City,State...",
+      type: "text",
+      name: "loc",
+    },
+    {
+      heading: "Enter your pincode",
+      type: "text",
+      name: "pincode",
+      placeholder: "Pincode",
+      imgLink: Loc,
+    },
+    {
+      heading: "Do you prefer meeting remotely",
+      type: "checkbox",
+      name: "preference",
+      options: ["Yes", "No"],
+    },
+  ];
+
+  useEffect(() => {
+    setCurrData(data[count]);
+  }, [count]);
+
+  const handleChange = (e) => {
+    let { name, value } = e.target;
+    setFields({ ...fields, [name]: value });
   };
-  const handleStepperDecrement = () => {
-    setCurrentStep(currentStep - 1);
+
+  const navigate = useNavigate();
+
+  const handleCheckboxChange = (name, val) => {
+    // let { name } = e.target
+    console.log("val", val);
+    setFields({ ...fields, [name]: val });
+    setProVisible(false);
+    navigate("/professionals/questions");
   };
+
+  const incCount = () => {
+    if (count !== data.length - 1) {
+      setCount(count + 1);
+    } else {
+      console.log(fields);
+    }
+  };
+
+  const decCount = () => {
+    if (count > 0) {
+      setCount(count - 1);
+    } else return;
+  };
+
+  // End
 
   return (
     <div className="shadow-md w-full relative bg-white z-40">
@@ -202,80 +224,125 @@ const Header = () => {
       {visibleForProfessionalSignUp && (
         <ProfessionalSignUp
           setVisibleForProfessionalSignUp={setVisibleForProfessionalSignUp}
+          setSuccessModalVisible={setSuccessModalVisible}
+          setProVisible={setProVisible}
         />
       )}
 
-      {/* <Formik
-        initialValues={initialValuesLocation}
-        onSubmit={handleSubmit}
-        validationSchema={LocationSchema}
-      >
-        {({
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          values,
-          errors,
-          touched,
-        }) => (
-          <Modal
-            // setVisible={}
-            description={currentStepValue[currentStep].title}
-            className="pt-5 font-medium text-base md:text-lg lg:text-3xl"
-            body={
-              <InputField
-                name={currentStep.name}
-                placeholder={currentStepValue[currentStep].placeholder}
-                id={currentStep.name}
-                className="font-medium"
-                type={currentStepValue[currentStep].type}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                // value={}
-                errorText={errors.name && touched.name ? errors.name : null}
-              />
-            }
-            footer={
-              <div className="flex items-center justify-between">
-                {currentStep > 0 || currentStep > 2 ? (
+      {professionalsAccSwitchingMsg && (
+        <SuccessModal massage={"Switching to professional account"} />
+      )}
+
+      {successModalVisible && (
+        <SuccessModal massage={"Professional User created SuccessFully"} />
+      )}
+
+      {proVisible && (
+        <>
+          <div className={styles.main_div}>
+            <div className={styles.popup}>
+              <div className={styles.popup_body}>
+                <div
+                  className={styles.cross}
+                  onClick={() => {
+                    setProVisible(false);
+                  }}
+                >
+                  <img src={Corss} alt="cross" />
+                </div>
+                {
                   <>
-                    <ButtonField
-                      className="py-3 text-primaryGray   font-medium  outline-none focus:outline-none "
-                      type="submit"
-                      children="Back"
-                      onClick={handleStepperDecrement}
-                    />
-                    {currentStep === 2 ? (
-                      <ButtonField
-                        className={`px-5 py-3 bg-primaryOrange border-primaryOrange text-white font-medium outline-none focus:outline-none ease-linear transition-all duration-150`}
-                        type="submit"
-                        children="Submit"
-                        onClick={() => {
-                          handleSubmit();
-                        }}
-                      />
-                    ) : (
-                      <ButtonField
-                        className={`px-5 py-3 bg-primaryOrange border-primaryOrange text-white font-medium outline-none focus:outline-none ease-linear transition-all duration-150 `}
-                        type="submit"
-                        children="Continue"
-                        onClick={handleStepperIncrement}
-                      />
-                    )}
+                    <h2 className={styles.question}>{currData.heading}</h2>
+                    <div className={styles.input_div}>
+                      {currData.type === "text" || currData.type === "email" ? (
+                        <>
+                          {currData.imgLink && (
+                            <img src={currData.imgLink} alt="location" />
+                          )}
+                          <input
+                            type={`${currData.type}`}
+                            onChange={handleChange}
+                            value={fields[currData.name]}
+                            name={currData.name}
+                            placeholder={currData.placeholder}
+                            id={`${
+                              currData.name === "pincode" ? styles.loc_inp : ""
+                            }`}
+                            className={styles.text_inp}
+                          />
+                        </>
+                      ) : (
+                        <>
+                          {currData.options.map((ele) => {
+                            return (
+                              <>
+                                <input
+                                  key={ele.indexOf}
+                                  type="checkbox"
+                                  aria-hidden
+                                  name={currData.name}
+                                  id={currData.name}
+                                />
+
+                                <label
+                                  htmlFor={currData.name}
+                                  onClick={() => {
+                                    handleCheckboxChange(currData.name, ele);
+                                  }}
+                                  style={{
+                                    borderColor: `${
+                                      fields[currData.name] === ele
+                                        ? "#F36C25"
+                                        : ""
+                                    }`,
+                                  }}
+                                  className={styles.checkbox_label}
+                                >
+                                  <CCheckbox
+                                    checked={fields[currData.name] === ele}
+                                  />
+                                  <p
+                                    className={styles.checkbox_text}
+                                    style={{
+                                      color: `${
+                                        fields[currData.name] === ele
+                                          ? ""
+                                          : "#939CA3"
+                                      }`,
+                                    }}
+                                  >
+                                    {ele}
+                                  </p>
+                                </label>
+                              </>
+                            );
+                          })}
+                        </>
+                      )}
+                    </div>
                   </>
-                ) : (
-                  <ButtonField
-                    className={`px-5 py-3 bg-primaryOrange border-primaryOrange text-white font-medium outline-none focus:outline-none ease-linear transition-all duration-150 `}
-                    type="submit"
-                    children="Continue"
-                    onClick={handleStepperIncrement}
-                  />
-                )}
+                }
+                <div className={styles.bottom}>
+                  <p className={styles.back} onClick={decCount}>
+                    Back
+                  </p>
+                  <button
+                    className={styles.btn}
+                    onClick={incCount}
+                    disabled={
+                      currData.name && fields[`${currData.name}`].length === 0
+                        ? true
+                        : false
+                    }
+                  >
+                    Continue
+                  </button>
+                </div>
               </div>
-            }
-          />
-        )}
-      </Formik> */}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

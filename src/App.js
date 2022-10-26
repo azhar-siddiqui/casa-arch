@@ -8,6 +8,7 @@ import ProQuestion from "./screens/ProQuestions/ProQuestion";
 import AboutUs from "./screens/About/AboutUs";
 import Blog from "./screens/Blog/Blog";
 import Contact from "./screens/Contact/Contact";
+import PageNotFound from "./screens/PageNotFound/PageNotFound";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="" element={<Professionals />} />
           <Route path="questions" element={<ProQuestion />} />
         </Route>
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer />
     </>

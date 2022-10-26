@@ -1,3 +1,106 @@
-.OrangeImg {
+/* .OrangeImg {
   margin-top: -73%;
+} */
+
+/* .Tick {
+  position: absolute;
+  top: -10px;
+} */
+
+.TickContainer {
+  transform: translate(0%, -74%);
+  position: absolute;
+  left: 40%;
+  width: 6.25rem;
+  height: 6.25rem;
+  background: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+  border-radius: 50%;
+  font-size: 3rem;
+  border: 0.1875rem solid #f36c25;
+}
+
+.tick {
+  transform: rotate(39deg);
+  background-color: var(--color-primary);
+  height: 2.938rem;
+  width: 1.75rem;
+  position: relative;
+  top: -0.438rem;
+}
+
+.tick::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 0.0625rem;
+  width: 0;
+  animation: tick linear forwards 0.6s;
+}
+
+@keyframes tick {
+  0% {
+    border-width: 0.438rem;
+    height: 0;
+    width: 0;
+  }
+  50% {
+    height: 0;
+    width: 100%;
+    border-bottom: 0.438rem solid white;
+  }
+
+  100% {
+    height: 100%;
+    width: 100%;
+    border-bottom: 0.438rem solid white;
+    border-right: 0.438rem solid white;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .TickContainer {
+    left: 35%;
+  }
+  .header {
+    width: 4rem;
+    height: 4rem;
+    transform: translate(0%, -87%);
+  }
+
+  .tick {
+    transform: rotate(38deg);
+    background-color: var(--color-primary);
+    height: 1.8125rem;
+    width: 1.125rem;
+    position: relative;
+    top: -0.3125rem;
+  }
+
+  .tick::before {
+    animation: tick2 linear forwards 0.6s;
+  }
+  @keyframes tick2 {
+    0% {
+      border-width: 4px;
+      height: 0;
+      width: 0;
+    }
+    50% {
+      height: 0;
+      width: 100%;
+      border-bottom: 0.25rem solid white;
+    }
+
+    100% {
+      height: 100%;
+      width: 100%;
+      border-bottom: 0.25rem solid white;
+      border-right: 0.25rem solid white;
+    }
+  }
 }
