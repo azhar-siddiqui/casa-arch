@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import ButtonField from "../../../components/ButtonsFields/ButtonField";
 
 const SelectLoginFrame = (props) => {
-  const { setVisible, setProButtonVisible, setVisibleForProfessionalLogin } =
+  const { setVisible, setProButtonVisible, setVisibleForProfessionalLogin, setVisibleForUserLogin } =
     props;
 
   const location = useLocation();
@@ -20,6 +20,11 @@ const SelectLoginFrame = (props) => {
   const handleLoginForProfessional = () => {
     setVisible(false);
     setVisibleForProfessionalLogin(true);
+  };
+
+  const handleLoginForUser = () => {
+    setVisible(false);
+    setVisibleForUserLogin(true);
   };
 
   return (
@@ -44,7 +49,8 @@ const SelectLoginFrame = (props) => {
                   icons={">"}
                   className="flex items-center justify-between text-primaryOrange w-full border 
                border-primaryOrange text-left px-5 py-5 mt-8 font-medium md:text-2xl hover:text-white hover:bg-primaryOrange"
-                />
+                  onClick={handleLoginForUser}
+              />
                 <ButtonField
                   children="Login for Professional"
                   icons={">"}

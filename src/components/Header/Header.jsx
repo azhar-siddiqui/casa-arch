@@ -13,6 +13,11 @@ import Check from "../../assets/ModalIcon/Right.svg";
 import ProfessionalLoginFrame from "../../screens/Frame/ProfessionalLoginFrame/ProfessionalLoginFrame";
 import SelectLoginFrame from "../../screens/Frame/SelectLoginFrame/SelectLoginFrame";
 import ProfessionalSignUp from "../../screens/Frame/ProfessionalSignUpFrame/ProfessionalSignUp";
+import UserLoginFrame from "../../screens/Frame/UserLoginFrame";
+import InputRadio from "../InputRadio/inputRadio";
+import UserSignUpFrame from "../../screens/Frame/UserSignupFrame/UserSignUpFrame";
+import { useGetQuestionsQuery, useSubmitSteppersMutation } from "../../app/services/userServices";
+import { useSelector } from "react-redux";
 // import Loc from "../../assets/ModalIcon/loc.svg";
 // import SelectLoginFrame from "../../screens/Frame/SelectLoginFrame/SelectLoginFrame";
 
@@ -65,6 +70,23 @@ const LocationSchema = Yup.object({
   area: Yup.string().required("This field is required."),
 });
 
+
+const initialValuesUserStepper = {
+  pincode: "",
+  service: "",
+  property: "",
+  rooms: "",
+  email: "",
+};
+
+const userStepperSchema = Yup.object({
+  pincode: Yup.string().required("This field is required."),
+  service: Yup.string().required("This field is required."),
+  property: Yup.string().required("This field is required."),
+  rooms: Yup.string().required("This field is required."),
+  email: Yup.string().required("This field is required."),
+});
+
 const stepper = [
   {
     step: 1,
@@ -89,21 +111,72 @@ const stepper = [
   },
 ];
 
+const userStepper = [
+  {
+    step: 2,
+    title: "Enter your pincode",
+    type: "text",
+    placeholder: "Pincode",
+    name: "pincode",
+    value: 0
+  },
+  {
+    step: 2,
+    title: "What type of service your’e looking for?",
+    type: "radio",
+    name: "service",
+    preference: ["Interior Design", "Architecture Design"],
+  },
+  {
+    step: 3,
+    title: "What kind of property is this?",
+    type: "radio",
+    name: "property",
+    preference: ["Residential House", "Commercial Property", "Residential Flat"],
+  },
+  {
+    step: 4,
+    title: "Which rooms need designing?",
+    type: "radio",
+    name: "rooms",
+    preference: ["Only one room", "More than one room", "Complete property"],
+  },
+  {
+    step: 5,
+    title: "Enter your email for sending quotation.",
+    type: "text",
+    name: "email",
+    placeholder: "Email address",
+  },
+];
+
 const Header = () => {
   const [vpass, setVPass] = useState("password");
   const [vpassConfirm, setVPassConfirm] = useState("password");
   let [openMenu, setOpenMenu] = useState(false);
   const [visible, setVisible] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
-  const [currentStepValue, setCurrentStepValue] = useState(stepper);
+  const [currentStepValue, setCurrentStepValue] = useState([]);
+  // normal or professional
+  const [currentStepper, setCurrentStepper] = useState('') //can be 'normal' or 'professional' - used to know which steppers (professional/normal) to be displayed
 
   const [proButtonVisible, setProButtonVisible] = useState(true);
+  const [dashboardButtonVisible, setDashboardButtonVisible] = useState(false)
   const [rememberMeCheck, setRememberMeCheck] = useState(false);
   const [visibleForProfessionalLogin, setVisibleForProfessionalLogin] =
     useState(false);
   const [visibleForProfessionalSignUp, setVisibleForProfessionalSignUp] =
     useState(false);
+
+  const [visibleForUserSignUp, setVisibleForUserSignUp] = useState(false)
+  const [visibleForUserLogin, setVisibleForUserLogin] = useState(false)
+  const [stepperVisible, setStepperVisible] = useState(false)
+
   const location = useLocation();
+  const [submitNormalUserSteppers, data] = useSubmitSteppersMutation()
+  const { isLoggedIn, userType } = useSelector(state => state.user)
+  // const stepperData = useGetQuestionsQuery()
+  // console.log(stepperData)
 
   let LinksUrl = [
     { name: "HOME", link: "/" },
@@ -114,23 +187,59 @@ const Header = () => {
   ];
 
   useEffect(() => {
-    if (location.pathname === "/professionals") {
+    if (location.pathname === "/professionals" || location.pathname === "/professionals/list") {
       setProButtonVisible(false);
-    } else {
+    } else if(isLoggedIn && userType === 'NORMAL'){
+      setProButtonVisible(false);
+    }
+    else {
       setProButtonVisible(true);
     }
-  }, [location]);
+
+    if(isLoggedIn && userType === 'NORMAL'){
+      setDashboardButtonVisible(true)
+    }else{
+      setDashboardButtonVisible(false)
+    }
+  }, [location, isLoggedIn]);
 
   useEffect(() => {
-    console.log(currentStepValue[currentStep]);
+    // console.log(currentStepValue);
     // console.log(currentStepValue[currentStep].title);
   }, [currentStep, currentStepValue]);
+
+  useEffect(() => {
+    if (currentStepper === '') return
+    if (currentStepper === 'normal') return setCurrentStepValue(userStepper)
+    if (currentStepper === 'professional') return setCurrentStepValue(stepper)
+  }, [currentStepper]);
 
   const handleStepperIncrement = () => {
     setCurrentStep(currentStep + 1);
   };
   const handleStepperDecrement = () => {
     setCurrentStep(currentStep - 1);
+  };
+
+  const handleSubmit = (values) => {
+    if (currentStepper === 'normal') {
+      let postData = userStepper.map(stepper => {
+        return {
+          question: stepper.title,
+          choice: values[stepper.name]
+        }
+      })
+      console.log(postData)
+      submitNormalUserSteppers(postData)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err.response)
+        })
+      // setCurrentStep(0);
+      // setStepperVisible(false)
+    }
   };
 
   return (
@@ -148,9 +257,8 @@ const Header = () => {
         </div>
 
         <ul
-          className={`lg:flex lg:items-center lg:pb-0 pb-12 absolute lg:static bg-white lg:z-auto z-[-1] left-0 w-full lg:w-auto lg:pl-0 pl-5 transition-all duration-500 ease-in ${
-            openMenu ? "top-20 " : "top-[-490px]"
-          }`}
+          className={`lg:flex lg:items-center lg:pb-0 pb-12 absolute lg:static bg-white lg:z-auto z-[-1] left-0 w-full lg:w-auto lg:pl-0 pl-5 transition-all duration-500 ease-in ${openMenu ? "top-20 " : "top-[-490px]"
+            }`}
         >
           {LinksUrl.map((link, i) => (
             <li key={i} className="lg:ml-8 text-sm lg:my-0 my-4">
@@ -166,10 +274,10 @@ const Header = () => {
             <ButtonField
               className="lg:ml-8 hover:bg-primaryOrange border-solid border-2 border-primaryOrange py-2 px-6 h-11 ease-linear duration-300 text-primaryOrange hover:text-white lg:my-0 my-3 w-11/12 lg:w-32"
               onClick={() => {
-                setVisible(!visible);
+                !isLoggedIn &&  setVisible(!visible);
               }}
             >
-              Login
+              {isLoggedIn ? 'Logout' : 'Login' }
             </ButtonField>
           </li>
           <li>
@@ -177,6 +285,15 @@ const Header = () => {
               <Link to="/professionals">
                 <ButtonField className="lg:ml-8 bg-primaryOrange py-2 px-6 h-11 hover:border-solid border-2 border-primaryOrange hover:bg-white hover:text-primaryOrange lg:my-0 my-3 w-11/12 lg:w-auto">
                   Join as a Professional
+                </ButtonField>
+              </Link>
+            )}
+          </li>
+          <li>
+            {dashboardButtonVisible && (
+              <Link to="/dashboard">
+                <ButtonField className="lg:ml-8 bg-primaryOrange py-2 px-6 h-11 hover:border-solid border-2 border-primaryOrange hover:bg-white hover:text-primaryOrange lg:my-0 my-3 w-11/12 lg:w-auto">
+                Dashboard
                 </ButtonField>
               </Link>
             )}
@@ -189,6 +306,24 @@ const Header = () => {
           setVisible={setVisible}
           setProButtonVisible={setProButtonVisible}
           setVisibleForProfessionalLogin={setVisibleForProfessionalLogin}
+          setVisibleForUserLogin={setVisibleForUserLogin}
+        />
+      )}
+
+      {visibleForUserLogin && (
+        <UserLoginFrame
+          setVisibleForUserSignUp={setVisibleForUserSignUp}
+          setVisibleForUserLogin={setVisibleForUserLogin}
+          setStepperVisible={setStepperVisible}
+          setCurrentStepper={setCurrentStepper}
+        />
+      )}
+      {visibleForUserSignUp && (
+        <UserSignUpFrame
+          setVisibleForUserSignUp={setVisibleForUserSignUp}
+          setVisibleForUserLogin={setVisibleForUserLogin}
+          setStepperVisible={setStepperVisible}
+          setCurrentStepper={setCurrentStepper}
         />
       )}
 
@@ -205,77 +340,106 @@ const Header = () => {
         />
       )}
 
-      {/* <Formik
-        initialValues={initialValuesLocation}
-        onSubmit={handleSubmit}
-        validationSchema={LocationSchema}
-      >
-        {({
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          values,
-          errors,
-          touched,
-        }) => (
-          <Modal
-            // setVisible={}
-            description={currentStepValue[currentStep].title}
-            className="pt-5 font-medium text-base md:text-lg lg:text-3xl"
-            body={
-              <InputField
-                name={currentStep.name}
-                placeholder={currentStepValue[currentStep].placeholder}
-                id={currentStep.name}
-                className="font-medium"
-                type={currentStepValue[currentStep].type}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                // value={}
-                errorText={errors.name && touched.name ? errors.name : null}
-              />
-            }
-            footer={
-              <div className="flex items-center justify-between">
-                {currentStep > 0 || currentStep > 2 ? (
-                  <>
-                    <ButtonField
-                      className="py-3 text-primaryGray   font-medium  outline-none focus:outline-none "
-                      type="submit"
-                      children="Back"
-                      onClick={handleStepperDecrement}
-                    />
-                    {currentStep === 2 ? (
-                      <ButtonField
-                        className={`px-5 py-3 bg-primaryOrange border-primaryOrange text-white font-medium outline-none focus:outline-none ease-linear transition-all duration-150`}
-                        type="submit"
-                        children="Submit"
-                        onClick={() => {
-                          handleSubmit();
-                        }}
+      {stepperVisible && currentStepValue.length >= 1 &&
+        <Formik
+          initialValues={currentStepper === 'normal' ? initialValuesUserStepper : initialValuesLocation}
+          onSubmit={handleSubmit}
+          validationSchema={currentStepper === 'normal' ? userStepperSchema : LocationSchema}
+        >
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            errors,
+            touched,
+          }) => (
+            <Modal
+              setVisible={setStepperVisible}
+              description={currentStepValue[currentStep].title}
+              className="pt-5 font-medium text-base md:text-lg lg:text-3xl"
+              body={
+                currentStepValue[currentStep].type === 'radio' ?
+                  <div className="mt-4">
+                    {currentStepValue[currentStep].preference.map((pref, idx) => {
+                      return <InputRadio
+                        key={idx}
+                        name={currentStepValue[currentStep].name}
+                        value={pref}
+                        placeholder={currentStepValue[currentStep].placeholder}
+                        id={currentStepValue[currentStep].name}
+                        className="font-medium"
+                        type={currentStepValue[currentStep].type}
+                        label={currentStepValue[currentStep].type === 'radio' ? pref : ''}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        isLast={idx === currentStepValue[currentStep].preference.length - 1 ? true : false}
+                        // value={}
+                        errorText={errors.name && touched.name ? errors.name : null}
                       />
-                    ) : (
-                      <ButtonField
-                        className={`px-5 py-3 bg-primaryOrange border-primaryOrange text-white font-medium outline-none focus:outline-none ease-linear transition-all duration-150 `}
-                        type="submit"
-                        children="Continue"
-                        onClick={handleStepperIncrement}
-                      />
-                    )}
-                  </>
-                ) : (
-                  <ButtonField
-                    className={`px-5 py-3 bg-primaryOrange border-primaryOrange text-white font-medium outline-none focus:outline-none ease-linear transition-all duration-150 `}
-                    type="submit"
-                    children="Continue"
-                    onClick={handleStepperIncrement}
+                    })}
+                  </div>
+                  :
+                  <InputField
+                    name={currentStepValue[currentStep].name}
+                    placeholder={currentStepValue[currentStep].placeholder}
+                    id={currentStepValue[currentStep].name}
+                    className="font-medium"
+                    type={currentStepValue[currentStep].type}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    // value={}
+                    errorText={errors.name && touched.name ? errors.name : null}
                   />
-                )}
-              </div>
-            }
-          />
-        )}
-      </Formik> */}
+
+              }
+              footer={
+                <div className="flex items-center justify-between">
+                  {currentStep > 0 || currentStep > currentStepValue.length - 1 ? (
+                    <>
+                      <ButtonField
+                        className="py-3 text-primaryGray   font-medium  outline-none focus:outline-none "
+                        type="submit"
+                        children="Back"
+                        onClick={handleStepperDecrement}
+                      />
+                      {currentStep === currentStepValue.length - 1 ? (
+                        // <ButtonField
+                        //   className={`px-5 py-3 bg-primaryOrange border-primaryOrange text-white font-medium outline-none focus:outline-none ease-linear transition-all duration-150`}
+                        //   type="submit"
+                        //   children="Submit"
+                        //   onClick={handleSubmit}
+                        // />
+                        <button
+                          className={`px-5 py-3 bg-primaryOrange border-primaryOrange text-white font-medium outline-none focus:outline-none ease-linear transition-all duration-150`}
+                          type='submit'
+                          onClick={handleSubmit}
+                        >
+                          Submit
+                        </button>
+                      ) : (
+                        <ButtonField
+                          className={`px-5 py-3 bg-primaryOrange border-primaryOrange text-white font-medium outline-none focus:outline-none ease-linear transition-all duration-150 `}
+                          type="submit"
+                          children="Continue"
+                          onClick={handleStepperIncrement}
+                        />
+                      )}
+                    </>
+                  ) : (
+                    <ButtonField
+                      className={`px-5 py-3 bg-primaryOrange border-primaryOrange text-white font-medium outline-none focus:outline-none ease-linear transition-all duration-150 `}
+                      type="submit"
+                      children="Continue"
+                      onClick={handleStepperIncrement}
+                    />
+                  )}
+                </div>
+              }
+            />
+          )}
+        </Formik>
+      }
     </div>
   );
 };

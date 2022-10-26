@@ -14,6 +14,14 @@ module.exports = {
         primaryLightGray: "#939CA3",
         primaryExtraLightGray: "#7C8691",
       },
+      spacing: {
+        '4.5': '17.5px',
+      },
+      maxWidth: {
+        '973': '973px',
+        '1224': '1224px',
+        '601': '601px',
+     },
     },
   },
   plugins: [],
