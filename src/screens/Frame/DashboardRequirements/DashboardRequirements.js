@@ -41,7 +41,7 @@ export default function DashboardRequirements({ setRequirementsVisible, isRequir
       project_budget: parseInt(values.projectBudget),
       aesthetic_req: parseInt(values.aestheticRequirements),
       project_details: values.projectDetails,
-      user: userId['user-id']
+      user: userId
     }
     console.log("Value", postData)
     postRequirements(postData)

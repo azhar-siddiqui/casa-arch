@@ -16,8 +16,9 @@ import ProfessionalSignUp from "../../screens/Frame/ProfessionalSignUpFrame/Prof
 import UserLoginFrame from "../../screens/Frame/UserLoginFrame";
 import InputRadio from "../InputRadio/inputRadio";
 import UserSignUpFrame from "../../screens/Frame/UserSignupFrame/UserSignUpFrame";
-import { useGetQuestionsQuery, useSubmitSteppersMutation } from "../../app/services/userServices";
-import { useSelector } from "react-redux";
+import { useLazyGetQuestionsQuery, useLazyGetUserIdQuery, useSubmitSteppersMutation } from "../../app/services/userServices";
+import { useDispatch, useSelector } from "react-redux";
+import { updateIsLoggedIn } from "../../app/slices/user";
 // import Loc from "../../assets/ModalIcon/loc.svg";
 // import SelectLoginFrame from "../../screens/Frame/SelectLoginFrame/SelectLoginFrame";
 
@@ -73,9 +74,9 @@ const LocationSchema = Yup.object({
 
 const initialValuesUserStepper = {
   pincode: "",
-  service: "",
-  property: "",
-  rooms: "",
+  service: "Interior Design",
+  property: "Residential House",
+  rooms: "More than one room",
   email: "",
 };
 
@@ -115,7 +116,7 @@ const userStepper = [
   {
     step: 2,
     title: "Enter your pincode",
-    type: "text",
+    type: "number",
     placeholder: "Pincode",
     name: "pincode",
     value: 0
@@ -174,9 +175,20 @@ const Header = () => {
 
   const location = useLocation();
   const [submitNormalUserSteppers, data] = useSubmitSteppersMutation()
-  const { isLoggedIn, userType } = useSelector(state => state.user)
-  // const stepperData = useGetQuestionsQuery()
-  // console.log(stepperData)
+  const { isLoggedIn, userType, userId } = useSelector(state => state.user)
+  const [fetchStepperData, result] = useLazyGetQuestionsQuery()
+  
+  const dispatch = useDispatch()
+  
+  useEffect(() => {
+    // fetchStepperData()
+    //   .then(res => {
+    //     console.log(res.data)
+    //   })
+    //   .catch(err => {
+    //     console.log(err.response)
+    //   })
+  }, [isLoggedIn])
 
   let LinksUrl = [
     { name: "HOME", link: "/" },
@@ -189,16 +201,16 @@ const Header = () => {
   useEffect(() => {
     if (location.pathname === "/professionals" || location.pathname === "/professionals/list") {
       setProButtonVisible(false);
-    } else if(isLoggedIn && userType === 'NORMAL'){
+    } else if (isLoggedIn && userType === 'NORMAL') {
       setProButtonVisible(false);
     }
     else {
       setProButtonVisible(true);
     }
 
-    if(isLoggedIn && userType === 'NORMAL'){
+    if (isLoggedIn && userType === 'NORMAL') {
       setDashboardButtonVisible(true)
-    }else{
+    } else {
       setDashboardButtonVisible(false)
     }
   }, [location, isLoggedIn]);
@@ -229,8 +241,17 @@ const Header = () => {
           choice: values[stepper.name]
         }
       })
-      console.log(postData)
-      submitNormalUserSteppers(postData)
+      console.log(currentStepValue)
+
+      let reqBody = {
+        user: userId,
+        pincode: parseInt(postData[0].choice),
+        service_looking: currentStepValue[1].preference.indexOf(postData[1].choice),
+        property_type: currentStepValue[2].preference.indexOf(postData[2].choice),
+        email: postData[4].choice,
+      }
+      console.log(reqBody)
+      submitNormalUserSteppers(reqBody)
         .then(res => {
           console.log(res)
         })
@@ -241,6 +262,11 @@ const Header = () => {
       // setStepperVisible(false)
     }
   };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('access')
+    dispatch(updateIsLoggedIn(false))
+  }
 
   return (
     <div className="shadow-md w-full relative bg-white z-40">
@@ -274,10 +300,10 @@ const Header = () => {
             <ButtonField
               className="lg:ml-8 hover:bg-primaryOrange border-solid border-2 border-primaryOrange py-2 px-6 h-11 ease-linear duration-300 text-primaryOrange hover:text-white lg:my-0 my-3 w-11/12 lg:w-32"
               onClick={() => {
-                !isLoggedIn &&  setVisible(!visible);
+                !isLoggedIn ? setVisible(!visible) : handleLogout()
               }}
             >
-              {isLoggedIn ? 'Logout' : 'Login' }
+              {isLoggedIn ? 'Logout' : 'Login'}
             </ButtonField>
           </li>
           <li>
@@ -293,7 +319,7 @@ const Header = () => {
             {dashboardButtonVisible && (
               <Link to="/dashboard">
                 <ButtonField className="lg:ml-8 bg-primaryOrange py-2 px-6 h-11 hover:border-solid border-2 border-primaryOrange hover:bg-white hover:text-primaryOrange lg:my-0 my-3 w-11/12 lg:w-auto">
-                Dashboard
+                  Dashboard
                 </ButtonField>
               </Link>
             )}
@@ -366,6 +392,7 @@ const Header = () => {
                         key={idx}
                         name={currentStepValue[currentStep].name}
                         value={pref}
+                        checkedValue={values[currentStepValue[currentStep].name]}
                         placeholder={currentStepValue[currentStep].placeholder}
                         id={currentStepValue[currentStep].name}
                         className="font-medium"

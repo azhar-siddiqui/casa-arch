@@ -10,10 +10,10 @@ import { useJoinUserMutation } from "../../../app/services/userServices";
 const initialValues = {
    first_name: "John",
    last_name: "Doe",
-   email: "prasadsoni60@gmail.com",
-   password: "Qwerty.54321",
-   confirmPassword: "Qwerty.54321",
-   phone: 1234567890,
+   email: "",
+   password: "",
+   confirmPassword: "",
+   phone: 0,
 };
 
 const SignUpSchema = Yup.object({
@@ -163,7 +163,7 @@ const UserSignUpFrame = (props) => {
                         placeholder="Enter your Phone Number"
                         id={"phone"}
                         className="font-medium"
-                        type="text"
+                        type="number"
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.phone}

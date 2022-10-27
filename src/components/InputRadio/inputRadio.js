@@ -5,6 +5,7 @@ const InputRadio = (props) => {
     id,
     name,
     value,
+    checkedValue,
     onChange,
     onBlur,
     placeholder,
@@ -27,6 +28,7 @@ const InputRadio = (props) => {
           placeholder={placeholder}
           className={`outline-none border-2 py-2.5 px-6 w-full ${props?.className} ${props?.errorText ? `border-red-700` : `border-primaryLight`}`}
           autoComplete="off"
+          checked={value === checkedValue ? true : false}
         />
       </div>
       <div className="flex items-center justify-between">

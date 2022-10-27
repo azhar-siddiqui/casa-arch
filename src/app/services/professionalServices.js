@@ -19,14 +19,6 @@ export const postApi = createApi({
         };
       },
     }),
-    getProfessionals: builder.query({
-      query: () => ({
-        url: `professional-profile-details/`,
-        headers: {
-          "Authorization": `Bearer ${sessionStorage.getItem('access')}`
-        },
-      }),
-    }),
   }),
 });
 

@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import { useGetProfessionalsQuery } from '../../app/services/professionalServices'
+import React, { useEffect, useState } from 'react'
+import { useGetArchitectsQuery, useGetInteriorDesignersQuery } from '../../app/services/userServices'
 import ProfessionalCard from '../../components/ProfessionalCard/ProfessionalCard'
 
-const data = [
+const tempData = [
    {
       name: 'Krishna Sharma',
       title: 'Interior Design',
@@ -25,16 +25,38 @@ const data = [
 
 export default function ProfessionalsList() {
 
-   const [list, setList] = useState(data)
+   const [list, setList] = useState([])
 
-   const professionalsData = useGetProfessionalsQuery()
-   console.log(professionalsData)
+   const architects = useGetArchitectsQuery(undefined, {
+      refetchOnMountOrArgChange: true
+   })
 
+   const interiorDesigners = useGetInteriorDesignersQuery(undefined, {
+      refetchOnMountOrArgChange: true
+   })
+
+   useEffect(() => {
+      if(architects.data === undefined) return
+      setList(prev=> {
+         return [...prev, ...architects.data.data]
+      })
+      // console.log(architects.data.data)
+   }, [architects])
+
+   useEffect(() => {
+      if(interiorDesigners.data === undefined) return
+      setList(prev=> {
+         return [...prev, ...interiorDesigners.data.data]
+      })
+      // console.log(interiorDesigners.data.data)
+   }, [interiorDesigners])
+   
+   console.log('list', list)
    return (
       <div className='p-4 max-w-973 md:mx-auto'>
-         {list.map((prof, idx) => {
+         {/* {list.map((prof, idx) => {
             return <ProfessionalCard key={idx} {...prof} />
-         })}
+         })} */}
       </div>
    )
 }

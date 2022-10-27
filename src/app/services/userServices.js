@@ -6,6 +6,7 @@ export const userServicesApi = createApi({
       baseUrl: "https://ad.casaarch.in/api/",
    }),
    endpoints: (builder) => ({
+
       joinUser: builder.mutation({
          query: (body) => ({
             url: `/user-signup`,
@@ -26,6 +27,7 @@ export const userServicesApi = createApi({
             },
          })
       }),
+
       getProjectDetails: builder.query({
          query: () => ({
             url: `/customer-project-details/`,
@@ -34,11 +36,16 @@ export const userServicesApi = createApi({
             },
          }),
       }),
+
       getQuestions: builder.query({
          query: () => ({
-            url: `/questions/`
+            url: `/customer-query/`,
+            headers: {
+               "Authorization": `Bearer ${sessionStorage.getItem('access')}`
+            },
          }),
       }),
+
       getUserId: builder.query({
          query: (token) => ({
             url: `/user-id`,
@@ -51,16 +58,18 @@ export const userServicesApi = createApi({
             // }
          }),
       }),
+
       submitSteppers: builder.mutation({
          query: (body) => ({
-            url: `/choice/`,
+            url: `/customer-query/`,
             method: "POST",
             body: body,
             headers: {
-               "Content-type": "application/json; charset=UTF-8",
+               "Authorization": `Bearer ${sessionStorage.getItem('access')}`
             },
          })
       }),
+
       postRequirements: builder.mutation({
          query: (body) => ({
             url: `/project-details/`,
@@ -72,6 +81,23 @@ export const userServicesApi = createApi({
          })
       }),
 
+      getArchitects: builder.query({
+         query: () => ({
+            url: `architects/`,
+            headers: {
+               "Authorization": `Bearer ${sessionStorage.getItem('access')}`
+            },
+         }),
+      }),
+      getInteriorDesigners: builder.query({
+         query: () => ({
+            url: `interior-designer/`,
+            headers: {
+               "Authorization": `Bearer ${sessionStorage.getItem('access')}`
+            },
+         }),
+      }),
+
    }),
 });
 
@@ -80,7 +106,10 @@ export const {
    useLoginUserMutation,
    useSubmitSteppersMutation,
    usePostRequirementsMutation,
-   useGetQuestionsQuery,
+   useLazyGetQuestionsQuery,
    useGetUserIdQuery,
-   useGetProjectDetailsQuery
+   useLazyGetUserIdQuery,
+   useGetProjectDetailsQuery,
+   useGetArchitectsQuery,
+   useGetInteriorDesignersQuery
 } = userServicesApi;

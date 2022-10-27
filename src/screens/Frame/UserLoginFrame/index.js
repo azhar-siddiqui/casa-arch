@@ -7,13 +7,13 @@ import EyeIcon from "../../../assets/InputFieldIcons/EyeIcon.svg";
 import BlankCheck from "../../../assets/ModalIcon/blank.svg";
 import Check from "../../../assets/ModalIcon/Right.svg";
 import ButtonField from "../../../components/ButtonsFields/ButtonField";
-import { useGetUserIdQuery, useLoginUserMutation } from "../../../app/services/userServices";
+import { useLazyGetUserIdQuery, useLoginUserMutation } from "../../../app/services/userServices";
 import { useDispatch, useSelector } from "react-redux";
-import { updateIsLoggedIn, updateToken, updateUserType } from "../../../app/slices/user";
+import { updateIsLoggedIn, updateToken, updateUserId, updateUserType } from "../../../app/slices/user";
 
 const initialValues = {
-  email: "prasadsoni60@gmail.com",
-  password: "Qwerty.54321",
+  email: "",
+  password: "",
 };
 
 const LoginSchema = Yup.object({
@@ -34,17 +34,11 @@ const UserLoginFrame = (props) => {
   const [vpass, setVPass] = useState("password");
 
   const [rememberMeCheck, setRememberMeCheck] = useState(false);
-  const [loginUser, data] = useLoginUserMutation()
-
-  // const [fetchUserId] = useGetUserIdQuery()
-  // console.log(result)
-
-  // const { data: userId } = useGetUserIdQuery(isLoggedIn, {
-  //   refetchOnMountOrArgChange: true
-  // })
-  // console.log(userId)
 
   const dispatch = useDispatch()
+
+  const [loginUser, data] = useLoginUserMutation()
+  const [fetchUserId, result] = useLazyGetUserIdQuery()
 
   const handleSubmit = async (values) => {
     setVisibleForUserLogin(false);
@@ -58,19 +52,19 @@ const UserLoginFrame = (props) => {
     // console.log("Value Login", userData);
     await loginUser(userData)
       .then(async res => {
-        // console.log(res)
         dispatch(updateIsLoggedIn(true))
         dispatch(updateUserType('NORMAL'))
         sessionStorage.setItem('access', res.data.access_token)
         setStepperVisible(true)
         setCurrentStepper('normal')
-        // await fetchUserId(res.data)
-        //   .then(res => {
-        //     console.log(res)
-        //   })
-        //   .catch(err => {
-        //     console.log(err.response)
-        //   })
+        await fetchUserId()
+          .then(res => {
+            console.log(res.data)
+            dispatch(updateUserId(res.data['user-id']))
+          })
+          .catch(err => {
+            console.log(err.response)
+          })
       })
       .catch(err => {
         console.log(err.response)
