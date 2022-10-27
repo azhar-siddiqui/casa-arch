@@ -2,9 +2,10 @@ import React from "react";
 import "./SuccessModal.css";
 import CircleOrange from "../../assets/successModalIcons/Circle.svg";
 import Loading from "../../assets/successModalIcons/Loading.svg";
-// import Tick from "../../assets/successModalIcons/Right.svg";
+import Tick from "../../assets/successModalIcons/Right.svg";
 
-const SuccessModal = () => {
+const SuccessModal = (props) => {
+  const { massage } = props;
   return (
     <>
       <div
@@ -14,23 +15,20 @@ const SuccessModal = () => {
           {/*content*/}
           <div className="border-0 shadow-lg relative flex flex-col bg-white outline-none focus:outline-none py-6">
             {/*header*/}
-            <div className="mx-auto">
-              <div className="">
-                <img
+            <div className="mx-auto TickContainer">
+              {/* <div className=""> */}
+              {/* <img
                   src={CircleOrange}
                   alt="CircleOrange"
                   className="OrangeImg w-20 md:w-auto"
-                />
-                {/* <img
-                  src={Tick}
-                  alt="RightTick"
-                  className="ml-3 sm:ml-4 md:ml-6 "
                 /> */}
-              </div>
+              {/* <img src={Tick} alt="RightTick" className="ml-3 md:ml-6 Tick" /> */}
+              <span className="tick"></span>
+              {/* </div> */}
             </div>
             {/*body*/}
-            <div className="py-4 flex-auto mx-auto font-medium text-lg lg:text-2xl text-primaryExtraLightGray">
-              Details Added Successfully
+            <div className="py-4 mt-7 flex-auto mx-auto font-medium text-lg lg:text-2xl text-primaryExtraLightGray">
+              {massage}
             </div>
             {/*footer*/}
             <div className=" mx-auto flex items-center">

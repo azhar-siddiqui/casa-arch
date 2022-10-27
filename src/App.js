@@ -11,6 +11,7 @@ import Contact from "./screens/Contact/Contact";
 import ProfessionalsList from "./screens/ProfessionalsList/ProfessionalsList";
 import Profile from "./screens/Profile/Profile";
 import Dashboard from "./screens/Dashboard/dashboard";
+import PageNotFound from "./screens/PageNotFound/PageNotFound";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="list" element={<ProfessionalsList />} />
           <Route path="questions" element={<ProQuestion />} />
         </Route>
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer />
     </>

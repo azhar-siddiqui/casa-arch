@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import Modal from "../../../components/Modal/Modal";
@@ -6,6 +6,7 @@ import InputField from "../../../components/InputField/InputField";
 import TextAreaFields from "../../../components/TextAreaFields/TextAreaFields";
 import ButtonField from "../../../components/ButtonsFields/ButtonField";
 import { useGetInTouchMutation } from "../../../app/services/getInTouchServices";
+import SuccessModal from "../../../components/SuccessModal/SuccessModal";
 
 const initialValues = {
   fname: "",
@@ -31,7 +32,7 @@ const GetInTouchSchema = Yup.object({
 });
 
 const GetInTouchFrame = (props) => {
-  const { setVisibleGetInTouch } = props;
+  const { setVisibleGetInTouch, setSuccessModalVisible } = props;
   const [getInTouchPost] = useGetInTouchMutation();
   // console.log("Get", getInTouchPost);
   // console.log("response", response);
@@ -40,6 +41,11 @@ const GetInTouchFrame = (props) => {
     console.log(values);
     getInTouchPost(values);
     setVisibleGetInTouch(false);
+    setSuccessModalVisible(true);
+
+    setTimeout(() => {
+      setSuccessModalVisible(false);
+    }, 3000);
   };
 
   return (

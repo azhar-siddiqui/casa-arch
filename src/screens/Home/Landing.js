@@ -7,15 +7,17 @@ import "./Landing.css";
 import GetInTouch from "../Frame/GetInTouchFrame/GetInTouchFrame";
 import { useSelector } from "react-redux";
 // import SuccessModal from "../../components/SuccessModal/SuccessModal";
+import SuccessModal from "../../components/SuccessModal/SuccessModal";
 
 const Landing = () => {
   const [searchTxt, setSearchTxt] = useState("");
   const [filterDropData, setFilterDropData] = useState([]);
   const [visibleGetInTouch, setVisibleGetInTouch] = useState(false);
   const { isLoggedIn, userType } = useSelector(state => state.user)
+  const [successModalVisible, setSuccessModalVisible] = useState(false);
 
   const dorpItem = [
-    { id: 1, type: "Architecture" },
+    { id: 1, type: "Architect" },
     { id: 2, type: "Interior" },
   ];
 
@@ -68,7 +70,7 @@ const Landing = () => {
             filterDropData={filterDropData}
             inputProp={{
               type: "text",
-              placeholder: "Architecture, Interior Designing",
+              placeholder: "Architect, Interior Designing",
             }}
           />
           <h1 className="text-primaryDark pt-7 font-medium text-2xl lg:text-5xl text-left">
@@ -126,9 +128,15 @@ const Landing = () => {
         />
       </div>
       {visibleGetInTouch && (
-        <GetInTouch setVisibleGetInTouch={setVisibleGetInTouch} />
+        <GetInTouch
+          setVisibleGetInTouch={setVisibleGetInTouch}
+          setSuccessModalVisible={setSuccessModalVisible}
+        />
       )}
-      {/* <SuccessModal /> */}
+
+      {successModalVisible && (
+        <SuccessModal massage={"Details Added Successfully"} />
+      )}
     </>
   );
 };

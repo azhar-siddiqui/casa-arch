@@ -1,0 +1,39 @@
+.circle_checkbox {
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.circle_checkbox > div {
+  border-radius: 50%;
+  position: relative;
+  left: -0.0625rem;
+  top: -0.0625rem;
+  height: 0.625rem;
+  width: 0.625rem;
+  background: var(--color-primary);
+}
+
+.checked {
+  border: 0.0625rem solid var(--color-primary);
+  padding: 0.4375rem;
+  background: #fff;
+}
+
+.unchecked {
+  background: #ced4da;
+  border: 1px solid #FFAE83;
+}
+
+@media screen and (max-width: 28.125rem) {
+  .circle_checkbox {
+    height: 1.125rem;
+    width: 1.125rem;
+    min-width: 1.125rem;
+  }
+
+  .checked {
+    padding: 0.25rem;
+  }
+}

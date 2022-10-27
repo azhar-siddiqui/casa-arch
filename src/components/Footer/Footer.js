@@ -57,7 +57,7 @@ const Footer = () => {
               <img src={Rectangle} alt="Rectangle" width={"64px"} />
               <NavLink to="/">Home</NavLink>
               <NavLink to="/services">Services</NavLink>
-              <NavLink to="/blog">Blog</NavLink>
+              <NavLink to="/blogs">Blog</NavLink>
               <NavLink to="/contact">Contact us</NavLink>
               <NavLink to="/about">About us</NavLink>
             </div>

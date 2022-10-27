@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ButtonField from "../ButtonsFields/ButtonField";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import CasaLogo from "../../assets/HeaderIcon/CasaLogo.svg";
 import MenuIcon from "../../assets/HeaderIcon/Menu.svg";
 import { Formik } from "formik";
@@ -13,12 +13,19 @@ import Check from "../../assets/ModalIcon/Right.svg";
 import ProfessionalLoginFrame from "../../screens/Frame/ProfessionalLoginFrame/ProfessionalLoginFrame";
 import SelectLoginFrame from "../../screens/Frame/SelectLoginFrame/SelectLoginFrame";
 import ProfessionalSignUp from "../../screens/Frame/ProfessionalSignUpFrame/ProfessionalSignUp";
-import UserLoginFrame from "../../screens/Frame/UserLoginFrame";
 import InputRadio from "../InputRadio/inputRadio";
 import UserSignUpFrame from "../../screens/Frame/UserSignupFrame/UserSignUpFrame";
 import { useLazyGetQuestionsQuery, useLazyGetUserIdQuery, useSubmitSteppersMutation } from "../../app/services/userServices";
 import { useDispatch, useSelector } from "react-redux";
 import { updateIsLoggedIn } from "../../app/slices/user";
+
+import SuccessModal from "../../components/SuccessModal/SuccessModal";
+import Loc from "../../assets/ModalIcon/loc.svg";
+import { CCheckbox } from "../CircularCheckbox/CCheckbox";
+import styles from "./Header.module.css";
+import Corss from "../../assets/ModalIcon/Cross.svg";
+import UserLoginFrame from "../../screens/Frame/UserLoginFrame";
+
 // import Loc from "../../assets/ModalIcon/loc.svg";
 // import SelectLoginFrame from "../../screens/Frame/SelectLoginFrame/SelectLoginFrame";
 
@@ -90,25 +97,24 @@ const userStepperSchema = Yup.object({
 
 const stepper = [
   {
-    step: 1,
-    title: "Where do you serve your customers",
-    placeholder: "Area,City,State...",
     type: "text",
     name: "text",
+    value: "Aurangabad",
   },
   {
     step: 2,
     title: "Enter your pincode",
-    type: "text",
+    type: "number",
     placeholder: "Pincode",
     name: "pincode",
+    value: "431111",
   },
   {
     step: 3,
     title: "Do you prefer meeting remotely",
     type: "radio",
-    name: "pincode",
     preference: ["Yes", "No"],
+    value: "Yes",
   },
 ];
 
@@ -152,27 +158,29 @@ const userStepper = [
 ];
 
 const Header = () => {
-  const [vpass, setVPass] = useState("password");
-  const [vpassConfirm, setVPassConfirm] = useState("password");
   let [openMenu, setOpenMenu] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [currentStep, setCurrentStep] = useState(0);
+
   const [currentStepValue, setCurrentStepValue] = useState(userStepper);
+  const [currentStep, setCurrentStep] = useState(0);
 
   // normal or professional
   const [currentStepper, setCurrentStepper] = useState('normal') //can be 'normal' or 'professional' - used to know which steppers (professional/normal) to be displayed
 
-  const [proButtonVisible, setProButtonVisible] = useState(true);
   const [dashboardButtonVisible, setDashboardButtonVisible] = useState(false)
   const [rememberMeCheck, setRememberMeCheck] = useState(false);
+  const [professionalsAccSwitchingMsg, setProfessionalsAccSwitchingMsg] =
+    useState(false);
+  const [proButtonVisible, setProButtonVisible] = useState(true);
   const [visibleForProfessionalLogin, setVisibleForProfessionalLogin] =
     useState(false);
   const [visibleForProfessionalSignUp, setVisibleForProfessionalSignUp] =
     useState(false);
-
   const [visibleForUserSignUp, setVisibleForUserSignUp] = useState(false)
   const [visibleForUserLogin, setVisibleForUserLogin] = useState(false)
   const [stepperVisible, setStepperVisible] = useState(false)
+  const [successModalVisible, setSuccessModalVisible] = useState(false);
+  const [proVisible, setProVisible] = useState(false);
 
   const location = useLocation();
   const [submitNormalUserSteppers, submittedSteppersData] = useSubmitSteppersMutation()
@@ -202,10 +210,11 @@ const Header = () => {
   useEffect(() => {
     if (location.pathname === "/professionals" || location.pathname === "/professionals/list") {
       setProButtonVisible(false);
-    } else if (isLoggedIn && userType === 'NORMAL') {
-      setProButtonVisible(false);
-    }
-    else {
+      setProfessionalsAccSwitchingMsg(true);
+      setTimeout(() => {
+        setProfessionalsAccSwitchingMsg(false);
+      }, 1000);
+    } else {
       setProButtonVisible(true);
     }
 
@@ -216,17 +225,70 @@ const Header = () => {
     }
   }, [location, isLoggedIn]);
 
+  //  New Changes Start
+
+  const [fields, setFields] = useState({
+    loc: "",
+    pincode: "",
+    preference: "",
+  });
+  const [count, setCount] = useState(0);
+  const [currData, setCurrData] = useState({
+    heading: "",
+    type: "",
+    name: "",
+    options: [],
+    imgLink: "",
+    placeholder: "",
+  });
+
+  const data = [
+    {
+      heading: "Where do you serve your customers",
+      placeholder: "Area,City,State...",
+      type: "text",
+      name: "loc",
+    },
+    {
+      heading: "Enter your pincode",
+      type: "text",
+      name: "pincode",
+      placeholder: "Pincode",
+      imgLink: Loc,
+    },
+    {
+      heading: "Do you prefer meeting remotely",
+      type: "checkbox",
+      name: "preference",
+      options: ["Yes", "No"],
+    },
+  ];
+
   useEffect(() => {
-    // console.log(currentStepValue);
-    // console.log(currentStepValue[currentStep].title);
-  }, [currentStep, currentStepValue]);
+    setCurrData(data[count]);
+  }, [count]);
+
+  const handleChange = (e) => {
+    let { name, value } = e.target;
+    setFields({ ...fields, [name]: value });
+  };
+
+  const navigate = useNavigate();
+
+  const handleCheckboxChange = (name, val) => {
+    // let { name } = e.target
+    console.log("val", val);
+    setFields({ ...fields, [name]: val });
+    setProVisible(false);
+    navigate("/professionals/questions");
+  };
 
   const handleStepperIncrement = () => {
     setCurrentStep(currentStep + 1);
-  };
+  }
   const handleStepperDecrement = () => {
     setCurrentStep(currentStep - 1);
-  };
+  }
 
   const handleSubmit = (values) => {
     if (currentStepper === 'normal') {
@@ -262,6 +324,19 @@ const Header = () => {
     sessionStorage.removeItem('access')
     dispatch(updateIsLoggedIn(false))
   }
+  const incCount = () => {
+    if (count !== data.length - 1) {
+      setCount(count + 1);
+    } else {
+      console.log(fields);
+    }
+  };
+
+  const decCount = () => {
+    if (count > 0) {
+      setCount(count - 1);
+    } else return;
+  };
 
   return (
     <div className="shadow-md w-full relative bg-white z-40">
@@ -358,6 +433,8 @@ const Header = () => {
       {visibleForProfessionalSignUp && (
         <ProfessionalSignUp
           setVisibleForProfessionalSignUp={setVisibleForProfessionalSignUp}
+          setSuccessModalVisible={setSuccessModalVisible}
+          setProVisible={setProVisible}
         />
       )}
 
@@ -456,6 +533,117 @@ const Header = () => {
           )}
         </Formik>
       }
+      {professionalsAccSwitchingMsg && (
+        <SuccessModal massage={"Switching to professional account"} />
+      )}
+
+      {successModalVisible && (
+        <SuccessModal massage={"Professional User created SuccessFully"} />
+      )}
+
+      {proVisible && (
+        <>
+          <div className={styles.main_div}>
+            <div className={styles.popup}>
+              <div className={styles.popup_body}>
+                <div
+                  className={styles.cross}
+                  onClick={() => {
+                    setProVisible(false);
+                  }}
+                >
+                  <img src={Corss} alt="cross" />
+                </div>
+                {
+                  <>
+                    <h2 className={styles.question}>{currData.heading}</h2>
+                    <div className={styles.input_div}>
+                      {currData.type === "text" || currData.type === "email" ? (
+                        <>
+                          {currData.imgLink && (
+                            <img src={currData.imgLink} alt="location" />
+                          )}
+                          <input
+                            type={`${currData.type}`}
+                            onChange={handleChange}
+                            value={fields[currData.name]}
+                            name={currData.name}
+                            placeholder={currData.placeholder}
+                            id={`${currData.name === "pincode" ? styles.loc_inp : ""
+                              }`}
+                            className={styles.text_inp}
+                          />
+                        </>
+                      ) : (
+                        <>
+                          {currData.options.map((ele) => {
+                            return (
+                              <>
+                                <input
+                                  key={ele.indexOf}
+                                  type="checkbox"
+                                  aria-hidden
+                                  name={currData.name}
+                                  id={currData.name}
+                                />
+
+                                <label
+                                  htmlFor={currData.name}
+                                  onClick={() => {
+                                    handleCheckboxChange(currData.name, ele);
+                                  }}
+                                  style={{
+                                    borderColor: `${fields[currData.name] === ele
+                                      ? "#F36C25"
+                                      : ""
+                                      }`,
+                                  }}
+                                  className={styles.checkbox_label}
+                                >
+                                  <CCheckbox
+                                    checked={fields[currData.name] === ele}
+                                  />
+                                  <p
+                                    className={styles.checkbox_text}
+                                    style={{
+                                      color: `${fields[currData.name] === ele
+                                        ? ""
+                                        : "#939CA3"
+                                        }`,
+                                    }}
+                                  >
+                                    {ele}
+                                  </p>
+                                </label>
+                              </>
+                            );
+                          })}
+                        </>
+                      )}
+                    </div>
+                  </>
+                }
+                <div className={styles.bottom}>
+                  <p className={styles.back} onClick={decCount}>
+                    Back
+                  </p>
+                  <button
+                    className={styles.btn}
+                    onClick={incCount}
+                    disabled={
+                      currData.name && fields[`${currData.name}`].length === 0
+                        ? true
+                        : false
+                    }
+                  >
+                    Continue
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

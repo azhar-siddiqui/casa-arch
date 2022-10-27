@@ -6,9 +6,6 @@ const PreFooter = () => {
       <p className="copyRight">Copyright 2022,All Right Reserved</p>
       <ul className="preNavLink">
         <li>
-          <NavLink to="/">Home</NavLink>
-        </li>
-        <li>
           <NavLink to="/">Terms</NavLink>
         </li>
         <li>
