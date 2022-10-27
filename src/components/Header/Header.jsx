@@ -157,9 +157,10 @@ const Header = () => {
   let [openMenu, setOpenMenu] = useState(false);
   const [visible, setVisible] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
-  const [currentStepValue, setCurrentStepValue] = useState([]);
+  const [currentStepValue, setCurrentStepValue] = useState(userStepper);
+
   // normal or professional
-  const [currentStepper, setCurrentStepper] = useState('') //can be 'normal' or 'professional' - used to know which steppers (professional/normal) to be displayed
+  const [currentStepper, setCurrentStepper] = useState('normal') //can be 'normal' or 'professional' - used to know which steppers (professional/normal) to be displayed
 
   const [proButtonVisible, setProButtonVisible] = useState(true);
   const [dashboardButtonVisible, setDashboardButtonVisible] = useState(false)
@@ -174,12 +175,12 @@ const Header = () => {
   const [stepperVisible, setStepperVisible] = useState(false)
 
   const location = useLocation();
-  const [submitNormalUserSteppers, data] = useSubmitSteppersMutation()
+  const [submitNormalUserSteppers, submittedSteppersData] = useSubmitSteppersMutation()
   const { isLoggedIn, userType, userId } = useSelector(state => state.user)
   const [fetchStepperData, result] = useLazyGetQuestionsQuery()
-  
+
   const dispatch = useDispatch()
-  
+
   useEffect(() => {
     // fetchStepperData()
     //   .then(res => {
@@ -219,12 +220,6 @@ const Header = () => {
     // console.log(currentStepValue);
     // console.log(currentStepValue[currentStep].title);
   }, [currentStep, currentStepValue]);
-
-  useEffect(() => {
-    if (currentStepper === '') return
-    if (currentStepper === 'normal') return setCurrentStepValue(userStepper)
-    if (currentStepper === 'professional') return setCurrentStepValue(stepper)
-  }, [currentStepper]);
 
   const handleStepperIncrement = () => {
     setCurrentStep(currentStep + 1);
@@ -368,9 +363,9 @@ const Header = () => {
 
       {stepperVisible && currentStepValue.length >= 1 &&
         <Formik
-          initialValues={currentStepper === 'normal' ? initialValuesUserStepper : initialValuesLocation}
+          initialValues={initialValuesUserStepper}
           onSubmit={handleSubmit}
-          validationSchema={currentStepper === 'normal' ? userStepperSchema : LocationSchema}
+          validationSchema={userStepperSchema}
         >
           {({
             handleChange,
@@ -431,12 +426,6 @@ const Header = () => {
                         onClick={handleStepperDecrement}
                       />
                       {currentStep === currentStepValue.length - 1 ? (
-                        // <ButtonField
-                        //   className={`px-5 py-3 bg-primaryOrange border-primaryOrange text-white font-medium outline-none focus:outline-none ease-linear transition-all duration-150`}
-                        //   type="submit"
-                        //   children="Submit"
-                        //   onClick={handleSubmit}
-                        // />
                         <button
                           className={`px-5 py-3 bg-primaryOrange border-primaryOrange text-white font-medium outline-none focus:outline-none ease-linear transition-all duration-150`}
                           type='submit'
