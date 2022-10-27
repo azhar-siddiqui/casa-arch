@@ -3,10 +3,13 @@ import ProLandingImg from "../../assets/ProfessionalsImages/ProLandingImg.svg";
 import SearchBar from "../../components/SearchBard/SearchBar";
 import Frame1 from "../../assets/ProfessionalsImages/Frame1.svg";
 import Frame2 from "../../assets/ProfessionalsImages/Frame2.svg";
+import ProfessionalSignUp from "../Frame/ProfessionalSignUpFrame/ProfessionalSignUp";
 
 const Professionals = () => {
   const [searchTxt, setSearchTxt] = useState("");
   const [filterDropData, setFilterDropData] = useState([]);
+  const [visibleForProfessionalSignUp, setVisibleForProfessionalSignUp] =
+    useState(false);
   const dorpItem = [
     { id: 1, type: "Architecture" },
     { id: 2, type: "Interior" },
@@ -29,6 +32,10 @@ const Professionals = () => {
     const searchWord = e.target.value || e.currentTarget.textContent;
     setSearchTxt(searchWord);
     setFilterDropData([]);
+  };
+
+  const handlePop = () => {
+    setVisibleForProfessionalSignUp(true);
   };
 
   const FrameImg = [
@@ -91,6 +98,7 @@ const Professionals = () => {
               type: "text",
               placeholder: "Architecture, Interior Designing",
             }}
+            onClick={handlePop}
           />
         </div>
       </div>
@@ -99,6 +107,11 @@ const Professionals = () => {
           <img src={item.image} alt="Frame1" key={i} />
         ))}
       </div>
+      {visibleForProfessionalSignUp && (
+        <ProfessionalSignUp
+          setVisibleForProfessionalSignUp={setVisibleForProfessionalSignUp}
+        />
+      )}
     </>
   );
 };

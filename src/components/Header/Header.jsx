@@ -3,13 +3,13 @@ import ButtonField from "../ButtonsFields/ButtonField";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import CasaLogo from "../../assets/HeaderIcon/CasaLogo.svg";
 import MenuIcon from "../../assets/HeaderIcon/Menu.svg";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import InputField from "../InputField/InputField";
-import Modal from "../Modal/Modal";
-import EyeIcon from "../../assets/InputFieldIcons/EyeIcon.svg";
-import BlankCheck from "../../assets/ModalIcon/blank.svg";
-import Check from "../../assets/ModalIcon/Right.svg";
+// import { Formik } from "formik";
+// import * as Yup from "yup";
+// import InputField from "../InputField/InputField";
+// import Modal from "../Modal/Modal";
+// import EyeIcon from "../../assets/InputFieldIcons/EyeIcon.svg";
+// import BlankCheck from "../../assets/ModalIcon/blank.svg";
+// import Check from "../../assets/ModalIcon/Right.svg";
 import ProfessionalLoginFrame from "../../screens/Frame/ProfessionalLoginFrame/ProfessionalLoginFrame";
 import SelectLoginFrame from "../../screens/Frame/SelectLoginFrame/SelectLoginFrame";
 import ProfessionalSignUp from "../../screens/Frame/ProfessionalSignUpFrame/ProfessionalSignUp";
@@ -18,35 +18,11 @@ import Loc from "../../assets/ModalIcon/loc.svg";
 import { CCheckbox } from "../CircularCheckbox/CCheckbox";
 import styles from "./Header.module.css";
 import Corss from "../../assets/ModalIcon/Cross.svg";
-// import SelectLoginFrame from "../../screens/Frame/SelectLoginFrame/SelectLoginFrame";
-
-const stepper = [
-  {
-    step: 1,
-    title: "Where do you serve your customers",
-    placeholder: "Area,City,State...",
-    type: "text",
-    name: "text",
-    value: "Aurangabad",
-  },
-  {
-    step: 2,
-    title: "Enter your pincode",
-    type: "number",
-    placeholder: "Pincode",
-    name: "pincode",
-    value: "431111",
-  },
-  {
-    step: 3,
-    title: "Do you prefer meeting remotely",
-    type: "radio",
-    preference: ["Yes", "No"],
-    value: "Yes",
-  },
-];
+import { useProfessionalServiceMutation } from "../../app/services/professionalServices";
 
 const Header = () => {
+  const [professionalService, professionalServiceResponse] =
+    useProfessionalServiceMutation();
   let [openMenu, setOpenMenu] = useState(false);
   const [visible, setVisible] = useState(false);
   const [professionalsAccSwitchingMsg, setProfessionalsAccSwitchingMsg] =
@@ -133,17 +109,16 @@ const Header = () => {
 
   const handleCheckboxChange = (name, val) => {
     // let { name } = e.target
-    console.log("val", val);
     setFields({ ...fields, [name]: val });
-    setProVisible(false);
-    navigate("/professionals/questions");
   };
 
   const incCount = () => {
     if (count !== data.length - 1) {
       setCount(count + 1);
     } else {
-      console.log(fields);
+      console.log("Fields", fields);
+      // navigate("/professionals/questions");
+      // setProVisible(false);
     }
   };
 
@@ -237,110 +212,123 @@ const Header = () => {
         <SuccessModal massage={"Professional User created SuccessFully"} />
       )}
 
-      {proVisible && (
+      {successModalVisible === false && (
         <>
-          <div className={styles.main_div}>
-            <div className={styles.popup}>
-              <div className={styles.popup_body}>
-                <div
-                  className={styles.cross}
-                  onClick={() => {
-                    setProVisible(false);
-                  }}
-                >
-                  <img src={Corss} alt="cross" />
-                </div>
-                {
-                  <>
-                    <h2 className={styles.question}>{currData.heading}</h2>
-                    <div className={styles.input_div}>
-                      {currData.type === "text" || currData.type === "email" ? (
-                        <>
-                          {currData.imgLink && (
-                            <img src={currData.imgLink} alt="location" />
-                          )}
-                          <input
-                            type={`${currData.type}`}
-                            onChange={handleChange}
-                            value={fields[currData.name]}
-                            name={currData.name}
-                            placeholder={currData.placeholder}
-                            id={`${
-                              currData.name === "pincode" ? styles.loc_inp : ""
-                            }`}
-                            className={styles.text_inp}
-                          />
-                        </>
-                      ) : (
-                        <>
-                          {currData.options.map((ele) => {
-                            return (
-                              <>
-                                <input
-                                  key={ele.indexOf}
-                                  type="checkbox"
-                                  aria-hidden
-                                  name={currData.name}
-                                  id={currData.name}
-                                />
-
-                                <label
-                                  htmlFor={currData.name}
-                                  onClick={() => {
-                                    handleCheckboxChange(currData.name, ele);
-                                  }}
-                                  style={{
-                                    borderColor: `${
-                                      fields[currData.name] === ele
-                                        ? "#F36C25"
-                                        : ""
-                                    }`,
-                                  }}
-                                  className={styles.checkbox_label}
-                                >
-                                  <CCheckbox
-                                    checked={fields[currData.name] === ele}
-                                  />
-                                  <p
-                                    className={styles.checkbox_text}
-                                    style={{
-                                      color: `${
-                                        fields[currData.name] === ele
-                                          ? ""
-                                          : "#939CA3"
-                                      }`,
-                                    }}
-                                  >
-                                    {ele}
-                                  </p>
-                                </label>
-                              </>
-                            );
-                          })}
-                        </>
-                      )}
+          {proVisible && (
+            <>
+              <div className={styles.main_div}>
+                <div className={styles.popup}>
+                  <div className={styles.popup_body}>
+                    <div
+                      className={styles.cross}
+                      onClick={() => {
+                        setProVisible(false);
+                      }}
+                    >
+                      <img src={Corss} alt="cross" />
                     </div>
-                  </>
-                }
-                <div className={styles.bottom}>
-                  <p className={styles.back} onClick={decCount}>
-                    Back
-                  </p>
-                  <button
-                    className={styles.btn}
-                    onClick={incCount}
-                    disabled={
-                      currData.name && fields[`${currData.name}`].length === 0
-                        ? true
-                        : false
+                    {
+                      <>
+                        <h2 className={styles.question}>{currData.heading}</h2>
+                        <div className={styles.input_div}>
+                          {currData.type === "text" ||
+                          currData.type === "email" ? (
+                            <>
+                              {currData.imgLink && (
+                                <img src={currData.imgLink} alt="location" />
+                              )}
+                              <input
+                                type={`${currData.type}`}
+                                onChange={handleChange}
+                                value={fields[currData.name]}
+                                name={currData.name}
+                                placeholder={currData.placeholder}
+                                id={`${
+                                  currData.name === "pincode"
+                                    ? styles.loc_inp
+                                    : ""
+                                }`}
+                                className={styles.text_inp}
+                                autoComplete="off"
+                              />
+                            </>
+                          ) : (
+                            <>
+                              {currData.options.map((ele) => {
+                                return (
+                                  <>
+                                    <input
+                                      key={ele.indexOf()}
+                                      type="checkbox"
+                                      aria-hidden
+                                      name={currData.name}
+                                      id={currData.name}
+                                      autoComplete="off"
+                                    />
+
+                                    <label
+                                      htmlFor={currData.name}
+                                      onClick={() => {
+                                        handleCheckboxChange(
+                                          currData.name,
+                                          ele
+                                        );
+                                      }}
+                                      style={{
+                                        borderColor: `${
+                                          fields[currData.name] === ele
+                                            ? "#F36C25"
+                                            : ""
+                                        }`,
+                                      }}
+                                      className={styles.checkbox_label}
+                                    >
+                                      <CCheckbox
+                                        checked={fields[currData.name] === ele}
+                                      />
+                                      <p
+                                        className={styles.checkbox_text}
+                                        style={{
+                                          color: `${
+                                            fields[currData.name] === ele
+                                              ? ""
+                                              : "#939CA3"
+                                          }`,
+                                        }}
+                                      >
+                                        {ele}
+                                      </p>
+                                    </label>
+                                  </>
+                                );
+                              })}
+                            </>
+                          )}
+                        </div>
+                      </>
                     }
-                  >
-                    Continue
-                  </button>
+                    <div className={styles.bottom}>
+                      <p className={styles.back} onClick={decCount}>
+                        Back
+                      </p>
+                      <button
+                        className={styles.btn}
+                        onClick={incCount}
+                        disabled={
+                          currData.name &&
+                          fields[`${currData.name}`].length === 0
+                            ? true
+                            : false
+                        }
+                      >
+                        Continue
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </>
+          )}
         </>
       )}
     </div>
