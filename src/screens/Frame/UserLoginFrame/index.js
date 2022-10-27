@@ -41,7 +41,6 @@ const UserLoginFrame = (props) => {
   const [fetchUserId, result] = useLazyGetUserIdQuery()
 
   const handleSubmit = async (values) => {
-    setVisibleForUserLogin(false);
     let userData = {
       ...values,
       username: values.email,
@@ -51,7 +50,8 @@ const UserLoginFrame = (props) => {
     }
     // console.log("Value Login", userData);
     await loginUser(userData)
-      .then(async res => {
+    .then(async res => {
+        setVisibleForUserLogin(false);
         dispatch(updateIsLoggedIn(true))
         dispatch(updateUserType('NORMAL'))
         sessionStorage.setItem('access', res.data.access_token)

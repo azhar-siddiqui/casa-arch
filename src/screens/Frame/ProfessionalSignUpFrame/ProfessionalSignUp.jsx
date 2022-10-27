@@ -6,7 +6,6 @@ import InputField from "../../../components/InputField/InputField";
 import ButtonField from "../../../components/ButtonsFields/ButtonField";
 import EyeIcon from "../../../assets/InputFieldIcons/EyeIcon.svg";
 import { useProfessionalSignUpMutation } from "../../../app/services/professionalOauthApiServices";
-import { useNavigate } from "react-router-dom";
 
 const initialValues = {
   name: "",
@@ -46,15 +45,14 @@ const ProfessionalSignUp = (props) => {
   const [vpass, setVPass] = useState("password");
   const [vpassConfirm, setVPassConfirm] = useState("password");
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     if (professionalSignUpResponse.isSuccess) {
       setVisibleForProfessionalSignUp(false);
       setSuccessModalVisible(true);
-      setSuccessModalVisible(false);
       setProVisible(true);
-      // navigate("/professionals/questions");
+      setTimeout(() => {
+        setSuccessModalVisible(false);
+      }, 2000);
     } else if (professionalSignUpResponse.isError) {
       alert("Something went wrong");
     }

@@ -13,6 +13,7 @@ const SearchBar = (prop) => {
     inputProp,
     onClick,
   } = prop;
+  console.log(onClick);
   return (
     <div className={`SearchDropDownList ${className}`}>
       <div className={`searchField ${className}`}>

@@ -1,25 +1,28 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { AppConstants } from "../constants/constants";
 
-export const postApi = createApi({
-  reducerPath: "postApi",
+export const professionalServicesApi = createApi({
+  reducerPath: "professionalServicesApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://ad.casaarch.in/api/",
+    baseUrl: `${AppConstants.baseUrl}`,
   }),
   endpoints: (builder) => ({
-    joinProfessional: builder.mutation({
+    professionalService: builder.mutation({
       query: (body) => {
-        console.log("body", body);
+        const data = {
+          area: body.loc,
+          pin_code: body.pincode,
+          is_meeting_remotely: body.preference,
+        };
+        console.log("professionalServicesApi body", body);
         return {
-          url: `posts`,
-          method: "POST",
+          url: `${AppConstants.endPoints.professional_signup}`,
+          method: "PATCH",
           body: body,
-          //   headers: {
-          //     "Content-type": "application/json; charset=UTF-8",
-          //   },
         };
       },
     }),
   }),
 });
 
-export const { useJoinProfessionalMutation, useGetProfessionalsQuery } = postApi;
+export const { useProfessionalServiceMutation } = professionalServicesApi;

@@ -22,6 +22,7 @@ const ProQuestion = () => {
   const handleImgFileUpload = (e) => {
     // const { name } = e.target;
     let fieldsCpy = { ...fields };
+    console.log(fieldsCpy);
     fieldsCpy = {
       ...fields,
       [photo.name]: fields[photo.name].concat(
@@ -348,49 +349,119 @@ const ProQuestion = () => {
             by adding your accreditations.
           </p>
           <div
-            className={`w-full md:h-44 py-4 px-5 border border-dashed  border-primaryLightGray flex flex-wrap items-center mt-3 md:mt-0`}
+            className={`w-full md:h-28 py-4 px-5 border border-dashed  border-primaryLightGray items-center mt-3 md:mt-0`}
           >
-            <div className="flex items-center justify-evenly">
-              <div>
-                <label htmlFor="Architecture">Architecture</label>
-                <input type="checkbox" name="Architecture" id="" />
-              </div>
-              <div>
-                <label htmlFor="ResidencialDesign">Residencial Design</label>
-                <input type="checkbox" name="Residencial Design" id="" />
-              </div>
-              <div>
-                <label htmlFor="Landscaping">Landscaping</label>
-                <input type="checkbox" name="Landscaping" id="" />
-              </div>
-              <div>
-                <label htmlFor="Office Design">Office Design</label>
-                <input type="checkbox" name="Office Design" id="" />
-              </div>
-            </div>
-            <div className="flex items-center justify-evenly">
-              <div>
-                <label htmlFor="Comercial Design">Comercial Design</label>
-                <input type="checkbox" name="Comercial Design" id="" />
-              </div>
-              <div>
-                <label htmlFor="Interier Design">Interier Design</label>
-                <input type="checkbox" name="Interier Design" id="" />
-              </div>
-              <div>
-                <label htmlFor="Resturent Design">Resturent Design</label>
-                <input type="checkbox" name="Resturent Design" id="" />
-              </div>
-            </div>
+            <ul className="flex items-center flex-wrap">
+              <li className="mt-4 md:mt-0 flex items-center">
+                <input
+                  type="checkbox"
+                  name="Architecture"
+                  id="Architecture"
+                  className="h-5 w-5 rounded-full cursor-pointer"
+                />
+                <label
+                  htmlFor="Architecture"
+                  className="ml-3 font-semibold text-primaryLightGray mr-10"
+                >
+                  Architecture
+                </label>
+              </li>
+              <li className="mt-4 md:mt-0 flex items-center">
+                <input
+                  type="checkbox"
+                  name="ResidentialDesign"
+                  id="ResidentialDesign"
+                  className="h-5 w-5 rounded-full cursor-pointer"
+                />
+                <label
+                  htmlFor="ResidentialDesign"
+                  className="ml-3 font-semibold text-primaryLightGray mr-10"
+                >
+                  Residential Design
+                </label>
+              </li>
+              <li className="mt-4 md:mt-0 flex items-center">
+                <input
+                  type="checkbox"
+                  name="Landscaping"
+                  id="Landscaping"
+                  className="h-5 w-5 rounded-full cursor-pointer"
+                />
+                <label
+                  htmlFor="Landscaping"
+                  className="ml-3 font-semibold text-primaryLightGray mr-10"
+                >
+                  Landscaping
+                </label>
+              </li>
+              <li className="mt-4 md:mt-0 flex items-center">
+                <input
+                  type="checkbox"
+                  name="OfficeDesign"
+                  id="OfficeDesign"
+                  className="h-5 w-5 rounded-full cursor-pointer"
+                />
+                <label
+                  htmlFor="OfficeDesign"
+                  className="ml-3 font-semibold text-primaryLightGray mr-10"
+                >
+                  Office Design
+                </label>
+              </li>
+            </ul>
+            <ul className="flex items-center flex-wrap mt-0 md:mt-8">
+              <li className="mt-4 md:mt-0 flex items-center">
+                <input
+                  type="checkbox"
+                  name="Architecture"
+                  id="Architecture"
+                  className="h-5 w-5 rounded-full cursor-pointer"
+                />
+                <label
+                  htmlFor="Architecture"
+                  className="ml-3 font-semibold text-primaryLightGray mr-10"
+                >
+                  Architecture
+                </label>
+              </li>
+              <li className="mt-4 md:mt-0 flex items-center">
+                <input
+                  type="checkbox"
+                  name="ResidentialDesign"
+                  id="ResidentialDesign"
+                  className="h-5 w-5 rounded-full cursor-pointer"
+                />
+                <label
+                  htmlFor="ResidentialDesign"
+                  className="ml-3 font-semibold text-primaryLightGray mr-10"
+                >
+                  Residential Design
+                </label>
+              </li>
+              <li className="mt-4 md:mt-0 flex items-center">
+                <input
+                  type="checkbox"
+                  name="Landscaping"
+                  id="Landscaping"
+                  className="h-5 w-5 rounded-full cursor-pointer"
+                />
+                <label
+                  htmlFor="Landscaping"
+                  className="ml-3 font-semibold text-primaryLightGray mr-10"
+                >
+                  Landscaping
+                </label>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className={styles.inputs}>
+        <div className={`mt-5 ${styles.inputs}`}>
           <h2>{options.title}</h2>
           <p>{options.desc}</p>
-          {options.option.map((opt) => {
+          {options.option.map((opt, i) => {
             return (
-              <React.Fragment key={opt.id}>
+              <React.Fragment key={i}>
                 <input
                   className={styles.hidden_checkbox}
                   type="checkbox"
@@ -400,6 +471,7 @@ const ProQuestion = () => {
                   onChange={() => {
                     handleCheckboxChange(opt.name);
                   }}
+                  autoComplete="off"
                 />
                 <label
                   htmlFor={opt.name}
@@ -433,12 +505,14 @@ const ProQuestion = () => {
                               placeholder={inps.placeholder}
                               id={inps.name}
                               name={inps.name}
+                              autoComplete="off"
                             />
                           ) : (
                             <textarea
                               name={inps.name}
                               id={styles.desc}
                               placeholder={inps.placeholder}
+                              autoComplete="off"
                             ></textarea>
                           )}
                         </div>
@@ -450,6 +524,14 @@ const ProQuestion = () => {
             );
           })}
         </div>
+      </div>
+      <div className="flex justify-center mb-5">
+        <button
+          className="h-11 w-44 bg-primaryOrange text-white text-center"
+          onClick={() => alert("data")}
+        >
+          Save
+        </button>
       </div>
     </>
   );
