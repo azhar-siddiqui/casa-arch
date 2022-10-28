@@ -12,6 +12,9 @@ import ProfessionalsList from "./screens/ProfessionalsList/ProfessionalsList";
 import Profile from "./screens/Profile/Profile";
 import Dashboard from "./screens/Dashboard/dashboard";
 import PageNotFound from "./screens/PageNotFound/PageNotFound";
+import PrivacyPolicy from "./screens/PrivacyPolicy/PrivacyPolicy";
+import Terms from "./screens/Terms/Terms";
+import RefundPolicy from "./screens/RefundPolicy/RefundPolicy";
 
 function App() {
   return (
@@ -23,6 +26,9 @@ function App() {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-and-conditions" element={<Terms />} />
+        <Route path="/refund-and-return" element={<RefundPolicy />} />
         {/* <Route path="/professionals" element={<Professionals />} /> */}
         <Route path="/professionals">
           <Route path="" element={<Professionals />} />
