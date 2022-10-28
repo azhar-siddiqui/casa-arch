@@ -202,7 +202,7 @@ const Header = () => {
   const setVisibleForUserLogin = (bool) => {
     dispatch(updateVisibleForUserLogin(bool))
   };
-  
+
   let LinksUrl = [
     { name: "HOME", link: "/" },
     { name: "SERVICE", link: "/" },
@@ -457,6 +457,8 @@ const Header = () => {
             errors,
             touched,
           }) => (
+            console.log(values),
+            console.log(currentStepValue[currentStep]),
             <Modal
               setVisible={setStepperVisible}
               description={currentStepValue[currentStep].title}
@@ -525,12 +527,22 @@ const Header = () => {
                       )}
                     </>
                   ) : (
-                    <ButtonField
-                      className={`px-5 py-3 bg-primaryOrange border-primaryOrange text-white font-medium outline-none focus:outline-none ease-linear transition-all duration-150 `}
+                    <button
+                      className={`px-5 py-3 bg-primaryOrange border-primaryOrange text-white font-medium outline-none focus:outline-none ease-linear transition-all duration-150 disabled:opacity-60 `}
                       type="submit"
                       children="Continue"
                       onClick={handleStepperIncrement}
-                    />
+                      disabled={
+                        currentStepValue[currentStep].name === 'pincode' ?
+                          values.pincode < 99999 ? true : false
+                          : currentStepValue[currentStep].name === 'email' ?
+                            values.email === '' ? true : false
+                            : false
+                      }
+                    >
+                      Continue
+                    </button>
+
                   )}
                 </div>
               }
@@ -538,131 +550,137 @@ const Header = () => {
           )}
         </Formik>
       }
-      {professionalsAccSwitchingMsg && (
-        <SuccessModal massage={"Switching to professional account"} />
-      )}
+      {
+        professionalsAccSwitchingMsg && (
+          <SuccessModal massage={"Switching to professional account"} />
+        )
+      }
 
-      {successModalVisible && (
-        <SuccessModal massage={"Professional User created SuccessFully"} />
-      )}
+      {
+        successModalVisible && (
+          <SuccessModal massage={"Professional User created SuccessFully"} />
+        )
+      }
 
-      {successModalVisible === false && (
-        <>
-          {proVisible && (
-            <>
-              <div className={styles.main_div}>
-                <div className={styles.popup}>
-                  <div className={styles.popup_body}>
-                    <div
-                      className={styles.cross}
-                      onClick={() => {
-                        setProVisible(false);
-                      }}
-                    >
-                      <img src={Corss} alt="cross" />
-                    </div>
-                    {
-                      <>
-                        <h2 className={styles.question}>{currData.heading}</h2>
-                        <div className={styles.input_div}>
-                          {currData.type === "text" ||
-                            currData.type === "email" ? (
-                            <>
-                              {currData.imgLink && (
-                                <img src={currData.imgLink} alt="location" />
-                              )}
-                              <input
-                                type={`${currData.type}`}
-                                onChange={handleChange}
-                                value={fields[currData.name]}
-                                name={currData.name}
-                                placeholder={currData.placeholder}
-                                id={`${currData.name === "pincode"
-                                  ? styles.loc_inp
-                                  : ""
-                                  }`}
-                                className={styles.text_inp}
-                                autoComplete="off"
-                              />
-                            </>
-                          ) : (
-                            <>
-                              {currData.options.map((ele) => {
-                                return (
-                                  <>
-                                    <input
-                                      key={ele.indexOf()}
-                                      type="checkbox"
-                                      aria-hidden
-                                      name={currData.name}
-                                      id={currData.name}
-                                      autoComplete="off"
-                                    />
-
-                                    <label
-                                      htmlFor={currData.name}
-                                      onClick={() => {
-                                        handleCheckboxChange(
-                                          currData.name,
-                                          ele
-                                        );
-                                      }}
-                                      style={{
-                                        borderColor: `${fields[currData.name] === ele
-                                          ? "#F36C25"
-                                          : ""
-                                          }`,
-                                      }}
-                                      className={styles.checkbox_label}
-                                    >
-                                      <CCheckbox
-                                        checked={fields[currData.name] === ele}
+      {
+        successModalVisible === false && (
+          <>
+            {proVisible && (
+              <>
+                <div className={styles.main_div}>
+                  <div className={styles.popup}>
+                    <div className={styles.popup_body}>
+                      <div
+                        className={styles.cross}
+                        onClick={() => {
+                          setProVisible(false);
+                        }}
+                      >
+                        <img src={Corss} alt="cross" />
+                      </div>
+                      {
+                        <>
+                          <h2 className={styles.question}>{currData.heading}</h2>
+                          <div className={styles.input_div}>
+                            {currData.type === "text" ||
+                              currData.type === "email" ? (
+                              <>
+                                {currData.imgLink && (
+                                  <img src={currData.imgLink} alt="location" />
+                                )}
+                                <input
+                                  type={`${currData.type}`}
+                                  onChange={handleChange}
+                                  value={fields[currData.name]}
+                                  name={currData.name}
+                                  placeholder={currData.placeholder}
+                                  id={`${currData.name === "pincode"
+                                    ? styles.loc_inp
+                                    : ""
+                                    }`}
+                                  className={styles.text_inp}
+                                  autoComplete="off"
+                                />
+                              </>
+                            ) : (
+                              <>
+                                {currData.options.map((ele) => {
+                                  return (
+                                    <>
+                                      <input
+                                        key={ele.indexOf()}
+                                        type="checkbox"
+                                        aria-hidden
+                                        name={currData.name}
+                                        id={currData.name}
+                                        autoComplete="off"
                                       />
-                                      <p
-                                        className={styles.checkbox_text}
+
+                                      <label
+                                        htmlFor={currData.name}
+                                        onClick={() => {
+                                          handleCheckboxChange(
+                                            currData.name,
+                                            ele
+                                          );
+                                        }}
                                         style={{
-                                          color: `${fields[currData.name] === ele
-                                            ? ""
-                                            : "#939CA3"
+                                          borderColor: `${fields[currData.name] === ele
+                                            ? "#F36C25"
+                                            : ""
                                             }`,
                                         }}
+                                        className={styles.checkbox_label}
                                       >
-                                        {ele}
-                                      </p>
-                                    </label>
-                                  </>
-                                );
-                              })}
-                            </>
-                          )}
-                        </div>
-                      </>
-                    }
-                    <div className={styles.bottom}>
-                      <p className={styles.back} onClick={decCount}>
-                        Back
-                      </p>
-                      <button
-                        className={styles.btn}
-                        onClick={incCount}
-                        disabled={
-                          currData.name &&
-                            fields[`${currData.name}`].length === 0
-                            ? true
-                            : false
-                        }
-                      >
-                        Continue
-                      </button>
+                                        <CCheckbox
+                                          checked={fields[currData.name] === ele}
+                                        />
+                                        <p
+                                          className={styles.checkbox_text}
+                                          style={{
+                                            color: `${fields[currData.name] === ele
+                                              ? ""
+                                              : "#939CA3"
+                                              }`,
+                                          }}
+                                        >
+                                          {ele}
+                                        </p>
+                                      </label>
+                                    </>
+                                  );
+                                })}
+                              </>
+                            )}
+                          </div>
+                        </>
+                      }
+                      <div className={styles.bottom}>
+                        <p className={styles.back} onClick={decCount}>
+                          Back
+                        </p>
+                        <button
+                          className={styles.btn}
+                          onClick={incCount}
+                          disabled={
+                            currData.name &&
+                              fields[`${currData.name}`].length === 0
+                              ? true
+                              : false
+                          }
+                        >
+                          Continue
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </>
-          )}
-        </>
-      )}
-    </div>
+              </>
+            )}
+          </>
+        )
+      }
+    </div >
   );
 };
 
