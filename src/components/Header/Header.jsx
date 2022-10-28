@@ -457,8 +457,6 @@ const Header = () => {
             errors,
             touched,
           }) => (
-            console.log(values),
-            console.log(currentStepValue[currentStep]),
             <Modal
               setVisible={setStepperVisible}
               description={currentStepValue[currentStep].title}

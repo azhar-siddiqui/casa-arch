@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-   isStepperVisible: false
+   isStepperVisible: false,
+   searchedProfessional: ''
 };
 
 const user = createSlice({
@@ -14,9 +15,15 @@ const user = createSlice({
             isStepperVisible: payload
          }
       },
+      updateSearchedProfessional: (state, { payload }) => {
+         return {
+            ...state,
+            searchedProfessional: payload
+         }
+      },
 
    },
 });
 
-export const { updateIsStepperVisible } = user.actions;
+export const { updateIsStepperVisible, updateSearchedProfessional } = user.actions;
 export default user.reducer;

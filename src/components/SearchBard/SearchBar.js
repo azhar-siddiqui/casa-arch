@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateRedirectToSteppers, updateVisibleForUserLogin } from "../../app/slices/user";
-import { updateIsStepperVisible } from "../../app/slices/userStepper";
+import { updateIsStepperVisible, updateSearchedProfessional } from "../../app/slices/userStepper";
 import SearchFiledImg from "../../assets/SearchFieldsIcons/search-normal.svg";
 import ButtonField from "../ButtonsFields/ButtonField";
 import "./SearchBar.css";
@@ -22,6 +22,7 @@ const SearchBar = (prop) => {
   const dispatch = useDispatch()
 
   const handleSearch = () => {
+    dispatch(updateSearchedProfessional(searchTxt))
     if (!isLoggedIn) {
       dispatch(updateRedirectToSteppers(true))
       dispatch(updateVisibleForUserLogin(true))
