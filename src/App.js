@@ -15,8 +15,25 @@ import PageNotFound from "./screens/PageNotFound/PageNotFound";
 import PrivacyPolicy from "./screens/PrivacyPolicy/PrivacyPolicy";
 import Terms from "./screens/Terms/Terms";
 import RefundPolicy from "./screens/RefundPolicy/RefundPolicy";
+import { updateIsLoggedIn } from "./app/slices/user";
+import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 
 function App() {
+
+  const [loading, setLoading] = useState(true)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    setLoading(true)
+    if (sessionStorage.getItem('access')) {
+      dispatch(updateIsLoggedIn(true))
+    }
+    setLoading(false)
+  }, [])
+
+  if (loading) return <></>
+
   return (
     <>
       <Header />

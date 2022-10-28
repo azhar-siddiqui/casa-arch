@@ -9,14 +9,14 @@ import InputSelect from '../../../components/InputSelect/InputSelect';
 import { useSelector } from 'react-redux';
 import { usePostRequirementsMutation } from '../../../app/services/userServices';
 
-const budgets = [0, 1, 2, 3]
-const requirementsOptions = [0, 1, 2, 3]
+const budgetValues = ['0-25000', '25K-50K', '50K-2L', '2L-5L']
+const requirementValues = ['Bohemian', 'Classic']
 
 const initialValues = {
   projectName: '',
   projectLocation: '',
-  projectBudget: 0,
-  aestheticRequirements: 0,
+  projectBudget: '0-25000',
+  aestheticRequirements: 'Bohemian',
   projectDetails: '',
 }
 
@@ -38,8 +38,8 @@ export default function DashboardRequirements({ setRequirementsVisible, isRequir
     const postData = {
       project_name: values.projectName,
       project_location: values.projectLocation,
-      project_budget: parseInt(values.projectBudget),
-      aesthetic_req: parseInt(values.aestheticRequirements),
+      project_budget: budgetValues.indexOf(values.projectBudget),
+      aesthetic_req: requirementValues.indexOf(values.aestheticRequirements),
       project_details: values.projectDetails,
       user: userId
     }
@@ -103,7 +103,7 @@ export default function DashboardRequirements({ setRequirementsVisible, isRequir
             />
             <InputSelect name="projectBudget"
               label="Project Budget"
-              optionData={budgets}
+              optionData={budgetValues}
               placeholder="Enter your Project Budget"
               id={"projectBudget"}
               className="font-medium"
@@ -117,7 +117,7 @@ export default function DashboardRequirements({ setRequirementsVisible, isRequir
             <InputSelect
               name="aestheticRequirements"
               label="Aesthetic Requirements"
-              optionData={requirementsOptions}
+              optionData={requirementValues}
               placeholder="Aesthetic Requirements"
               id={"aestheticRequirements"}
               className="font-medium"
