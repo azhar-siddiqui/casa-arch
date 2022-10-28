@@ -91,7 +91,7 @@ export default function DashboardRequirements({ setRequirementsVisible, isRequir
             />
             <InputField
               name="projectLocation"
-              label="Project Name"
+              label="Project Location"
               placeholder="Project Location"
               id={"projectLocation"}
               className="font-medium"

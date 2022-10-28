@@ -69,6 +69,7 @@ const Landing = () => {
             handleFilter={handleFilter}
             handleOnclick={handleOnclick}
             filterDropData={filterDropData}
+            fromHomePage={true}
             inputProp={{
               type: "text",
               placeholder: "Architect, Interior Designing",

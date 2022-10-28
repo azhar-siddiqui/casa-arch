@@ -15,6 +15,7 @@ const SearchBar = (prop) => {
     className,
     inputProp,
     onClick,
+    fromHomePage
   } = prop;
   // console.log(onClick);
 
@@ -22,12 +23,14 @@ const SearchBar = (prop) => {
   const dispatch = useDispatch()
 
   const handleSearch = () => {
-    dispatch(updateSearchedProfessional(searchTxt))
-    if (!isLoggedIn) {
-      dispatch(updateRedirectToSteppers(true))
-      dispatch(updateVisibleForUserLogin(true))
+    if (fromHomePage) {
+      dispatch(updateSearchedProfessional(searchTxt))
+      if (!isLoggedIn) {
+        dispatch(updateRedirectToSteppers(true))
+        dispatch(updateVisibleForUserLogin(true))
+      }
+      isLoggedIn && userType === "Customer" && dispatch(updateIsStepperVisible(true))
     }
-    isLoggedIn && userType === "Customer" && dispatch(updateIsStepperVisible(true))
   }
 
   return (
@@ -49,9 +52,10 @@ const SearchBar = (prop) => {
         className={`searchtbn mt-3 lg:mt-0 ${searchTxt.length === 0 ? "btnDisable" : "btnActive"
           } ${className}`}
         disabled={searchTxt.length === 0 ? true : false}
-        onClick={
-          handleSearch
-        }
+        onClick={() => {
+          handleSearch();
+          onClick()
+        }}
       >
         Search
       </ButtonField>
