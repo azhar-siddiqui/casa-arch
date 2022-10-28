@@ -227,6 +227,9 @@ const Header = () => {
     } else {
       setDashboardButtonVisible(false)
     }
+    if(isLoggedIn && userType==='Customer'){
+      setProButtonVisible(false)
+    }
   }, [location, isLoggedIn]);
 
   //  New Changes Start
@@ -328,6 +331,7 @@ const Header = () => {
     sessionStorage.removeItem('access')
     dispatch(updateIsLoggedIn(false))
     dispatch(updateUserType(''))
+    navigate('/')
   }
   const incCount = () => {
     if (count !== data.length - 1) {
@@ -384,7 +388,7 @@ const Header = () => {
             </ButtonField>
           </li>
           <li>
-            {proButtonVisible && userType !== "Customer" && (
+            {proButtonVisible && userType !== "Customer" && !isLoggedIn && (
               <Link to="/professionals">
                 <ButtonField className="lg:ml-8 bg-primaryOrange py-2 px-6 h-11 hover:border-solid border-2 border-primaryOrange hover:bg-white hover:text-primaryOrange lg:my-0 my-3 w-11/12 lg:w-auto">
                   Join as a Professional

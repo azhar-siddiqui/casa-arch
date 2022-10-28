@@ -6,6 +6,10 @@ import Requirement from '../../components/Requirement/Requirement'
 import DashboardRequirements from '../Frame/DashboardRequirements/DashboardRequirements'
 import Message from './Message'
 
+
+const budgetValues = ['0-25000', '25K-50K', '50K-2L', '2L-5L']
+const requirementValues = ['Bohemian', 'Classic']
+
 export default function Dashboard() {
 
    const [requirementsVisible, setRequirementsVisible] = useState(false)
@@ -36,7 +40,7 @@ export default function Dashboard() {
          }
 
          {
-            requirementsVisible ? <DashboardRequirements isRequirementPosted={isRequirementPosted} setRequirementsVisible={setRequirementsVisible} /> :
+            requirementsVisible ? <DashboardRequirements isRequirementPosted={isRequirementPosted} setRequirementsVisible={setRequirementsVisible} budgetValues={budgetValues} requirementValues={requirementValues} /> :
                requirements.length < 1 ?
                   <div className='font-medium text-center text-slate-500 my-10'>
                      Requirements not added yet !
@@ -44,7 +48,7 @@ export default function Dashboard() {
                   <div>
                      {
                         requirements.map(req => {
-                           return <Requirement key={req.id} {...req} />
+                           return <Requirement key={req.id} {...req} budgetValues={budgetValues} requirementValues={requirementValues} />
                         })
                      }
                   </div>

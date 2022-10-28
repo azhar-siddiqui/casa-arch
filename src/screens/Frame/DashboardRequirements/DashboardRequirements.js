@@ -9,9 +9,6 @@ import InputSelect from '../../../components/InputSelect/InputSelect';
 import { useSelector } from 'react-redux';
 import { usePostRequirementsMutation } from '../../../app/services/userServices';
 
-const budgetValues = ['0-25000', '25K-50K', '50K-2L', '2L-5L']
-const requirementValues = ['Bohemian', 'Classic']
-
 const initialValues = {
   projectName: '',
   projectLocation: '',
@@ -28,7 +25,7 @@ const Schema = Yup.object({
   projectDetails: Yup.string().required("This field is required."),
 })
 
-export default function DashboardRequirements({ setRequirementsVisible, isRequirementPosted }) {
+export default function DashboardRequirements({ setRequirementsVisible, isRequirementPosted, requirementValues, budgetValues }) {
 
   const { userId } = useSelector(state => state.user)
   const [postRequirements, data] = usePostRequirementsMutation()

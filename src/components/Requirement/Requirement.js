@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function Requirement({
-   project_budget, project_name, project_location, project_details, aesthetic_req, user
+   project_budget, project_name, project_location, project_details, aesthetic_req, user,requirementValues, budgetValues
 }) {
 
    return (
@@ -22,12 +22,12 @@ export default function Requirement({
             </div>
             <div className='mb-6'>
                <p className='text-sm'>
-                  {aesthetic_req}
+                  {requirementValues[aesthetic_req]}
                </p>
             </div>
             <div className='mb-6'>
                <p className='text-sm'>
-                  {project_budget}
+                  {budgetValues[project_budget]}
                </p>
             </div>
             <div className='mb-6 w-full col-span-2'>

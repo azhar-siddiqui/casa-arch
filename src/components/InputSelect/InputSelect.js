@@ -45,8 +45,8 @@ const InputSelect = (props) => {
           onChange={onChange}
           onBlur={onBlur}
           >
-          {optionData.map(option => {
-          return <option>
+          {optionData.map((option, idx) => {
+          return <option key={idx} >
               {option}
             </option>
           })}
