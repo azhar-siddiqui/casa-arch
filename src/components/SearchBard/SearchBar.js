@@ -1,4 +1,7 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateRedirectToSteppers, updateVisibleForUserLogin } from "../../app/slices/user";
+import { updateIsStepperVisible } from "../../app/slices/userStepper";
 import SearchFiledImg from "../../assets/SearchFieldsIcons/search-normal.svg";
 import ButtonField from "../ButtonsFields/ButtonField";
 import "./SearchBar.css";
@@ -13,7 +16,19 @@ const SearchBar = (prop) => {
     inputProp,
     onClick,
   } = prop;
-  console.log(onClick);
+  // console.log(onClick);
+
+  const { isLoggedIn, userType } = useSelector(state => state.user)
+  const dispatch = useDispatch()
+
+  const handleSearch = () => {
+    if (!isLoggedIn) {
+      dispatch(updateRedirectToSteppers(true))
+      dispatch(updateVisibleForUserLogin(true))
+    }
+    isLoggedIn && userType === "Customer" && dispatch(updateIsStepperVisible(true))
+  }
+
   return (
     <div className={`SearchDropDownList ${className}`}>
       <div className={`searchField ${className}`}>
@@ -21,9 +36,8 @@ const SearchBar = (prop) => {
           <img src={SearchFiledImg} alt="SearchIcons" />
         </span>
         <input
-          className={`search ${
-            searchTxt.length === 0 ? "disable" : "inputActive"
-          } ${className} `}
+          className={`search ${searchTxt.length === 0 ? "disable" : "inputActive"
+            } ${className} `}
           {...inputProp}
           onChange={handleFilter}
           value={searchTxt}
@@ -31,11 +45,12 @@ const SearchBar = (prop) => {
       </div>
       <ButtonField
         type="button"
-        className={`searchtbn mt-3 lg:mt-0 ${
-          searchTxt.length === 0 ? "btnDisable" : "btnActive"
-        } ${className}`}
+        className={`searchtbn mt-3 lg:mt-0 ${searchTxt.length === 0 ? "btnDisable" : "btnActive"
+          } ${className}`}
         disabled={searchTxt.length === 0 ? true : false}
-        onClick={onClick}
+        onClick={
+          handleSearch
+        }
       >
         Search
       </ButtonField>

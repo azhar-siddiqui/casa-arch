@@ -8,6 +8,7 @@ import GetInTouch from "../Frame/GetInTouchFrame/GetInTouchFrame";
 import { useSelector } from "react-redux";
 // import SuccessModal from "../../components/SuccessModal/SuccessModal";
 import SuccessModal from "../../components/SuccessModal/SuccessModal";
+import { updateIsStepperVisible } from "../../app/slices/userStepper";
 
 const Landing = () => {
   const [searchTxt, setSearchTxt] = useState("");
@@ -92,7 +93,7 @@ const Landing = () => {
         </div>
       </div>
       <div className="text-center pt-0 sm:pt-5  lg:pt-14 mx-auto max-w-5xl mb-10 px-5 lg:px-0">
-        { isLoggedIn === true && userType === 'Customer' ? <></> :
+        {isLoggedIn === true && userType === 'Customer' ? <></> :
           <>
             <h1 className="text-primaryDark py-2 font-medium text-left md:text-center text-2xl lg:text-5xl">
               Pricing

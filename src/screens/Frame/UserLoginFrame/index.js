@@ -10,6 +10,7 @@ import ButtonField from "../../../components/ButtonsFields/ButtonField";
 import { useLazyGetUserIdQuery, useLazyGetUserTypeQuery, useLoginUserMutation } from "../../../app/services/userServices";
 import { useDispatch, useSelector } from "react-redux";
 import { updateIsLoggedIn, updateToken, updateUserId, updateUserType } from "../../../app/slices/user";
+import { updateIsStepperVisible } from "../../../app/slices/userStepper";
 
 const initialValues = {
   email: "",
@@ -30,13 +31,13 @@ const LoginSchema = Yup.object({
 });
 
 const UserLoginFrame = (props) => {
-  const { setVisibleForUserLogin, setVisibleForUserSignUp, setStepperVisible, setCurrentStepper } = props;
+  const { setVisibleForUserLogin, setVisibleForUserSignUp } = props;
   const [vpass, setVPass] = useState("password");
 
   const [rememberMeCheck, setRememberMeCheck] = useState(false);
 
   const dispatch = useDispatch()
-
+  const { redirectToSteppers } = useSelector(state => state.user)
   const [loginUser, data] = useLoginUserMutation()
   const [fetchUserId, result] = useLazyGetUserIdQuery()
   const [fetchUserType, userTypeFetched] = useLazyGetUserTypeQuery()
@@ -51,16 +52,16 @@ const UserLoginFrame = (props) => {
     }
     // console.log("Value Login", userData);
     await loginUser(userData)
-    .then(async res => {
-       console.log(res)
-        if(res.error){
+      .then(async res => {
+        console.log(res)
+        if (res.error) {
           alert(res.error.data.error_description)
           return
         }
         setVisibleForUserLogin(false);
         dispatch(updateIsLoggedIn(true))
         sessionStorage.setItem('access', res.data.access_token)
-        setStepperVisible(true)
+        redirectToSteppers && dispatch(updateIsStepperVisible(true))
         await fetchUserId()
           .then(res => {
             console.log(res.data)

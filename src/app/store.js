@@ -3,12 +3,14 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import { getInTouchApi } from "./services/getInTouchServices";
 import { userServicesApi } from "./services/userServices";
 import userReducer from './slices/user'
+import userStepperReducer from './slices/userStepper'
 import { professionalOauthApi } from "./services/professionalOauthApiServices";
 import { professionalServicesApi } from "./services/professionalServices";
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
+    userStepper: userStepperReducer,
     [getInTouchApi.reducerPath]: getInTouchApi.reducer,
     [userServicesApi.reducerPath]: userServicesApi.reducer,
     [professionalOauthApi.reducerPath]: professionalOauthApi.reducer,

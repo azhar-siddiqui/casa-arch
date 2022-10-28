@@ -17,7 +17,7 @@ import InputRadio from "../InputRadio/inputRadio";
 import UserSignUpFrame from "../../screens/Frame/UserSignupFrame/UserSignUpFrame";
 import { useLazyGetQuestionsQuery, useLazyGetUserIdQuery, useSubmitSteppersMutation } from "../../app/services/userServices";
 import { useDispatch, useSelector } from "react-redux";
-import { updateIsLoggedIn } from "../../app/slices/user";
+import { updateIsLoggedIn, updateUserType, updateVisibleForUserLogin } from "../../app/slices/user";
 
 import SuccessModal from "../../components/SuccessModal/SuccessModal";
 import Loc from "../../assets/ModalIcon/loc.svg";
@@ -26,6 +26,7 @@ import styles from "./Header.module.css";
 import Corss from "../../assets/ModalIcon/Cross.svg";
 import { useProfessionalServiceMutation } from "../../app/services/professionalServices";
 import UserLoginFrame from "../../screens/Frame/UserLoginFrame";
+import { updateIsStepperVisible } from "../../app/slices/userStepper";
 
 // import Loc from "../../assets/ModalIcon/loc.svg";
 // import SelectLoginFrame from "../../screens/Frame/SelectLoginFrame/SelectLoginFrame";
@@ -179,11 +180,14 @@ const Header = () => {
   const [visibleForProfessionalSignUp, setVisibleForProfessionalSignUp] =
     useState(false);
   const [visibleForUserSignUp, setVisibleForUserSignUp] = useState(false)
-  const [visibleForUserLogin, setVisibleForUserLogin] = useState(false)
-  const [stepperVisible, setStepperVisible] = useState(false)
+
+  // const [visibleForUserLogin, setVisibleForUserLogin] = useState(false)
+  const { visibleForUserLogin } = useSelector(state => state.user)
+
+  // const [stepperVisible, setStepperVisible] = useState(false)
+  const { isStepperVisible } = useSelector(state => state.userStepper)
   const [successModalVisible, setSuccessModalVisible] = useState(false);
   const [proVisible, setProVisible] = useState(false);
-
   const location = useLocation();
   const [submitNormalUserSteppers, submittedSteppersData] = useSubmitSteppersMutation()
   const { isLoggedIn, userType, userId } = useSelector(state => state.user)
@@ -191,16 +195,14 @@ const Header = () => {
 
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    // fetchStepperData()
-    //   .then(res => {
-    //     console.log(res.data)
-    //   })
-    //   .catch(err => {
-    //     console.log(err.response)
-    //   })
-  }, [isLoggedIn])
+  const setStepperVisible = (bool) => {
+    dispatch(updateIsStepperVisible(bool))
+  };
 
+  const setVisibleForUserLogin = (bool) => {
+    dispatch(updateVisibleForUserLogin(bool))
+  };
+  
   let LinksUrl = [
     { name: "HOME", link: "/" },
     { name: "SERVICE", link: "/" },
@@ -220,7 +222,7 @@ const Header = () => {
       setProButtonVisible(true);
     }
 
-    if (isLoggedIn && userType === 'Customer') {
+    if (isLoggedIn) {
       setDashboardButtonVisible(true)
     } else {
       setDashboardButtonVisible(false)
@@ -309,19 +311,23 @@ const Header = () => {
       console.log(reqBody)
       submitNormalUserSteppers(reqBody)
         .then(res => {
-          console.log(res)
+          if (res.data) {
+            console.log('submitted')
+            navigate('/professionals/list')
+          }
         })
         .catch(err => {
           console.log(err.response)
         })
-      // setCurrentStep(0);
-      // setStepperVisible(false)
+      setCurrentStep(0);
+      setStepperVisible(false)
     }
   };
 
   const handleLogout = () => {
     sessionStorage.removeItem('access')
     dispatch(updateIsLoggedIn(false))
+    dispatch(updateUserType(''))
   }
   const incCount = () => {
     if (count !== data.length - 1) {
@@ -378,7 +384,7 @@ const Header = () => {
             </ButtonField>
           </li>
           <li>
-            {proButtonVisible && (
+            {proButtonVisible && userType !== "Customer" && (
               <Link to="/professionals">
                 <ButtonField className="lg:ml-8 bg-primaryOrange py-2 px-6 h-11 hover:border-solid border-2 border-primaryOrange hover:bg-white hover:text-primaryOrange lg:my-0 my-3 w-11/12 lg:w-auto">
                   Join as a Professional
@@ -411,7 +417,6 @@ const Header = () => {
         <UserLoginFrame
           setVisibleForUserSignUp={setVisibleForUserSignUp}
           setVisibleForUserLogin={setVisibleForUserLogin}
-          setStepperVisible={setStepperVisible}
           setCurrentStepper={setCurrentStepper}
         />
       )}
@@ -419,7 +424,6 @@ const Header = () => {
         <UserSignUpFrame
           setVisibleForUserSignUp={setVisibleForUserSignUp}
           setVisibleForUserLogin={setVisibleForUserLogin}
-          setStepperVisible={setStepperVisible}
           setCurrentStepper={setCurrentStepper}
         />
       )}
@@ -439,7 +443,7 @@ const Header = () => {
         />
       )}
 
-      {stepperVisible && currentStepValue.length >= 1 &&
+      {isStepperVisible && currentStepValue.length >= 1 &&
         <Formik
           initialValues={initialValuesUserStepper}
           onSubmit={handleSubmit}
@@ -574,8 +578,8 @@ const Header = () => {
                                 name={currData.name}
                                 placeholder={currData.placeholder}
                                 id={`${currData.name === "pincode"
-                                    ? styles.loc_inp
-                                    : ""
+                                  ? styles.loc_inp
+                                  : ""
                                   }`}
                                 className={styles.text_inp}
                                 autoComplete="off"
@@ -605,8 +609,8 @@ const Header = () => {
                                       }}
                                       style={{
                                         borderColor: `${fields[currData.name] === ele
-                                            ? "#F36C25"
-                                            : ""
+                                          ? "#F36C25"
+                                          : ""
                                           }`,
                                       }}
                                       className={styles.checkbox_label}
@@ -618,8 +622,8 @@ const Header = () => {
                                         className={styles.checkbox_text}
                                         style={{
                                           color: `${fields[currData.name] === ele
-                                              ? ""
-                                              : "#939CA3"
+                                            ? ""
+                                            : "#939CA3"
                                             }`,
                                         }}
                                       >
