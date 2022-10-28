@@ -7,7 +7,7 @@ import EyeIcon from "../../../assets/InputFieldIcons/EyeIcon.svg";
 import BlankCheck from "../../../assets/ModalIcon/blank.svg";
 import Check from "../../../assets/ModalIcon/Right.svg";
 import ButtonField from "../../../components/ButtonsFields/ButtonField";
-import { useLazyGetUserIdQuery, useLoginUserMutation } from "../../../app/services/userServices";
+import { useLazyGetUserIdQuery, useLazyGetUserTypeQuery, useLoginUserMutation } from "../../../app/services/userServices";
 import { useDispatch, useSelector } from "react-redux";
 import { updateIsLoggedIn, updateToken, updateUserId, updateUserType } from "../../../app/slices/user";
 
@@ -39,6 +39,7 @@ const UserLoginFrame = (props) => {
 
   const [loginUser, data] = useLoginUserMutation()
   const [fetchUserId, result] = useLazyGetUserIdQuery()
+  const [fetchUserType, userTypeFetched] = useLazyGetUserTypeQuery()
 
   const handleSubmit = async (values) => {
     let userData = {
@@ -51,16 +52,27 @@ const UserLoginFrame = (props) => {
     // console.log("Value Login", userData);
     await loginUser(userData)
     .then(async res => {
+       console.log(res)
+        if(res.error){
+          alert(res.error.data.error_description)
+          return
+        }
         setVisibleForUserLogin(false);
         dispatch(updateIsLoggedIn(true))
-        dispatch(updateUserType('NORMAL'))
         sessionStorage.setItem('access', res.data.access_token)
         setStepperVisible(true)
-        setCurrentStepper('normal')
         await fetchUserId()
           .then(res => {
             console.log(res.data)
             dispatch(updateUserId(res.data['user-id']))
+          })
+          .catch(err => {
+            console.log(err.response)
+          })
+        await fetchUserType()
+          .then(res => {
+            console.log(res)
+            dispatch(updateUserType(res.data['user-type']))
           })
           .catch(err => {
             console.log(err.response)

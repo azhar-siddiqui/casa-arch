@@ -220,7 +220,7 @@ const Header = () => {
       setProButtonVisible(true);
     }
 
-    if (isLoggedIn && userType === 'NORMAL') {
+    if (isLoggedIn && userType === 'Customer') {
       setDashboardButtonVisible(true)
     } else {
       setDashboardButtonVisible(false)

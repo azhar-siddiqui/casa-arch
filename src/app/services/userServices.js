@@ -47,7 +47,7 @@ export const userServicesApi = createApi({
       }),
 
       getUserId: builder.query({
-         query: (token) => ({
+         query: () => ({
             url: `/user-id`,
             headers: {
                "Authorization": `Bearer ${sessionStorage.getItem('access')}`
@@ -56,6 +56,14 @@ export const userServicesApi = createApi({
             //    headers.set('Authorization', `Bearer ${sessionStorage.getItem('access')}`)
             //    return headers
             // }
+         }),
+      }),
+      getUserType: builder.query({
+         query: () => ({
+            url: `/user-type`,
+            headers: {
+               "Authorization": `Bearer ${sessionStorage.getItem('access')}`
+            },
          }),
       }),
 
@@ -108,6 +116,7 @@ export const {
    usePostRequirementsMutation,
    useLazyGetQuestionsQuery,
    useGetUserIdQuery,
+   useLazyGetUserTypeQuery,
    useLazyGetUserIdQuery,
    useGetProjectDetailsQuery,
    useGetArchitectsQuery,
