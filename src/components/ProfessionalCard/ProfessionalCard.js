@@ -2,7 +2,7 @@ import React from 'react'
 import EmailIcon from '../../assets/ProfessionalList/email.svg'
 import RightArrowIcon from '../../assets/ProfessionalList/rightArrow.svg'
 
-export default function ProfessionalCard({ name, professional_type, area, pin_code, email }) {
+export default function ProfessionalCard({id, name, professional_type, area, pin_code, email }) {
 
    return (
       <div className='py-6 border-b flex flex-col md:flex-row md:items-center justify-between' >
