@@ -36,27 +36,27 @@ export default function ProfessionalsList() {
    })
 
    useEffect(() => {
-      if(architects.data === undefined) return
-      setList(prev=> {
+      if (architects.data === undefined) return
+      setList(prev => {
          return [...prev, ...architects.data.data]
       })
       // console.log(architects.data.data)
    }, [architects])
 
    useEffect(() => {
-      if(interiorDesigners.data === undefined) return
-      setList(prev=> {
+      if (interiorDesigners.data === undefined) return
+      setList(prev => {
          return [...prev, ...interiorDesigners.data.data]
       })
       // console.log(interiorDesigners.data.data)
    }, [interiorDesigners])
-   
+
    console.log('list', list)
    return (
       <div className='p-4 max-w-973 md:mx-auto'>
-         {/* {list.map((prof, idx) => {
+         {list.length > 0 && list.map((prof, idx) => {
             return <ProfessionalCard key={idx} {...prof} />
-         })} */}
+         })}
       </div>
    )
 }

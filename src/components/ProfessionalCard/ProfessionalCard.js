@@ -2,23 +2,23 @@ import React from 'react'
 import EmailIcon from '../../assets/ProfessionalList/email.svg'
 import RightArrowIcon from '../../assets/ProfessionalList/rightArrow.svg'
 
-export default function ProfessionalCard({ name, title, address, email }) {
+export default function ProfessionalCard({ name, professional_type, area, pin_code, email }) {
 
    return (
       <div className='py-6 border-b flex flex-col md:flex-row md:items-center justify-between' >
          <div className='mb-4'>
             <p className='font-semibold text-xl mb-1'>
                {name}
-            </p>
+            </p> 
             <p className='mb-1'>
-               {title}
+               {professional_type === 0 ? 'Architect' : 'Interior Designer'}
             </p>
             <p className='text-sm text-gray-700	mb-2'>
-               {address}
+              {area} {','} {pin_code}
             </p>
             <div className='flex items-center'>
                <img src={EmailIcon} className='mr-4.5' />
-               <p className='font-semibold'> {email} </p>
+               <p className='font-semibold'> {email === undefined ? 'No Email' : email } </p>
             </div>
          </div>
          <div className='flex'>
