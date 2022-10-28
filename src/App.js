@@ -1,5 +1,6 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Landing from "./screens/Home/Landing";
@@ -12,8 +13,23 @@ import ProfessionalsList from "./screens/ProfessionalsList/ProfessionalsList";
 import Profile from "./screens/Profile/Profile";
 import Dashboard from "./screens/Dashboard/dashboard";
 import PageNotFound from "./screens/PageNotFound/PageNotFound";
+import ProLandingAfterLogin from "./screens/ProLandingAfterLogin/ProLandingAfterLogin";
+import ProfessionalProfile from "./screens/ProfessionalProfile/ProfessionalProfile";
 
 function App() {
+  let Token = localStorage.getItem("Token");
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (
+      location.pathname === "/professionals/landing" ||
+      (location.pathname === "/professionals/myprofile" && !Token)
+    ) {
+      navigate("/");
+    }
+  }, [navigate, location]);
+
   return (
     <>
       <Header />
@@ -26,6 +42,12 @@ function App() {
         {/* <Route path="/professionals" element={<Professionals />} /> */}
         <Route path="/professionals">
           <Route path="" element={<Professionals />} />
+          {Token && (
+            <>
+              <Route path="landing" element={<ProLandingAfterLogin />} />
+              <Route path="myprofile" element={<ProfessionalProfile />} />
+            </>
+          )}
           <Route path="profile/:id" element={<Profile />} />
           <Route path="list" element={<ProfessionalsList />} />
           <Route path="questions" element={<ProQuestion />} />

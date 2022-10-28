@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import Modal from "../../../components/Modal/Modal";
@@ -7,7 +7,11 @@ import EyeIcon from "../../../assets/InputFieldIcons/EyeIcon.svg";
 import BlankCheck from "../../../assets/ModalIcon/blank.svg";
 import Check from "../../../assets/ModalIcon/Right.svg";
 import ButtonField from "../../../components/ButtonsFields/ButtonField";
-
+import {
+  useProfessionalLoginMutation,
+  useProfessionalTypeMutation,
+} from "../../../app/services/professionalOauthApiServices";
+import { useNavigate } from "react-router-dom";
 const initialValues = {
   email: "",
   password: "",
@@ -29,12 +33,50 @@ const LoginSchema = Yup.object({
 const ProfessionalLoginFrame = (props) => {
   const { setVisibleForProfessionalLogin, setVisibleForProfessionalSignUp } =
     props;
+  const [professionalLogin, ProfessionalLoginResponse] =
+    useProfessionalLoginMutation();
+
+  const [professionalLoginType, ProfessionalLoginTypeResponse] =
+    useProfessionalTypeMutation();
+
   const [vpass, setVPass] = useState("password");
   const [rememberMeCheck, setRememberMeCheck] = useState(false);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (ProfessionalLoginResponse.isSuccess) {
+      setVisibleForProfessionalLogin(false);
+      console.log("ProfessionalLoginResponse", ProfessionalLoginResponse);
+      let setToken = ProfessionalLoginResponse.data.access_token;
+      localStorage.setItem("Token", setToken);
+      navigate("/professionals/landing");
+      professionalLoginType();
+      console.log(
+        "ProfessionalLoginTypeResponse =>",
+        ProfessionalLoginTypeResponse
+      );
+    } else if (ProfessionalLoginResponse.isError) {
+      alert("Something went wrong");
+    }
+  }, [
+    ProfessionalLoginResponse.isSuccess,
+    ProfessionalLoginResponse.isError,
+    ProfessionalLoginTypeResponse.isSuccess,
+    ProfessionalLoginTypeResponse.isError,
+  ]);
 
   const handleSubmit = (values) => {
-    console.log("Value Login", values);
-    setVisibleForProfessionalLogin(false);
+    let userData = {
+      ...values,
+      client_id: "6mRngWLUxLB2g0KS7IanCXiZF0yyFMQEfQMEoV1p",
+      client_secret:
+        "kEaW5QO9Ph0xZQLS2fSQf8r3Mk3mWQPxgBl7ouekGDQtDEmXt8NfXuH0jDcYlNBCcM7oDqvzGFrvn5NAYKMYL5Jy7opRYg2Ga8DZXFT2hpkF6jSl7W3fg3XcuAWx6PgO",
+      grant_type: "password",
+      username: values.email,
+      password: values.password,
+    };
+    professionalLogin(userData);
+
+    // setVisibleForProfessionalLogin(false);
   };
 
   const handleViewPass = () => {

@@ -15,7 +15,11 @@ import SelectLoginFrame from "../../screens/Frame/SelectLoginFrame/SelectLoginFr
 import ProfessionalSignUp from "../../screens/Frame/ProfessionalSignUpFrame/ProfessionalSignUp";
 import InputRadio from "../InputRadio/inputRadio";
 import UserSignUpFrame from "../../screens/Frame/UserSignupFrame/UserSignUpFrame";
-import { useLazyGetQuestionsQuery, useLazyGetUserIdQuery, useSubmitSteppersMutation } from "../../app/services/userServices";
+import {
+  useLazyGetQuestionsQuery,
+  useLazyGetUserIdQuery,
+  useSubmitSteppersMutation,
+} from "../../app/services/userServices";
 import { useDispatch, useSelector } from "react-redux";
 import { updateIsLoggedIn } from "../../app/slices/user";
 
@@ -79,7 +83,6 @@ const LocationSchema = Yup.object({
   area: Yup.string().required("This field is required."),
 });
 
-
 const initialValuesUserStepper = {
   pincode: "",
   service: "Interior Design",
@@ -96,65 +99,47 @@ const userStepperSchema = Yup.object({
   email: Yup.string().required("This field is required."),
 });
 
-const stepper = [
-  {
-    type: "text",
-    name: "text",
-    value: "Aurangabad",
-  },
+const userStepper = [
   {
     step: 2,
     title: "Enter your pincode",
     type: "number",
     placeholder: "Pincode",
     name: "pincode",
-    value: "431111",
+    value: 0,
+  },
+  {
+    step: 2,
+    title: "What type of service your’e looking for?",
+    type: "radio",
+    name: "service",
+    preference: ["Interior Design", "Architecture Design"],
   },
   {
     step: 3,
-    title: "Do you prefer meeting remotely",
+    title: "What kind of property is this?",
     type: "radio",
-    preference: ["Yes", "No"],
-    value: "Yes",
+    name: "property",
+    preference: [
+      "Residential House",
+      "Commercial Property",
+      "Residential Flat",
+    ],
   },
-];
-
-const userStepper = [{
-  step: 2,
-  title: "Enter your pincode",
-  type: "number",
-  placeholder: "Pincode",
-  name: "pincode",
-  value: 0
-},
-{
-  step: 2,
-  title: "What type of service your’e looking for?",
-  type: "radio",
-  name: "service",
-  preference: ["Interior Design", "Architecture Design"],
-},
-{
-  step: 3,
-  title: "What kind of property is this?",
-  type: "radio",
-  name: "property",
-  preference: ["Residential House", "Commercial Property", "Residential Flat"],
-},
-{
-  step: 4,
-  title: "Which rooms need designing?",
-  type: "radio",
-  name: "rooms",
-  preference: ["Only one room", "More than one room", "Complete property"],
-},
-{
-  step: 5,
-  title: "Enter your email for sending quotation.",
-  type: "text",
-  name: "email",
-  placeholder: "Email address",
-},
+  {
+    step: 4,
+    title: "Which rooms need designing?",
+    type: "radio",
+    name: "rooms",
+    preference: ["Only one room", "More than one room", "Complete property"],
+  },
+  {
+    step: 5,
+    title: "Enter your email for sending quotation.",
+    type: "text",
+    name: "email",
+    placeholder: "Email address",
+  },
 ];
 
 const Header = () => {
@@ -167,9 +152,9 @@ const Header = () => {
   const [currentStep, setCurrentStep] = useState(0);
 
   // normal or professional
-  const [currentStepper, setCurrentStepper] = useState('normal') //can be 'normal' or 'professional' - used to know which steppers (professional/normal) to be displayed
+  const [currentStepper, setCurrentStepper] = useState("Normal"); //can be 'normal' or 'professional' - used to know which steppers (professional/normal) to be displayed
 
-  const [dashboardButtonVisible, setDashboardButtonVisible] = useState(false)
+  const [dashboardButtonVisible, setDashboardButtonVisible] = useState(false);
   const [rememberMeCheck, setRememberMeCheck] = useState(false);
   const [professionalsAccSwitchingMsg, setProfessionalsAccSwitchingMsg] =
     useState(false);
@@ -178,18 +163,22 @@ const Header = () => {
     useState(false);
   const [visibleForProfessionalSignUp, setVisibleForProfessionalSignUp] =
     useState(false);
-  const [visibleForUserSignUp, setVisibleForUserSignUp] = useState(false)
-  const [visibleForUserLogin, setVisibleForUserLogin] = useState(false)
-  const [stepperVisible, setStepperVisible] = useState(false)
+  const [visibleForUserSignUp, setVisibleForUserSignUp] = useState(false);
+  const [visibleForUserLogin, setVisibleForUserLogin] = useState(false);
+  const [stepperVisible, setStepperVisible] = useState(false);
   const [successModalVisible, setSuccessModalVisible] = useState(false);
   const [proVisible, setProVisible] = useState(false);
+  const [logoutSucces, setLogoutSuccess] = useState(false);
 
   const location = useLocation();
-  const [submitNormalUserSteppers, submittedSteppersData] = useSubmitSteppersMutation()
-  const { isLoggedIn, userType, userId } = useSelector(state => state.user)
-  const [fetchStepperData, result] = useLazyGetQuestionsQuery()
+  const [submitNormalUserSteppers, submittedSteppersData] =
+    useSubmitSteppersMutation();
+  const { isLoggedIn, userType, userId } = useSelector((state) => state.user);
+  const [fetchStepperData, result] = useLazyGetQuestionsQuery();
 
-  const dispatch = useDispatch()
+  let Token = localStorage.getItem("Token");
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // fetchStepperData()
@@ -199,7 +188,7 @@ const Header = () => {
     //   .catch(err => {
     //     console.log(err.response)
     //   })
-  }, [isLoggedIn])
+  }, [isLoggedIn]);
 
   let LinksUrl = [
     { name: "HOME", link: "/" },
@@ -210,7 +199,10 @@ const Header = () => {
   ];
 
   useEffect(() => {
-    if (location.pathname === "/professionals" || location.pathname === "/professionals/list") {
+    if (
+      location.pathname === "/professionals" ||
+      location.pathname === "/professionals/list"
+    ) {
       setProButtonVisible(false);
       setProfessionalsAccSwitchingMsg(true);
       setTimeout(() => {
@@ -220,10 +212,10 @@ const Header = () => {
       setProButtonVisible(true);
     }
 
-    if (isLoggedIn && userType === 'NORMAL') {
-      setDashboardButtonVisible(true)
+    if (isLoggedIn && userType === "Normal") {
+      setDashboardButtonVisible(true);
     } else {
-      setDashboardButtonVisible(false)
+      setDashboardButtonVisible(false);
     }
   }, [location, isLoggedIn]);
 
@@ -275,8 +267,6 @@ const Header = () => {
     setFields({ ...fields, [name]: value });
   };
 
-  const navigate = useNavigate();
-
   const handleCheckboxChange = (name, val) => {
     // let { name } = e.target
     setFields({ ...fields, [name]: val });
@@ -284,53 +274,89 @@ const Header = () => {
 
   const handleStepperIncrement = () => {
     setCurrentStep(currentStep + 1);
-  }
+  };
   const handleStepperDecrement = () => {
     setCurrentStep(currentStep - 1);
-  }
+  };
 
   const handleSubmit = (values) => {
-    if (currentStepper === 'normal') {
-      let postData = userStepper.map(stepper => {
+    if (currentStepper === "normal") {
+      let postData = userStepper.map((stepper) => {
         return {
           question: stepper.title,
-          choice: values[stepper.name]
-        }
-      })
-      console.log(currentStepValue)
+          choice: values[stepper.name],
+        };
+      });
+      console.log(currentStepValue);
 
       let reqBody = {
         user: userId,
         pincode: parseInt(postData[0].choice),
-        service_looking: currentStepValue[1].preference.indexOf(postData[1].choice),
-        property_type: currentStepValue[2].preference.indexOf(postData[2].choice),
+        service_looking: currentStepValue[1].preference.indexOf(
+          postData[1].choice
+        ),
+        property_type: currentStepValue[2].preference.indexOf(
+          postData[2].choice
+        ),
         email: postData[4].choice,
-      }
-      console.log(reqBody)
+      };
+      console.log(reqBody);
       submitNormalUserSteppers(reqBody)
-        .then(res => {
-          console.log(res)
+        .then((res) => {
+          console.log(res);
         })
-        .catch(err => {
-          console.log(err.response)
-        })
+        .catch((err) => {
+          console.log(err.response);
+        });
       // setCurrentStep(0);
       // setStepperVisible(false)
     }
   };
 
   const handleLogout = () => {
-    sessionStorage.removeItem('access')
-    dispatch(updateIsLoggedIn(false))
-  }
+    sessionStorage.removeItem("access");
+    dispatch(updateIsLoggedIn(false));
+  };
   const incCount = () => {
     if (count !== data.length - 1) {
       setCount(count + 1);
     } else {
-      console.log("Fields", fields);
+      // console.log("Fields1", fields);
       // navigate("/professionals/questions");
       // setProVisible(false);
+
+      if (fields.preference === "Yes") {
+        let t = (fields.preference = true);
+        setFields({ ...fields, preference: t });
+        professionalService(fields);
+        setProVisible(false);
+        navigate("/professionals/questions");
+        if (submittedSteppersData.isError) {
+          setProVisible(true);
+        }
+      }
+      if (fields.preference === "No") {
+        let f = (fields.preference = false);
+        setFields({ ...fields, preference: f });
+        professionalService(fields);
+        setProVisible(false);
+        navigate("/professionals/questions");
+        if (submittedSteppersData.isError) {
+          setProVisible(true);
+        }
+      }
     }
+  };
+
+  const navigate = useNavigate();
+
+  const handleProfessionalLogout = () => {
+    setLogoutSuccess(true);
+    localStorage.clear();
+    setTimeout(() => {
+      setLogoutSuccess(false);
+      navigate("/");
+    }, 2000);
   };
 
   const decCount = () => {
@@ -354,8 +380,9 @@ const Header = () => {
         </div>
 
         <ul
-          className={`lg:flex lg:items-center lg:pb-0 pb-12 absolute lg:static bg-white lg:z-auto z-[-1] left-0 w-full lg:w-auto lg:pl-0 pl-5 transition-all duration-500 ease-in ${openMenu ? "top-20 " : "top-[-490px]"
-            }`}
+          className={`lg:flex lg:items-center lg:pb-0 pb-12 absolute lg:static bg-white lg:z-auto z-[-1] left-0 w-full lg:w-auto lg:pl-0 pl-5 transition-all duration-500 ease-in ${
+            openMenu ? "top-20 " : "top-[-490px]"
+          }`}
         >
           {LinksUrl.map((link, i) => (
             <li key={i} className="lg:ml-8 text-sm lg:my-0 my-4">
@@ -367,25 +394,42 @@ const Header = () => {
               </NavLink>
             </li>
           ))}
-          <li>
-            <ButtonField
-              className="lg:ml-8 hover:bg-primaryOrange border-solid border-2 border-primaryOrange py-2 px-6 h-11 ease-linear duration-300 text-primaryOrange hover:text-white lg:my-0 my-3 w-11/12 lg:w-32"
-              onClick={() => {
-                !isLoggedIn ? setVisible(!visible) : handleLogout()
-              }}
-            >
-              {isLoggedIn ? 'Logout' : 'Login'}
-            </ButtonField>
-          </li>
-          <li>
-            {proButtonVisible && (
-              <Link to="/professionals">
-                <ButtonField className="lg:ml-8 bg-primaryOrange py-2 px-6 h-11 hover:border-solid border-2 border-primaryOrange hover:bg-white hover:text-primaryOrange lg:my-0 my-3 w-11/12 lg:w-auto">
-                  Join as a Professional
-                </ButtonField>
-              </Link>
-            )}
-          </li>
+
+          {Token ? (
+            <li>
+              <ButtonField
+                className="lg:ml-8 hover:bg-primaryOrange border-solid border-2 border-primaryOrange py-2 px-6 h-11 ease-linear duration-300 text-primaryOrange hover:text-white lg:my-0 my-3 w-11/12 lg:w-32"
+                onClick={handleProfessionalLogout}
+              >
+                Logout
+              </ButtonField>
+            </li>
+          ) : (
+            <li>
+              <ButtonField
+                className="lg:ml-8 hover:bg-primaryOrange border-solid border-2 border-primaryOrange py-2 px-6 h-11 ease-linear duration-300 text-primaryOrange hover:text-white lg:my-0 my-3 w-11/12 lg:w-32"
+                onClick={() => {
+                  !isLoggedIn ? setVisible(!visible) : handleLogout();
+                }}
+              >
+                {isLoggedIn ? "Logout" : "Login"}
+              </ButtonField>
+            </li>
+          )}
+
+          {Token ? (
+            ""
+          ) : (
+            <li>
+              {proButtonVisible && (
+                <Link to="/professionals">
+                  <ButtonField className="lg:ml-8 bg-primaryOrange py-2 px-6 h-11 hover:border-solid border-2 border-primaryOrange hover:bg-white hover:text-primaryOrange lg:my-0 my-3 w-11/12 lg:w-auto">
+                    Join as a Professional
+                  </ButtonField>
+                </Link>
+              )}
+            </li>
+          )}
           <li>
             {dashboardButtonVisible && (
               <Link to="/dashboard">
@@ -439,7 +483,7 @@ const Header = () => {
         />
       )}
 
-      {stepperVisible && currentStepValue.length >= 1 &&
+      {stepperVisible && currentStepValue.length >= 1 && (
         <Formik
           initialValues={initialValuesUserStepper}
           onSubmit={handleSubmit}
@@ -458,28 +502,48 @@ const Header = () => {
               description={currentStepValue[currentStep].title}
               className="pt-5 font-medium text-base md:text-lg lg:text-3xl"
               body={
-                currentStepValue[currentStep].type === 'radio' ?
+                currentStepValue[currentStep].type === "radio" ? (
                   <div className="mt-4">
-                    {currentStepValue[currentStep].preference.map((pref, idx) => {
-                      return <InputRadio
-                        key={idx}
-                        name={currentStepValue[currentStep].name}
-                        value={pref}
-                        checkedValue={values[currentStepValue[currentStep].name]}
-                        placeholder={currentStepValue[currentStep].placeholder}
-                        id={currentStepValue[currentStep].name}
-                        className="font-medium"
-                        type={currentStepValue[currentStep].type}
-                        label={currentStepValue[currentStep].type === 'radio' ? pref : ''}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        isLast={idx === currentStepValue[currentStep].preference.length - 1 ? true : false}
-                        // value={}
-                        errorText={errors.name && touched.name ? errors.name : null}
-                      />
-                    })}
+                    {currentStepValue[currentStep].preference.map(
+                      (pref, idx) => {
+                        return (
+                          <InputRadio
+                            key={idx}
+                            name={currentStepValue[currentStep].name}
+                            value={pref}
+                            checkedValue={
+                              values[currentStepValue[currentStep].name]
+                            }
+                            placeholder={
+                              currentStepValue[currentStep].placeholder
+                            }
+                            id={currentStepValue[currentStep].name}
+                            className="font-medium"
+                            type={currentStepValue[currentStep].type}
+                            label={
+                              currentStepValue[currentStep].type === "radio"
+                                ? pref
+                                : ""
+                            }
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            isLast={
+                              idx ===
+                              currentStepValue[currentStep].preference.length -
+                                1
+                                ? true
+                                : false
+                            }
+                            // value={}
+                            errorText={
+                              errors.name && touched.name ? errors.name : null
+                            }
+                          />
+                        );
+                      }
+                    )}
                   </div>
-                  :
+                ) : (
                   <InputField
                     name={currentStepValue[currentStep].name}
                     placeholder={currentStepValue[currentStep].placeholder}
@@ -491,11 +555,12 @@ const Header = () => {
                     // value={}
                     errorText={errors.name && touched.name ? errors.name : null}
                   />
-
+                )
               }
               footer={
                 <div className="flex items-center justify-between">
-                  {currentStep > 0 || currentStep > currentStepValue.length - 1 ? (
+                  {currentStep > 0 ||
+                  currentStep > currentStepValue.length - 1 ? (
                     <>
                       <ButtonField
                         className="py-3 text-primaryGray   font-medium  outline-none focus:outline-none "
@@ -506,7 +571,7 @@ const Header = () => {
                       {currentStep === currentStepValue.length - 1 ? (
                         <button
                           className={`px-5 py-3 bg-primaryOrange border-primaryOrange text-white font-medium outline-none focus:outline-none ease-linear transition-all duration-150`}
-                          type='submit'
+                          type="submit"
                           onClick={handleSubmit}
                         >
                           Submit
@@ -533,7 +598,7 @@ const Header = () => {
             />
           )}
         </Formik>
-      }
+      )}
       {professionalsAccSwitchingMsg && (
         <SuccessModal massage={"Switching to professional account"} />
       )}
@@ -541,6 +606,8 @@ const Header = () => {
       {successModalVisible && (
         <SuccessModal massage={"Professional User created SuccessFully"} />
       )}
+
+      {logoutSucces && <SuccessModal massage="Logout Successfully" />}
 
       {successModalVisible === false && (
         <>
@@ -562,7 +629,7 @@ const Header = () => {
                         <h2 className={styles.question}>{currData.heading}</h2>
                         <div className={styles.input_div}>
                           {currData.type === "text" ||
-                            currData.type === "email" ? (
+                          currData.type === "email" ? (
                             <>
                               {currData.imgLink && (
                                 <img src={currData.imgLink} alt="location" />
@@ -573,10 +640,11 @@ const Header = () => {
                                 value={fields[currData.name]}
                                 name={currData.name}
                                 placeholder={currData.placeholder}
-                                id={`${currData.name === "pincode"
+                                id={`${
+                                  currData.name === "pincode"
                                     ? styles.loc_inp
                                     : ""
-                                  }`}
+                                }`}
                                 className={styles.text_inp}
                                 autoComplete="off"
                               />
@@ -604,10 +672,11 @@ const Header = () => {
                                         );
                                       }}
                                       style={{
-                                        borderColor: `${fields[currData.name] === ele
+                                        borderColor: `${
+                                          fields[currData.name] === ele
                                             ? "#F36C25"
                                             : ""
-                                          }`,
+                                        }`,
                                       }}
                                       className={styles.checkbox_label}
                                     >
@@ -617,10 +686,11 @@ const Header = () => {
                                       <p
                                         className={styles.checkbox_text}
                                         style={{
-                                          color: `${fields[currData.name] === ele
+                                          color: `${
+                                            fields[currData.name] === ele
                                               ? ""
                                               : "#939CA3"
-                                            }`,
+                                          }`,
                                         }}
                                       >
                                         {ele}
@@ -643,7 +713,7 @@ const Header = () => {
                         onClick={incCount}
                         disabled={
                           currData.name &&
-                            fields[`${currData.name}`].length === 0
+                          fields[`${currData.name}`].length === 0
                             ? true
                             : false
                         }

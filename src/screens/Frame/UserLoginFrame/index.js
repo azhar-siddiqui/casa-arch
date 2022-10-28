@@ -7,9 +7,17 @@ import EyeIcon from "../../../assets/InputFieldIcons/EyeIcon.svg";
 import BlankCheck from "../../../assets/ModalIcon/blank.svg";
 import Check from "../../../assets/ModalIcon/Right.svg";
 import ButtonField from "../../../components/ButtonsFields/ButtonField";
-import { useLazyGetUserIdQuery, useLoginUserMutation } from "../../../app/services/userServices";
+import {
+  useLazyGetUserIdQuery,
+  useLoginUserMutation,
+} from "../../../app/services/userServices";
 import { useDispatch, useSelector } from "react-redux";
-import { updateIsLoggedIn, updateToken, updateUserId, updateUserType } from "../../../app/slices/user";
+import {
+  updateIsLoggedIn,
+  updateToken,
+  updateUserId,
+  updateUserType,
+} from "../../../app/slices/user";
 
 const initialValues = {
   email: "",
@@ -30,45 +38,51 @@ const LoginSchema = Yup.object({
 });
 
 const UserLoginFrame = (props) => {
-  const { setVisibleForUserLogin, setVisibleForUserSignUp, setStepperVisible, setCurrentStepper } = props;
+  const {
+    setVisibleForUserLogin,
+    setVisibleForUserSignUp,
+    setStepperVisible,
+    setCurrentStepper,
+  } = props;
   const [vpass, setVPass] = useState("password");
 
   const [rememberMeCheck, setRememberMeCheck] = useState(false);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const [loginUser, data] = useLoginUserMutation()
-  const [fetchUserId, result] = useLazyGetUserIdQuery()
+  const [loginUser, data] = useLoginUserMutation();
+  const [fetchUserId, result] = useLazyGetUserIdQuery();
 
   const handleSubmit = async (values) => {
     let userData = {
       ...values,
       username: values.email,
-      client_id: '6mRngWLUxLB2g0KS7IanCXiZF0yyFMQEfQMEoV1p',
-      client_secret: 'kEaW5QO9Ph0xZQLS2fSQf8r3Mk3mWQPxgBl7ouekGDQtDEmXt8NfXuH0jDcYlNBCcM7oDqvzGFrvn5NAYKMYL5Jy7opRYg2Ga8DZXFT2hpkF6jSl7W3fg3XcuAWx6PgO',
-      grant_type: 'password'
-    }
+      client_id: "6mRngWLUxLB2g0KS7IanCXiZF0yyFMQEfQMEoV1p",
+      client_secret:
+        "kEaW5QO9Ph0xZQLS2fSQf8r3Mk3mWQPxgBl7ouekGDQtDEmXt8NfXuH0jDcYlNBCcM7oDqvzGFrvn5NAYKMYL5Jy7opRYg2Ga8DZXFT2hpkF6jSl7W3fg3XcuAWx6PgO",
+      grant_type: "password",
+    };
     // console.log("Value Login", userData);
     await loginUser(userData)
-    .then(async res => {
+      .then(async (res) => {
         setVisibleForUserLogin(false);
-        dispatch(updateIsLoggedIn(true))
-        dispatch(updateUserType('NORMAL'))
-        sessionStorage.setItem('access', res.data.access_token)
-        setStepperVisible(true)
-        setCurrentStepper('normal')
+        dispatch(updateIsLoggedIn(true));
+        dispatch(updateUserType("NORMAL"));
+        sessionStorage.setItem("access", res.data.access_token);
+        setStepperVisible(true);
+        setCurrentStepper("normal");
         await fetchUserId()
-          .then(res => {
-            console.log(res.data)
-            dispatch(updateUserId(res.data['user-id']))
+          .then((res) => {
+            console.log(res.data);
+            dispatch(updateUserId(res.data["user-id"]));
           })
-          .catch(err => {
-            console.log(err.response)
-          })
+          .catch((err) => {
+            console.log(err.response);
+          });
       })
-      .catch(err => {
-        console.log(err.response)
-      })
+      .catch((err) => {
+        console.log(err.response);
+      });
   };
 
   const handleViewPass = () => {
@@ -158,17 +172,19 @@ const UserLoginFrame = (props) => {
                   />
                 )}
                 <span
-                  className={`ml-3 font-medium ${rememberMeCheck === true ? `text-black` : `text-primaryGray`
-                    }  `}
+                  className={`ml-3 font-medium ${
+                    rememberMeCheck === true ? `text-black` : `text-primaryGray`
+                  }  `}
                 >
                   Remember me
                 </span>
               </p>
               <ButtonField
-                className={` w-full px-6 py-3 ${rememberMeCheck === false
-                  ? `bg-primaryExtraLight text-white border border-primaryExtraLight`
-                  : `bg-primaryOrange hover:text-primaryOrange text-white  border border-primaryOrange hover:bg-white font-medium w-full px-6 py-3 outline-none focus:outline-none ease-linear transition-all duration-150`
-                  }`}
+                className={` w-full px-6 py-3 ${
+                  rememberMeCheck === false
+                    ? `bg-primaryExtraLight text-white border border-primaryExtraLight`
+                    : `bg-primaryOrange hover:text-primaryOrange text-white  border border-primaryOrange hover:bg-white font-medium w-full px-6 py-3 outline-none focus:outline-none ease-linear transition-all duration-150`
+                }`}
                 type="submit"
                 children="Login now"
                 disabled={rememberMeCheck === false ? true : false}
