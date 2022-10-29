@@ -21,14 +21,14 @@ function App() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  useEffect(() => {
-    if (
-      location.pathname === "/professionals/landing" ||
-      (location.pathname === "/professionals/myprofile" && !Token)
-    ) {
-      navigate("/");
-    }
-  }, [navigate, location]);
+  // useEffect(() => {
+  //   if (
+  //     location.pathname === "/professionals/landing" ||
+  //     (location.pathname === "/professionals/myprofile" && !Token)
+  //   ) {
+  //     navigate("/");
+  //   }
+  // }, [navigate, location]);
 
   return (
     <>
@@ -39,15 +39,15 @@ function App() {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        {/* <Route path="/professionals" element={<Professionals />} /> */}
+
         <Route path="/professionals">
           <Route path="" element={<Professionals />} />
-          {Token && (
+          {/* {Token && (
             <>
-              <Route path="landing" element={<ProLandingAfterLogin />} />
-              <Route path="myprofile" element={<ProfessionalProfile />} />
             </>
-          )}
+          )} */}
+          <Route path="landing" element={<ProLandingAfterLogin />} />
+          <Route path="myprofile" element={<ProfessionalProfile />} />
           <Route path="profile/:id" element={<Profile />} />
           <Route path="list" element={<ProfessionalsList />} />
           <Route path="questions" element={<ProQuestion />} />

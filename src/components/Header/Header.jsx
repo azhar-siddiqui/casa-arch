@@ -28,7 +28,10 @@ import Loc from "../../assets/ModalIcon/loc.svg";
 import { CCheckbox } from "../CircularCheckbox/CCheckbox";
 import styles from "./Header.module.css";
 import Corss from "../../assets/ModalIcon/Cross.svg";
-import { useProfessionalServiceMutation } from "../../app/services/professionalServices";
+import {
+  useProfessionalAreaCheckServiceMutation,
+  useProfessionalServiceMutation,
+} from "../../app/services/professionalServices";
 import UserLoginFrame from "../../screens/Frame/UserLoginFrame";
 
 // import Loc from "../../assets/ModalIcon/loc.svg";
@@ -145,15 +148,19 @@ const userStepper = [
 const Header = () => {
   const [professionalService, professionalServiceResponse] =
     useProfessionalServiceMutation();
+  const [professionalAreaCheckService, ProfessionalAreaCheckServiceResponse] =
+    useProfessionalAreaCheckServiceMutation();
+  // console.log("professionalAreaCheckService", professionalAreaCheckService);
+  console.log(
+    "ProfessionalAreaCheckServiceResponse",
+    ProfessionalAreaCheckServiceResponse
+  );
   let [openMenu, setOpenMenu] = useState(false);
   const [visible, setVisible] = useState(false);
-
   const [currentStepValue, setCurrentStepValue] = useState(userStepper);
   const [currentStep, setCurrentStep] = useState(0);
-
   // normal or professional
   const [currentStepper, setCurrentStepper] = useState("Normal"); //can be 'normal' or 'professional' - used to know which steppers (professional/normal) to be displayed
-
   const [dashboardButtonVisible, setDashboardButtonVisible] = useState(false);
   const [rememberMeCheck, setRememberMeCheck] = useState(false);
   const [professionalsAccSwitchingMsg, setProfessionalsAccSwitchingMsg] =
@@ -169,7 +176,6 @@ const Header = () => {
   const [successModalVisible, setSuccessModalVisible] = useState(false);
   const [proVisible, setProVisible] = useState(false);
   const [logoutSucces, setLogoutSuccess] = useState(false);
-
   const location = useLocation();
   const [submitNormalUserSteppers, submittedSteppersData] =
     useSubmitSteppersMutation();
