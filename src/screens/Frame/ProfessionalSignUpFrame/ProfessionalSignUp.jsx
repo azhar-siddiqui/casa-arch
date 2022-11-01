@@ -47,6 +47,14 @@ const ProfessionalSignUp = (props) => {
 
   useEffect(() => {
     if (professionalSignUpResponse.isSuccess) {
+      console.log(
+        "professionalSignUpResponse",
+        professionalSignUpResponse.data.data.access_token
+      );
+      localStorage.setItem(
+        "signupToken",
+        professionalSignUpResponse.data.data.access_token
+      );
       setVisibleForProfessionalSignUp(false);
       setSuccessModalVisible(true);
       setProVisible(true);

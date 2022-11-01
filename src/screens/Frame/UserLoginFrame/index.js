@@ -63,20 +63,17 @@ const UserLoginFrame = (props) => {
         sessionStorage.setItem('access', res.data.access_token)
         redirectToSteppers && dispatch(updateIsStepperVisible(true))
         await fetchUserId()
-          .then(res => {
-            console.log(res.data)
-            dispatch(updateUserId(res.data['user-id']))
-          })
-          .catch(err => {
-            console.log(err.response)
+          .then((res) => {
+            console.log(res.data);
+            dispatch(updateUserId(res.data["user-id"]));
           })
         await fetchUserType()
           .then(res => {
             console.log(res)
-            if(res.data['user-type'] === 'Professional'){
+            if (res.data['user-type'] === 'Professional') {
               handleLogout()
               alert('Cant login as the account is registered as Professional')
-              return 
+              return
             }
             dispatch(updateUserType(res.data['user-type']))
           })
@@ -84,9 +81,9 @@ const UserLoginFrame = (props) => {
             console.log(err.response)
           })
       })
-      .catch(err => {
-        console.log(err.response)
-      })
+      .catch((err) => {
+        console.log(err.response);
+      });
   };
 
   const handleViewPass = () => {
@@ -190,8 +187,8 @@ const UserLoginFrame = (props) => {
               </p>
               <ButtonField
                 className={` w-full px-6 py-3 ${rememberMeCheck === false
-                  ? `bg-primaryExtraLight text-white border border-primaryExtraLight`
-                  : `bg-primaryOrange hover:text-primaryOrange text-white  border border-primaryOrange hover:bg-white font-medium w-full px-6 py-3 outline-none focus:outline-none ease-linear transition-all duration-150`
+                    ? `bg-primaryExtraLight text-white border border-primaryExtraLight`
+                    : `bg-primaryOrange hover:text-primaryOrange text-white  border border-primaryOrange hover:bg-white font-medium w-full px-6 py-3 outline-none focus:outline-none ease-linear transition-all duration-150`
                   }`}
                 type="submit"
                 children="Login now"

@@ -24,14 +24,14 @@ export default function Modal(props) {
             {/*header*/}
             <div className="p-5 pb-0">
               <div className="flex items-center justify-between ">
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold">
+                <h3 className="font-semibold text-2xl md:text-[32px]">
                   {ModalTitle ? ModalTitle : ""}
                 </h3>
                 <button className="" onClick={() => setVisible(false)}>
                   <img src={Cross} alt="CrossImg" />
                 </button>
               </div>
-              <p className={`text-primaryGray font-medium ${className}`}>
+              <p className={`text-primaryGray font-medium  ${className}`}>
                 {description}
               </p>
             </div>

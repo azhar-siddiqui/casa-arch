@@ -1,5 +1,6 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Landing from "./screens/Home/Landing";
@@ -17,12 +18,18 @@ import Terms from "./screens/Terms/Terms";
 import RefundPolicy from "./screens/RefundPolicy/RefundPolicy";
 import { updateIsLoggedIn } from "./app/slices/user";
 import { useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
+import ProLandingAfterLogin from "./screens/ProLandingAfterLogin/ProLandingAfterLogin";
+import ProfessionalProfile from "./screens/ProfessionalProfile/ProfessionalProfile";
 
 function App() {
 
   const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
+  let Token = localStorage.getItem("Token");
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     setLoading(true)
@@ -43,17 +50,18 @@ function App() {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/terms-and-conditions" element={<Terms />} />
-        <Route path="/refund-and-return" element={<RefundPolicy />} />
-        {/* <Route path="/professionals" element={<Professionals />} /> */}
         <Route path="/professionals">
           <Route path="" element={<Professionals />} />
+          <Route path="landing" element={<ProLandingAfterLogin />} />
+          <Route path="myprofile" element={<ProfessionalProfile />} />
           <Route path="profile/:id" element={<Profile />} />
           <Route path="list" element={<ProfessionalsList />} />
           <Route path="questions" element={<ProQuestion />} />
         </Route>
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="*" element={<PageNotFound />} />
+        <Route path="/terms-and-conditions" element={<Terms />} />
+        <Route path="/refund-and-return" element={<RefundPolicy />} />
       </Routes>
       <Footer />
     </>

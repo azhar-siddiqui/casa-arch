@@ -23,13 +23,28 @@ export const professionalOauthApi = createApi({
         console.log("professionalOauthApi Login body", body);
         return {
           // url: `${AppConstants.professional_signup}`,
-          url: `${AppConstants.endPoints.professional_signup}`,
+          url: `${AppConstants.endPoints.professional_Login}`,
           method: "POST",
           body: body,
+        };
+      },
+    }),
+    professionalType: builder.mutation({
+      query: () => {
+        return {
+          url: `${AppConstants.endPoints.user_Type}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("Token")}`,
+          },
         };
       },
     }),
   }),
 });
 
-export const { useProfessionalSignUpMutation } = professionalOauthApi;
+export const {
+  useProfessionalSignUpMutation,
+  useProfessionalLoginMutation,
+  useProfessionalTypeMutation,
+} = professionalOauthApi;

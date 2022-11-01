@@ -14,15 +14,32 @@ export const professionalServicesApi = createApi({
           pin_code: body.pincode,
           is_meeting_remotely: body.preference,
         };
-        console.log("professionalServicesApi body", body);
+        console.log("professionalServicesApi body", data);
         return {
           url: `${AppConstants.endPoints.professional_signup}`,
           method: "PATCH",
-          body: body,
+          body: data,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("signupToken")}`,
+          },
+        };
+      },
+    }),
+    professionalAreaCheckService: builder.mutation({
+      query: () => {
+        return {
+          url: `${AppConstants.endPoints.professional_area_check}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("Token")}`,
+          },
         };
       },
     }),
   }),
 });
 
-export const { useProfessionalServiceMutation } = professionalServicesApi;
+export const {
+  useProfessionalServiceMutation,
+  useProfessionalAreaCheckServiceMutation,
+} = professionalServicesApi;

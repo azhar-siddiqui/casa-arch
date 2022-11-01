@@ -52,7 +52,12 @@ const Footer = () => {
             </p>
           </div>
           <div className="respod">
-            <div className="webLinks second">
+            <div
+              className="webLinks second"
+              onClick={() => {
+                window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+              }}
+            >
               <h5>Useful Links</h5>
               <img src={Rectangle} alt="Rectangle" width={"64px"} />
               <NavLink to="/">Home</NavLink>

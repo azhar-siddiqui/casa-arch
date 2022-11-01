@@ -8,7 +8,12 @@ const PreFooter = () => {
   return (
     <div className="preFooterContainer">
       <p className="copyRight">Copyright 2022,All Right Reserved</p>
-      <ul className="preNavLink">
+      <ul
+        className="preNavLink"
+        onClick={() => {
+          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        }}
+      >
         <li>
           <NavLink onClick={scrollToTop} to="/terms-and-conditions">Terms</NavLink>
         </li>
