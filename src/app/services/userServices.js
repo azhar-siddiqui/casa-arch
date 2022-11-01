@@ -105,6 +105,20 @@ export const userServicesApi = createApi({
             },
          }),
       }),
+      sendOtp: builder.mutation({
+         query: (body) => ({
+            url: `/sendotp/`,
+            method: "POST",
+            body: body
+         })
+      }),
+      verifyOtp: builder.mutation({
+         query: (body) => ({
+            url: `/otpverification/`,
+            method: "POST",
+            body: body
+         })
+      }),
 
    }),
 });
@@ -120,5 +134,7 @@ export const {
    useLazyGetUserIdQuery,
    useGetProjectDetailsQuery,
    useGetArchitectsQuery,
-   useGetInteriorDesignersQuery
+   useGetInteriorDesignersQuery,
+   useSendOtpMutation,
+   useVerifyOtpMutation,
 } = userServicesApi;

@@ -31,7 +31,7 @@ const LoginSchema = Yup.object({
 });
 
 const UserLoginFrame = (props) => {
-  const { setVisibleForUserLogin, setVisibleForUserSignUp } = props;
+  const { setVisibleForUserLogin, setVisibleForUserSignUp, setvisibleForForgotPassword, handleLogout } = props;
   const [vpass, setVPass] = useState("password");
 
   const [rememberMeCheck, setRememberMeCheck] = useState(false);
@@ -46,8 +46,8 @@ const UserLoginFrame = (props) => {
     let userData = {
       ...values,
       username: values.email,
-      client_id: '6mRngWLUxLB2g0KS7IanCXiZF0yyFMQEfQMEoV1p',
-      client_secret: 'kEaW5QO9Ph0xZQLS2fSQf8r3Mk3mWQPxgBl7ouekGDQtDEmXt8NfXuH0jDcYlNBCcM7oDqvzGFrvn5NAYKMYL5Jy7opRYg2Ga8DZXFT2hpkF6jSl7W3fg3XcuAWx6PgO',
+      client_id: 'tY6p7BwDip8iefcX3RqrcWBwyu95ueDvpq4SlM6a',
+      client_secret: 'P4LK7i0AgqTL6JuFRckxIoMt2z4PtOKOapNdnMeXz5jVCo9t6S0OFIJV2OhsN8NaCg0GPDLhRqiHbqHDaCMsAkeF1SmR6qYFNaLyN2fxKAJM5WQysGk0H4Ka5x25MhEy',
       grant_type: 'password'
     }
     // console.log("Value Login", userData);
@@ -73,6 +73,11 @@ const UserLoginFrame = (props) => {
         await fetchUserType()
           .then(res => {
             console.log(res)
+            if(res.data['user-type'] === 'Professional'){
+              handleLogout()
+              alert('Cant login as the account is registered as Professional')
+              return 
+            }
             dispatch(updateUserType(res.data['user-type']))
           })
           .catch(err => {
@@ -95,6 +100,11 @@ const UserLoginFrame = (props) => {
   const handleSignUpModal = () => {
     setVisibleForUserLogin(false);
     setVisibleForUserSignUp(true);
+  };
+
+  const handleForgetLinkClick = () => {
+    setvisibleForForgotPassword(true)
+    setVisibleForUserLogin(false);
   };
 
   return (
@@ -143,6 +153,7 @@ const UserLoginFrame = (props) => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 forgetLink="Forgot Password?"
+                forgetLinkOnclick={handleForgetLinkClick}
                 value={values.password}
                 errorText={
                   errors.password && touched.password ? errors.password : null

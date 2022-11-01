@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 // import SuccessModal from "../../components/SuccessModal/SuccessModal";
 import SuccessModal from "../../components/SuccessModal/SuccessModal";
 import { updateIsStepperVisible } from "../../app/slices/userStepper";
+import Subscription from "../Frame/Subscription/Subscription";
 
 const Landing = () => {
   const [searchTxt, setSearchTxt] = useState("");
@@ -16,6 +17,7 @@ const Landing = () => {
   const [visibleGetInTouch, setVisibleGetInTouch] = useState(false);
   const { isLoggedIn, userType } = useSelector(state => state.user)
   const [successModalVisible, setSuccessModalVisible] = useState(false);
+  const [pricingSubscriptionMoadl, setPricingSubscriptionMoadl] = useState(false)
 
   const dorpItem = [
     { id: 1, type: "Architect" },
@@ -133,6 +135,11 @@ const Landing = () => {
         <GetInTouch
           setVisibleGetInTouch={setVisibleGetInTouch}
           setSuccessModalVisible={setSuccessModalVisible}
+        />
+      )}
+      {pricingSubscriptionMoadl && (
+        <Subscription
+        setPricingSubscriptionMoadl={setPricingSubscriptionMoadl}
         />
       )}
 

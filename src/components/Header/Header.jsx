@@ -27,6 +27,9 @@ import Corss from "../../assets/ModalIcon/Cross.svg";
 import { useProfessionalServiceMutation } from "../../app/services/professionalServices";
 import UserLoginFrame from "../../screens/Frame/UserLoginFrame";
 import { updateIsStepperVisible } from "../../app/slices/userStepper";
+import ForgotPasswordFrame from "../../screens/Frame/ForgotPasswordFrame/ForgotPasswordFrame";
+import OtpVerificationFrame from "../../screens/Frame/OtpVerificationFrame/OtpVerificationFrame";
+import ResetPasswordFrame from "../../screens/Frame/ResetPasswordFrame/ResetPasswordFrame";
 
 // import Loc from "../../assets/ModalIcon/loc.svg";
 // import SelectLoginFrame from "../../screens/Frame/SelectLoginFrame/SelectLoginFrame";
@@ -183,7 +186,11 @@ const Header = () => {
 
   // const [visibleForUserLogin, setVisibleForUserLogin] = useState(false)
   const { visibleForUserLogin } = useSelector(state => state.user)
-
+  const [visibleForForgotPassword, setvisibleForForgotPassword] = useState(false)
+  const [visibleForOtpVerification, setVisibleForOtpVerification] = useState(false)
+  const [visibleForResetPassword, setVisibleForResetPassword] = useState(false)
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState('')
+  
   // const [stepperVisible, setStepperVisible] = useState(false)
   const { isStepperVisible } = useSelector(state => state.userStepper)
   const [successModalVisible, setSuccessModalVisible] = useState(false);
@@ -227,7 +234,7 @@ const Header = () => {
     } else {
       setDashboardButtonVisible(false)
     }
-    if(isLoggedIn && userType==='Customer'){
+    if (isLoggedIn && userType === 'Customer') {
       setProButtonVisible(false)
     }
   }, [location, isLoggedIn]);
@@ -422,6 +429,8 @@ const Header = () => {
           setVisibleForUserSignUp={setVisibleForUserSignUp}
           setVisibleForUserLogin={setVisibleForUserLogin}
           setCurrentStepper={setCurrentStepper}
+          setvisibleForForgotPassword={setvisibleForForgotPassword}
+          handleLogout={handleLogout}
         />
       )}
       {visibleForUserSignUp && (
@@ -429,6 +438,25 @@ const Header = () => {
           setVisibleForUserSignUp={setVisibleForUserSignUp}
           setVisibleForUserLogin={setVisibleForUserLogin}
           setCurrentStepper={setCurrentStepper}
+        />
+      )}
+
+      {visibleForForgotPassword && (
+        <ForgotPasswordFrame
+          setvisibleForForgotPassword={setvisibleForForgotPassword}
+          setVisibleForOtpVerification={setVisibleForOtpVerification}
+          setForgotPasswordEmail={setForgotPasswordEmail}
+        />
+      )}
+      {visibleForOtpVerification && (
+        <OtpVerificationFrame
+          setVisibleForOtpVerification={setVisibleForOtpVerification}
+          forgotPasswordEmail={forgotPasswordEmail}
+        />
+      )}
+      {visibleForResetPassword && (
+        <ResetPasswordFrame
+          setVisibleForResetPassword={setVisibleForResetPassword}
         />
       )}
 

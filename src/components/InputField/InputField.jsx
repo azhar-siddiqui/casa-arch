@@ -12,13 +12,14 @@ const InputField = (props) => {
     label,
     handleViewPassword,
     forgetLink,
+    forgetLinkOnclick
   } = props;
   const inputRef = useRef();
   return (
     <div className="w-full pt-4">
       <div className="flex items-center justify-between">
         <label htmlFor={name}>{label}</label>
-        <p className="text-primaryGray cursor-pointer">{forgetLink}</p>
+        <p className="text-primaryGray cursor-pointer" onClick={forgetLinkOnclick} >{forgetLink}</p>
       </div>
       <div className="relative flex items-center pt-3">
         <input
