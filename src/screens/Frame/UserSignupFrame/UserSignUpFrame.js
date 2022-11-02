@@ -6,6 +6,10 @@ import InputField from "../../../components/InputField/InputField";
 import ButtonField from "../../../components/ButtonsFields/ButtonField";
 import EyeIcon from "../../../assets/InputFieldIcons/EyeIcon.svg";
 import { useJoinUserMutation } from "../../../app/services/userServices";
+import Check from "../../../assets/ModalIcon/Right.svg";
+import BlankCheck from "../../../assets/ModalIcon/blank.svg";
+import FacebookIcon from "../../../assets/socialIcons/fb.svg";
+import GoogleIcon from "../../../assets/socialIcons/google.svg";
 
 const initialValues = {
   first_name: "",
@@ -40,8 +44,7 @@ const UserSignUpFrame = (props) => {
   const { setVisibleForUserSignUp } = props;
   const [vpass, setVPass] = useState("password");
   const [vpassConfirm, setVPassConfirm] = useState("password");
-
-  console.log(data);
+  const [rememberMeCheck, setRememberMeCheck] = useState(false)
   const handleSubmit = async (values) => {
     console.log("Value", values);
     await createUser(values);
@@ -82,9 +85,8 @@ const UserSignUpFrame = (props) => {
         <Modal
           setVisible={setVisibleForUserSignUp}
           classNameModal={"pt-[110px]"}
-          ModalTitle="Tell us about yourself"
-          description="You're one step away from seeing our Architecture
-                leads"
+          ModalTitle="Create your account"
+          description="Sign up to get started!"
           body={
             <>
               <InputField
@@ -181,22 +183,67 @@ const UserSignUpFrame = (props) => {
           }
           footer={
             <>
+              <p className="flex items-center mb-8 cursor-pointer">
+                {rememberMeCheck ? (
+                  <img
+                    src={Check}
+                    alt="Check"
+                    onClick={() => {
+                      setRememberMeCheck(!rememberMeCheck);
+                    }}
+                  />
+                ) : (
+                  <img
+                    src={BlankCheck}
+                    alt="BlankCheck"
+                    onClick={() => {
+                      setRememberMeCheck(!rememberMeCheck);
+                    }}
+                  />
+                )}
+                <span
+                  className={`ml-3 font-medium ${rememberMeCheck === true ? `text-black` : `text-primaryGray`
+                    }  `}
+                >
+                  I agree with the <span className="text-primaryOrange underline"> Terms of services  </span> {'  '} and {'  '} <span className="text-primaryOrange underline"> Privacy Policy </span>
+                </span>
+              </p>
               <ButtonField
-                className="bg-primaryOrange text-white hover:text-primaryOrange border border-primaryOrange hover:bg-white hover font-medium w-full px-6 py-3 outline-none focus:outline-none ease-linear transition-all duration-150"
+                className="bg-primaryOrange text-white hover:text-primaryOrange border border-primaryOrange hover:bg-white hover font-medium w-full px-6 py-4 outline-none focus:outline-none ease-linear transition-all duration-150"
                 type="submit"
-                children="Submit"
+                children="Register now"
                 onClick={() => {
                   handleSubmit();
                 }}
               />
-              <ButtonField
-                className="text-primaryOrange bg-white border border-primaryOrange hover:bg-primaryOrange hover:text-white w-full px-6 py-3 mt-3 font-medium outline-none focus:outline-none ease-linear transition-all duration-150"
-                type="button"
-                children="Cancel"
-                onClick={() => {
-                  setVisibleForUserSignUp(false);
-                }}
-              />
+              <div className="flex items-center my-4 md:my-7">
+                <div className="flex-1  border-b border-slate-700"></div>
+                <p className="text-xl px-5 md:px-8 font-semibold">Or</p>
+                <div className="flex-1  border-b border-slate-700"></div>
+              </div>
+              <div className="flex items-center">
+                <ButtonField
+                  className="flex items-center text-white bg-primaryBlue border border-primaryBlue hover:bg-primaryBlue hover:text-white w-full px-2 py-1  outline-none focus:outline-none ease-linear transition-all duration-150 mr-3 text-sm md:px-4 md:py-4 md:font-medium md:text-lg md:mr-8"
+                  type="button"
+                  children={
+                    <>
+                    <img className="mr-1 md:mr-4" src={FacebookIcon} />
+                    Login via Facebook
+                    </>
+                  }
+                />
+                <ButtonField
+                  className="flex items-center text-white  bg-primaryRed border border-primaryRed hover:bg-primaryRed hover:text-white w-full px-2 py-1 font-medium outline-none focus:outline-none ease-linear transition-all duration-150 text-sm
+                  md:px-4 md:py-4 md:font-medium md:text-lg"
+                  type="button"
+                  children={
+                    <>
+                      <img className="mr-1 md:mr-4" src={GoogleIcon} />
+                      Login via Google
+                    </>
+                  }
+                />
+              </div>
             </>
           }
         />

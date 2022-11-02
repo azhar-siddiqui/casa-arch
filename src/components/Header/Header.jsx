@@ -37,6 +37,9 @@ import { updateIsStepperVisible } from "../../app/slices/userStepper";
 import ForgotPasswordFrame from "../../screens/Frame/ForgotPasswordFrame/ForgotPasswordFrame";
 import OtpVerificationFrame from "../../screens/Frame/OtpVerificationFrame/OtpVerificationFrame";
 import ResetPasswordFrame from "../../screens/Frame/ResetPasswordFrame/ResetPasswordFrame";
+import PremiumButtonLogin from "../../screens/Frame/premiumButtonLogin/PremiumButtonLogin";
+import { updateVisibleForPremiumButtonLogin, updateVisibleForSubscriptionModal } from "../../app/slices/professionalauthSlice";
+import Subscription from "../../screens/Frame/Subscription/Subscription";
 
 // import Loc from "../../assets/ModalIcon/loc.svg";
 // import SelectLoginFrame from "../../screens/Frame/SelectLoginFrame/SelectLoginFrame";
@@ -182,7 +185,7 @@ const Header = () => {
   const [visibleForOtpVerification, setVisibleForOtpVerification] = useState(false)
   const [visibleForResetPassword, setVisibleForResetPassword] = useState(false)
   const [forgotPasswordEmail, setForgotPasswordEmail] = useState('')
-  
+
   // const [stepperVisible, setStepperVisible] = useState(false)
   const { isStepperVisible } = useSelector(state => state.userStepper)
   const [successModalVisible, setSuccessModalVisible] = useState(false);
@@ -192,6 +195,18 @@ const Header = () => {
   const [submitNormalUserSteppers, submittedSteppersData] =
     useSubmitSteppersMutation();
   const { isLoggedIn, userType, userId } = useSelector((state) => state.user);
+
+  // login frame when premium button click
+  const { visibleForPremiumButtonLogin, visibleForSubscriptionModal } = useSelector((state) => state.professional);
+  const setVisibleForPremiumButtonLogin = (bool) => {
+    dispatch(updateVisibleForPremiumButtonLogin(bool))
+  }
+
+  // subscription modal
+  const setVisibleForSubscription = (bool) => {
+    dispatch(updateVisibleForSubscriptionModal(bool))
+  }
+  
   const [fetchStepperData, result] = useLazyGetQuestionsQuery();
 
   let Token = localStorage.getItem("Token");
@@ -404,9 +419,8 @@ const Header = () => {
         </div>
 
         <ul
-          className={`lg:flex lg:items-center lg:pb-0 pb-12 absolute lg:static bg-white lg:z-auto z-[-1] left-0 w-full lg:w-auto lg:pl-0 pl-5 transition-all duration-500 ease-in ${
-            openMenu ? "top-20 " : "top-[-490px]"
-          }`}
+          className={`lg:flex lg:items-center lg:pb-0 pb-12 absolute lg:static bg-white lg:z-auto z-[-1] left-0 w-full lg:w-auto lg:pl-0 pl-5 transition-all duration-500 ease-in ${openMenu ? "top-20 " : "top-[-490px]"
+            }`}
         >
           {LinksUrl.map((link, i) => (
             <li key={i} className="lg:ml-8 text-sm lg:my-0 my-4">
@@ -445,7 +459,7 @@ const Header = () => {
             ""
           ) : (
             <li>
-              {proButtonVisible &&  userType !== "Customer" && !isLoggedIn &&  (
+              {proButtonVisible && userType !== "Customer" && !isLoggedIn && (
                 <Link to="/professionals">
                   <ButtonField className="lg:ml-8 bg-primaryOrange py-2 px-6 h-11 hover:border-solid border-2 border-primaryOrange hover:bg-white hover:text-primaryOrange lg:my-0 my-3 w-11/12 lg:w-auto">
                     Join as a Professional
@@ -472,6 +486,21 @@ const Header = () => {
           setProButtonVisible={setProButtonVisible}
           setVisibleForProfessionalLogin={setVisibleForProfessionalLogin}
           setVisibleForUserLogin={setVisibleForUserLogin}
+        />
+      )}
+
+      {visibleForPremiumButtonLogin && (
+        <PremiumButtonLogin
+          setVisibleForPremiumButtonLogin={setVisibleForPremiumButtonLogin}
+          setProButtonVisible={setProButtonVisible}
+          setVisibleForProfessionalLogin={setVisibleForProfessionalLogin}
+          setVisibleForUserLogin={setVisibleForUserLogin}
+        />
+      )}
+      {visibleForSubscriptionModal && (
+        <Subscription
+          setVisibleForSubscription={setVisibleForSubscription}
+          // setVisibleForUserLogin={setVisibleForUserLogin}
         />
       )}
 
@@ -503,6 +532,7 @@ const Header = () => {
         <OtpVerificationFrame
           setVisibleForOtpVerification={setVisibleForOtpVerification}
           forgotPasswordEmail={forgotPasswordEmail}
+          setVisibleForResetPassword={setVisibleForResetPassword}
         />
       )}
       {visibleForResetPassword && (
@@ -572,7 +602,7 @@ const Header = () => {
                             onBlur={handleBlur}
                             isLast={
                               idx ===
-                              currentStepValue[currentStep].preference.length -
+                                currentStepValue[currentStep].preference.length -
                                 1
                                 ? true
                                 : false
@@ -603,7 +633,7 @@ const Header = () => {
               footer={
                 <div className="flex items-center justify-between">
                   {currentStep > 0 ||
-                  currentStep > currentStepValue.length - 1 ? (
+                    currentStep > currentStepValue.length - 1 ? (
                     <>
                       <ButtonField
                         className="py-3 text-primaryGray   font-medium  outline-none focus:outline-none "
@@ -684,7 +714,7 @@ const Header = () => {
                         <h2 className={styles.question}>{currData.heading}</h2>
                         <div className={styles.input_div}>
                           {currData.type === "text" ||
-                          currData.type === "email" ? (
+                            currData.type === "email" ? (
                             <>
                               {currData.imgLink && (
                                 <img src={currData.imgLink} alt="location" />
@@ -695,11 +725,10 @@ const Header = () => {
                                 value={fields[currData.name]}
                                 name={currData.name}
                                 placeholder={currData.placeholder}
-                                id={`${
-                                  currData.name === "pincode"
+                                id={`${currData.name === "pincode"
                                     ? styles.loc_inp
                                     : ""
-                                }`}
+                                  }`}
                                 className={styles.text_inp}
                                 autoComplete="off"
                               />
@@ -727,11 +756,10 @@ const Header = () => {
                                         );
                                       }}
                                       style={{
-                                        borderColor: `${
-                                          fields[currData.name] === ele
+                                        borderColor: `${fields[currData.name] === ele
                                             ? "#F36C25"
                                             : ""
-                                        }`,
+                                          }`,
                                       }}
                                       className={styles.checkbox_label}
                                     >
@@ -741,13 +769,12 @@ const Header = () => {
                                       <p
                                         className={styles.checkbox_text}
                                         style={{
-                                          color: `${
-                                            fields[currData.name] === ele
+                                          color: `${fields[currData.name] === ele
                                               ? ""
                                               : "#939CA3"
-                                          }`,
+                                            }`,
                                         }}
-                                        className={styles.checkbox_label}
+                                      // className={styles.checkbox_label}
                                       >
                                         {ele}
                                       </p>
@@ -769,7 +796,7 @@ const Header = () => {
                         onClick={incCount}
                         disabled={
                           currData.name &&
-                          fields[`${currData.name}`].length === 0
+                            fields[`${currData.name}`].length === 0
                             ? true
                             : false
                         }
@@ -780,11 +807,11 @@ const Header = () => {
 
                   </div>
                 </div>
-                </div>
-              </>
-            )}
-          </>
-        )
+              </div>
+            </>
+          )}
+        </>
+      )
       }
     </div >
   );

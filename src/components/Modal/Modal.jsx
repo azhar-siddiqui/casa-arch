@@ -11,6 +11,8 @@ export default function Modal(props) {
     classNameModal,
     className,
     footer,
+    secondModalVisible,
+    secondModalBody
     // checkValue,
   } = props;
   return (
@@ -41,7 +43,16 @@ export default function Modal(props) {
             <div className="p-6">{footer}</div>
           </div>
         </div>
+
+        {
+          secondModalVisible &&
+          <div className='mx-auto bg-white w-full px-5 max-w-601'>
+            {secondModalBody}
+          </div>
+        }
+
       </div>
+
       <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
     </>
   );

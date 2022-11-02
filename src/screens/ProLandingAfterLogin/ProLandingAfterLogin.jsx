@@ -1,10 +1,24 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { updateVisibleForPremiumButtonLogin, updateVisibleForSubscriptionModal } from "../../app/slices/professionalauthSlice";
 import LandingImg from "../../assets/LandingPageIcons/Landing.svg";
 import Vector from "../../assets/LandingPageIcons/Vector.svg";
 import ButtonField from "../../components/ButtonsFields/ButtonField";
 
 const ProLandingAfterLogin = () => {
+
+  let Token = localStorage.getItem("Token");
+  const dispatch = useDispatch()
+
+  const handlePremiumButtonClick = () => {
+    if (!Token) {
+      dispatch(updateVisibleForPremiumButtonLogin(true))
+    } else {
+      dispatch(updateVisibleForSubscriptionModal(true))
+    }
+  }
+
   return (
     <>
       <div className="mx-auto text-center mt-8">
@@ -47,9 +61,9 @@ const ProLandingAfterLogin = () => {
             <ButtonField
               children={"Get in Touch"}
               className={"bg-primaryOrange py-3 w-36 lg:w-40 "}
-              // onClick={() => {
-              //   setVisibleGetInTouch(true);
-              // }}
+            // onClick={() => {
+            //   setVisibleGetInTouch(true);
+            // }}
             />
           </div>
         </div>
@@ -67,6 +81,7 @@ const ProLandingAfterLogin = () => {
             </p>
             <ButtonField
               children={"Casa Arch Premium"}
+              onClick={handlePremiumButtonClick}
               className={"bg-primaryOrange py-3 px-4 mt-3 lt:mt-0"}
             />
           </>

@@ -36,10 +36,22 @@ export const professionalServicesApi = createApi({
         };
       },
     }),
+    professionalSubscribe: builder.mutation({
+      query: (body) => ({
+        url: `/professional-subscriber/`,
+        method: "POST",
+        body: body,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("Token")}`,
+        },
+      })
+    }),
+
   }),
 });
 
 export const {
   useProfessionalServiceMutation,
   useProfessionalAreaCheckServiceMutation,
+  useProfessionalSubscribeMutation
 } = professionalServicesApi;

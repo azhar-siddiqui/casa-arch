@@ -5,8 +5,8 @@ import Modal from "../../../components/Modal/Modal";
 import InputField from "../../../components/InputField/InputField";
 import ButtonField from "../../../components/ButtonsFields/ButtonField";
 import EyeIcon from "../../../assets/InputFieldIcons/EyeIcon.svg";
-import { useVerifyOtpMutation } from "../../../app/services/userServices";
-
+import { useVerifyOtpMutation, useResendOtpMutation } from "../../../app/services/userServices";
+import TickIcon from '../../../assets/ModalIcon/Tick.svg'
 
 const initialValues = {
    otp: '',
@@ -18,21 +18,44 @@ const schema = Yup.object({
       .required("This field is required."),
 });
 
-export default function OtpVerificationFrame({ setVisibleForOtpVerification, forgotPasswordEmail }) {
+export default function OtpVerificationFrame({ setVisibleForOtpVerification, forgotPasswordEmail, setVisibleForResetPassword }) {
 
    const [verifyOtp, verifyOtpResponse] = useVerifyOtpMutation()
+   const [resendOtp, resendOtpData] = useResendOtpMutation()
+   const [successModalVisible, setsuccessModalVisible] = useState(false)
+   const [loading, setLoading] = useState(false)
+
+   const handleResendOtp = async (values) => {
+      setsuccessModalVisible(true)
+      setLoading(true)
+      setTimeout(() => {
+         setsuccessModalVisible(false)
+      }, 4000);
+      resendOtp({email: forgotPasswordEmail})
+         .then(res => {
+            setLoading(false)
+            console.log(res)
+            if (res.status === 400) {
+               alert('No such email')
+               return
+            }
+            // setVisibleForResetPassword(true)
+         })
+   }
 
    const handleSubmit = async (values) => {
       // console.log(values)
       const reqBody = { otp: `${values.otp}`, email: forgotPasswordEmail }
       console.log(reqBody)
-      
+
       verifyOtp(reqBody)
          .then(res => {
             console.log(res)
             if (res.data.status === 400) {
                alert('Wrong otp')
                return
+            } else {
+               setVisibleForResetPassword(true)
             }
 
          })
@@ -54,12 +77,11 @@ export default function OtpVerificationFrame({ setVisibleForOtpVerification, for
          }) => (
             <Modal
                setVisible={setVisibleForOtpVerification}
-               classNameModal={"pt-[110px]"}
+               classNameModal={"pt-[110px] flex-col"}
                ModalTitle="OTP verification"
                description={`Please enter your OTP that sent to ${forgotPasswordEmail}`}
                body={
                   <>
-
                      <InputField
                         name="otp"
                         label="OTP"
@@ -72,7 +94,8 @@ export default function OtpVerificationFrame({ setVisibleForOtpVerification, for
                         value={values.otp}
                         errorText={errors.otp && touched.otp ? errors.otp : null}
                      />
-
+                     <p className="text-right text-primaryOrange font-semibold mt-2"
+                        onClick={handleResendOtp}>Resend the Otp</p>
                   </>
                }
                footer={
@@ -94,6 +117,18 @@ export default function OtpVerificationFrame({ setVisibleForOtpVerification, for
                         }}
                      />
                   </>
+               }
+               secondModalVisible={successModalVisible}
+               secondModalBody={
+                  successModalVisible &&
+                  <div className="py-6 px-4 flex items-center text-slate-500 text-2xl">
+                     <img src={TickIcon} className='mr-4' />
+                     <p className="font-semibold">
+
+                        Otp sent to <span className="text-black inline-block" >
+                           {`${forgotPasswordEmail}`} </span>
+                     </p>
+                  </div>
                }
             />
          )}

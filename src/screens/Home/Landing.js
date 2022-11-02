@@ -5,11 +5,12 @@ import ButtonField from "../../components/ButtonsFields/ButtonField";
 import SearchBar from "../../components/SearchBard/SearchBar";
 import "./Landing.css";
 import GetInTouch from "../Frame/GetInTouchFrame/GetInTouchFrame";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import SuccessModal from "../../components/SuccessModal/SuccessModal";
 import SuccessModal from "../../components/SuccessModal/SuccessModal";
 import { updateIsStepperVisible } from "../../app/slices/userStepper";
 import Subscription from "../Frame/Subscription/Subscription";
+import { updateVisibleForPremiumButtonLogin, updateVisibleForSubscriptionModal } from "../../app/slices/professionalauthSlice";
 
 const Landing = () => {
   const [searchTxt, setSearchTxt] = useState("");
@@ -18,7 +19,18 @@ const Landing = () => {
   const { isLoggedIn, userType } = useSelector(state => state.user)
   const [successModalVisible, setSuccessModalVisible] = useState(false);
   const [pricingSubscriptionMoadl, setPricingSubscriptionMoadl] = useState(false)
+  const dispatch = useDispatch()
 
+  let Token = localStorage.getItem("Token");
+
+  const handlePremiumButtonClick = () => {
+    if(!Token){
+      dispatch(updateVisibleForPremiumButtonLogin(true))
+    }else{
+      dispatch(updateVisibleForSubscriptionModal(true))
+    }
+  }
+  
   const dorpItem = [
     { id: 1, type: "Architect" },
     { id: 2, type: "Interior" },
@@ -109,6 +121,7 @@ const Landing = () => {
               your business
             </p>
             <ButtonField
+              onClick={handlePremiumButtonClick}
               children={"Casa Arch Premium"}
               className={"bg-primaryOrange py-3 px-4 mt-3 lt:mt-0"}
             />
@@ -139,7 +152,7 @@ const Landing = () => {
       )}
       {pricingSubscriptionMoadl && (
         <Subscription
-        setPricingSubscriptionMoadl={setPricingSubscriptionMoadl}
+          setPricingSubscriptionMoadl={setPricingSubscriptionMoadl}
         />
       )}
 

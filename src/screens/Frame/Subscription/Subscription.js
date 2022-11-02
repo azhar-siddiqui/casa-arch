@@ -7,15 +7,15 @@ import InputField from '../../../components/InputField/InputField';
 import TextAreaFields from '../../../components/TextAreaFields/TextAreaFields';
 import InputSelect from '../../../components/InputSelect/InputSelect';
 import { useSelector } from 'react-redux';
-import { usePostRequirementsMutation } from '../../../app/services/userServices';
 import Modal from '../../../components/Modal/Modal';
+import { useProfessionalSubscribeMutation } from '../../../app/services/professionalServices';
 
 const initialValues = {
    name: '',
    email: '',
    phone: 0,
-   subscriptionPlan: 'Bohemian',
-   areaOfOperation: '',
+   subscriptionPlan: 'sub 1',
+   areaOfOperation: 'area 1',
    portfolioLink: '',
    socialMediaLink: ''
 }
@@ -31,38 +31,48 @@ const Schema = Yup.object({
 })
 
 const subscriptionPlans = [
-   'sdsad', 'dasdsadas'
+   'sub 1', 'sub 2'
 ]
-export default function Subscription({setPricingSubscriptionMoadl}) {
+const areaOfOperations = [
+   'area 1', 'area 2'
+]
+
+export default function Subscription({ setVisibleForSubscription }) {
 
    const { userId } = useSelector(state => state.user)
-   // const [postRequirements, data] = usePostRequirementsMutation()
+   const [subscribe, subscribeResponse] = useProfessionalSubscribeMutation()
 
    const handleSubmit = async (values) => {
-      console.log("Value", values)
+      // console.log("Value", values)
 
-      //  const postData = {
-      //    project_name: values.projectName,
-      //    project_location: values.projectLocation,
-      //    project_budget: budgetValues.indexOf(values.projectBudget),
-      //    aesthetic_req: requirementValues.indexOf(values.aestheticRequirements),
-      //    project_details: values.projectDetails,
-      //    user: userId
-      //  }
-      //  postRequirements(postData)
-      //    .then(res => {
-      //      console.log(res)
-      //    //   setRequirementsVisible(false)
-      //    //   isRequirementPosted(true)
-      //    })
-      //    .catch(err => {
-      //      console.log(err)
-      //    })
+      const body = {
+         name: values.name,
+         email: values.email,
+         phone: parseInt(values.phone),
+         portfolio: values.portfolioLink,
+         website: values.socialMediaLink,
+         area_of_operation: areaOfOperations.indexOf(values.areaOfOperation),
+         subscription_type: subscriptionPlans.indexOf(values.subscriptionPlan),
+         is_paid: false
+      }
+      console.log(body)
+      subscribe(body)
+         .then(res => {
+            console.log(res)
+            if(res.error){
+               return alert('Something went wrong')
+            }else{
+               setVisibleForSubscription(false)
+            }
+         })
+         .catch(err => {
+            console.log(err)
+         })
    }
 
    return (
       <Modal
-         setVisible={setPricingSubscriptionMoadl}
+         setVisible={setVisibleForSubscription}
          ModalTitle="Subscription"
          description="Help us UnderStand what Services you are Seeking, and 
          we will help you find the best Professional for you."
@@ -143,7 +153,7 @@ export default function Subscription({setPricingSubscriptionMoadl}) {
                         <InputSelect
                            name="areaOfOperation"
                            label="Area of Operation"
-                           optionData={subscriptionPlans}
+                           optionData={areaOfOperations}
                            placeholder="Enter your Area of Operation"
                            id={"areaOfOperation"}
                            className="font-medium"
@@ -155,7 +165,7 @@ export default function Subscription({setPricingSubscriptionMoadl}) {
                         />
                         <InputField
                            name="portfolioLink"
-                           label="portfolioLink"
+                           label="Portfolio Link"
                            placeholder="Enter your Portfolio Link"
                            id={"portfolioLink"}
                            className="font-medium"
@@ -167,7 +177,7 @@ export default function Subscription({setPricingSubscriptionMoadl}) {
                         />
                         <InputField
                            name="socialMediaLink"
-                           label="socialMediaLink Number"
+                           label="Website/Social Media Link(optional)"
                            placeholder="Website/Social Media Link(optional)"
                            id={"socialMediaLink"}
                            className="font-medium"
@@ -180,7 +190,7 @@ export default function Subscription({setPricingSubscriptionMoadl}) {
                         <ButtonField
                            className="mt-6 bg-primaryOrange text-white hover:text-primaryOrange border border-primaryOrange hover:bg-white hover font-medium w-full px-6 py-3 outline-none focus:outline-none ease-linear transition-all duration-150"
                            type="submit"
-                           children="Submit"
+                           children="Complete Payment"
                            onClick={handleSubmit}
                         />
 

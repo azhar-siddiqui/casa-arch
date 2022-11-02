@@ -112,6 +112,13 @@ export const userServicesApi = createApi({
             body: body
          })
       }),
+      resendOtp: builder.mutation({
+         query: (body) => ({
+            url: `/resendotp/`,
+            method: "GET",
+            // body: body
+         })
+      }),
       verifyOtp: builder.mutation({
          query: (body) => ({
             url: `/otpverification/`,
@@ -136,5 +143,6 @@ export const {
    useGetArchitectsQuery,
    useGetInteriorDesignersQuery,
    useSendOtpMutation,
+   useResendOtpMutation,
    useVerifyOtpMutation,
 } = userServicesApi;
