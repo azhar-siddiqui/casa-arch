@@ -115,14 +115,21 @@ export const userServicesApi = createApi({
       resendOtp: builder.mutation({
          query: (body) => ({
             url: `/resendotp/`,
-            method: "GET",
-            // body: body
+            method: "POST",
+            body: body
          })
       }),
       verifyOtp: builder.mutation({
          query: (body) => ({
             url: `/otpverification/`,
             method: "POST",
+            body: body
+         })
+      }),
+      resetPassword: builder.mutation({
+         query: (body) => ({
+            url: `/resetpassword/`,
+            method: "PUT",
             body: body
          })
       }),
@@ -145,4 +152,5 @@ export const {
    useSendOtpMutation,
    useResendOtpMutation,
    useVerifyOtpMutation,
+   useResetPasswordMutation,
 } = userServicesApi;

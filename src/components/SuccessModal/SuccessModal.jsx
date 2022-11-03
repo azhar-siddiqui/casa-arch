@@ -5,7 +5,7 @@ import Loading from "../../assets/successModalIcons/Loading.svg";
 import Tick from "../../assets/successModalIcons/Right.svg";
 
 const SuccessModal = (props) => {
-  const { massage } = props;
+  const { massage, hideFooter } = props;
   return (
     <>
       <div
@@ -31,10 +31,13 @@ const SuccessModal = (props) => {
               {massage}
             </div>
             {/*footer*/}
-            <div className=" mx-auto flex items-center">
-              <img src={Loading} alt="Loading" className="animate-spin" />
-              <p className="pl-2 text-primaryLight">Please wait</p>
-            </div>
+            {
+              hideFooter ? '' :
+                <div className=" mx-auto flex items-center">
+                  <img src={Loading} alt="Loading" className="animate-spin" />
+                  <p className="pl-2 text-primaryLight">Please wait</p>
+                </div>
+            }
           </div>
         </div>
       </div>

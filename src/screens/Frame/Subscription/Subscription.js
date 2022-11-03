@@ -9,6 +9,7 @@ import InputSelect from '../../../components/InputSelect/InputSelect';
 import { useSelector } from 'react-redux';
 import Modal from '../../../components/Modal/Modal';
 import { useProfessionalSubscribeMutation } from '../../../app/services/professionalServices';
+import { useNavigate } from 'react-router-dom';
 
 const initialValues = {
    name: '',
@@ -41,6 +42,7 @@ export default function Subscription({ setVisibleForSubscription }) {
 
    const { userId } = useSelector(state => state.user)
    const [subscribe, subscribeResponse] = useProfessionalSubscribeMutation()
+   const navigate = useNavigate()
 
    const handleSubmit = async (values) => {
       // console.log("Value", values)
@@ -59,10 +61,13 @@ export default function Subscription({ setVisibleForSubscription }) {
       subscribe(body)
          .then(res => {
             console.log(res)
-            if(res.error){
+            if (res.error) {
                return alert('Something went wrong')
-            }else{
-               setVisibleForSubscription(false)
+            } else {
+               if (res.data) {
+                  window.open(res.data.msg)
+                  setVisibleForSubscription(false)
+               }
             }
          })
          .catch(err => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import Modal from "../../../components/Modal/Modal";
@@ -7,6 +7,9 @@ import ButtonField from "../../../components/ButtonsFields/ButtonField";
 import EyeIcon from "../../../assets/InputFieldIcons/EyeIcon.svg";
 import { useVerifyOtpMutation, useResendOtpMutation } from "../../../app/services/userServices";
 import TickIcon from '../../../assets/ModalIcon/Tick.svg'
+import Loading from "../../../assets/InputFieldIcons/LoadingIcon.svg";
+import WrongIcon from "../../../assets/InputFieldIcons/wrong.svg";
+import CorrectIcon from "../../../assets/InputFieldIcons/correct.svg";
 
 const initialValues = {
    otp: '',
@@ -24,23 +27,50 @@ export default function OtpVerificationFrame({ setVisibleForOtpVerification, for
    const [resendOtp, resendOtpData] = useResendOtpMutation()
    const [successModalVisible, setsuccessModalVisible] = useState(false)
    const [loading, setLoading] = useState(false)
+   const [loadingIconActive, setLoadingIconActive] = useState(false)
+   const [loadingIcon, setLoadingIcon] = useState({src: Loading, toSpin: true})
+
 
    const handleResendOtp = async (values) => {
-      setsuccessModalVisible(true)
       setLoading(true)
-      setTimeout(() => {
-         setsuccessModalVisible(false)
-      }, 4000);
-      resendOtp({email: forgotPasswordEmail})
+
+      resendOtp({ email: forgotPasswordEmail })
          .then(res => {
             setLoading(false)
-            console.log(res)
             if (res.status === 400) {
                alert('No such email')
                return
+            } else {
+               setsuccessModalVisible(true)
+               setTimeout(() => {
+                  setsuccessModalVisible(false)
+               }, 4000);
+               console.log(res.data)
             }
+
             // setVisibleForResetPassword(true)
          })
+   }
+
+   const handleOtpChange = async (otp) => {
+      const reqBody = { otp: `${otp}`, email: forgotPasswordEmail }
+
+      if (otp.length === 4) {
+         setLoadingIconActive(true)
+         verifyOtp(reqBody)
+         .then(res => {
+            console.log(res)
+            if (res.data.status === 400) {
+               setLoadingIcon({src: WrongIcon, toSpin: false})
+               return
+            } else {
+               setLoadingIcon({src: CorrectIcon, toSpin: false})
+            }
+         })
+      }else{
+         setLoadingIcon({src: Loading, toSpin: true})
+         setLoadingIconActive(false)
+      }
    }
 
    const handleSubmit = async (values) => {
@@ -89,13 +119,21 @@ export default function OtpVerificationFrame({ setVisibleForOtpVerification, for
                         id={"otp"}
                         className="font-medium "
                         type="number"
-                        onChange={handleChange}
+                        onChange={e => {
+                           handleChange(e); handleOtpChange(e.target.value)
+                        }}
                         onBlur={handleBlur}
                         value={values.otp}
                         errorText={errors.otp && touched.otp ? errors.otp : null}
+                        loadingIconActive={loadingIconActive}
+                        LoadingIcon={loadingIcon}
                      />
-                     <p className="text-right text-primaryOrange font-semibold mt-2"
-                        onClick={handleResendOtp}>Resend the Otp</p>
+
+                     <p className="text-right text-primaryOrange font-semibold mt-2">
+                        <span onClick={handleResendOtp}>
+                           Resend the Otp
+                        </span>
+                     </p>
                   </>
                }
                footer={

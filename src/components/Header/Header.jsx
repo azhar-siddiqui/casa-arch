@@ -189,6 +189,8 @@ const Header = () => {
   // const [stepperVisible, setStepperVisible] = useState(false)
   const { isStepperVisible } = useSelector(state => state.userStepper)
   const [successModalVisible, setSuccessModalVisible] = useState(false);
+  const [forgotPasswordSuccessModal, setForgotPasswordSuccessModal] = useState(false)
+
   const [proVisible, setProVisible] = useState(false);
   const [logoutSucces, setLogoutSuccess] = useState(false);
   const location = useLocation();
@@ -206,7 +208,7 @@ const Header = () => {
   const setVisibleForSubscription = (bool) => {
     dispatch(updateVisibleForSubscriptionModal(bool))
   }
-  
+
   const [fetchStepperData, result] = useLazyGetQuestionsQuery();
 
   let Token = localStorage.getItem("Token");
@@ -500,7 +502,7 @@ const Header = () => {
       {visibleForSubscriptionModal && (
         <Subscription
           setVisibleForSubscription={setVisibleForSubscription}
-          // setVisibleForUserLogin={setVisibleForUserLogin}
+        // setVisibleForUserLogin={setVisibleForUserLogin}
         />
       )}
 
@@ -538,6 +540,7 @@ const Header = () => {
       {visibleForResetPassword && (
         <ResetPasswordFrame
           setVisibleForResetPassword={setVisibleForResetPassword}
+          setForgotPasswordSuccessModal={setForgotPasswordSuccessModal}
         />
       )}
 
@@ -691,6 +694,27 @@ const Header = () => {
           <SuccessModal massage={"Professional User created SuccessFully"} />
         )
       }
+      {
+        forgotPasswordSuccessModal && (
+          <SuccessModal
+            massage={
+              <div className="text-center px-2">
+                <p className="mx-auto font-medium text-lg lg:text-2xl text-primaryExtraLightGray mb-2">
+                  Password Reset
+                </p>
+                <p className="font-bold text-sm text-black">
+                  Your password has been Reset successfully
+                  Click below to Login
+                </p >
+                <ButtonField className="bg-primaryOrange py-2 px-6 hover:border-solid border-2 border-primaryOrange hover:bg-white hover:text-primaryOrange leading-normal w-full text-normal font-semibold mt-51"
+                onClick={()=>setForgotPasswordSuccessModal(false)} >
+                  Continue
+                </ButtonField>
+              </div>
+            }
+            hideFooter={true} />
+        )
+      }
 
       {logoutSucces && <SuccessModal massage="Logout Successfully" />}
 
@@ -726,8 +750,8 @@ const Header = () => {
                                 name={currData.name}
                                 placeholder={currData.placeholder}
                                 id={`${currData.name === "pincode"
-                                    ? styles.loc_inp
-                                    : ""
+                                  ? styles.loc_inp
+                                  : ""
                                   }`}
                                 className={styles.text_inp}
                                 autoComplete="off"
@@ -757,8 +781,8 @@ const Header = () => {
                                       }}
                                       style={{
                                         borderColor: `${fields[currData.name] === ele
-                                            ? "#F36C25"
-                                            : ""
+                                          ? "#F36C25"
+                                          : ""
                                           }`,
                                       }}
                                       className={styles.checkbox_label}
@@ -770,8 +794,8 @@ const Header = () => {
                                         className={styles.checkbox_text}
                                         style={{
                                           color: `${fields[currData.name] === ele
-                                              ? ""
-                                              : "#939CA3"
+                                            ? ""
+                                            : "#939CA3"
                                             }`,
                                         }}
                                       // className={styles.checkbox_label}

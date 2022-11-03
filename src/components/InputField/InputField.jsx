@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+
 const InputField = (props) => {
   const {
     type,
@@ -12,7 +13,9 @@ const InputField = (props) => {
     label,
     handleViewPassword,
     forgetLink,
-    forgetLinkOnclick
+    forgetLinkOnclick,
+    LoadingIcon,
+    loadingIconActive
   } = props;
   const inputRef = useRef();
   return (
@@ -46,7 +49,17 @@ const InputField = (props) => {
         ) : (
           ""
         )}
+        {loadingIconActive && (
+          <img
+            src={LoadingIcon.src}
+            alt="Icon"
+            className={`absolute right-3 cursor-pointer ${LoadingIcon.toSpin ? 'animate-spin' : ''}`}
+            // onClick={handleViewPassword}
+          />
+        )}
+        
       </div>
+
       {props?.errorText && (
         <div className="text-red-700">{props?.errorText}</div>
       )}

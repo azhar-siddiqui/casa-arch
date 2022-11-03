@@ -5,7 +5,7 @@ import Modal from "../../../components/Modal/Modal";
 import InputField from "../../../components/InputField/InputField";
 import ButtonField from "../../../components/ButtonsFields/ButtonField";
 import EyeIcon from "../../../assets/InputFieldIcons/EyeIcon.svg";
-import { useJoinUserMutation } from "../../../app/services/userServices";
+import { useResetPasswordMutation } from "../../../app/services/userServices";
 
 const initialValues = {
    password: "",
@@ -27,23 +27,30 @@ const schema = Yup.object({
 });
 
 const ResetPasswordFrame = (props) => {
-   const [createUser, data] = useJoinUserMutation()
-   const { setVisibleForResetPassword } = props;
+   const [resetPassword, resetPasswordResponse] = useResetPasswordMutation()
+   const { setVisibleForResetPassword, setForgotPasswordSuccessModal } = props;
    const [vpass, setVPass] = useState("password");
    const [vpassConfirm, setVPassConfirm] = useState("password");
-
-   console.log(data)
+   const [loading, setLoading] = useState(false)
 
    const handleSubmit = async (values) => {
       console.log(values)
-      // sendOtp(values)
-      // .then(res=>{
-      //    console.log(res)
-      //    if(res.ststus === 400){
-      //       alert('No such email')
-      //       return
-      //    }
-      // })
+      setLoading(true)
+      resetPassword({
+         new_password: values.password,
+         confirm_password: values.password
+      })
+         .then(res => {
+            setLoading(false)
+            console.log(res)
+            if (res.status === 400) {
+               alert('Something went wrong')
+               return
+            }else{
+               // setVisibleForResetPassword(false)
+               // setForgotPasswordSuccessModal(false)
+            }
+         })
    };
 
    const handleViewPass = () => {
@@ -83,7 +90,7 @@ const ResetPasswordFrame = (props) => {
                description="Enter the new password for your account"
                body={
                   <>
-                     
+
                      <InputField
                         handleViewPassword={handleViewPass}
                         name="password"
