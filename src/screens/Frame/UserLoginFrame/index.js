@@ -46,8 +46,8 @@ const UserLoginFrame = (props) => {
     let userData = {
       ...values,
       username: values.email,
-      client_id: 'tY6p7BwDip8iefcX3RqrcWBwyu95ueDvpq4SlM6a',
-      client_secret: 'P4LK7i0AgqTL6JuFRckxIoMt2z4PtOKOapNdnMeXz5jVCo9t6S0OFIJV2OhsN8NaCg0GPDLhRqiHbqHDaCMsAkeF1SmR6qYFNaLyN2fxKAJM5WQysGk0H4Ka5x25MhEy',
+      client_id: 'kKbg2dlGSfA5Gd7RKvDCgTrjnmjsURXMqb2YUdem',
+      client_secret: 'zdgavQUtnBoHLugOIoa6EBg9THa5PgPjU8Z7jFfySXOSDEoraFCA3mtPtTxbJMgriUfj6F705qt3YJI3WxyWvFliVbyGEbbBg0XL4RmEb9l7KzOgm2ZbXg1qWDw6TMI9',
       grant_type: 'password'
     }
     // console.log("Value Login", userData);
@@ -187,8 +187,8 @@ const UserLoginFrame = (props) => {
               </p>
               <ButtonField
                 className={` w-full px-6 py-3 ${rememberMeCheck === false
-                    ? `bg-primaryExtraLight text-white border border-primaryExtraLight`
-                    : `bg-primaryOrange hover:text-primaryOrange text-white  border border-primaryOrange hover:bg-white font-medium w-full px-6 py-3 outline-none focus:outline-none ease-linear transition-all duration-150`
+                  ? `bg-primaryExtraLight text-white border border-primaryExtraLight`
+                  : `bg-primaryOrange hover:text-primaryOrange text-white  border border-primaryOrange hover:bg-white font-medium w-full px-6 py-3 outline-none focus:outline-none ease-linear transition-all duration-150`
                   }`}
                 type="submit"
                 children="Login now"
