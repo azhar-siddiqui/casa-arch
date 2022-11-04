@@ -1,4 +1,5 @@
 // import { useState } from "react";
+import { useEffect } from "react";
 import Cross from "../../assets/ModalIcon/Cross.svg";
 import "./Modal.css";
 
@@ -15,6 +16,15 @@ export default function Modal(props) {
     secondModalBody
     // checkValue,
   } = props;
+
+  //disable body scroll if modal open
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    }
+  }, [])
+
   return (
     <>
       <div
