@@ -31,7 +31,7 @@ const LoginSchema = Yup.object({
 });
 
 const UserLoginFrame = (props) => {
-  const { setVisibleForUserLogin, setVisibleForUserSignUp, setvisibleForForgotPassword, handleLogout } = props;
+  const { setVisibleForUserLogin, setVisibleForUserSignUp, setvisibleForForgotPassword, handleLogout , setCustomerForgotPassword} = props;
   const [vpass, setVPass] = useState("password");
 
   const [rememberMeCheck, setRememberMeCheck] = useState(false);
@@ -100,6 +100,7 @@ const UserLoginFrame = (props) => {
   };
 
   const handleForgetLinkClick = () => {
+    setCustomerForgotPassword(true)
     setvisibleForForgotPassword(true)
     setVisibleForUserLogin(false);
   };
@@ -120,7 +121,7 @@ const UserLoginFrame = (props) => {
       }) => (
         <Modal
           setVisible={setVisibleForUserLogin}
-          ModalTitle="Login"
+          ModalTitle="Login As Customer"
           description="Welcome back!Please enter your details"
           className="pt-5 font-normal"
           SignUpText=" SignUp now"

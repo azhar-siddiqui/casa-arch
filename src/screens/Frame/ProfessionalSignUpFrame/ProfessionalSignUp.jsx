@@ -17,7 +17,14 @@ const initialValues = {
 };
 
 const SignUpSchema = Yup.object({
-  name: Yup.string().required("This field is required."),
+  name: Yup.string()
+    .required("This field is required.")
+    .max(20, 'Maximum 20 characters allowed')
+    .min(2, "Minimum 2 characters required.")
+    .matches(
+      /^[a-z]+$/i,
+      "Name must only contain letters"
+    ),
   email: Yup.string()
     .email("Please Enter Valid Email")
     .required("This field is required."),

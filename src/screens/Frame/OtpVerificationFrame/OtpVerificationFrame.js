@@ -21,7 +21,7 @@ const schema = Yup.object({
       .required("This field is required."),
 });
 
-export default function OtpVerificationFrame({ setVisibleForOtpVerification, forgotPasswordEmail, setVisibleForResetPassword }) {
+export default function OtpVerificationFrame({setVisibleForUserLogin, setVisibleForOtpVerification, forgotPasswordEmail, setVisibleForResetPassword }) {
 
    const [verifyOtp, verifyOtpResponse] = useVerifyOtpMutation()
    const [resendOtp, resendOtpData] = useResendOtpMutation()
@@ -137,7 +137,7 @@ export default function OtpVerificationFrame({ setVisibleForOtpVerification, for
                   </>
                }
                footer={
-                  <>
+                  <div className="flex flex-col items-center">
                      <ButtonField
                         className="bg-primaryOrange text-white hover:text-primaryOrange border border-primaryOrange hover:bg-white hover font-medium w-full px-6 py-3 outline-none focus:outline-none ease-linear transition-all duration-150"
                         type="submit"
@@ -147,14 +147,15 @@ export default function OtpVerificationFrame({ setVisibleForOtpVerification, for
                         }}
                      />
                      <ButtonField
-                        className="text-primaryOrange bg-white border border-primaryOrange hover:bg-primaryOrange hover:text-white w-full px-6 py-3 mt-3 font-medium outline-none focus:outline-none ease-linear transition-all duration-150"
+                        className="text-primaryOrange underline bg-white px-6 py-1 mt-5 mb-2 font-medium outline-none focus:outline-none ease-linear transition-all duration-150"                        
                         type="button"
                         children="Back to Login"
                         onClick={() => {
                            setVisibleForOtpVerification(false);
+                           setVisibleForUserLogin(true);
                         }}
                      />
-                  </>
+                  </div>
                }
                secondModalVisible={successModalVisible}
                secondModalBody={

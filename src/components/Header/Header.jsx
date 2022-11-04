@@ -198,6 +198,8 @@ const Header = () => {
     useSubmitSteppersMutation();
   const { isLoggedIn, userType, userId } = useSelector((state) => state.user);
 
+  //to determine how forgot password.. customer or professional
+  const [customerForgotPassword, setCustomerForgotPassword] = useState(false)
   // login frame when premium button click
   const { visibleForPremiumButtonLogin, visibleForSubscriptionModal } = useSelector((state) => state.professional);
   const setVisibleForPremiumButtonLogin = (bool) => {
@@ -513,6 +515,7 @@ const Header = () => {
           setCurrentStepper={setCurrentStepper}
           setvisibleForForgotPassword={setvisibleForForgotPassword}
           handleLogout={handleLogout}
+          setCustomerForgotPassword={setCustomerForgotPassword}
         />
       )}
       {visibleForUserSignUp && (
@@ -528,6 +531,7 @@ const Header = () => {
           setvisibleForForgotPassword={setvisibleForForgotPassword}
           setVisibleForOtpVerification={setVisibleForOtpVerification}
           setForgotPasswordEmail={setForgotPasswordEmail}
+          setVisibleForUserLogin={customerForgotPassword ? setVisibleForUserLogin : setVisibleForProfessionalLogin}
         />
       )}
       {visibleForOtpVerification && (
@@ -535,12 +539,13 @@ const Header = () => {
           setVisibleForOtpVerification={setVisibleForOtpVerification}
           forgotPasswordEmail={forgotPasswordEmail}
           setVisibleForResetPassword={setVisibleForResetPassword}
+          setVisibleForUserLogin={customerForgotPassword ? setVisibleForUserLogin : setVisibleForProfessionalLogin}
         />
       )}
       {visibleForResetPassword && (
         <ResetPasswordFrame
           setVisibleForResetPassword={setVisibleForResetPassword}
-          setForgotPasswordSuccessModal={setForgotPasswordSuccessModal}
+          setVisibleForUserLogin={customerForgotPassword ? setVisibleForUserLogin : setVisibleForProfessionalLogin}
         />
       )}
 
@@ -548,6 +553,9 @@ const Header = () => {
         <ProfessionalLoginFrame
           setVisibleForProfessionalLogin={setVisibleForProfessionalLogin}
           setVisibleForProfessionalSignUp={setVisibleForProfessionalSignUp}
+          setCustomerForgotPassword={setCustomerForgotPassword}
+          setvisibleForForgotPassword={setvisibleForForgotPassword}
+          
         />
       )}
 
@@ -669,7 +677,7 @@ const Header = () => {
                       onClick={handleStepperIncrement}
                       disabled={
                         currentStepValue[currentStep].name === 'pincode' ?
-                          values.pincode < 99999 ? true : false
+                          values.pincode < 99999 || values.pincode > 1000000 ? true : false
                           : currentStepValue[currentStep].name === 'email' ?
                             values.email === '' ? true : false
                             : false

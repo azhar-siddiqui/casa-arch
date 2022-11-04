@@ -28,7 +28,7 @@ const schema = Yup.object({
 
 const ResetPasswordFrame = (props) => {
    const [resetPassword, resetPasswordResponse] = useResetPasswordMutation()
-   const { setVisibleForResetPassword, setForgotPasswordSuccessModal } = props;
+   const { setVisibleForResetPassword, setForgotPasswordSuccessModal, setVisibleForUserLogin } = props;
    const [vpass, setVPass] = useState("password");
    const [vpassConfirm, setVPassConfirm] = useState("password");
    const [loading, setLoading] = useState(false)
@@ -128,7 +128,7 @@ const ResetPasswordFrame = (props) => {
                   </>
                }
                footer={
-                  <>
+                  <div className="flex flex-col items-center">
                      <ButtonField
                         className="bg-primaryOrange text-white hover:text-primaryOrange border border-primaryOrange hover:bg-white hover font-medium w-full px-6 py-3 outline-none focus:outline-none ease-linear transition-all duration-150"
                         type="submit"
@@ -138,14 +138,15 @@ const ResetPasswordFrame = (props) => {
                         }}
                      />
                      <ButtonField
-                        className="text-primaryOrange bg-white border border-primaryOrange hover:bg-primaryOrange hover:text-white w-full px-6 py-3 mt-3 font-medium outline-none focus:outline-none ease-linear transition-all duration-150"
+                        className="text-primaryOrange underline bg-white px-6 py-1 mt-5 mb-2 font-medium outline-none focus:outline-none ease-linear transition-all duration-150"                        
                         type="button"
-                        children="Cancel"
+                        children="Back to Login"
                         onClick={() => {
                            setVisibleForResetPassword(false);
+                           setVisibleForUserLogin(true)
                         }}
                      />
-                  </>
+                  </div>
                }
             />
          )}

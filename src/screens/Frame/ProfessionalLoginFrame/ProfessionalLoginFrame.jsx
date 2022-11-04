@@ -31,7 +31,7 @@ const LoginSchema = Yup.object({
 });
 
 const ProfessionalLoginFrame = (props) => {
-  const { setVisibleForProfessionalLogin, setVisibleForProfessionalSignUp } =
+  const { setVisibleForProfessionalLogin, setVisibleForProfessionalSignUp, setvisibleForForgotPassword, setCustomerForgotPassword } =
     props;
   const [professionalLogin, ProfessionalLoginResponse] =
     useProfessionalLoginMutation();
@@ -92,6 +92,12 @@ const ProfessionalLoginFrame = (props) => {
     setVisibleForProfessionalSignUp(true);
   };
 
+  const handleForgetLinkClick = () => {
+    setCustomerForgotPassword(false)
+    setvisibleForForgotPassword(true)
+    setVisibleForProfessionalLogin(false);
+  };
+
   return (
     <Formik
       initialValues={initialValues}
@@ -138,6 +144,7 @@ const ProfessionalLoginFrame = (props) => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 forgetLink="Forgot Password?"
+                forgetLinkOnclick={handleForgetLinkClick}                
                 value={values.password}
                 errorText={
                   errors.password && touched.password ? errors.password : null

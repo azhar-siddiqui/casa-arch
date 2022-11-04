@@ -19,8 +19,8 @@ const schema = Yup.object({
 });
 
 const ForgotPasswordFrame = (props) => {
-   const { setvisibleForForgotPassword, setVisibleForOtpVerification, setForgotPasswordEmail } = props;
-
+   const { setvisibleForForgotPassword, setVisibleForOtpVerification, setForgotPasswordEmail, setVisibleForUserLogin } = props;
+ 
    const [sendOtp, otpData] = useSendOtpMutation()
    const [loading, setLoading] = useState(false)
 
@@ -82,7 +82,7 @@ const ForgotPasswordFrame = (props) => {
                         </>
                      }
                      footer={
-                        <>
+                        <div className="flex flex-col items-center">
                            <ButtonField
                               className="bg-primaryOrange text-white hover:text-primaryOrange border border-primaryOrange hover:bg-white hover font-medium w-full px-6 py-3 outline-none focus:outline-none ease-linear transition-all duration-150"
                               type="submit"
@@ -93,16 +93,17 @@ const ForgotPasswordFrame = (props) => {
                               }}
                            />
                            <ButtonField
-                              className="text-primaryOrange bg-white border border-primaryOrange hover:bg-primaryOrange hover:text-white w-full px-6 py-3 mt-3 font-medium outline-none focus:outline-none ease-linear transition-all duration-150"
+                              className="text-primaryOrange underline bg-white px-6 py-1 mt-5 mb-2 font-medium outline-none focus:outline-none ease-linear transition-all duration-150"
                               type="button"
-                              children="Cancel"
+                              children="Back to Login"
                               onClick={() => {
                                  setvisibleForForgotPassword(false);
+                                 setVisibleForUserLogin(true);
                               }}
                            />
 
 
-                        </>
+                        </div>
                      }
                      
                   />

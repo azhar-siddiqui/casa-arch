@@ -21,10 +21,28 @@ const initialValues = {
 };
 
 const SignUpSchema = Yup.object({
-  first_name: Yup.string().required("This field is required."),
-  last_name: Yup.string().required("This field is required."),
+  first_name: Yup.string()
+    .required("This field is required.")
+    .max(20, 'Maximum 20 characters allowed')
+    .min(2, "Minimum 2 characters required.")
+    .matches(
+      /^[a-z]+$/i,
+      "Name must only contain letters"
+    ),
+  last_name: Yup.string()
+    .required("This field is required.")
+    .max(20, 'Maximum 20 characters allowed')
+    .min(2, "Minimum 2 characters required.")
+    .matches(
+      /^[a-z]+$/i,
+      "Name must only contain letters"
+    ),
   email: Yup.string()
     .email("Please Enter Valid Email")
+    .matches(
+      /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+      'Please enter a valid email address'
+    )
     .required("This field is required."),
   password: Yup.string()
     .min(8, "Minimum 8 digits required.")
@@ -36,20 +54,30 @@ const SignUpSchema = Yup.object({
   confirmPassword: Yup.string()
     .required("This field is required.")
     .oneOf([Yup.ref("password"), null], "Passwords must match"),
-  phone: Yup.string().required("This field is required."),
+  phone: Yup.string().required("This field is required.")
+    .min(8, "Minimum 8 digits required.")
+    .max(12, 'Maximum 12 digits allowed'),
 });
 
 const UserSignUpFrame = (props) => {
   const [createUser, data] = useJoinUserMutation();
-  const { setVisibleForUserSignUp } = props;
+  const { setVisibleForUserSignUp, setVisibleForUserLogin } = props;
   const [vpass, setVPass] = useState("password");
   const [vpassConfirm, setVPassConfirm] = useState("password");
   const [rememberMeCheck, setRememberMeCheck] = useState(false)
   const handleSubmit = async (values) => {
     console.log("Value", values);
-    await createUser(values);
-    console.log("submitted..");
-    setVisibleForUserSignUp(false);
+    await createUser(values)
+      .then(res => {
+        if (res.error) {
+          alert('User registered! login to continue')
+          alert('Email is already registered. Please login to continue')
+          return
+        }else{
+          setVisibleForUserLogin(true)
+          setVisibleForUserSignUp(false)
+        }
+      })
   };
 
   const handleViewPass = () => {
@@ -227,8 +255,8 @@ const UserSignUpFrame = (props) => {
                   type="button"
                   children={
                     <>
-                    <img className="mr-1 md:mr-4" src={FacebookIcon} />
-                    Login via Facebook
+                      <img className="mr-1 md:mr-4" src={FacebookIcon} />
+                      Login via Facebook
                     </>
                   }
                 />
