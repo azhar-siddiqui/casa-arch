@@ -121,7 +121,7 @@ const UserLoginFrame = (props) => {
       }) => (
         <Modal
           setVisible={setVisibleForUserLogin}
-          ModalTitle="Login As Customer"
+          ModalTitle="Login"
           description="Welcome back!Please enter your details"
           className="pt-5 font-normal"
           SignUpText=" SignUp now"
