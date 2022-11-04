@@ -22,7 +22,7 @@ const SignUpSchema = Yup.object({
     .max(20, 'Maximum 20 characters allowed')
     .min(2, "Minimum 2 characters required.")
     .matches(
-      /^[a-z]+$/i,
+      /^[a-zA-Z\s]*$/,
       "Name must only contain letters"
     ),
   email: Yup.string()
