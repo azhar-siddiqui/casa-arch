@@ -34,57 +34,7 @@ import {
 } from "../../app/services/professionalServices";
 import UserLoginFrame from "../../screens/Frame/UserLoginFrame";
 
-// import Loc from "../../assets/ModalIcon/loc.svg";
 // import SelectLoginFrame from "../../screens/Frame/SelectLoginFrame/SelectLoginFrame";
-
-const initialValues = {
-  name: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
-  companyName: "",
-  companyWebsite: "",
-};
-
-const SignUpSchema = Yup.object({
-  name: Yup.string().required("This field is required."),
-  email: Yup.string()
-    .email("Please Enter Valid Email")
-    .required("This field is required."),
-  password: Yup.string()
-    .min(8, "Minimum 8 digits required.")
-    .required("This field is required.")
-    .matches(
-      /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
-      "Password must contain at least 8 characters, one uppercase, one number and one special case character Abc@1234"
-    ),
-  confirmPassword: Yup.string().oneOf(
-    [Yup.ref("password"), null],
-    "Passwords must match"
-  ),
-  companyName: Yup.string().required("This field is required."),
-});
-
-const LoginSchema = Yup.object({
-  email: Yup.string()
-    .email("Please Enter Valid Email")
-    .required("This field is required."),
-  password: Yup.string()
-    .min(8, "Minimum 8 digits required.")
-    .required("This field is required.")
-    .matches(
-      /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
-      "Password must contain at least 8 characters, one uppercase, one number and one special case character Abc@1234"
-    ),
-});
-
-const initialValuesLocation = {
-  area: "",
-};
-
-const LocationSchema = Yup.object({
-  area: Yup.string().required("This field is required."),
-});
 
 const initialValuesUserStepper = {
   pincode: "",
@@ -150,11 +100,7 @@ const Header = () => {
     useProfessionalServiceMutation();
   const [professionalAreaCheckService, ProfessionalAreaCheckServiceResponse] =
     useProfessionalAreaCheckServiceMutation();
-  // console.log("professionalAreaCheckService", professionalAreaCheckService);
-  console.log(
-    "ProfessionalAreaCheckServiceResponse",
-    ProfessionalAreaCheckServiceResponse
-  );
+
   let [openMenu, setOpenMenu] = useState(false);
   const [visible, setVisible] = useState(false);
   const [currentStepValue, setCurrentStepValue] = useState(userStepper);
@@ -162,7 +108,6 @@ const Header = () => {
   // normal or professional
   const [currentStepper, setCurrentStepper] = useState("Normal"); //can be 'normal' or 'professional' - used to know which steppers (professional/normal) to be displayed
   const [dashboardButtonVisible, setDashboardButtonVisible] = useState(false);
-  const [rememberMeCheck, setRememberMeCheck] = useState(false);
   const [professionalsAccSwitchingMsg, setProfessionalsAccSwitchingMsg] =
     useState(false);
   const [proButtonVisible, setProButtonVisible] = useState(true);
@@ -176,11 +121,12 @@ const Header = () => {
   const [successModalVisible, setSuccessModalVisible] = useState(false);
   const [proVisible, setProVisible] = useState(false);
   const [logoutSucces, setLogoutSuccess] = useState(false);
+  const [DetailsVisible, setDetailsVisible] = useState(false);
   const location = useLocation();
   const [submitNormalUserSteppers, submittedSteppersData] =
     useSubmitSteppersMutation();
   const { isLoggedIn, userType, userId } = useSelector((state) => state.user);
-  const [fetchStepperData, result] = useLazyGetQuestionsQuery();
+  // const [fetchStepperData, result] = useLazyGetQuestionsQuery();
 
   let Token = localStorage.getItem("Token");
 
@@ -232,6 +178,7 @@ const Header = () => {
     pincode: "",
     preference: "",
   });
+
   const [count, setCount] = useState(0);
   const [currData, setCurrData] = useState({
     heading: "",
@@ -352,13 +299,19 @@ const Header = () => {
         }
       }
     }
+
+    setDetailsVisible(true);
+    setTimeout(() => {
+      setDetailsVisible(false);
+      navigate("/professionals");
+      // navigate("/professionals/questions");
+    }, 2000);
   };
 
   const navigate = useNavigate();
 
   const handleProfessionalLogout = () => {
     setLogoutSuccess(true);
-    localStorage.clear();
     setTimeout(() => {
       setLogoutSuccess(false);
       navigate("/");
@@ -447,7 +400,6 @@ const Header = () => {
           </li>
         </ul>
       </div>
-
       {visible && (
         <SelectLoginFrame
           setVisible={setVisible}
@@ -456,7 +408,6 @@ const Header = () => {
           setVisibleForUserLogin={setVisibleForUserLogin}
         />
       )}
-
       {visibleForUserLogin && (
         <UserLoginFrame
           setVisibleForUserSignUp={setVisibleForUserSignUp}
@@ -473,14 +424,13 @@ const Header = () => {
           setCurrentStepper={setCurrentStepper}
         />
       )}
-
       {visibleForProfessionalLogin && (
         <ProfessionalLoginFrame
           setVisibleForProfessionalLogin={setVisibleForProfessionalLogin}
           setVisibleForProfessionalSignUp={setVisibleForProfessionalSignUp}
+          setProVisible={setProVisible}
         />
       )}
-
       {visibleForProfessionalSignUp && (
         <ProfessionalSignUp
           setVisibleForProfessionalSignUp={setVisibleForProfessionalSignUp}
@@ -488,7 +438,6 @@ const Header = () => {
           setProVisible={setProVisible}
         />
       )}
-
       {stepperVisible && currentStepValue.length >= 1 && (
         <Formik
           initialValues={initialValuesUserStepper}
@@ -608,13 +557,10 @@ const Header = () => {
       {professionalsAccSwitchingMsg && (
         <SuccessModal massage={"Switching to professional account"} />
       )}
-
       {successModalVisible && (
         <SuccessModal massage={"Professional User created SuccessFully"} />
       )}
-
       {logoutSucces && <SuccessModal massage="Logout Successfully" />}
-
       {successModalVisible === false && (
         <>
           {proVisible && (
@@ -632,7 +578,7 @@ const Header = () => {
                     </div>
                     {
                       <>
-                        <h2 className={styles.question}>{currData.heading}</h2>
+                        <h2 className={styles.question}>?{currData.heading}</h2>
                         <div className={styles.input_div}>
                           {currData.type === "text" ||
                           currData.type === "email" ? (
@@ -731,6 +677,14 @@ const Header = () => {
                 </div>
               </div>
             </>
+          )}
+        </>
+      )}
+
+      {proVisible === false && (
+        <>
+          {DetailsVisible && (
+            <SuccessModal massage={"Details Added Successfully"} />
           )}
         </>
       )}

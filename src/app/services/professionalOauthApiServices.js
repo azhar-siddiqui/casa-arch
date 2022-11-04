@@ -9,12 +9,21 @@ export const professionalOauthApi = createApi({
   endpoints: (builder) => ({
     professionalSignUp: builder.mutation({
       query: (body) => {
-        console.log("professionalOauthApi body", body);
+        const data = {
+          name: body.name,
+          company_name: body.company_name,
+          company_website: body.company_website,
+          email: body.email,
+          password: body.password,
+        };
         return {
           // url: `${AppConstants.professional_signup}`,
           url: `${AppConstants.endPoints.professional_signup}`,
           method: "POST",
-          body: body,
+          body: data,
+          // headers: {
+          //   Authorization: `Bearer ${body.token}`,
+          // },
         };
       },
     }),
@@ -30,12 +39,12 @@ export const professionalOauthApi = createApi({
       },
     }),
     professionalType: builder.mutation({
-      query: () => {
+      query: (Token) => {
         return {
           url: `${AppConstants.endPoints.user_Type}`,
           method: "GET",
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("Token")}`,
+            Authorization: `Bearer ${Token}`,
           },
         };
       },

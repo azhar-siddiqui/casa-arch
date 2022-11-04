@@ -15,21 +15,9 @@ import Dashboard from "./screens/Dashboard/dashboard";
 import PageNotFound from "./screens/PageNotFound/PageNotFound";
 import ProLandingAfterLogin from "./screens/ProLandingAfterLogin/ProLandingAfterLogin";
 import ProfessionalProfile from "./screens/ProfessionalProfile/ProfessionalProfile";
+import PrivateRoutes from "./screens/PrivateRoute/PrivateRoutes";
 
 function App() {
-  let Token = localStorage.getItem("Token");
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  // useEffect(() => {
-  //   if (
-  //     location.pathname === "/professionals/landing" ||
-  //     (location.pathname === "/professionals/myprofile" && !Token)
-  //   ) {
-  //     navigate("/");
-  //   }
-  // }, [navigate, location]);
-
   return (
     <>
       <Header />
@@ -42,15 +30,13 @@ function App() {
 
         <Route path="/professionals">
           <Route path="" element={<Professionals />} />
-          {/* {Token && (
-            <>
-            </>
-          )} */}
-          <Route path="landing" element={<ProLandingAfterLogin />} />
-          <Route path="myprofile" element={<ProfessionalProfile />} />
-          <Route path="profile/:id" element={<Profile />} />
-          <Route path="list" element={<ProfessionalsList />} />
-          <Route path="questions" element={<ProQuestion />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path="landing" element={<ProLandingAfterLogin />} />
+            <Route path="myprofile" element={<ProfessionalProfile />} />
+            <Route path="profile/:id" element={<Profile />} />
+            <Route path="list" element={<ProfessionalsList />} />
+            <Route path="questions" element={<ProQuestion />} />
+          </Route>
         </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>

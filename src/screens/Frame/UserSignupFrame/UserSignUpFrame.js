@@ -36,12 +36,11 @@ const SignUpSchema = Yup.object({
 });
 
 const UserSignUpFrame = (props) => {
-  const [createUser, data] = useJoinUserMutation();
+  const [createUser, createUserResponse] = useJoinUserMutation();
   const { setVisibleForUserSignUp } = props;
   const [vpass, setVPass] = useState("password");
   const [vpassConfirm, setVPassConfirm] = useState("password");
-
-  console.log(data);
+  console.log("createUserResponse", createUserResponse);
   const handleSubmit = async (values) => {
     console.log("Value", values);
     await createUser(values);
@@ -81,7 +80,7 @@ const UserSignUpFrame = (props) => {
       }) => (
         <Modal
           setVisible={setVisibleForUserSignUp}
-          classNameModal={"pt-[110px]"}
+          classNameModal={"pt-[210px]"}
           ModalTitle="Tell us about yourself"
           description="You're one step away from seeing our Architecture
                 leads"

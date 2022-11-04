@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
   isLoggedIn: false,
@@ -6,7 +6,7 @@ const initialState = {
   userId: "",
 };
 
-export const professionalauthSlice = createSlice({
+export const professionalAuthSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
@@ -24,6 +24,6 @@ export const professionalauthSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const { updateIsLoggedIn, updateUserType, updateUserId } =
-  professionalauthSlice.actions;
+  professionalAuthSlice.actions;
 
-export default professionalauthSlice.reducer;
+export default professionalAuthSlice.reducer;

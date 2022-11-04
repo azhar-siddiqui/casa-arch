@@ -42,7 +42,7 @@ const SearchBar = (prop) => {
         <div className={`DropList ${className}`}>
           {filterDropData.map((item) => (
             <p
-              className={`listItem ${className}`}
+              className={`listItem text-left ${className}`}
               key={item.id}
               onClick={handleOnclick}
             >

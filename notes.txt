@@ -1,0 +1,226 @@
+const residentialDesignData = [
+    {
+      id: 1,
+      heading: "Which city is the property located at?",
+      placeholder: "Enter your City",
+      type: "text",
+    },
+    {
+      id: 2,
+      heading: "What is the property type?",
+      type: "radio",
+      name: "propertyType",
+      options: ["Flat", "House"],
+    },
+    {
+      id: 3,
+      heading: "Which rooms do you wish to design?",
+      type: "radio",
+      name: "designType",
+      options: ["Only one house", "Full house"],
+    },
+  ];
+
+
+  const commercialDesignData = [
+    {
+      id: 1,
+      heading: "Which city is the property located at?",
+      placeholder: "Enter your City",
+      type: "text",
+    },
+    {
+      id: 2,
+      heading: "What is the property type?",
+      type: "radio",
+      options: ["Flat", "House"],
+    },
+    {
+      id: 3,
+      heading: "Which rooms do you wish to design?",
+      type: "radio",
+      options: ["Only one house", "Full house"],
+    },
+  ];
+
+  const architectureData = [
+    {
+      id: 1,
+      heading: "Which city is the property located at?",
+      placeholder: "Enter your City",
+      type: "text",
+    },
+    {
+      id: 2,
+      heading: "What is the property type?",
+      type: "radio",
+      options: [
+        "Residential Building",
+        "Commercial Building",
+        "Institute Building",
+      ],
+    },
+    {
+      id: 3,
+      heading: "Which rooms do you wish to design?",
+      type: "radio",
+      options: ["Only one house", "Full house"],
+    },
+  ];
+
+  const landscapingData = [
+    {
+      id: 1,
+      heading: "Which city is the property located at?",
+      placeholder: "Enter your City",
+      type: "text",
+    },
+  ];
+
+  const restaurantDesignData = [
+    {
+      id: 1,
+      heading: "Which city is the property located at?",
+      placeholder: "Enter your City",
+      type: "text",
+    },
+  ];
+
+  const officeDesignData = [
+    {
+      id: 1,
+      heading: "Which city is the property located at?",
+      placeholder: "Enter your City",
+      type: "text",
+    },
+    {
+      id: 2,
+      heading: "What is the property type?",
+      type: "radio",
+      options: ["Standalone office", "Complex"],
+    },
+    {
+      id: 3,
+      heading: "Which blocks do you wish to design?",
+      type: "radio",
+      options: ["Only one", "Full complex"],
+    },
+  ];
+
+
+  const designdata = [
+    {
+      residentialDesignData: [
+        {
+          id: 1,
+          heading: "Which city is the property located at?",
+          placeholder: "Enter your City",
+          type: "text",
+        },
+        {
+          id: 2,
+          heading: "What is the property type?",
+          type: "radio",
+          name: "propertyType",
+          options: ["Flat", "House"],
+        },
+        {
+          id: 3,
+          heading: "Which rooms do you wish to design?",
+          type: "radio",
+          name: "designType",
+          options: ["Only one house", "Full house"],
+        },
+      ],
+    },
+    {
+      commercialDesignData: [
+        {
+          id: 1,
+          heading: "Which city is the property located at?",
+          placeholder: "Enter your City",
+          type: "text",
+        },
+        {
+          id: 2,
+          heading: "What is the property type?",
+          type: "radio",
+          options: ["Flat", "House"],
+        },
+        {
+          id: 3,
+          heading: "Which rooms do you wish to design?",
+          type: "radio",
+          options: ["Only one house", "Full house"],
+        },
+      ],
+    },
+    {
+      architectureData: [
+        {
+          id: 1,
+          heading: "Which city is the property located at?",
+          placeholder: "Enter your City",
+          type: "text",
+        },
+        {
+          id: 2,
+          heading: "What is the property type?",
+          type: "radio",
+          options: [
+            "Residential Building",
+            "Commercial Building",
+            "Institute Building",
+          ],
+        },
+        {
+          id: 3,
+          heading: "Which rooms do you wish to design?",
+          type: "radio",
+          options: ["Only one house", "Full house"],
+        },
+      ],
+    },
+    {
+      landscapingData: [
+        {
+          id: 1,
+          heading: "Which city is the property located at?",
+          placeholder: "Enter your City",
+          type: "text",
+        },
+      ],
+    },
+    {
+      restaurantDesignData: [
+        {
+          id: 1,
+          heading: "Which city is the property located at?",
+          placeholder: "Enter your City",
+          type: "text",
+        },
+      ],
+    },
+    {
+      officeDesignData: [
+        {
+          id: 1,
+          heading: "Which city is the property located at?",
+          placeholder: "Enter your City",
+          type: "text",
+        },
+        {
+          id: 2,
+          heading: "What is the property type?",
+          type: "radio",
+          options: ["Standalone office", "Complex"],
+        },
+        {
+          id: 3,
+          heading: "Which blocks do you wish to design?",
+          type: "radio",
+          options: ["Only one", "Full complex"],
+        },
+      ],
+    },
+  ];
