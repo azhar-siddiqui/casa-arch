@@ -27,6 +27,10 @@ const SignUpSchema = Yup.object({
     ),
   email: Yup.string()
     .email("Please Enter Valid Email")
+    .matches(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      "Please enter a valid email address"
+    )
     .required("This field is required."),
   password: Yup.string()
     .min(8, "Minimum 8 digits required.")
@@ -39,6 +43,12 @@ const SignUpSchema = Yup.object({
     .required("This field is required.")
     .oneOf([Yup.ref("password"), null], "Passwords must match"),
   company_name: Yup.string().required("This field is required."),
+  company_website: Yup.string()
+    .matches(
+      // /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
+      /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
+      "Invalid Website URL"
+    )
 });
 
 const ProfessionalSignUp = (props) => {
@@ -69,7 +79,7 @@ const ProfessionalSignUp = (props) => {
         setSuccessModalVisible(false);
       }, 2000);
     } else if (professionalSignUpResponse.isError) {
-      alert("Something went wrong");
+      alert("Email is already registered. Login to continue");
     }
   }, [
     professionalSignUpResponse.isSuccess,
@@ -206,6 +216,9 @@ const ProfessionalSignUp = (props) => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.company_website}
+                  errorText={
+                    errors.company_website && touched.company_website ? errors.company_website : null
+                  }
                 />
               </>
             }

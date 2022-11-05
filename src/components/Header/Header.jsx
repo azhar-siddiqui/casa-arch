@@ -197,7 +197,7 @@ const Header = () => {
   const [submitNormalUserSteppers, submittedSteppersData] =
     useSubmitSteppersMutation();
   const { isLoggedIn, userType, userId } = useSelector((state) => state.user);
-
+  const [successfulLoginModal, setSuccessfulLoginModal] = useState(false)
   //to determine how forgot password.. customer or professional
   const [customerForgotPassword, setCustomerForgotPassword] = useState(false)
   // login frame when premium button click
@@ -211,9 +211,24 @@ const Header = () => {
     dispatch(updateVisibleForSubscriptionModal(bool))
   }
 
-  const [fetchStepperData, result] = useLazyGetQuestionsQuery();
+  useEffect(() => {
+    if (isLoggedIn) {
+      setSuccessfulLoginModal(true)
+      setTimeout(() => {
+        setSuccessfulLoginModal(false)
+      }, 3000);
+    }
+  }, [isLoggedIn])
 
   let Token = localStorage.getItem("Token");
+  useEffect(() => {
+    if (Token) {
+      setSuccessfulLoginModal(true)
+      setTimeout(() => {
+        setSuccessfulLoginModal(false)
+      }, 2000);
+    }
+  }, [Token])
 
   const dispatch = useDispatch();
 
@@ -508,6 +523,10 @@ const Header = () => {
         />
       )}
 
+      {successfulLoginModal && (
+        <SuccessModal massage='Successful Login' />
+      )}
+
       {visibleForUserLogin && (
         <UserLoginFrame
           setVisibleForUserSignUp={setVisibleForUserSignUp}
@@ -555,7 +574,7 @@ const Header = () => {
           setVisibleForProfessionalSignUp={setVisibleForProfessionalSignUp}
           setCustomerForgotPassword={setCustomerForgotPassword}
           setvisibleForForgotPassword={setvisibleForForgotPassword}
-          
+
         />
       )}
 
@@ -715,7 +734,7 @@ const Header = () => {
                   Click below to Login
                 </p >
                 <ButtonField className="bg-primaryOrange py-2 px-6 hover:border-solid border-2 border-primaryOrange hover:bg-white hover:text-primaryOrange leading-normal w-full text-normal font-semibold mt-51"
-                onClick={()=>setForgotPasswordSuccessModal(false)} >
+                  onClick={() => setForgotPasswordSuccessModal(false)} >
                   Continue
                 </ButtonField>
               </div>

@@ -25,7 +25,7 @@ const Schema = Yup.object({
   projectDetails: Yup.string().required("This field is required."),
 })
 
-export default function DashboardRequirements({ setRequirementsVisible, isRequirementPosted, requirementValues, budgetValues }) {
+export default function DashboardRequirements({displaySuccessModal, setRequirementsVisible, setIsRequirementPosted, requirementValues, budgetValues }) {
 
   const { userId } = useSelector(state => state.user)
   const [postRequirements, data] = usePostRequirementsMutation()
@@ -45,7 +45,8 @@ export default function DashboardRequirements({ setRequirementsVisible, isRequir
       .then(res => {
         console.log(res)
         setRequirementsVisible(false)
-        isRequirementPosted(true)
+        displaySuccessModal()
+        setIsRequirementPosted(true)
       })
       .catch(err => {
         console.log(err)

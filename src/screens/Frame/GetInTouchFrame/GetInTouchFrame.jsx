@@ -33,9 +33,15 @@ const GetInTouchSchema = Yup.object({
   ),
   email: Yup.string()
     .email("Please Enter Valid Email")
+    .matches(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      "Please enter a valid email address"
+    )
     .required("This field is required."),
   phone: Yup.string()
     .required("This field is required.")
+    .min(8, "Minimum 8 digits required.")
+    .max(12, 'Maximum 12 digits allowed')
     .matches(
       /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
       "Phone number is not valid"

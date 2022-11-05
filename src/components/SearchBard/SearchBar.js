@@ -53,8 +53,8 @@ const SearchBar = (prop) => {
           } ${className}`}
         disabled={searchTxt.length === 0 ? true : false}
         onClick={() => {
-          handleSearch();
-          onClick()
+          handleSearch !== undefined && handleSearch();
+          onClick !== undefined && onClick()
         }}
       >
         Search

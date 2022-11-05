@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useGetArchitectsQuery, useGetInteriorDesignersQuery } from '../../app/services/userServices'
 import ProfessionalCard from '../../components/ProfessionalCard/ProfessionalCard'
+import SuccessModal from '../../components/SuccessModal/SuccessModal'
 
 const tempData = [
    {
@@ -29,6 +30,7 @@ export default function ProfessionalsList() {
    const [list, setList] = useState([])
    const { searchedProfessional } = useSelector(state => state.userStepper)
    console.log(searchedProfessional)
+   const [loading, setLoading] = useState(true)
 
    const architects = useGetArchitectsQuery(undefined, {
       refetchOnMountOrArgChange: true
@@ -39,17 +41,26 @@ export default function ProfessionalsList() {
    })
 
    useEffect(() => {
-      if(searchedProfessional === 'Interior') return
+   }, [])
+
+   useEffect(() => {
+      if (searchedProfessional === 'Interior') return
       if (architects.data === undefined) return
+      setTimeout(() => {
+         setLoading(false)
+      }, 2000);
       setList(prev => {
          return [...prev, ...architects.data.data]
       })
       // console.log(architects.data.data)
    }, [architects])
-   
+
    useEffect(() => {
-      if(searchedProfessional === 'Architect') return
+      if (searchedProfessional === 'Architect') return
       if (interiorDesigners.data === undefined) return
+      setTimeout(() => {
+         setLoading(false)
+      }, 2000);
       setList(prev => {
          return [...prev, ...interiorDesigners.data.data]
       })
@@ -58,10 +69,17 @@ export default function ProfessionalsList() {
 
    console.log('list', list)
    return (
-      <div className='p-4 max-w-973 md:mx-auto'>
-         {list.length > 0 && list.map((prof, idx) => {
-            return <ProfessionalCard key={idx} {...prof} />
-         })}
-      </div>
+      <>
+         <div className='p-4 max-w-973 md:mx-auto'>
+            {list.length > 0 && list.map((prof, idx) => {
+               return <ProfessionalCard key={idx} {...prof} />
+            })}
+         </div>
+         {loading ?
+            <SuccessModal massage='Finding suitable professionals for you' />
+            : <></>
+         }
+
+      </>
    )
 }
