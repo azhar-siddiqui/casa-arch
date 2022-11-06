@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import Modal from "../../../components/Modal/Modal";
 import { useLocation, useNavigate } from "react-router-dom";
 import ButtonField from "../../../components/ButtonsFields/ButtonField";
+import { useDispatch } from "react-redux";
+import { updateOpenSubscriptionAfterLogin } from "../../../app/slices/professionalauthSlice";
 
 const PremiumButtonLogin = (props) => {
   const { setVisibleForPremiumButtonLogin, setProButtonVisible, setVisibleForProfessionalLogin, } =
@@ -9,6 +11,7 @@ const PremiumButtonLogin = (props) => {
 
   const location = useLocation();
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (location.pathname === "/professionals") {
@@ -29,10 +32,15 @@ const PremiumButtonLogin = (props) => {
     // setVisibleForUserLogin(true);
   };
 
+  const handleClose = () => {
+    dispatch(updateOpenSubscriptionAfterLogin(false))
+    setVisibleForPremiumButtonLogin(false)
+  }
+
   return (
     <>
       <Modal
-        setVisible={setVisibleForPremiumButtonLogin}
+        setVisible={handleClose}
         description="Select among the following?"
         className="md:text-2xl"
         body={

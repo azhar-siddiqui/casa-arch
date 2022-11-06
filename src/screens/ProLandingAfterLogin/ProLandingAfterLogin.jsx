@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { updateVisibleForPremiumButtonLogin, updateVisibleForSubscriptionModal } from "../../app/slices/professionalauthSlice";
+import { updateOpenSubscriptionAfterLogin, updateVisibleForPremiumButtonLogin, updateVisibleForSubscriptionModal } from "../../app/slices/professionalauthSlice";
 import LandingImg from "../../assets/LandingPageIcons/Landing.svg";
 import Vector from "../../assets/LandingPageIcons/Vector.svg";
 import ButtonField from "../../components/ButtonsFields/ButtonField";
@@ -10,14 +10,23 @@ const ProLandingAfterLogin = () => {
 
   let Token = localStorage.getItem("Token");
   const dispatch = useDispatch()
+  const { openSubscriptionAfterLogin } = useSelector(state => state.professional)
 
   const handlePremiumButtonClick = () => {
+    dispatch(updateOpenSubscriptionAfterLogin(true))
     if (!Token) {
       dispatch(updateVisibleForPremiumButtonLogin(true))
     } else {
       dispatch(updateVisibleForSubscriptionModal(true))
     }
   }
+  
+  useEffect(() => {
+    if(openSubscriptionAfterLogin){
+      dispatch(updateVisibleForSubscriptionModal(true))
+      dispatch(updateOpenSubscriptionAfterLogin(false))
+    }
+  }, [])
 
   return (
     <>

@@ -12,6 +12,8 @@ import {
   useProfessionalTypeMutation,
 } from "../../../app/services/professionalOauthApiServices";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { updateOpenSubscriptionAfterLogin } from "../../../app/slices/professionalauthSlice";
 const initialValues = {
   email: "",
   password: "",
@@ -42,6 +44,8 @@ const ProfessionalLoginFrame = (props) => {
   const [vpass, setVPass] = useState("password");
   const [rememberMeCheck, setRememberMeCheck] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+
   useEffect(() => {
     if (ProfessionalLoginResponse.isSuccess) {
       setVisibleForProfessionalLogin(false);
@@ -113,7 +117,7 @@ const ProfessionalLoginFrame = (props) => {
         touched,
       }) => (
         <Modal
-          setVisible={setVisibleForProfessionalLogin}
+          setVisible={()=> {setVisibleForProfessionalLogin(false);dispatch(updateOpenSubscriptionAfterLogin(false))}}
           ModalTitle="Login"
           description="Welcome back!Please enter your details"
           className="pt-5 font-normal"

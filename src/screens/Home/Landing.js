@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SuccessModal from "../../components/SuccessModal/SuccessModal";
 import { updateIsStepperVisible } from "../../app/slices/userStepper";
 import Subscription from "../Frame/Subscription/Subscription";
-import { updateVisibleForPremiumButtonLogin, updateVisibleForSubscriptionModal } from "../../app/slices/professionalauthSlice";
+import { updateOpenSubscriptionAfterLogin, updateVisibleForPremiumButtonLogin, updateVisibleForSubscriptionModal } from "../../app/slices/professionalauthSlice";
 
 const Landing = () => {
   const [searchTxt, setSearchTxt] = useState("");
@@ -24,6 +24,7 @@ const Landing = () => {
   let Token = localStorage.getItem("Token");
 
   const handlePremiumButtonClick = () => {
+    dispatch(updateOpenSubscriptionAfterLogin(true))
     if(!Token){
       dispatch(updateVisibleForPremiumButtonLogin(true))
     }else{
