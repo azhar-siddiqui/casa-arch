@@ -5,6 +5,7 @@ import Mail from "../../assets/FooterIcons/Mail.svg";
 import CasaLogo from "../../assets/FooterIcons/FooterCasaLogo.svg";
 import Rectangle from "../../assets/FooterIcons/Rectangle.svg";
 import Google from "../../assets/FooterIcons/Google.svg";
+import Instagram from "../../assets/FooterIcons/Instagram.svg";
 import Twitter from "../../assets/FooterIcons/Twitter.svg";
 import Facebook from "../../assets/FooterIcons/Facebook.svg";
 import Subscription from "../../assets/FooterIcons/Vector-3.svg";
@@ -70,8 +71,8 @@ const Footer = () => {
               <h5>Follow us</h5>
               <img src={Rectangle} alt="Rectangle" width={"64px"} />
               <div className="FollowUs flex mt-2">
-                <Link to="/" target="_blank">
-                  <img src={Google} alt="googleLogo" />
+                <Link to="/" target="_blank" onClick={()=>window.open('https://instagram.com/casaarch.in?igshid=YmMyMTA2M2Y=')} >
+                  <img src={Instagram} alt="googleLogo" />
                 </Link>
                 <Link to="/" target="_blank">
                   <img src={Twitter} alt="twitterLogo" />
