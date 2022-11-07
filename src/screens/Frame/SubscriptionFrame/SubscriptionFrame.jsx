@@ -48,14 +48,14 @@ const initialValueData = {
   email: "",
   phone: "",
   subscriptionPlan: { id: 0, val: "" },
-  AreaOIfOperation: { id: 0, val: "" },
+  AreaOfOperation: { id: 0, val: "" },
   portfolioLink: "",
   socialMedia: "",
 };
 
 const SubscriptionFrame = () => {
   const [subscription, setSubscriptionPlan] = useState(false);
-  const [areaOfOperation, setAreaOIfOperation] = useState(false);
+  const [areaOfOperation, setAreaOfOperation] = useState(false);
 
   const [initialValues, SetInitialValues] = useState(initialValueData);
 
@@ -63,20 +63,29 @@ const SubscriptionFrame = () => {
     subscription ? setSubscriptionPlan(false) : setSubscriptionPlan(true);
   };
   const toggleDropDownAreaOIfOperation = () => {
-    areaOfOperation ? setAreaOIfOperation(false) : setAreaOIfOperation(true);
+    areaOfOperation ? setAreaOfOperation(false) : setAreaOfOperation(true);
   };
 
-  const changeDropdownValue = (e) => {
+  const changeDropdownValue = (e, setFieldValue) => {
     // let name = e.target.className;
     // console.log("name", name);
-    let value = e.target.innerHTML;
+
+    console.log(e.currentTarget.getAttribute("name"));
+    let value =
+      e.currentTarget.firstElementChild.innerText +
+      " " +
+      e.currentTarget.lastElementChild.innerText;
     console.log(value);
-    let id = parseInt(e.target.id);
-    SetInitialValues({ ...initialValues, [initialValues]: { id, value } });
+    let id = parseInt(e.currentTarget.id);
+    if (e.currentTarget.getAttribute("name") === "subscriptionPlan") {
+      setFieldValue("subscriptionPlan", { id: id, val: value });
+    } else if (e.currentTarget.getAttribute("name") === "AreaOfOperation") {
+      setFieldValue("AreaOfOperation", { id: id, val: value });
+    }
   };
 
-  const handleSubmit = () => {
-    console.log("Subscription Value", initialValues);
+  const handleSubmit = (values) => {
+    console.log("Subscription Value", values);
   };
 
   return (
@@ -87,6 +96,7 @@ const SubscriptionFrame = () => {
     >
       {({
         handleChange,
+        setFieldValue,
         handleBlur,
         handleSubmit,
         values,
@@ -143,11 +153,11 @@ const SubscriptionFrame = () => {
                 <span onClick={toggleDropDownSubscription} className="relative">
                   <input
                     type="text"
-                    name="subscription"
-                    value={initialValues.subscriptionPlan.val}
-                    readOnly
+                    name="subscriptionPlan"
+                    value={values.subscriptionPlan.val}
                     placeholder="Select your subscription plan"
                     className={`py-2.5 px-3 lg:px-6 ${styles.input}`}
+                    onChange={() => {}}
                   />
                   {subscription ? (
                     <img
@@ -169,8 +179,11 @@ const SubscriptionFrame = () => {
                           <li
                             key={ele.id}
                             className="subscription hover:bg-[#CED4DA] hover:text-black px-3 md:px-6 py-3 text-[16px] flex justify-between"
-                            onClick={changeDropdownValue}
+                            onClick={(e) => {
+                              changeDropdownValue(e, setFieldValue);
+                            }}
                             id={ele.id}
+                            name="subscriptionPlan"
                           >
                             <span>{ele.val[0]}</span>
                             <span>{ele.val[1]}</span>
@@ -192,10 +205,11 @@ const SubscriptionFrame = () => {
                   <input
                     type="text"
                     name="AreaOfOperation"
-                    value={initialValues.AreaOIfOperation.val}
-                    readOnly
+                    value={values.AreaOfOperation.val}
                     placeholder="Select your subscription plan"
                     className={`py-2.5 px-3 lg:px-6 ${styles.input}`}
+                    onChange={() => {}}
+                    id={"AreaOfOperation"}
                   />
                   {areaOfOperation ? (
                     <img
@@ -217,10 +231,14 @@ const SubscriptionFrame = () => {
                           <li
                             key={ele.id}
                             className="subscription hover:bg-[#CED4DA] hover:text-black px-3 md:px-6 py-3 text-[16px] flex justify-between"
-                            onClick={changeDropdownValue}
                             id={ele.id}
+                            onClick={(e) => {
+                              changeDropdownValue(e, setFieldValue);
+                            }}
+                            name="AreaOfOperation"
                           >
                             <span>{ele.val}</span>
+                            <span></span>
                           </li>
                         );
                       })}

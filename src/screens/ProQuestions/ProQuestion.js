@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./ProQuestions.module.css";
 import DeleteOrange from "../../assets/ProQuestionIcons/DeleteOrange.svg";
 import UpArrow from "../../assets/ProQuestionIcons/up-arrow.svg";
@@ -7,14 +7,20 @@ import Up from "../../assets/up-icon.svg";
 import { Popup } from "../../components/Popup/Popup";
 import TypeOfClientProfessional from "../Frame/TypeOfClientForProfessionalFrame/TypeOfClientProfessional";
 import SubscriptionFrame from "../Frame/SubscriptionFrame/SubscriptionFrame";
+import { useProQuestionMutation } from "../../app/services/proQuestion";
+import SuccessModal from "../../components/SuccessModal/SuccessModal";
 
 const ProQuestion = () => {
+  let Token = localStorage.getItem("Token");
+  console.log(Token);
+  const [visibleSuccess, SetVisibleSuccess] = useState(false);
+  const [visibleTypeOfClient, SetVisibleTypeOfClient] = useState(false);
   const [checkedName, setcheckedName] = useState("");
   const [fields, setFields] = useState({
     photo: [],
     video: [],
-    accreditation: [],
   });
+  const [proQuestion, proQuestionresp] = useProQuestionMutation();
 
   const [orgnization, setOrgnization] = useState({
     companyName: "",
@@ -164,17 +170,114 @@ const ProQuestion = () => {
     initialVal: "",
   });
 
-  // const maxLengthfields = (maxLength, fieldsCpy) => {
-  //   if (maxLength <= 5) {
-  //     setFields(fieldsCpy);
-  //   } else {
-  //     alert("alert");
-  //   }
-  // };
+  useEffect(() => {
+    if (proQuestionresp.isSuccess) {
+      SetVisibleSuccess(true);
+      setTimeout(() => {
+        SetVisibleSuccess(false);
+      }, 2000);
+      SetVisibleTypeOfClient(true);
+    } else if (proQuestionresp.isError) {
+    }
+  }, [proQuestionresp.isSuccess, proQuestionresp.isError]);
 
   const getorgdata = () => {
-    const data = { fields, orgnization, freelancer };
+    const data = { fields, orgnization, freelancer, accr };
+    const completeFormData = new FormData();
     console.log(data);
+
+    const reqPayload = {
+      desginer_profile_type: "",
+      name_of_organization: orgnization.companyName,
+      years_in_business: orgnization.yearOfBusiness,
+      organization_website: orgnization.companyWebSite,
+      organisation_size: orgnization.companySize,
+      description: "",
+      name_of_business: freelancer.NameOfBusiness,
+      website: freelancer.Websites,
+      portfolio_url: freelancer.Portfolio,
+      work_video_link1: fields.video[0],
+      work_video_link2: fields.video[1],
+      work_video_link3: fields.video[2],
+      work_video_link4: fields.video[3],
+      work_video_link5: fields.video[4],
+      work_profile_pic1: fields.photo[0],
+      work_profile_pic2: fields.photo[1],
+      work_profile_pic3: fields.photo[2],
+      work_profile_pic4: fields.photo[3],
+      work_profile_pic5: fields.photo[4],
+      work_profile_accerditation1: accr[0],
+      work_profile_accerditation2: accr[1],
+      work_profile_accerditation3: accr[2],
+      work_profile_accerditation4: accr[3],
+      work_profile_accerditation5: accr[4],
+      work_profile_accerditation6: accr[5],
+      work_profile_accerditation7: accr[6],
+      work_profile_accerditation8: accr[7],
+    };
+
+    completeFormData.append(
+      "desginer_profile_type",
+      reqPayload.desginer_profile_type
+    );
+    completeFormData.append(
+      "name_of_organization",
+      reqPayload.name_of_organization
+    );
+
+    completeFormData.append("years_in_business", reqPayload.years_in_business);
+    completeFormData.append(
+      "organization_website",
+      reqPayload.organization_website
+    );
+    completeFormData.append("organisation_size", reqPayload.organisation_size);
+    completeFormData.append("description", reqPayload.description);
+    completeFormData.append("name_of_business", reqPayload.name_of_business);
+    completeFormData.append("website", reqPayload.website);
+    completeFormData.append("portfolio_url", reqPayload.portfolio_url);
+    completeFormData.append("work_video_link1", reqPayload.work_video_link1);
+    completeFormData.append("work_video_link2", reqPayload.work_video_link2);
+    completeFormData.append("work_video_link3", reqPayload.work_video_link3);
+    completeFormData.append("work_video_link4", reqPayload.work_video_link4);
+    completeFormData.append("work_video_link5", reqPayload.work_video_link5);
+    completeFormData.append("work_profile_pic1", reqPayload.work_profile_pic1);
+    completeFormData.append("work_profile_pic2", reqPayload.work_profile_pic2);
+    completeFormData.append("work_profile_pic3", reqPayload.work_profile_pic3);
+    completeFormData.append("work_profile_pic4", reqPayload.work_profile_pic4);
+    completeFormData.append("work_profile_pic5", reqPayload.work_profile_pic5);
+    completeFormData.append(
+      "work_profile_accerditation1",
+      reqPayload.work_profile_accerditation1
+    );
+    completeFormData.append(
+      "work_profile_accerditation2",
+      reqPayload.work_profile_accerditation2
+    );
+    completeFormData.append(
+      "work_profile_accerditation3",
+      reqPayload.work_profile_accerditation3
+    );
+    completeFormData.append(
+      "work_profile_accerditation4",
+      reqPayload.work_profile_accerditation4
+    );
+    completeFormData.append(
+      "work_profile_accerditation5",
+      reqPayload.work_profile_accerditation5
+    );
+    completeFormData.append(
+      "work_profile_accerditation6",
+      reqPayload.work_profile_accerditation6
+    );
+    completeFormData.append(
+      "work_profile_accerditation7",
+      reqPayload.work_profile_accerditation7
+    );
+    completeFormData.append(
+      "work_profile_accerditation8",
+      reqPayload.work_profile_accerditation8
+    );
+    proQuestion({ completeFormData: completeFormData, Token: Token });
   };
 
   const handleImgFileUpload = (e) => {
@@ -693,8 +796,14 @@ const ProQuestion = () => {
           </button>
         </div>
       </>
+      {visibleSuccess && <SuccessModal massage={"Added Successfully"} />}
+      {visibleTypeOfClient && (
+        <TypeOfClientProfessional
+          SetVisibleTypeOfClient={SetVisibleTypeOfClient}
+        />
+      )}
+
       {/* Modal Start */}
-      {/* <TypeOfClientProfessional /> */}
       {/* Modal End */}
       {/* <SubscriptionFrame /> */}
     </>

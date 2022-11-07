@@ -1,8 +1,6 @@
 import React from "react";
 import "./SuccessModal.css";
-import CircleOrange from "../../assets/successModalIcons/Circle.svg";
 import Loading from "../../assets/successModalIcons/Loading.svg";
-import Tick from "../../assets/successModalIcons/Right.svg";
 
 const SuccessModal = (props) => {
   const { massage } = props;

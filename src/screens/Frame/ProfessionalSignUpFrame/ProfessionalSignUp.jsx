@@ -53,7 +53,7 @@ const ProfessionalSignUp = (props) => {
         professionalSignUpResponse.data
       );
       localStorage.setItem(
-        "signupToken",
+        "Token",
         professionalSignUpResponse.data.data.access_token
       );
       setVisibleForProfessionalSignUp(false);

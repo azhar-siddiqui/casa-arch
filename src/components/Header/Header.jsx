@@ -33,6 +33,7 @@ import {
   useProfessionalServiceMutation,
 } from "../../app/services/professionalServices";
 import UserLoginFrame from "../../screens/Frame/UserLoginFrame";
+import { useProfessionalSignUpPatchMutation } from "../../app/services/professionalOauthApiServices";
 
 // import SelectLoginFrame from "../../screens/Frame/SelectLoginFrame/SelectLoginFrame";
 
@@ -100,6 +101,8 @@ const Header = () => {
     useProfessionalServiceMutation();
   const [professionalAreaCheckService, ProfessionalAreaCheckServiceResponse] =
     useProfessionalAreaCheckServiceMutation();
+  // const [professionalSignUpPatch, professionalSignUpPatchResponse] =
+  //   useProfessionalSignUpPatchMutation();
 
   let [openMenu, setOpenMenu] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -270,6 +273,8 @@ const Header = () => {
     sessionStorage.removeItem("access");
     dispatch(updateIsLoggedIn(false));
   };
+
+  const navigate = useNavigate();
   const incCount = () => {
     if (count !== data.length - 1) {
       setCount(count + 1);
@@ -282,8 +287,12 @@ const Header = () => {
         let t = (fields.preference = true);
         setFields({ ...fields, preference: t });
         professionalService(fields);
-        setProVisible(false);
-        navigate("/professionals/questions");
+        if (professionalServiceResponse.isSuccess) {
+          setProVisible(false);
+          navigate("/professionals/questions");
+          console.log("professionalServiceResponse");
+        }
+
         if (submittedSteppersData.isError) {
           setProVisible(true);
         }
@@ -303,12 +312,11 @@ const Header = () => {
     setDetailsVisible(true);
     setTimeout(() => {
       setDetailsVisible(false);
-      navigate("/professionals");
-      // navigate("/professionals/questions");
     }, 2000);
+    // navigate("/professionals/questions");
   };
 
-  const navigate = useNavigate();
+  useEffect(() => {}, []);
 
   const handleProfessionalLogout = () => {
     setLogoutSuccess(true);
@@ -316,6 +324,7 @@ const Header = () => {
       setLogoutSuccess(false);
       navigate("/");
     }, 2000);
+    localStorage.clear();
   };
 
   const decCount = () => {
@@ -337,7 +346,6 @@ const Header = () => {
         >
           <img src={MenuIcon} alt="MenuIcon" />
         </div>
-
         <ul
           className={`lg:flex lg:items-center lg:pb-0 pb-12 absolute lg:static bg-white lg:z-auto z-[-1] left-0 w-full lg:w-auto lg:pl-0 pl-5 transition-all duration-500 ease-in ${
             openMenu ? "top-20 " : "top-[-490px]"
@@ -578,7 +586,7 @@ const Header = () => {
                     </div>
                     {
                       <>
-                        <h2 className={styles.question}>?{currData.heading}</h2>
+                        <h2 className={styles.question}>{currData.heading}</h2>
                         <div className={styles.input_div}>
                           {currData.type === "text" ||
                           currData.type === "email" ? (

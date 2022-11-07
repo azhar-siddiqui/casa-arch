@@ -7,6 +7,7 @@ import professionalAuthReducer from "./slices/professionalAuthSlice";
 import { professionalOauthApi } from "./services/professionalOauthApiServices";
 import { professionalServicesApi } from "./services/professionalServices";
 import { checkPointsApi } from "./services/CheckPoints";
+import { proQuestionApi } from "./services/proQuestion";
 
 export const store = configureStore({
   reducer: {
@@ -17,13 +18,15 @@ export const store = configureStore({
     [professionalOauthApi.reducerPath]: professionalOauthApi.reducer,
     [professionalServicesApi.reducerPath]: professionalServicesApi.reducer,
     [checkPointsApi.reducerPath]: checkPointsApi.reducer,
+    [proQuestionApi.reducerPath]: proQuestionApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       getInTouchApi.middleware,
       professionalOauthApi.middleware,
       professionalServicesApi.middleware,
-      checkPointsApi.middleware
+      checkPointsApi.middleware,
+      proQuestionApi.middleware
     ),
   // getDefaultMiddleware().concat(professionalOauthApi.middleware),
 });

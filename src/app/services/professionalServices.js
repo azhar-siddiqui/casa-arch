@@ -20,7 +20,7 @@ export const professionalServicesApi = createApi({
           method: "PATCH",
           body: data,
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("signupToken")}`,
+            Authorization: `Bearer ${localStorage.getItem("Token")}`,
           },
         };
       },

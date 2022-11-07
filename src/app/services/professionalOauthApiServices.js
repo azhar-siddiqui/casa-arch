@@ -49,6 +49,18 @@ export const professionalOauthApi = createApi({
         };
       },
     }),
+    professionalSignUpPatch: builder.mutation({
+      query: (payload) => {
+        return {
+          url: `${AppConstants.endPoints.professional_signup_patch}`,
+          method: "PATCH",
+          body: payload.body,
+          headers: {
+            Authorization: `Bearer ${payload.Token}`,
+          },
+        };
+      },
+    }),
   }),
 });
 
@@ -56,4 +68,5 @@ export const {
   useProfessionalSignUpMutation,
   useProfessionalLoginMutation,
   useProfessionalTypeMutation,
+  useProfessionalSignUpPatchMutation,
 } = professionalOauthApi;
