@@ -11,12 +11,13 @@ import SuccessModal from "../../components/SuccessModal/SuccessModal";
 import { updateIsStepperVisible } from "../../app/slices/userStepper";
 import Subscription from "../Frame/Subscription/Subscription";
 import { updateOpenSubscriptionAfterLogin, updateVisibleForPremiumButtonLogin, updateVisibleForSubscriptionModal } from "../../app/slices/professionalauthSlice";
+import StartDesignFrame from "../Frame/StartDesignFrame/StartDesignFrame";
 
 const Landing = () => {
   const [searchTxt, setSearchTxt] = useState("");
   const [filterDropData, setFilterDropData] = useState([]);
   const [visibleGetInTouch, setVisibleGetInTouch] = useState(false);
-  const { isLoggedIn, userType } = useSelector(state => state.user)
+  const { isLoggedIn, userType } = useSelector((state) => state.user);
   const [successModalVisible, setSuccessModalVisible] = useState(false);
   const [pricingSubscriptionMoadl, setPricingSubscriptionMoadl] = useState(false)
   const dispatch = useDispatch()
@@ -110,16 +111,16 @@ const Landing = () => {
       </div>
       <div className="text-center pt-0 sm:pt-5  lg:pt-14 mx-auto max-w-5xl mb-10 px-5 lg:px-0">
         {isLoggedIn === true && userType === 'Customer' ? <></> :
-          <>
+         (<>
             <h1 className="text-primaryDark py-2 font-medium text-left md:text-center text-2xl lg:text-5xl">
               Pricing
             </h1>
             <p className="text-base text-primaryGray font-medium text-justify lg:text-left py-4 leading-5">
-              From the moment you sign up, we'll send you leads for free. You only
-              pay to contact customers that you think are the right fit for your
-              business.From the moment you sign up, we'll send you leads for free.
-              You only pay to contact customers that you think are the right fit for
-              your business
+              From the moment you sign up, we'll send you leads for free. You
+              only pay to contact customers that you think are the right fit for
+              your business.From the moment you sign up, we'll send you leads
+              for free. You only pay to contact customers that you think are the
+              right fit for your business
             </p>
             <ButtonField
               onClick={handlePremiumButtonClick}
@@ -127,7 +128,7 @@ const Landing = () => {
               className={"bg-primaryOrange py-3 px-4 mt-3 lt:mt-0"}
             />
           </>
-        }
+        )}
 
         <h1 className="text-primaryDark pt-11 font-medium text-left md:text-center text-2xl lg:text-5xl">
           Discover
@@ -160,6 +161,8 @@ const Landing = () => {
       {successModalVisible && (
         <SuccessModal massage={"Details Added Successfully"} />
       )}
+
+      {/* <StartDesignFrame /> */}
     </>
   );
 };

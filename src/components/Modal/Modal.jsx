@@ -32,9 +32,9 @@ export default function Modal(props) {
       >
         <div className="relative w-auto my-6 mx-auto max-w-3xl my-auto">
           {/*content*/}
-          <div className="border-0 shadow-lg relative flex flex-col bg-white outline-none focus:outline-none">
+          <div className="border-0 shadow-lg relative flex flex-col bg-white outline-none focus:outline-none ">
             {/*header*/}
-            <div className="p-5 pb-0">
+            <div className="p-4 sm:p-5 pb-0">
               <div className="flex items-center justify-between ">
                 <h3 className="font-semibold text-2xl md:text-[32px]">
                   {ModalTitle ? ModalTitle : ""}

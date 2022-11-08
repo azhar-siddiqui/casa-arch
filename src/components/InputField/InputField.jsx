@@ -34,7 +34,7 @@ const InputField = (props) => {
           onChange={onChange}
           onBlur={onBlur}
           placeholder={placeholder}
-          className={`outline-none border-2 py-2.5 px-6 w-full ${
+          className={`outline-none border py-2.5 px-3 lg:px-6 w-full ${
             props?.className
           } ${props?.errorText ? `border-red-700` : `border-primaryLight`}`}
           autoComplete="off"

@@ -40,58 +40,9 @@ import ResetPasswordFrame from "../../screens/Frame/ResetPasswordFrame/ResetPass
 import PremiumButtonLogin from "../../screens/Frame/premiumButtonLogin/PremiumButtonLogin";
 import { updateVisibleForPremiumButtonLogin, updateVisibleForSubscriptionModal } from "../../app/slices/professionalauthSlice";
 import Subscription from "../../screens/Frame/Subscription/Subscription";
+import { useProfessionalSignUpPatchMutation } from "../../app/services/professionalOauthApiServices";
 
-// import Loc from "../../assets/ModalIcon/loc.svg";
 // import SelectLoginFrame from "../../screens/Frame/SelectLoginFrame/SelectLoginFrame";
-
-const initialValues = {
-  name: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
-  companyName: "",
-  companyWebsite: "",
-};
-
-const SignUpSchema = Yup.object({
-  name: Yup.string().required("This field is required."),
-  email: Yup.string()
-    .email("Please Enter Valid Email")
-    .required("This field is required."),
-  password: Yup.string()
-    .min(8, "Minimum 8 digits required.")
-    .required("This field is required.")
-    .matches(
-      /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
-      "Password must contain at least 8 characters, one uppercase, one number and one special case character Abc@1234"
-    ),
-  confirmPassword: Yup.string().oneOf(
-    [Yup.ref("password"), null],
-    "Passwords must match"
-  ),
-  companyName: Yup.string().required("This field is required."),
-});
-
-const LoginSchema = Yup.object({
-  email: Yup.string()
-    .email("Please Enter Valid Email")
-    .required("This field is required."),
-  password: Yup.string()
-    .min(8, "Minimum 8 digits required.")
-    .required("This field is required.")
-    .matches(
-      /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
-      "Password must contain at least 8 characters, one uppercase, one number and one special case character Abc@1234"
-    ),
-});
-
-const initialValuesLocation = {
-  area: "",
-};
-
-const LocationSchema = Yup.object({
-  area: Yup.string().required("This field is required."),
-});
 
 const initialValuesUserStepper = {
   pincode: "",
@@ -157,11 +108,9 @@ const Header = () => {
     useProfessionalServiceMutation();
   const [professionalAreaCheckService, ProfessionalAreaCheckServiceResponse] =
     useProfessionalAreaCheckServiceMutation();
-  // console.log("professionalAreaCheckService", professionalAreaCheckService);
-  console.log(
-    "ProfessionalAreaCheckServiceResponse",
-    ProfessionalAreaCheckServiceResponse
-  );
+  // const [professionalSignUpPatch, professionalSignUpPatchResponse] =
+  //   useProfessionalSignUpPatchMutation();
+const navigate = useNavigate()
   let [openMenu, setOpenMenu] = useState(false);
   const [visible, setVisible] = useState(false);
   const [currentStepValue, setCurrentStepValue] = useState(userStepper);
@@ -169,7 +118,6 @@ const Header = () => {
   // normal or professional
   const [currentStepper, setCurrentStepper] = useState("normal"); //can be 'normal' or 'professional' - used to know which steppers (professional/normal) to be displayed
   const [dashboardButtonVisible, setDashboardButtonVisible] = useState(false);
-  const [rememberMeCheck, setRememberMeCheck] = useState(false);
   const [professionalsAccSwitchingMsg, setProfessionalsAccSwitchingMsg] =
     useState(false);
   const [proButtonVisible, setProButtonVisible] = useState(true);
@@ -193,6 +141,7 @@ const Header = () => {
 
   const [proVisible, setProVisible] = useState(false);
   const [logoutSucces, setLogoutSuccess] = useState(false);
+  const [DetailsVisible, setDetailsVisible] = useState(false);
   const location = useLocation();
   const [submitNormalUserSteppers, submittedSteppersData] =
     useSubmitSteppersMutation();
@@ -279,6 +228,7 @@ const Header = () => {
     pincode: "",
     preference: "",
   });
+
   const [count, setCount] = useState(0);
   const [currData, setCurrData] = useState({
     heading: "",
@@ -387,8 +337,12 @@ const Header = () => {
         let t = (fields.preference = true);
         setFields({ ...fields, preference: t });
         professionalService(fields);
-        setProVisible(false);
-        navigate("/professionals/questions");
+        if (professionalServiceResponse.isSuccess) {
+          setProVisible(false);
+          navigate("/professionals/questions");
+          console.log("professionalServiceResponse");
+        }
+
         if (submittedSteppersData.isError) {
           setProVisible(true);
         }
@@ -404,17 +358,23 @@ const Header = () => {
         }
       }
     }
+
+    setDetailsVisible(true);
+    setTimeout(() => {
+      setDetailsVisible(false);
+    }, 2000);
+    // navigate("/professionals/questions");
   };
 
-  const navigate = useNavigate();
+  useEffect(() => {}, []);
 
   const handleProfessionalLogout = () => {
     setLogoutSuccess(true);
-    localStorage.clear();
     setTimeout(() => {
       setLogoutSuccess(false);
       navigate("/");
     }, 2000);
+    localStorage.clear();
   };
 
   const decCount = () => {
@@ -436,7 +396,6 @@ const Header = () => {
         >
           <img src={MenuIcon} alt="MenuIcon" />
         </div>
-
         <ul
           className={`lg:flex lg:items-center lg:pb-0 pb-12 absolute lg:static bg-white lg:z-auto z-[-1] left-0 w-full lg:w-auto lg:pl-0 pl-5 transition-all duration-500 ease-in ${openMenu ? "top-20 " : "top-[-490px]"
             }`}
@@ -498,7 +457,6 @@ const Header = () => {
           </li>
         </ul>
       </div>
-
       {visible && (
         <SelectLoginFrame
           setVisible={setVisible}
@@ -574,10 +532,9 @@ const Header = () => {
           setVisibleForProfessionalSignUp={setVisibleForProfessionalSignUp}
           setCustomerForgotPassword={setCustomerForgotPassword}
           setvisibleForForgotPassword={setvisibleForForgotPassword}
-
+          setProVisible={setProVisible}
         />
       )}
-
       {visibleForProfessionalSignUp && (
         <ProfessionalSignUp
           setVisibleForProfessionalSignUp={setVisibleForProfessionalSignUp}
@@ -586,7 +543,7 @@ const Header = () => {
         />
       )}
 
-      {isStepperVisible && currentStepValue.length >= 1 &&
+      {isStepperVisible && currentStepValue.length >= 1 && (
         <Formik
           initialValues={initialValuesUserStepper}
           onSubmit={handleSubmit}
@@ -711,7 +668,7 @@ const Header = () => {
             />
           )}
         </Formik>
-      }
+      )}
       {professionalsAccSwitchingMsg && (
         <SuccessModal massage={"Switching to professional account"} />
       )}
@@ -744,7 +701,6 @@ const Header = () => {
       }
 
       {logoutSucces && <SuccessModal massage="Logout Successfully" />}
-
       {successModalVisible === false && (
         <>
           {proVisible && (
@@ -862,9 +818,16 @@ const Header = () => {
             </>
           )}
         </>
-      )
-      }
-    </div >
+      )}
+
+      {proVisible === false && (
+        <>
+          {DetailsVisible && (
+            <SuccessModal massage={"Details Added Successfully"} />
+          )}
+        </>
+      )}
+    </div>
   );
 };
 

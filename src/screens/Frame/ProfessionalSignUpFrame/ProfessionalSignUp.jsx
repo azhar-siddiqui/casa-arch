@@ -52,6 +52,7 @@ const SignUpSchema = Yup.object({
 });
 
 const ProfessionalSignUp = (props) => {
+  let Token = localStorage.getItem("Token");
   const {
     setVisibleForProfessionalSignUp,
     setSuccessModalVisible,
@@ -66,10 +67,10 @@ const ProfessionalSignUp = (props) => {
     if (professionalSignUpResponse.isSuccess) {
       console.log(
         "professionalSignUpResponse",
-        professionalSignUpResponse.data.data.access_token
+        professionalSignUpResponse.data
       );
       localStorage.setItem(
-        "signupToken",
+        "Token",
         professionalSignUpResponse.data.data.access_token
       );
       setVisibleForProfessionalSignUp(false);
@@ -124,7 +125,7 @@ const ProfessionalSignUp = (props) => {
         }) => (
           <Modal
             setVisible={setVisibleForProfessionalSignUp}
-            classNameModal={"pt-[110px]"}
+            classNameModal={"pt-[210px]"}
             ModalTitle="Tell us about yourself"
             description="You're one step away from seeing our Architecture
                 leads"

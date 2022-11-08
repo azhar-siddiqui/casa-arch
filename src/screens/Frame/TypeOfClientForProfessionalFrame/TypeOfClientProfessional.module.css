@@ -1,0 +1,207 @@
+::placeholder {
+  font-weight: 600 !important;
+  font-size: 0.875rem;
+  line-height: 1.125rem;
+  color: #939ca3;
+}
+
+.main_div {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(73, 73, 73, 0.6);
+}
+
+.popup {
+  background-color: #fff;
+  width: 44.9375rem;
+}
+
+.popup_body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.cross {
+  margin-bottom: 1.5rem;
+  display: block;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.cross > img {
+  width: 100%;
+}
+
+/* .cross > img {
+  width: 100%;
+} */
+
+.question {
+  font-weight: 600;
+  font-size: 2rem;
+  line-height: 2.625rem;
+  color: #6d747a;
+  margin-bottom: 1.8125rem;
+}
+
+.input_div {
+  position: relative;
+}
+
+.checkbox_label {
+  border: 0.0625rem solid #ebedf0;
+  height: 4.625rem;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 1.5rem;
+}
+
+.input_div > img {
+  position: absolute;
+  top: 1.1875rem;
+  left: 1.8125rem;
+}
+
+#loc_inp {
+  padding-left: 4rem;
+}
+
+.text_inp {
+  padding: 1rem 0rem 1rem 1.5rem;
+  gap: 1rem;
+  width: 100%;
+  height: 3.5rem;
+  border: 0.0938rem solid #ced4da;
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.125rem;
+  color: #08090a;
+}
+
+.text_inp:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.input_div > input[type="checkbox"] {
+  visibility: hidden;
+  position: absolute;
+}
+
+.checkbox_text {
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.3125rem;
+  color: #08090a;
+  display: inline-block;
+  margin-left: 0.625rem;
+}
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.btn {
+  cursor: pointer;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--color-primary);
+  border: none;
+  color: white;
+  width: 7.125rem;
+  height: 2.8125rem;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.3125rem;
+}
+
+.back {
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.3125rem;
+  color: #6d747a;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 450px) {
+  ::placeholder {
+    font-weight: 600;
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+  .popup {
+    width: 20.375rem;
+  }
+  .popup_body {
+    padding: 0.75rem 1rem;
+  }
+
+  .cross {
+    width: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .question {
+    font-size: 1rem;
+    line-height: 1.3125rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .text_inp {
+    height: 1.9069rem;
+    font-weight: 600;
+    font-size: 0.75rem;
+    line-height: 0.8125rem;
+    padding: 0.4534rem 0rem 0.4534rem 0.6801rem;
+  }
+
+  #loc_inp {
+    padding-left: 1.8125rem;
+  }
+
+  .back {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+
+  .btn {
+    width: 4rem;
+    height: 1.6875rem;
+    font-size: 0.625rem;
+    line-height: 0.8125rem;
+    padding: 0;
+  }
+
+  .bottom {
+    margin-top: 0.6875rem;
+    margin-bottom: 0;
+  }
+
+  .checkbox_label {
+    padding: 0.625rem 0.75rem;
+    height: 2.375rem;
+  }
+
+  .checkbox_text {
+    font-size: 0.8125rem;
+    line-height: 1.0625rem;
+  }
+
+  .input_div > img {
+    width: 0.5rem;
+    top: 0.625rem;
+    left: 0.8125rem;
+  }
+}

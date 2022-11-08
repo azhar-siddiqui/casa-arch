@@ -1,8 +1,6 @@
 import React from "react";
 import "./SuccessModal.css";
-import CircleOrange from "../../assets/successModalIcons/Circle.svg";
 import Loading from "../../assets/successModalIcons/Loading.svg";
-import Tick from "../../assets/successModalIcons/Right.svg";
 
 const SuccessModal = (props) => {
   const { massage, hideFooter } = props;
@@ -13,7 +11,9 @@ const SuccessModal = (props) => {
       >
         <div className="relative w-auto my-6 mx-auto max-w-3xl">
           {/*content*/}
-          <div className="border-0 shadow-lg relative flex flex-col bg-white outline-none focus:outline-none py-6">
+          <div
+            className={` border-0 shadow-lg relative flex flex-col bg-white outline-none focus:outline-none py-6`}
+          >
             {/*header*/}
             <div className="mx-auto TickContainer">
               {/* <div className=""> */}

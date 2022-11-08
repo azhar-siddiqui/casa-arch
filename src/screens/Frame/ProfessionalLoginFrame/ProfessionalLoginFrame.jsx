@@ -14,9 +14,15 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateOpenSubscriptionAfterLogin } from "../../../app/slices/professionalauthSlice";
+import {
+  useProfessionalAreaCheckPointsMutation,
+  useProfessionalServiceCheckPointsMutation,
+  useProfessionalSubscriptionCheckPointsMutation,
+} from "../../../app/services/CheckPoints";
+
 const initialValues = {
-  email: "",
-  password: "",
+  email: "test1@test.com",
+  password: "Test@1234",
 };
 
 const LoginSchema = Yup.object({
@@ -33,13 +39,25 @@ const LoginSchema = Yup.object({
 });
 
 const ProfessionalLoginFrame = (props) => {
-  const { setVisibleForProfessionalLogin, setVisibleForProfessionalSignUp, setvisibleForForgotPassword, setCustomerForgotPassword } =
+  const { setVisibleForProfessionalLogin, setVisibleForProfessionalSignUp, setvisibleForForgotPassword, setCustomerForgotPassword, setProVisible } =
     props;
   const [professionalLogin, ProfessionalLoginResponse] =
     useProfessionalLoginMutation();
 
   const [professionalLoginType, ProfessionalLoginTypeResponse] =
     useProfessionalTypeMutation();
+
+  const [professionalAreaCheckPoint, ProfessionalAreaCheckPointResponse] =
+    useProfessionalAreaCheckPointsMutation();
+  const [
+    professionalServiceCheckPoints,
+    ProfessionalServiceCheckPointsResponse,
+  ] = useProfessionalServiceCheckPointsMutation();
+
+  const [
+    professionalSubscriptionCheckPoints,
+    ProfessionalSubscriptionCheckPointsResponse,
+  ] = useProfessionalSubscriptionCheckPointsMutation();
 
   const [vpass, setVPass] = useState("password");
   const [rememberMeCheck, setRememberMeCheck] = useState(false);
@@ -48,25 +66,117 @@ const ProfessionalLoginFrame = (props) => {
 
   useEffect(() => {
     if (ProfessionalLoginResponse.isSuccess) {
-      setVisibleForProfessionalLogin(false);
-      console.log("ProfessionalLoginResponse", ProfessionalLoginResponse);
       let setToken = ProfessionalLoginResponse.data.access_token;
       localStorage.setItem("Token", setToken);
-      navigate("/professionals/landing");
-      professionalLoginType();
-      console.log(
-        "ProfessionalLoginTypeResponse =>",
-        ProfessionalLoginTypeResponse
-      );
+      professionalLoginType(setToken);
+      professionalAreaCheckPoint(setToken);
+      // professionalServiceCheckPoints(setToken);
+      // professionalSubscriptionCheckPoints(setToken);
     } else if (ProfessionalLoginResponse.isError) {
       alert("Something went wrong");
     }
   }, [
     ProfessionalLoginResponse.isSuccess,
     ProfessionalLoginResponse.isError,
+    // ProfessionalAreaCheckPointResponse.isSuccess,
+    // ProfessionalAreaCheckPointResponse.isError,
+    // ProfessionalServiceCheckPointsResponse.isSuccess,
+    // ProfessionalServiceCheckPointsResponse.isError,
+  ]);
+
+  useEffect(() => {
+    if (ProfessionalLoginTypeResponse.isSuccess) {
+      if (ProfessionalLoginTypeResponse.data["user-type"] === "Professional") {
+        // ;
+        console.log("Type Professional");
+        if (ProfessionalServiceCheckPointsResponse.isSuccess) {
+          if (
+            ProfessionalServiceCheckPointsResponse.data.client_type === null
+          ) {
+            console.log(
+              "ProfessionalServiceCheckPointsResponse",
+              ProfessionalServiceCheckPointsResponse.data
+            );
+            navigate("professionals/questions");
+          } else {
+            navigate("/");
+          }
+        }
+        // navigate("/professionals/landing");
+        // console.log("work2");
+        // setVisibleForProfessionalLogin(false);
+      } else {
+        alert("User Type is Not Professional");
+      }
+    }
+  }, [
     ProfessionalLoginTypeResponse.isSuccess,
     ProfessionalLoginTypeResponse.isError,
   ]);
+
+  useEffect(() => {
+    if (ProfessionalAreaCheckPointResponse.isSuccess) {
+      console.log("Type Professional isSuccess");
+      if (ProfessionalAreaCheckPointResponse.data["area"] === null) {
+        // sjdkjsfkjhd
+        setProVisible(true);
+        console.log("area");
+      } else {
+        setProVisible(false);
+      }
+    } else if (ProfessionalAreaCheckPointResponse.isError) {
+      console.log("ProfessionalAreaCheckPointResponse Something Went Wrong");
+    }
+  }, [
+    ProfessionalAreaCheckPointResponse.isSuccess,
+    ProfessionalAreaCheckPointResponse.isError,
+  ]);
+
+  useEffect(() => {
+    if (ProfessionalServiceCheckPointsResponse.isSuccess) {
+      console.log("Type Professional isSuccess");
+      if (ProfessionalServiceCheckPointsResponse.data["client_type"] === null) {
+        setProVisible(true);
+        console.log("area");
+      } else {
+        setProVisible(false);
+      }
+    } else if (ProfessionalServiceCheckPointsResponse.isError) {
+      console.log("ProfessionalAreaCheckPointResponse Something Went Wrong");
+    }
+  }, [
+    ProfessionalServiceCheckPointsResponse.isSuccess,
+    ProfessionalServiceCheckPointsResponse.isError,
+  ]);
+
+  // useEffect(() => {
+  //   if (ProfessionalLoginTypeResponse.isSuccess) {
+  //     if (ProfessionalLoginTypeResponse.data["user-type"] === "Professional") {
+  //       setVisibleForProfessionalLogin(false);
+  //       navigate("/professionals/landing");
+  //       console.log("work2");
+  //     }
+  //   } else if (ProfessionalLoginTypeResponse.isError) {
+  //     alert("outside error");
+  //   }
+  // }, [
+  //   ProfessionalLoginTypeResponse.isSuccess,
+  //   ProfessionalLoginTypeResponse.isError,
+  // ]);
+
+  // useEffect(() => {
+  //   if (ProfessionalAreaCheckPointResponse.isSuccess) {
+  //     if (ProfessionalAreaCheckPointResponse.data["area"] === null) {
+  //       setProVisible(true);
+  //       console.log("work");
+  //     } else {
+  //       setProVisible(false);
+  //     }
+  //   }
+  // }, [
+  //   ProfessionalAreaCheckPointResponse.isSuccess,
+  //   ProfessionalAreaCheckPointResponse.isError,
+  // ]);
 
   const handleSubmit = (values) => {
     let userData = {
@@ -78,8 +188,10 @@ const ProfessionalLoginFrame = (props) => {
       username: values.email,
       password: values.password,
     };
-    professionalLogin(userData);
-
+    professionalLogin(userData)
+    .then(res => {
+       setVisibleForProfessionalLogin(false);
+    })
     // setVisibleForProfessionalLogin(false);
   };
 

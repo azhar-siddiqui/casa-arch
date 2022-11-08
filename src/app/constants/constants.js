@@ -6,5 +6,10 @@ export const AppConstants = {
     professional_Login: "user-login",
     user_Type: "user-type",
     professional_area_check: "professional-area-check",
+    professional_service_check: "professional-service-check",
+    professional_subscription_check: "professional-subscription-check",
+    professional_work_profile: "professional-work-profile/",
+    customer_project_choices: "customer-project-choices/",
+    professional_signup_patch: "professional-signup",
   },
 };
