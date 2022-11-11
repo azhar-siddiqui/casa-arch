@@ -57,8 +57,6 @@ const SubscriptionFrame = () => {
   const [subscription, setSubscriptionPlan] = useState(false);
   const [areaOfOperation, setAreaOfOperation] = useState(false);
 
-  const [initialValues, SetInitialValues] = useState(initialValueData);
-
   const toggleDropDownSubscription = () => {
     subscription ? setSubscriptionPlan(false) : setSubscriptionPlan(true);
   };
@@ -90,7 +88,7 @@ const SubscriptionFrame = () => {
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={initialValueData}
       onSubmit={handleSubmit}
       validationSchema={SignUpSchema}
     >
@@ -158,6 +156,7 @@ const SubscriptionFrame = () => {
                     placeholder="Select your subscription plan"
                     className={`py-2.5 px-3 lg:px-6 ${styles.input}`}
                     onChange={() => {}}
+                    autoComplete="off"
                   />
                   {subscription ? (
                     <img

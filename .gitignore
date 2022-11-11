@@ -4,7 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
-
+/notes.txt
+/notes2.txt
 # testing
 /coverage
 

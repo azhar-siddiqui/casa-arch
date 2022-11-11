@@ -18,6 +18,7 @@ import ProfessionalProfile from "./screens/ProfessionalProfile/ProfessionalProfi
 import PrivateRoutes from "./screens/PrivateRoute/PrivateRoutes";
 import Leads from "./screens/Leads/Leads";
 import LeadListing from "./screens/Leads/LeadListing/LeadListing.jsx";
+import DashboardLeads from "./screens/ProfessionalDashboardLeads/DashboardLeads";
 // import ProQuestion from "./screens/ProQuestion/ProQuestion.jsx";
 function App() {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
@@ -44,12 +45,15 @@ function App() {
           <Route path="/leads" element={<LeadListing />} />
         ) : (
           <Route path="/leadsListing/:id" element={<Leads />} />
+          // <Route path="/leadsListing" element={<Leads />} />
         )}
         <Route path="/leadsListing/:id" element={<Leads />} />
+        {/* <Route path="/leadsListing" element={<Leads />} /> */}
         {/* <Route path="/pro_question" element={<ProQuestion />} /> */}
         <Route path="/professionals">
           <Route path="" element={<Professionals />} />
           <Route path="questions" element={<ProQuestion />} />
+          <Route path="dashboardleads" element={<DashboardLeads />} />
           <Route element={<PrivateRoutes />}>
             <Route path="landing" element={<ProLandingAfterLogin />} />
             <Route path="myprofile" element={<ProfessionalProfile />} />

@@ -6,8 +6,11 @@ import "./Leads.css";
 import ButtonField from "../../components/ButtonsFields/ButtonField";
 import LeadsCards from "../../components/LeadsCards/LeadsCards";
 import { useParams, useNavigate } from "react-router-dom";
-
+import { useCustomerDetailsLeadsQuery } from "../../app/services/leadsServices";
 const Leads = () => {
+  const { data, isLoading, isError, isSuccess } = useCustomerDetailsLeadsQuery;
+  console.log("customerDetailsLeads data", data);
+
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   useEffect(() => {
     const changeWidth = () => {

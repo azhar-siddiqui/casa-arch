@@ -1,8 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useCustomerDetailsLeadsQuery } from "../../app/services/leadsServices";
 import Loc from "../../assets/LeadsIcons/Loc.svg";
 const LeadsCards = () => {
-  const data = [
+  const { data, isLoading, isError, isSuccess } =
+    useCustomerDetailsLeadsQuery();
+  console.log("customerDetailsLeads data", data.data?.length);
+  const leadsdata = [
     {
       id: 1,
       name: "Krishna",
@@ -47,9 +51,9 @@ const LeadsCards = () => {
   return (
     <div className="lg:pl-24 w-full lg:w-[416px] h-screen overflow-auto">
       <p className="text-center text-sm font-semibold text-[#939CA3] py-5 border-b border-[#939CA3]">
-        Showing all {data.length} Leads
+        Showing all {leadsdata.length} Leads
       </p>
-      {data.map((value) => (
+      {leadsdata.map((value) => (
         <Link to={`/leadsListing/${value.id}`} key={value.id}>
           <div className="p-3 pb-0 lg:p-0">
             <div className="border border-[#939CA3] w-full h-[181px] p-4  border-l-4 border-l-[#F36C25] lg:border-t-0 lg:border-r-0">
