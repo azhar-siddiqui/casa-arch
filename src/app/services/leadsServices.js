@@ -31,15 +31,35 @@ export const customerLeadsApi = createApi({
         };
       },
     }),
+    SearchLeads: builder.mutation({
+      query: (body) => {
+        return {
+          url: `${AppConstants.endPoints.search_leads_all}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${body.token}`,
+          },
+        };
+      },
+    }),
     DesignLeads: builder.mutation({
-      query: () => {
-        let Token = localStorage.getItem("Token");
-        console.log("Token", Token);
+      query: (body) => {
         return {
           url: `${AppConstants.endPoints.design_leads_all}`,
           method: "GET",
           headers: {
-            Authorization: `Bearer ${Token}`,
+            Authorization: `Bearer ${body.token}`,
+          },
+        };
+      },
+    }),
+    OnGoingProjectLeads: builder.mutation({
+      query: (body) => {
+        return {
+          url: `${AppConstants.endPoints.project_leads_all}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${body.token}`,
           },
         };
       },
@@ -51,4 +71,6 @@ export const {
   useCustomerDetailsLeadsMutation,
   useCustomerDetailsLeadMutation,
   useDesignLeadsMutation,
+  useSearchLeadsMutation,
+  useOnGoingProjectLeadsMutation,
 } = customerLeadsApi;

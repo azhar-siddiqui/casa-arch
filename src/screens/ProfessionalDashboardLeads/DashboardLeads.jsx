@@ -1,43 +1,136 @@
+import { useEffect } from "react";
 import OrangeStar from "../../assets/DashboardLeadsIcons/OrangeStar.svg";
+import OutlineStar from "../../assets/DashboardLeadsIcons/OutlineStar.svg";
 import Location from "../../assets/DashboardLeadsIcons/Location.svg";
 import Dot from "../../assets/DashboardLeadsIcons/Dot.svg";
 import "./DashboardLeads.css";
-import { useDesignLeadsMutation } from "../../app/services/leadsServices";
+import {
+  useDesignLeadsMutation,
+  useOnGoingProjectLeadsMutation,
+  useSearchLeadsMutation,
+} from "../../app/services/leadsServices";
 
-const SearchLeads = [
+const OngoingProject = [
   {
-    id: "1",
-    name: "Krishna Ahuja",
-    designType: "Interior Design",
-    email: "kartikeyan@gmail.com",
-    pincode: "6400961 ",
-    propertyType: "Commercial design ",
-    numberOfRooms: "One room",
+    id: 1,
+    design_type: "Residential Design",
+    location: null,
+    property_type: null,
+    rooms: null,
+    user: 2,
+    is_designer_fav: false,
+    project_name: "test",
+    project_location: "delhi",
+    project_details: "test",
+    project_budget: "25K-50K",
+    aesthetic_req: "Classic",
   },
   {
-    id: "2",
-    name: "Krishna Ahuja",
-    designType: "Interior Design",
-    email: "kartikeyan@gmail.com",
-    pincode: "6400961 ",
-    propertyType: "Commercial design ",
-    numberOfRooms: "One room",
+    id: 2,
+    design_type: "Residential Design",
+    location: "orissa",
+    property_type: "House",
+    rooms: "Only one room",
+    user: 3,
+    is_designer_fav: false,
+    project_name: "test1",
+    project_location: "mumbai",
+    project_details: "test4",
+    project_budget: "25K-50K",
+    aesthetic_req: "Classic",
   },
   {
-    id: "3",
-    name: "Krishna Ahuja",
-    designType: "Interior Design",
-    email: "kartikeyan@gmail.com",
-    pincode: "6400961 ",
-    propertyType: "Commercial design ",
-    numberOfRooms: "One room",
+    id: 5,
+    design_type: "Landscaping",
+    location: "Mumbai",
+    property_type: "House",
+    rooms: "Only one room",
+    user: 7,
+    is_designer_fav: false,
+    project_name: "project 1",
+    project_location: "here",
+    project_details: "nothing",
+    project_budget: "25K-50K",
+    aesthetic_req: "Classic",
+  },
+  {
+    id: 6,
+    design_type: "Landscaping",
+    location: "fg",
+    property_type: "Flat",
+    rooms: "Full ",
+    user: 7,
+    is_designer_fav: false,
+    project_name: "project 1",
+    project_location: "here",
+    project_details: "nothing",
+    project_budget: "25K-50K",
+    aesthetic_req: "Classic",
+  },
+  {
+    id: 7,
+    design_type: "Office Design",
+    location: "Mumbai",
+    property_type: "House",
+    rooms: "Full ",
+    user: 7,
+    is_designer_fav: false,
+    project_name: "project 1",
+    project_location: "here",
+    project_details: "nothing",
+    project_budget: "25K-50K",
+    aesthetic_req: "Classic",
+  },
+  {
+    id: 8,
+    design_type: "Office Design",
+    location: "Mumbai",
+    property_type: "Flat",
+    rooms: "Full ",
+    user: 7,
+    is_designer_fav: false,
+    project_name: "project 1",
+    project_location: "here",
+    project_details: "nothing",
+    project_budget: "25K-50K",
+    aesthetic_req: "Classic",
+  },
+  {
+    id: 9,
+    design_type: "Landscaping",
+    location: "dfd",
+    property_type: "House",
+    rooms: "Full ",
+    user: 7,
+    is_designer_fav: false,
+    project_name: "project 1",
+    project_location: "here",
+    project_details: "nothing",
+    project_budget: "25K-50K",
+    aesthetic_req: "Classic",
   },
 ];
 
 const DashboardLeads = () => {
+  let Token = localStorage.getItem("Token");
   const [designLead, designLeadResponse] = useDesignLeadsMutation();
-  console.log("designLeadResponse", designLeadResponse);
-  console.log("designLead", designLead);
+  const [searchLead, searchLeadResponse] = useSearchLeadsMutation();
+  const [ongoingProject, ongoingProjectResponse] =
+    useOnGoingProjectLeadsMutation();
+
+  console.log("projectLeadResponse", ongoingProjectResponse?.data?.data);
+
+  useEffect(() => {
+    designLead({ token: Token });
+  }, []);
+
+  useEffect(() => {
+    searchLead({ token: Token });
+  }, []);
+
+  useEffect(() => {
+    ongoingProject({ token: Token });
+  }, []);
 
   return (
     <div className="dashLeads">
@@ -69,32 +162,41 @@ const DashboardLeads = () => {
                   </option>
                 </select>
               </div>
-              {SearchLeads.map((SearchLeads) => (
+              {searchLeadResponse?.data?.data.map((SearchLeads) => (
                 <div
                   className="px-5 pt-5 border-b border-[#CED4DA]"
                   key={SearchLeads.id}
                 >
                   <div className="flex justify-between items-center">
                     <h1 className="text-[#08090A] font-semibold text-2xl w-full">
-                      Krishna Ahuja
+                      {SearchLeads.name}
                     </h1>
-                    <img src={OrangeStar} alt="OrangeStar" />
+                    <button>
+                      {SearchLeads.is_designer_fav === true ? (
+                        <img src={OrangeStar} alt="OrangeStar" />
+                      ) : (
+                        <img src={OutlineStar} alt="OutlineStar" />
+                      )}
+                    </button>
                   </div>
-                  <h2 className="text-[20px] font-normal">Interior Design</h2>
+                  <h2 className="text-[20px] font-normal">
+                    {SearchLeads.service_looking}
+                  </h2>
                   <p className="text-[#939CA3] text-base font-normal pt-1">
-                    kartikeyan@gmail.com
+                    {SearchLeads.email}
                   </p>
                   <p className="text-[#939CA3] text-base font-normal pt-1">
-                    Pincode - 6400961
+                    Pincode - {SearchLeads.pincode}
                   </p>
                   <p className="text-[#939CA3] text-base font-normal pt-1">
-                    Mobile No - 888888888
+                    Mobile No - {SearchLeads.phone}
+                    Mobile No -
                   </p>
                   <p className="text-[#939CA3] text-base font-normal pt-1">
-                    Property - Commercial design
+                    Property - {SearchLeads.property_type}
                   </p>
                   <p className="text-[#939CA3] text-base font-normal py-2">
-                    Number of rooms - One room
+                    Number of rooms - {SearchLeads.rooms}
                   </p>
                 </div>
               ))}
@@ -119,26 +221,38 @@ const DashboardLeads = () => {
                   </option>
                 </select>
               </div>
-              {SearchLeads.map((SearchLeads) => (
+              {designLeadResponse?.data?.data.map((SearchLeads) => (
                 <div
                   className="px-5 pt-5 border-b border-[#CED4DA]"
                   key={SearchLeads.id}
                 >
                   <div className="flex justify-between items-center">
                     <h1 className="text-[#08090A] font-semibold text-2xl w-full">
-                      Krishna Ahuja
+                      {SearchLeads.name}
                     </h1>
-                    <img src={OrangeStar} alt="OrangeStar" />
+                    <button>
+                      {SearchLeads.is_designer_fav === true ? (
+                        <img src={OrangeStar} alt="OrangeStar" />
+                      ) : (
+                        <img src={OutlineStar} alt="OutlineStar" />
+                      )}
+                    </button>
                   </div>
-                  <h2 className="text-[20px] font-normal">Interior Design</h2>
+                  <h2 className="text-[20px] font-normal">
+                    {SearchLeads.design_type === ""
+                      ? "Interior Design"
+                      : SearchLeads.design_type}
+                  </h2>
                   <p className="text-[#939CA3] text-base font-normal pt-5">
-                    Create new interiors/Commercial property/ <br /> Only one
-                    room
+                    Create new interiors/{SearchLeads.property_type} / <br />
+                    {SearchLeads.rooms === null
+                      ? "One Room"
+                      : SearchLeads.rooms}
                   </p>
                   <span className="flex items-center">
                     <img src={Location} alt="Location" />
                     <p className="text-[#939CA3] text-base font-normal pl-3 py-5">
-                      Vinukonda, Guntur, Andhra Pradesh <br /> (Nationwide)
+                      {SearchLeads.location}
                     </p>
                   </span>
                 </div>
@@ -167,35 +281,45 @@ const DashboardLeads = () => {
                 </option>
               </select>
             </div>
-            <div
-              className="px-5 pt-5 border-b border-[#CED4DA]"
-              key={SearchLeads.id}
-            >
-              <div className="flex justify-between items-center">
-                <h1 className="text-[#08090A] font-semibold text-2xl w-full">
-                  Project ABC
-                </h1>
-                <img src={OrangeStar} alt="OrangeStar" />
+            {ongoingProjectResponse?.data?.data.map((ongoingProject) => (
+              <div
+                className="px-5 pt-5 border-b border-[#CED4DA]"
+                key={ongoingProject.id}
+              >
+                <div className="flex justify-between items-center">
+                  <h1 className="text-[#08090A] font-semibold text-2xl w-full">
+                    {ongoingProject.project_name}
+                  </h1>
+                  <button>
+                    {ongoingProject.is_designer_fav === true ? (
+                      <img src={OrangeStar} alt="OrangeStar" />
+                    ) : (
+                      <img src={OutlineStar} alt="OutlineStar" />
+                    )}
+                  </button>
+                </div>
+                <span className="flex items-center">
+                  <h2 className="text-[20px] font-normal text-[#6D747A] pr-2">
+                    {ongoingProject.location === null
+                      ? "Chennai"
+                      : ongoingProject.location}
+                  </h2>
+                  <img src={Dot} alt="Dot" />
+                  <h2 className="text-[20px] font-normal text-[#6D747A] px-2">
+                    {ongoingProject.project_budget}
+                  </h2>
+                  <img src={Dot} alt="Dot" />
+                  <h2 className="text-[20px] font-normal text-[#6D747A] pl-2">
+                    {ongoingProject.aesthetic_req}
+                  </h2>
+                </span>
+                <p className="text-[#939CA3] text-base font-normal pt-1 pb-3">
+                  Text description provided by the architects. nursery The
+                  Learning Tree in Romford, for leading childcare and education
+                  company, Storal Learning.
+                </p>
               </div>
-              <span className="flex items-center">
-                <h2 className="text-[20px] font-normal text-[#6D747A] pr-2">
-                  Chennai
-                </h2>
-                <img src={Dot} alt="Dot" />
-                <h2 className="text-[20px] font-normal text-[#6D747A] px-2">
-                  25k - 50 k
-                </h2>
-                <img src={Dot} alt="Dot" />
-                <h2 className="text-[20px] font-normal text-[#6D747A] pl-2">
-                  Classic
-                </h2>
-              </span>
-              <p className="text-[#939CA3] text-base font-normal pt-1 pb-3">
-                Text description provided by the architects. nursery The
-                Learning Tree in Romford, for leading childcare and education
-                company, Storal Learning.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </div>
