@@ -7,7 +7,7 @@ export const customerLeadsApi = createApi({
     baseUrl: `${AppConstants.baseUrl}`,
   }),
   endpoints: (builder) => ({
-    customerDetailsLeads: builder.query({
+    customerDetailsLeads: builder.mutation({
       query: () => {
         let Token = localStorage.getItem("Token");
         return {
@@ -19,7 +19,36 @@ export const customerLeadsApi = createApi({
         };
       },
     }),
+    customerDetailsLead: builder.mutation({
+      query: (body) => {
+        let Token = localStorage.getItem("Token");
+        return {
+          url: `${AppConstants.endPoints.customer_details_lead}/${body.id}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${Token}`,
+          },
+        };
+      },
+    }),
+    DesignLeads: builder.mutation({
+      query: () => {
+        let Token = localStorage.getItem("Token");
+        console.log("Token", Token);
+        return {
+          url: `${AppConstants.endPoints.design_leads_all}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${Token}`,
+          },
+        };
+      },
+    }),
   }),
 });
 
-export const { useCustomerDetailsLeadsQuery } = customerLeadsApi;
+export const {
+  useCustomerDetailsLeadsMutation,
+  useCustomerDetailsLeadMutation,
+  useDesignLeadsMutation,
+} = customerLeadsApi;

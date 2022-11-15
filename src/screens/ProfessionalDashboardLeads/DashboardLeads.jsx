@@ -2,6 +2,7 @@ import OrangeStar from "../../assets/DashboardLeadsIcons/OrangeStar.svg";
 import Location from "../../assets/DashboardLeadsIcons/Location.svg";
 import Dot from "../../assets/DashboardLeadsIcons/Dot.svg";
 import "./DashboardLeads.css";
+import { useDesignLeadsMutation } from "../../app/services/leadsServices";
 
 const SearchLeads = [
   {
@@ -34,6 +35,10 @@ const SearchLeads = [
 ];
 
 const DashboardLeads = () => {
+  const [designLead, designLeadResponse] = useDesignLeadsMutation();
+  console.log("designLeadResponse", designLeadResponse);
+  console.log("designLead", designLead);
+
   return (
     <div className="dashLeads">
       <div className="w-full h-[72px] lg:h-[93px] bg-primaryOrange mt-4 pl-5 lg:pl-[76px] flex items-center text-white font-semibold text-[20px] lg:text-2xl">
@@ -44,14 +49,25 @@ const DashboardLeads = () => {
       </h1>
       <div className="lg:px-[76px] ">
         {/*  */}
-        <div className="lg:flex justify-between">
+        <div className="lg:flex justify-between styled-scrollbar">
           <div className="w-full h-[544px]  border border-[#000] overflow-auto">
             <div className="w-full">
               <div className="bg-[#CED4DA] w-full sticky top-0 flex items-center justify-between">
                 <h1 className="text-[#08090A] text-2xl font-medium px-5 py-2 lg:text-center w-full">
                   Search Leads
                 </h1>
-                <p>jjkdhf</p>
+                <select
+                  name=""
+                  id=""
+                  className="outline-none p-2 rounded-md cursor-pointer mr-4"
+                >
+                  <option value="All" className="p-2">
+                    All
+                  </option>
+                  <option value="Favourite" className="p-2">
+                    Favourite
+                  </option>
+                </select>
               </div>
               {SearchLeads.map((SearchLeads) => (
                 <div
@@ -90,7 +106,18 @@ const DashboardLeads = () => {
                 <h1 className="text-[#08090A] text-2xl font-medium px-5 py-2 lg:text-center w-full">
                   Designing Leads
                 </h1>
-                <p>jhfjkhd</p>
+                <select
+                  name=""
+                  id=""
+                  className="outline-none p-2 rounded-md cursor-pointer mr-4"
+                >
+                  <option value="All" className="p-2">
+                    All
+                  </option>
+                  <option value="Favourite" className="p-2">
+                    Favourite
+                  </option>
+                </select>
               </div>
               {SearchLeads.map((SearchLeads) => (
                 <div
@@ -120,14 +147,25 @@ const DashboardLeads = () => {
           </div>
         </div>
       </div>
-      <div className="lg:px-[76px]  mt-5">
-        <div className="w-full h-full border border-[#000] overflow-auto">
+      <div className="lg:px-[76px] mt-5 styled-scrollbar mb-10">
+        <div className="w-full h-[210px] border border-[#000] overflow-auto">
           <div className="w-full ">
             <div className="bg-[#CED4DA] w-full sticky top-0 flex justify-between items-center">
               <h1 className="text-[#08090A] text-2xl font-medium px-5 py-2 lg:text-center w-full">
                 Ongoing Projects
               </h1>
-              <p>jhfjkhd</p>
+              <select
+                name=""
+                id=""
+                className="outline-none p-2 rounded-md cursor-pointer mr-4"
+              >
+                <option value="All" className="p-2">
+                  All
+                </option>
+                <option value="Favourite" className="p-2">
+                  Favourite
+                </option>
+              </select>
             </div>
             <div
               className="px-5 pt-5 border-b border-[#CED4DA]"

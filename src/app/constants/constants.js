@@ -11,5 +11,7 @@ export const AppConstants = {
     professional_work_profile: "professional-work-profile/",
     customer_project_choices: "customer-project-choices/",
     customer_details_leads: "customer-details-all",
+    customer_details_lead: "customer-details-all",
+    design_leads_all: "design-leads-all",
   },
 };

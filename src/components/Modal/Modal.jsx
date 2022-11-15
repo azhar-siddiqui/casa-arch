@@ -36,7 +36,7 @@ export default function Modal(props) {
               </p>
             </div>
             {/*body*/}
-            <div className="relative px-6 flex-auto">{body}</div>
+            <div className="relative px-4 sm:px-5 flex-auto">{body}</div>
             {/*footer*/}
             <div className="p-6">{footer}</div>
           </div>

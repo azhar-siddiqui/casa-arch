@@ -181,9 +181,9 @@ const ProfessionalLoginFrame = (props) => {
   const handleSubmit = (values) => {
     let userData = {
       ...values,
-      client_id: "kKbg2dlGSfA5Gd7RKvDCgTrjnmjsURXMqb2YUdem",
+      client_id: "Immucq4FCvfr93KsJc8wTYt1Z1zTNbPR0iuD3TcE",
       client_secret:
-        "zdgavQUtnBoHLugOIoa6EBg9THa5PgPjU8Z7jFfySXOSDEoraFCA3mtPtTxbJMgriUfj6F705qt3YJI3WxyWvFliVbyGEbbBg0XL4RmEb9l7KzOgm2ZbXg1qWDw6TMI9",
+        "0u3kVQpS0JpU3NaQHr4tiCn6o70JrUCbeSI7Xf6oRt5NXIfW69YrshDdAnWS833YY7xJNaq3qUb8LC8895nBewmaBw9NjbU5bSfv3F8TBCKpQ7uieHvTxpaYj0R2Hm0o",
       grant_type: "password",
       username: values.email,
       password: values.password,

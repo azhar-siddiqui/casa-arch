@@ -34,6 +34,7 @@ import {
 } from "../../app/services/professionalServices";
 import UserLoginFrame from "../../screens/Frame/UserLoginFrame";
 import { useProfessionalSignUpPatchMutation } from "../../app/services/professionalOauthApiServices";
+import StartDesignFrame from "../../screens/Frame/StartDesignFrame/StartDesignFrame";
 
 // import SelectLoginFrame from "../../screens/Frame/SelectLoginFrame/SelectLoginFrame";
 
@@ -613,9 +614,8 @@ const Header = () => {
                             <>
                               {currData.options.map((ele) => {
                                 return (
-                                  <>
+                                  <React.Fragment key={ele.indexOf()}>
                                     <input
-                                      key={ele.indexOf()}
                                       type="checkbox"
                                       aria-hidden
                                       name={currData.name}
@@ -656,7 +656,7 @@ const Header = () => {
                                         {ele}
                                       </p>
                                     </label>
-                                  </>
+                                  </React.Fragment>
                                 );
                               })}
                             </>

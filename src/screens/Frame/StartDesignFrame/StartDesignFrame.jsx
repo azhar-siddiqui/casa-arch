@@ -5,7 +5,6 @@ import styles from "./StartDesignFrame.module.css";
 
 const StartDesignFrame = () => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [innerCurrentStep, setInnerCurrentStep] = useState(0);
   // const [innerCurrentStep1, setInnerCurrentStep1] = useState(0);
   // const [selectedDesignType, setSelectedDesignType] = useState(null);
 
