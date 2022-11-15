@@ -41,6 +41,7 @@ import PremiumButtonLogin from "../../screens/Frame/premiumButtonLogin/PremiumBu
 import { updateVisibleForPremiumButtonLogin, updateVisibleForSubscriptionModal } from "../../app/slices/professionalauthSlice";
 import Subscription from "../../screens/Frame/Subscription/Subscription";
 import { useProfessionalSignUpPatchMutation } from "../../app/services/professionalOauthApiServices";
+import StartDesignFrame from "../../screens/Frame/StartDesignFrame/StartDesignFrame";
 
 // import SelectLoginFrame from "../../screens/Frame/SelectLoginFrame/SelectLoginFrame";
 
@@ -752,9 +753,8 @@ const navigate = useNavigate()
                             <>
                               {currData.options.map((ele) => {
                                 return (
-                                  <>
+                                  <React.Fragment key={ele.indexOf()}>
                                     <input
-                                      key={ele.indexOf()}
                                       type="checkbox"
                                       aria-hidden
                                       name={currData.name}
@@ -794,7 +794,7 @@ const navigate = useNavigate()
                                         {ele}
                                       </p>
                                     </label>
-                                  </>
+                                  </React.Fragment>
                                 );
                               })}
                             </>

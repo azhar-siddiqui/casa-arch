@@ -25,6 +25,7 @@ import PrivateRoutes from "./screens/PrivateRoute/PrivateRoutes";
 import Leads from "./screens/Leads/Leads";
 import LeadListing from "./screens/Leads/LeadListing/LeadListing.jsx";
 import { useLazyGetUserIdQuery, useLazyGetUserTypeQuery } from "./app/services/userServices";
+import DashboardLeads from "./screens/ProfessionalDashboardLeads/DashboardLeads";
 // import ProQuestion from "./screens/ProQuestion/ProQuestion.jsx";
 
 function App() {
@@ -80,6 +81,7 @@ function App() {
           <Route path="/leads" element={<LeadListing />} />
         ) : (
           <Route path="/leadsListing/:id" element={<Leads />} />
+          // <Route path="/leadsListing" element={<Leads />} />
         )}
         <Route path="/leadsListing/:id" element={<Leads />} />
         <Route path="/professionals/list" element={<ProfessionalsList />} />
@@ -87,6 +89,7 @@ function App() {
           <Route path="" element={<Professionals />} />
           {/* <Route path="/pro_question" element={<ProQuestion />} /> */}
           <Route path="questions" element={<ProQuestion />} />
+          <Route path="dashboardleads" element={<DashboardLeads />} />
           <Route element={<PrivateRoutes />}>
             <Route path="landing" element={<ProLandingAfterLogin />} />
             <Route path="myprofile" element={<ProfessionalProfile />} />

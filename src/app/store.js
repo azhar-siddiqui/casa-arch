@@ -9,6 +9,7 @@ import { professionalOauthApi } from "./services/professionalOauthApiServices";
 import { professionalServicesApi } from "./services/professionalServices";
 import { checkPointsApi } from "./services/CheckPoints";
 import { proQuestionApi } from "./services/proQuestion";
+import { customerLeadsApi } from "./services/leadsServices";
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ export const store = configureStore({
     [professionalServicesApi.reducerPath]: professionalServicesApi.reducer,
     [checkPointsApi.reducerPath]: checkPointsApi.reducer,
     [proQuestionApi.reducerPath]: proQuestionApi.reducer,
+    [customerLeadsApi.reducerPath]: customerLeadsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -29,9 +31,9 @@ export const store = configureStore({
       professionalOauthApi.middleware,
       professionalServicesApi.middleware,
       checkPointsApi.middleware,
-      proQuestionApi.middleware
+      proQuestionApi.middleware,
+      customerLeadsApi.middleware
     ),
-  // getDefaultMiddleware().concat(professionalOauthApi.middleware),
 });
 
 setupListeners(store.dispatch);

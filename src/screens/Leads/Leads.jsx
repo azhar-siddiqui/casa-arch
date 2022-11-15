@@ -6,26 +6,50 @@ import "./Leads.css";
 import ButtonField from "../../components/ButtonsFields/ButtonField";
 import LeadsCards from "../../components/LeadsCards/LeadsCards";
 import { useParams, useNavigate } from "react-router-dom";
-
+import { useCustomerDetailsLeadMutation } from "../../app/services/leadsServices";
 const Leads = () => {
+  const [customerDetailsLead, customerDetailsReponse] =
+    useCustomerDetailsLeadMutation();
+  console.log(customerDetailsReponse);
+  const param = useParams();
+  const navigate = useNavigate();
+
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
   useEffect(() => {
     const changeWidth = () => {
       setScreenWidth(window.innerWidth);
     };
     window.addEventListener("resize", changeWidth);
-    return () => {
-      window.removeEventListener("resize", changeWidth);
-    };
   }, [screenWidth]);
 
-  const param = useParams();
+  useEffect(() => {
+    customerDetailsLead({ id: param?.id });
+  }, [param]);
 
-  useEffect(() => {}, [param.id]);
-  const navigate = useNavigate();
+  const hiddenNumber = (value) => {
+    let number = value.toString().split("");
+    for (let i = 0; i <= number.length; i++) {
+      if (i <= number.length - 4) {
+        number[i] = "*";
+      }
+    }
+    return number.join("");
+  };
+
+  const hiddenEmail = (value = "") => {
+    let email = value.toString().split("@");
+    let newemail = email[0].split("");
+    for (let i = 0; i <= newemail.length; i++) {
+      if (i <= newemail.length - 4) {
+        newemail[i] = "*";
+      }
+    }
+    return newemail.join("") + "@" + email[1];
+  };
 
   return (
-    <div className="lg:flex leadsContainer">
+    <div className="lg:flex leadsContainer md:mb-[100px]">
       {screenWidth > 1024 && <LeadsCards />}
       <div className="flex-1 px-5 lg:px-0 lg:pl-6 lg:pt-16">
         {screenWidth < 1024 && (
@@ -41,17 +65,29 @@ const Leads = () => {
             </ButtonField>
           </div>
         )}
-        <h1 className="font-semibold text-[32px]">Krishna</h1>
-        <p className="text-[20px] font-normal">Interior Design</p>
-        <p className="text-[20px] font-semibold text-[#939CA3] pb-2">6400961</p>
+        <h1 className="font-semibold text-[32px]">
+          {customerDetailsReponse?.data?.data.name}
+        </h1>
+        <p className="text-[20px] font-normal">
+          {customerDetailsReponse?.data?.data.design_type}
+        </p>
+        <p className="text-[20px] font-semibold text-[#939CA3] pb-2">
+          {customerDetailsReponse?.data?.data.pincode}
+        </p>
         <span className="flex items-center pb-3">
           <img src={Call} alt="Call Icon" />
-          <p className="pl-5 font-semibold text-[16px]">855*******</p>
+          <p className="pl-5 font-semibold text-[16px]">
+            {customerDetailsReponse.data?.data.mobile
+              ? hiddenNumber(customerDetailsReponse?.data?.data.mobile)
+              : "N/A"}
+          </p>
         </span>
         <span className="flex items-center pb-4">
           <img src={Mail} alt="Mail Icon" />
           <p className="pl-5 font-semibold text-[16px]">
-            k****************1@g***l.com
+            {customerDetailsReponse.data?.data.email
+              ? hiddenEmail(customerDetailsReponse?.data?.data.email)
+              : "N/A"}
           </p>
         </span>
         <ButtonField
@@ -65,33 +101,35 @@ const Leads = () => {
         <h1 className="w-full border-b border-[#939CA3] pt-5 pb-1 text-[#08090A] font-semibold text-[20px] ">
           Details
         </h1>
-        <p className="text-[#939CA3] font-semibold text-[16px] pt-3">
-          Enter your Pincode
+        <p className="text-[#939CA3] font-semibold text-[16px] pt-3">Pincode</p>
+        <p className="text-[#08090A] font-semibold text-[16px] pt-1">
+          {customerDetailsReponse?.data?.data.pincode}
         </p>
-        <p className="text-[#08090A] font-semibold text-[16px] pt-1">6400961</p>
         <p className="text-[#939CA3] font-semibold text-[16px] pt-3">
           What type of services you’re looking for?
         </p>
         <p className="text-[#08090A] font-semibold text-[16px] pt-1">
-          Interior Design
+          {customerDetailsReponse?.data?.data.service_looking}
         </p>
         <p className="text-[#939CA3] font-semibold text-[16px] pt-3">
           What type of property is this?
         </p>
         <p className="text-[#08090A] font-semibold text-[16px] pt-1">
-          Commercial Design
+          {customerDetailsReponse?.data?.data.property_type}
         </p>
         <p className="text-[#939CA3] font-semibold text-[16px] pt-3">
-          Which room need designing?
+          How Many room need designing?
         </p>
         <p className="text-[#08090A] font-semibold text-[16px] pt-1">
-          Only one room
+          {customerDetailsReponse?.data?.data.rooms !== ""
+            ? 1
+            : customerDetailsReponse?.data?.data.rooms}
         </p>
         <p className="text-[#939CA3] font-semibold text-[16px] pt-3">
           Enter your email for sending quotation
         </p>
         <p className="text-[#08090A] font-semibold text-[16px] pt-1">
-          Kartikeyan@gmail.com
+          {customerDetailsReponse?.data?.data.email}
         </p>
       </div>
     </div>

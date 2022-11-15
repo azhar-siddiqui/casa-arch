@@ -10,6 +10,10 @@ export const AppConstants = {
     professional_subscription_check: "professional-subscription-check",
     professional_work_profile: "professional-work-profile/",
     customer_project_choices: "customer-project-choices/",
-    professional_signup_patch: "professional-signup",
+    customer_details_leads: "customer-details-all",
+    customer_details_lead: "customer-details-all",
+    design_leads_all: "design-leads-all/",
+    search_leads_all: "search-leads-all/",
+    project_leads_all: "project-leads-all",
   },
 };
