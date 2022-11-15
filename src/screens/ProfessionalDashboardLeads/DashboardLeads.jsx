@@ -10,107 +10,6 @@ import {
   useSearchLeadsMutation,
 } from "../../app/services/leadsServices";
 
-const OngoingProject = [
-  {
-    id: 1,
-    design_type: "Residential Design",
-    location: null,
-    property_type: null,
-    rooms: null,
-    user: 2,
-    is_designer_fav: false,
-    project_name: "test",
-    project_location: "delhi",
-    project_details: "test",
-    project_budget: "25K-50K",
-    aesthetic_req: "Classic",
-  },
-  {
-    id: 2,
-    design_type: "Residential Design",
-    location: "orissa",
-    property_type: "House",
-    rooms: "Only one room",
-    user: 3,
-    is_designer_fav: false,
-    project_name: "test1",
-    project_location: "mumbai",
-    project_details: "test4",
-    project_budget: "25K-50K",
-    aesthetic_req: "Classic",
-  },
-  {
-    id: 5,
-    design_type: "Landscaping",
-    location: "Mumbai",
-    property_type: "House",
-    rooms: "Only one room",
-    user: 7,
-    is_designer_fav: false,
-    project_name: "project 1",
-    project_location: "here",
-    project_details: "nothing",
-    project_budget: "25K-50K",
-    aesthetic_req: "Classic",
-  },
-  {
-    id: 6,
-    design_type: "Landscaping",
-    location: "fg",
-    property_type: "Flat",
-    rooms: "Full ",
-    user: 7,
-    is_designer_fav: false,
-    project_name: "project 1",
-    project_location: "here",
-    project_details: "nothing",
-    project_budget: "25K-50K",
-    aesthetic_req: "Classic",
-  },
-  {
-    id: 7,
-    design_type: "Office Design",
-    location: "Mumbai",
-    property_type: "House",
-    rooms: "Full ",
-    user: 7,
-    is_designer_fav: false,
-    project_name: "project 1",
-    project_location: "here",
-    project_details: "nothing",
-    project_budget: "25K-50K",
-    aesthetic_req: "Classic",
-  },
-  {
-    id: 8,
-    design_type: "Office Design",
-    location: "Mumbai",
-    property_type: "Flat",
-    rooms: "Full ",
-    user: 7,
-    is_designer_fav: false,
-    project_name: "project 1",
-    project_location: "here",
-    project_details: "nothing",
-    project_budget: "25K-50K",
-    aesthetic_req: "Classic",
-  },
-  {
-    id: 9,
-    design_type: "Landscaping",
-    location: "dfd",
-    property_type: "House",
-    rooms: "Full ",
-    user: 7,
-    is_designer_fav: false,
-    project_name: "project 1",
-    project_location: "here",
-    project_details: "nothing",
-    project_budget: "25K-50K",
-    aesthetic_req: "Classic",
-  },
-];
-
 const DashboardLeads = () => {
   let Token = localStorage.getItem("Token");
   const [designLead, designLeadResponse] = useDesignLeadsMutation();
@@ -190,7 +89,6 @@ const DashboardLeads = () => {
                   </p>
                   <p className="text-[#939CA3] text-base font-normal pt-1">
                     Mobile No - {SearchLeads.phone}
-                    Mobile No -
                   </p>
                   <p className="text-[#939CA3] text-base font-normal pt-1">
                     Property - {SearchLeads.property_type}
@@ -248,6 +146,9 @@ const DashboardLeads = () => {
                     {SearchLeads.rooms === null
                       ? "One Room"
                       : SearchLeads.rooms}
+                  </p>
+                  <p className="text-[#939CA3] text-base font-normal pt-2">
+                    Mobile No - 123458784
                   </p>
                   <span className="flex items-center">
                     <img src={Location} alt="Location" />

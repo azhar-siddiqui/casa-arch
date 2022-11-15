@@ -1,32 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { updateOpenSubscriptionAfterLogin, updateVisibleForPremiumButtonLogin, updateVisibleForSubscriptionModal } from "../../app/slices/professionalauthSlice";
+import {
+  updateOpenSubscriptionAfterLogin,
+  updateVisibleForPremiumButtonLogin,
+  updateVisibleForSubscriptionModal,
+} from "../../app/slices/professionalauthSlice";
 import LandingImg from "../../assets/LandingPageIcons/Landing.svg";
 import Vector from "../../assets/LandingPageIcons/Vector.svg";
 import ButtonField from "../../components/ButtonsFields/ButtonField";
 
 const ProLandingAfterLogin = () => {
-
   let Token = localStorage.getItem("Token");
-  const dispatch = useDispatch()
-  const { openSubscriptionAfterLogin } = useSelector(state => state.professional)
+  const dispatch = useDispatch();
+  const { openSubscriptionAfterLogin } = useSelector(
+    (state) => state.professional
+  );
 
   const handlePremiumButtonClick = () => {
-    dispatch(updateOpenSubscriptionAfterLogin(true))
+    dispatch(updateOpenSubscriptionAfterLogin(true));
     if (!Token) {
-      dispatch(updateVisibleForPremiumButtonLogin(true))
+      dispatch(updateVisibleForPremiumButtonLogin(true));
     } else {
-      dispatch(updateVisibleForSubscriptionModal(true))
+      dispatch(updateVisibleForSubscriptionModal(true));
     }
-  }
-  
+  };
+
   useEffect(() => {
-    if(openSubscriptionAfterLogin){
-      dispatch(updateVisibleForSubscriptionModal(true))
-      dispatch(updateOpenSubscriptionAfterLogin(false))
+    if (openSubscriptionAfterLogin) {
+      dispatch(updateVisibleForSubscriptionModal(true));
+      dispatch(updateOpenSubscriptionAfterLogin(false));
     }
-  }, [])
+  }, []);
 
   return (
     <>
@@ -70,9 +75,9 @@ const ProLandingAfterLogin = () => {
             <ButtonField
               children={"Get in Touch"}
               className={"bg-primaryOrange py-3 w-36 lg:w-40 "}
-            // onClick={() => {
-            //   setVisibleGetInTouch(true);
-            // }}
+              // onClick={() => {
+              //   setVisibleGetInTouch(true);
+              // }}
             />
           </div>
         </div>
@@ -106,10 +111,12 @@ const ProLandingAfterLogin = () => {
             quotes. I had a professional visit the next day and he did an
             excellent job.
           </p>
-          <ButtonField
-            children={"Start Designing"}
-            className={"bg-primaryOrange py-3 px-4 w-44 mt-3 lt:mt-0"}
-          />
+          <Link to="/professionals/dashboardleads">
+            <ButtonField
+              children={"Start Designing"}
+              className={"bg-primaryOrange py-3 px-4 w-44 mt-3 lt:mt-0"}
+            />
+          </Link>
         </div>
       </>
     </>
