@@ -31,10 +31,18 @@ export default function ProfessionalsList() {
    const { searchedProfessional } = useSelector(state => state.userStepper)
    console.log(searchedProfessional)
    const [loading, setLoading] = useState(true)
+   const [successModalActive, setSuccessModalActive] = useState(false)
 
    const architects = useGetArchitectsQuery(undefined, {
       refetchOnMountOrArgChange: true
    })
+
+   const showSuccessModal = ()=>{
+      setSuccessModalActive(true)
+      setTimeout(() => {
+        setSuccessModalActive(false)
+      }, 3000);
+   }
 
    const interiorDesigners = useGetInteriorDesignersQuery(undefined, {
       refetchOnMountOrArgChange: true
@@ -72,14 +80,16 @@ export default function ProfessionalsList() {
       <>
          <div className='p-4 max-w-973 md:mx-auto'>
             {list.length > 0 && list.map((prof, idx) => {
-               return <ProfessionalCard key={idx} {...prof} />
+               return <ProfessionalCard key={idx} {...prof} showSuccessModal={showSuccessModal} />
             })}
          </div>
          {loading ?
             <SuccessModal massage='Finding suitable professionals for you' />
             : <></>
          }
-
+         {successModalActive && (
+            <SuccessModal massage='We have sent the mail, the professional will contact you soon' />
+         )}
       </>
    )
 }

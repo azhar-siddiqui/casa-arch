@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LandingImg from "../../assets/LandingPageIcons/Landing.svg";
 import Vector from "../../assets/LandingPageIcons/Vector.svg";
 import ButtonField from "../../components/ButtonsFields/ButtonField";
@@ -12,27 +12,56 @@ import { updateIsStepperVisible } from "../../app/slices/userStepper";
 import Subscription from "../Frame/Subscription/Subscription";
 import { updateOpenSubscriptionAfterLogin, updateVisibleForPremiumButtonLogin, updateVisibleForSubscriptionModal } from "../../app/slices/professionalauthSlice";
 import StartDesignFrame from "../Frame/StartDesignFrame/StartDesignFrame";
+import { updateRedirectToSteppers, updateRedirectToStartDesignQuestions, updateVisibleForUserLogin, updateSelectLoginFrameActive } from "../../app/slices/user";
+import StartDesigningQuestions from "../Frame/StartDesigningQuestions/StartDesigningQuestions";
 
 const Landing = () => {
   const [searchTxt, setSearchTxt] = useState("");
   const [filterDropData, setFilterDropData] = useState([]);
   const [visibleGetInTouch, setVisibleGetInTouch] = useState(false);
-  const { isLoggedIn, userType } = useSelector((state) => state.user);
   const [successModalVisible, setSuccessModalVisible] = useState(false);
   const [pricingSubscriptionMoadl, setPricingSubscriptionMoadl] = useState(false)
+
+  const [startDesigningQuestionsActive, setStartDesigningQuestionsActive] = useState(false)
+  const [successModalActive, setSuccessModalActive] = useState(false)
+  const { isLoggedIn, userType, redirectToStartDesignQuestions } = useSelector((state) => state.user);
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (isLoggedIn && redirectToStartDesignQuestions) {
+      setTimeout(() => {
+        setStartDesigningQuestionsActive(true)
+        dispatch(updateRedirectToStartDesignQuestions(false))
+      }, 3000);
+    }
+  }, [isLoggedIn])
+
+  const handleStartDesign = (e) => {
+    if (!isLoggedIn) {
+      dispatch(updateSelectLoginFrameActive(true))
+      dispatch(updateRedirectToStartDesignQuestions(true))
+    } else {
+      if (userType === 'Customer') return setStartDesigningQuestionsActive(true)
+    }
+  }
+  const showSuccessModal = () => {
+    setSuccessModalActive(true)
+    setTimeout(() => {
+      setSuccessModalActive(false)
+    }, 3000);
+  }
 
   let Token = localStorage.getItem("Token");
 
   const handlePremiumButtonClick = () => {
     dispatch(updateOpenSubscriptionAfterLogin(true))
-    if(!Token){
+    if (!Token) {
       dispatch(updateVisibleForPremiumButtonLogin(true))
-    }else{
+    } else {
       dispatch(updateVisibleForSubscriptionModal(true))
     }
   }
-  
+
   const dorpItem = [
     { id: 1, type: "Architect" },
     { id: 2, type: "Interior" },
@@ -56,6 +85,7 @@ const Landing = () => {
     setSearchTxt(searchWord);
     setFilterDropData([]);
   };
+
   return (
     <>
       <div className="grid grid-cols-1 grid-rows-7 lg:grid-cols-12 grid-flow-row-dense lg:px-24 px-5 py-10">
@@ -111,7 +141,7 @@ const Landing = () => {
       </div>
       <div className="text-center pt-0 sm:pt-5  lg:pt-14 mx-auto max-w-5xl mb-10 px-5 lg:px-0">
         {isLoggedIn === true && userType === 'Customer' ? <></> :
-         (<>
+          (<>
             <h1 className="text-primaryDark py-2 font-medium text-left md:text-center text-2xl lg:text-5xl">
               Pricing
             </h1>
@@ -128,7 +158,7 @@ const Landing = () => {
               className={"bg-primaryOrange py-3 px-4 mt-3 lt:mt-0"}
             />
           </>
-        )}
+          )}
 
         <h1 className="text-primaryDark pt-11 font-medium text-left md:text-center text-2xl lg:text-5xl">
           Discover
@@ -142,6 +172,7 @@ const Landing = () => {
           had a professional visit the next day and he did an excellent job.
         </p>
         <ButtonField
+          onClick={handleStartDesign}
           children={"Start Designing"}
           className={"bg-primaryOrange py-3 px-4 w-44 mt-3 lt:mt-0"}
         />
@@ -162,6 +193,13 @@ const Landing = () => {
         <SuccessModal massage={"Details Added Successfully"} />
       )}
 
+      {startDesigningQuestionsActive && (
+        <StartDesigningQuestions showSuccessModal={showSuccessModal} setStartDesigningQuestionsActive={setStartDesigningQuestionsActive} />
+      )}
+
+      {successModalActive && (
+        <SuccessModal massage='We have sent the mail, the professional will contact you soon' />
+      )}
       {/* <StartDesignFrame /> */}
     </>
   );

@@ -15,7 +15,11 @@ const InputRadio = (props) => {
   } = props;
   const inputRef = useRef();
   return (
-    <div className={`w-full pt-4 flex items-center border px-4 pb-4  ${isLast ? '' : 'border-b-0'}`}>
+    <div className={`w-full pt-4 flex items-center border px-4 pb-4
+    ${isLast ? '' : 'border--0'}
+    ${value === checkedValue ? 'border border-primaryOrange border-b-primaryOrange' : ''}
+    `}
+    >
       <div className="relative flex items-center mr-2">
         <input
           ref={inputRef}

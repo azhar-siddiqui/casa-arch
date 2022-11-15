@@ -21,7 +21,7 @@ import {
   useSubmitSteppersMutation,
 } from "../../app/services/userServices";
 import { useDispatch, useSelector } from "react-redux";
-import { updateIsLoggedIn, updateUserType, updateVisibleForUserLogin } from "../../app/slices/user";
+import { updateIsLoggedIn, updateSelectLoginFrameActive, updateUserType, updateVisibleForUserLogin } from "../../app/slices/user";
 
 import SuccessModal from "../../components/SuccessModal/SuccessModal";
 import Loc from "../../assets/ModalIcon/loc.svg";
@@ -145,7 +145,7 @@ const navigate = useNavigate()
   const location = useLocation();
   const [submitNormalUserSteppers, submittedSteppersData] =
     useSubmitSteppersMutation();
-  const { isLoggedIn, userType, userId } = useSelector((state) => state.user);
+  const { isLoggedIn, userType, userId, selectLoginFrameActive } = useSelector((state) => state.user);
   const [successfulLoginModal, setSuccessfulLoginModal] = useState(false)
   //to determine how forgot password.. customer or professional
   const [customerForgotPassword, setCustomerForgotPassword] = useState(false)
@@ -460,6 +460,14 @@ const navigate = useNavigate()
       {visible && (
         <SelectLoginFrame
           setVisible={setVisible}
+          setProButtonVisible={setProButtonVisible}
+          setVisibleForProfessionalLogin={setVisibleForProfessionalLogin}
+          setVisibleForUserLogin={setVisibleForUserLogin}
+        />
+      )}
+      {selectLoginFrameActive && (
+        <SelectLoginFrame
+          setVisible={()=>dispatch(updateSelectLoginFrameActive(false))}
           setProButtonVisible={setProButtonVisible}
           setVisibleForProfessionalLogin={setVisibleForProfessionalLogin}
           setVisibleForUserLogin={setVisibleForUserLogin}

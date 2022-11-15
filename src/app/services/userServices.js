@@ -133,6 +133,26 @@ export const userServicesApi = createApi({
             body: body
          })
       }),
+      enquire: builder.mutation({
+         query: (body) => ({
+            url: `/enquire/`,
+            method: "POST",
+            body: body,
+            headers: {
+               "Authorization": `Bearer ${sessionStorage.getItem('access')}`
+            },
+         })
+      }),
+      projectChoices: builder.mutation({
+         query: (body) => ({
+            url: `/customer-project-choices/`,
+            method: "POST",
+            body: body,
+            headers: {
+               "Authorization": `Bearer ${sessionStorage.getItem('access')}`
+            },
+         })
+      }),
 
    }),
 });
@@ -153,4 +173,6 @@ export const {
    useResendOtpMutation,
    useVerifyOtpMutation,
    useResetPasswordMutation,
+   useEnquireMutation,
+   useProjectChoicesMutation
 } = userServicesApi;

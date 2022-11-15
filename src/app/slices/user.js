@@ -5,7 +5,10 @@ const initialState = {
   userType: '',
   userId: '',
   visibleForUserLogin: false,
-  redirectToSteppers: false
+  redirectToSteppers: false,
+  redirectToStartDesignQuestions: false,
+  startDesigningQuestionsActive: false,
+  selectLoginFrameActive: false
 };
 
 const user = createSlice({
@@ -27,8 +30,18 @@ const user = createSlice({
     updateRedirectToSteppers: (state, { payload }) => {
       state.redirectToSteppers = payload;
     },
+    updateRedirectToStartDesignQuestions: (state, { payload }) => {
+      state.redirectToStartDesignQuestions = payload;
+    },
+    updateStartDesigningQuestionsActive: (state, { payload }) => {
+      state.startDesigningQuestionsActive = payload;
+    },
+    updateSelectLoginFrameActive: (state, { payload }) => {
+      state.selectLoginFrameActive = payload;
+    },
+  
   },
 });
 
-export const { updateIsLoggedIn, updateUserType, updateUserId, updateVisibleForUserLogin, updateRedirectToSteppers } = user.actions;
+export const { updateIsLoggedIn, updateUserType, updateUserId, updateVisibleForUserLogin, updateRedirectToSteppers, updateRedirectToStartDesignQuestions, updateStartDesigningQuestionsActive, updateSelectLoginFrameActive } = user.actions;
 export default user.reducer;
