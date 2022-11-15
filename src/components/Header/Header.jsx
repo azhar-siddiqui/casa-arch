@@ -472,6 +472,7 @@ const navigate = useNavigate()
           setProButtonVisible={setProButtonVisible}
           setVisibleForProfessionalLogin={setVisibleForProfessionalLogin}
           setVisibleForUserLogin={setVisibleForUserLogin}
+          hideProfessionalButton={true}
         />
       )}
 

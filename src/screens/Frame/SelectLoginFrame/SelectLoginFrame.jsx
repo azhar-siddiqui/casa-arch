@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import ButtonField from "../../../components/ButtonsFields/ButtonField";
 
 const SelectLoginFrame = (props) => {
-  const { setVisible, setProButtonVisible, setVisibleForProfessionalLogin, setVisibleForUserLogin } =
+  const { setVisible, setProButtonVisible, setVisibleForProfessionalLogin, setVisibleForUserLogin, hideProfessionalButton } =
     props;
 
   const location = useLocation();
@@ -42,23 +42,35 @@ const SelectLoginFrame = (props) => {
                 className="flex items-center justify-between text-primaryOrange w-full border border-primaryOrange text-left px-5 py-5 my-8 font-medium md:text-2xl hover:text-white hover:bg-primaryOrange"
                 onClick={handleLoginForProfessional}
               />
-            ) : (
-              <>
-                <ButtonField
-                  children="Login for Customer"
-                  icons={">"}
-                  className="flex items-center justify-between text-primaryOrange w-full border 
+            ) :
+              hideProfessionalButton ? (
+                <>
+                  <ButtonField
+                    children="Login for Customer"
+                    icons={">"}
+                    className="flex items-center justify-between text-primaryOrange w-full border 
+             border-primaryOrange text-left px-5 py-5 mt-8 font-medium md:text-2xl hover:text-white hover:bg-primaryOrange"
+                    onClick={handleLoginForUser}
+                  />
+                </>
+              ) :
+                (
+                  <>
+                    <ButtonField
+                      children="Login for Customer"
+                      icons={">"}
+                      className="flex items-center justify-between text-primaryOrange w-full border 
                border-primaryOrange text-left px-5 py-5 mt-8 font-medium md:text-2xl hover:text-white hover:bg-primaryOrange"
-                  onClick={handleLoginForUser}
-              />
-                <ButtonField
-                  children="Login for Professional"
-                  icons={">"}
-                  className="flex items-center justify-between text-primaryOrange w-full border border-primaryOrange text-left px-5 py-5 my-8 font-medium md:text-2xl hover:text-white hover:bg-primaryOrange"
-                  onClick={handleLoginForProfessional}
-                />
-              </>
-            )}
+                      onClick={handleLoginForUser}
+                    />
+                    <ButtonField
+                      children="Login for Professional"
+                      icons={">"}
+                      className="flex items-center justify-between text-primaryOrange w-full border border-primaryOrange text-left px-5 py-5 my-8 font-medium md:text-2xl hover:text-white hover:bg-primaryOrange"
+                      onClick={handleLoginForProfessional}
+                    />
+                  </>
+                )}
           </>
         }
       />
