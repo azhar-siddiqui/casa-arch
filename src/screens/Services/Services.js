@@ -68,11 +68,10 @@ export const Services = () => {
    useEffect(() => {
       fetchServices()
          .then(res => {
-            setServices(res.data)
+            setServices(res.data.data)
          })
       }, [])
       
-      console.log(services)
 
    const handleClick = id => navigate(`/service/${id}`)
    
@@ -97,7 +96,7 @@ export const Services = () => {
                   return <ServicesCard Img={ele.icon}
                      id={ele.id}
                      key={ele.id}
-                     heading={ele.type}
+                     heading={ele.heading}
                      handleClick={handleClick} />
                })}
                {/* {services.length > 0 && services.map((elem) => {

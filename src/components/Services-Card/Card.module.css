@@ -10,6 +10,7 @@
 
 .img_div {
   margin-bottom: 1rem;
+  flex: 1;
 }
 
 .img_div > img {
@@ -22,6 +23,7 @@
   color: var(--color-primary);
   padding-left: 2rem;
   cursor: pointer;
+  padding-bottom: 1rem;
 }
 
 @media screen and (max-width: 450px) {

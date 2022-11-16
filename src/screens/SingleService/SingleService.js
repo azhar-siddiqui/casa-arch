@@ -29,7 +29,7 @@ const SingleService = () => {
    return (
       <div className={styles.main_div}>
          <div className={styles.head_img}>
-            <img src={HeadImg} className={styles.big_dev} alt="..."
+            <img src={icon} className={styles.big_dev} alt="..."
                onClick={() => { console.log(heading) }} />
             <img src={icon} alt="..." className={styles.small_dev} />
          </div>
