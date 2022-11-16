@@ -31,16 +31,60 @@ const LoginSchema = Yup.object({
 });
 
 const UserLoginFrame = (props) => {
-  const { setVisibleForUserLogin, setVisibleForUserSignUp, setvisibleForForgotPassword, handleLogout , setCustomerForgotPassword} = props;
+  const { setVisibleForUserLogin, setVisibleForUserSignUp, setvisibleForForgotPassword, handleLogout, setCustomerForgotPassword } = props;
   const [vpass, setVPass] = useState("password");
 
   const [rememberMeCheck, setRememberMeCheck] = useState(false);
 
   const dispatch = useDispatch()
   const { redirectToSteppers } = useSelector(state => state.user)
-  const [loginUser, data] = useLoginUserMutation()
+  const [loginUser, loginUserResponse] = useLoginUserMutation()
   const [fetchUserId, result] = useLazyGetUserIdQuery()
   const [fetchUserType, userTypeFetched] = useLazyGetUserTypeQuery()
+
+  // console.log(loginUserResponse);
+  // Qwerty.123456
+  useEffect(() => {
+    const { isUninitialized, isSuccess, isError, error, data } = loginUserResponse
+
+    if (isUninitialized === true) return
+    if (isError) {
+      if (error.data) {
+        alert(error.data.error_description)
+        return
+      }
+    }
+    if (isSuccess) {
+      setVisibleForUserLogin(false);
+      dispatch(updateIsLoggedIn(true))
+      sessionStorage.setItem('access', data.access_token)
+      redirectToSteppers && dispatch(updateIsStepperVisible(true))
+      fetchUserId()
+        .then((res) => {
+          console.log(res.data);
+          dispatch(updateUserId(res.data["user-id"]));
+        })
+      fetchUserType()
+        .then(res => {
+          console.log(res)
+          if (res.data['user-type'] === 'Professional') {
+            handleLogout()
+            alert('Cant login as the account is registered as Professional')
+            return
+          }
+          dispatch(updateUserType(res.data['user-type']))
+        })
+        .catch(err => {
+          console.log(err.response)
+        })
+    }
+  }, [
+    loginUserResponse.isUninitialized,
+    loginUserResponse.isSuccess,
+    loginUserResponse.isError,
+    loginUserResponse.error,
+    loginUserResponse.data,
+  ])
 
   const handleSubmit = async (values) => {
     let userData = {
@@ -50,40 +94,37 @@ const UserLoginFrame = (props) => {
       client_secret: '0u3kVQpS0JpU3NaQHr4tiCn6o70JrUCbeSI7Xf6oRt5NXIfW69YrshDdAnWS833YY7xJNaq3qUb8LC8895nBewmaBw9NjbU5bSfv3F8TBCKpQ7uieHvTxpaYj0R2Hm0o',
       grant_type: 'password'
     }
-    // console.log("Value Login", userData);
     await loginUser(userData)
-      .then(async res => {
-        console.log(res)
-        if (res.error) {
-          alert(res.error.data.error_description)
-          return
-        }
-        setVisibleForUserLogin(false);
-        dispatch(updateIsLoggedIn(true))
-        sessionStorage.setItem('access', res.data.access_token)
-        redirectToSteppers && dispatch(updateIsStepperVisible(true))
-        await fetchUserId()
-          .then((res) => {
-            console.log(res.data);
-            dispatch(updateUserId(res.data["user-id"]));
-          })
-        await fetchUserType()
-          .then(res => {
-            console.log(res)
-            if (res.data['user-type'] === 'Professional') {
-              handleLogout()
-              alert('Cant login as the account is registered as Professional')
-              return
-            }
-            dispatch(updateUserType(res.data['user-type']))
-          })
-          .catch(err => {
-            console.log(err.response)
-          })
+      .then(res => {
+        // console.log(res)
+        // if (res.error) {
+        //   alert(res.error.data.error_description)
+        //   return
+        // }
+        // setVisibleForUserLogin(false);
+        // dispatch(updateIsLoggedIn(true))
+        // sessionStorage.setItem('access', res.data.access_token)
+        // redirectToSteppers && dispatch(updateIsStepperVisible(true))
+        // await fetchUserId()
+        //   .then((res) => {
+        //     console.log(res.data);
+        //     dispatch(updateUserId(res.data["user-id"]));
+        //   })
+        // await fetchUserType()
+        //   .then(res => {
+        //     console.log(res)
+        //     if (res.data['user-type'] === 'Professional') {
+        //       handleLogout()
+        //       alert('Cant login as the account is registered as Professional')
+        //       return
+        //     }
+        //     dispatch(updateUserType(res.data['user-type']))
+        //   })
+        //   .catch(err => {
+        //     console.log(err.response)
+        //   })
       })
-      .catch((err) => {
-        console.log(err.response);
-      });
+
   };
 
   const handleViewPass = () => {

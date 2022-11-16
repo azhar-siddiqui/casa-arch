@@ -192,7 +192,7 @@ const navigate = useNavigate()
 
   let LinksUrl = [
     { name: "HOME", link: "/" },
-    { name: "SERVICE", link: "/" },
+    { name: "SERVICE", link: "/services" },
     { name: "BLOG", link: "/blogs" },
     { name: "ABOUT US", link: "/about" },
     { name: "CONTACT US", link: "/contact" },

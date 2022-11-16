@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const userServicesApi = createApi({
-   reducerPath: "postApi",
+   reducerPath: "userServicesApi",
    baseQuery: fetchBaseQuery({
       baseUrl: "https://ad.casaarch.in/api/",
    }),
@@ -31,6 +31,14 @@ export const userServicesApi = createApi({
       getProjectDetails: builder.query({
          query: () => ({
             url: `/customer-project-details/`,
+            headers: {
+               "Authorization": `Bearer ${sessionStorage.getItem('access')}`
+            },
+         }),
+      }),
+      getProfessionalProfile: builder.query({
+         query: (id) => ({
+            url: `/professional-work-profile/${id}`,
             headers: {
                "Authorization": `Bearer ${sessionStorage.getItem('access')}`
             },
@@ -92,6 +100,7 @@ export const userServicesApi = createApi({
       getArchitects: builder.query({
          query: () => ({
             url: `architects/`,
+            method: 'GET',
             headers: {
                "Authorization": `Bearer ${sessionStorage.getItem('access')}`
             },
@@ -100,6 +109,7 @@ export const userServicesApi = createApi({
       getInteriorDesigners: builder.query({
          query: () => ({
             url: `interior-designer/`,
+            method: 'GET',
             headers: {
                "Authorization": `Bearer ${sessionStorage.getItem('access')}`
             },
@@ -167,12 +177,15 @@ export const {
    useLazyGetUserTypeQuery,
    useLazyGetUserIdQuery,
    useGetProjectDetailsQuery,
+
    useGetArchitectsQuery,
    useGetInteriorDesignersQuery,
+
    useSendOtpMutation,
    useResendOtpMutation,
    useVerifyOtpMutation,
    useResetPasswordMutation,
    useEnquireMutation,
-   useProjectChoicesMutation
+   useProjectChoicesMutation,
+   useLazyGetProfessionalProfileQuery
 } = userServicesApi;
