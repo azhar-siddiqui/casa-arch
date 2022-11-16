@@ -94,7 +94,7 @@ export const Services = () => {
             </h2>
             <div className={styles.card_div}>
                {services.length > 0 && services.map((ele) => {
-                  return <ServicesCard Img={ele.Img}
+                  return <ServicesCard Img={ele.icon}
                      id={ele.id}
                      key={ele.id}
                      heading={ele.type}
