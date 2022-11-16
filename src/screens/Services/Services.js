@@ -68,11 +68,11 @@ export const Services = () => {
    useEffect(() => {
       fetchServices()
          .then(res => {
-            console.log(res)
-            setServices(res.data.data)
+            setServices(res.data)
          })
-   }, [])
-
+      }, [])
+      
+      console.log(services)
 
    const handleClick = id => navigate(`/service/${id}`)
    
@@ -93,12 +93,11 @@ export const Services = () => {
                What we design
             </h2>
             <div className={styles.card_div}>
-               {data.map((ele) => {
+               {services.length > 0 && services.map((ele) => {
                   return <ServicesCard Img={ele.Img}
                      id={ele.id}
-                     key={ele.route}
-                     route={ele.route}
-                     heading={ele.heading}
+                     key={ele.id}
+                     heading={ele.type}
                      handleClick={handleClick} />
                })}
                {/* {services.length > 0 && services.map((elem) => {

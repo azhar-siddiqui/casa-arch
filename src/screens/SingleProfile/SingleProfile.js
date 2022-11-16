@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useLazyGetProfessionalProfileQuery } from "../../app/services/userServices";
 import Img1 from "../../assets/ProfessionalProfileIcons/Img1.svg";
@@ -9,13 +9,29 @@ const SingleProfile = () => {
 
    const { id } = useParams()
    const [fetchProfile, response] = useLazyGetProfessionalProfileQuery()
+   const [profile, setProfile] = useState({})
 
    useEffect(() => {
       fetchProfile(id)
          .then(res => {
-            // console.log(res)
+            setProfile(res.data)
          })
-   }, [])
+   }, [id])
+
+   console.log(profile)
+   const {
+      work_profile_pic1, work_profile_pic2, work_profile_pic3, work_profile_pic4, work_profile_pic5,
+      work_profile_accerditation1, work_profile_accerditation2, work_profile_accerditation3,
+      work_profile_accerditation4, work_profile_accerditation5,
+      work_video_link1, work_video_link2, work_video_link3, work_video_link4, work_video_link5,
+      years_in_business,
+      websites,
+      portfolio_url,
+      organisation_website,
+      organisation_size,
+      name_of_organisation,
+      name_of_business
+   } = profile
 
    return (
       <div className="lg:px-24 px-5 py-10">
@@ -87,31 +103,44 @@ const SingleProfile = () => {
             <h1 className="text-[#08090A] font-medium text-xl md:text-2xl pb-4">
                Photos of past work
             </h1>
-            {/* {photos.map(photo => {
-               return (
-                  <img
-                     src={Img1}
-                     alt="Img-1"
-                     className="md:mr-3 mt-3 md:mt-0 w-full md:w-auto"
-                  />
-               )
-            })} */}
+
             <div className="border border-dashed  border-[#939CA3] p-4 md:flex flex-wrap">
-               <img
-                  src={Img1}
-                  alt="Img-1"
-                  className="md:mr-3 mt-3 md:mt-0 w-full md:w-auto"
-               />
-               <img
-                  src={Img2}
-                  alt="Img-2"
-                  className="md:mr-3 mt-3 md:mt-0 w-full md:w-auto"
-               />
-               <img
-                  src={Img3}
-                  alt="Img-1"
-                  className="md:mr-3 mt-3 md:mt-0 w-full md:w-auto"
-               />
+               {
+                  work_profile_pic1 !== null && <img
+                     src={work_profile_pic1}
+                     alt="Img-1"
+                     className="max-w-xs md:mr-3 mt-3 md:mt-0 w-full md:w-auto"
+                  />
+               }
+               {
+                  work_profile_pic2 !== null && <img
+                     src={work_profile_pic2}
+                     alt="Img-1"
+                     className="max-w-xs md:mr-3 mt-3 md:mt-0 w-full md:w-auto"
+                  />
+               }
+               {
+                  work_profile_pic3 !== null && <img
+                     src={work_profile_pic3}
+                     alt="Img-1"
+                     className="max-w-xs md:mr-3 mt-3 md:mt-0 w-full md:w-auto"
+                  />
+               }
+               {
+                  work_profile_pic4 !== null && <img
+                     src={work_profile_pic4}
+                     alt="Img-1"
+                     className="max-w-xs md:mr-3 mt-3 md:mt-0 w-full md:w-auto"
+                  />
+               }
+               {
+                  work_profile_pic5 !== null && <img
+                     src={work_profile_pic5}
+                     alt="Img-1"
+                     className="max-w-xs md:mr-3 mt-3 md:mt-0 w-full md:w-auto"
+                  />
+               }
+
             </div>
          </div>
          <div className="border border-[#CED4DA] p-4 mt-5">
@@ -119,29 +148,23 @@ const SingleProfile = () => {
                Videos of past work
             </h1>
             <div className="border border-dashed  border-[#939CA3] p-4 md:flex flex-wrap">
-               {/* {photos.map(photo => {
-               return (
-                  <img
-                     src={Img1}
-                     alt="Img-1"
-                     className="md:mr-3 mt-3 md:mt-0 w-full md:w-auto"
-                  />
-               )
-            })} */}
                <img
                   src={Img1}
                   alt="Img-1"
                   className="md:mr-3 mt-3 md:mt-0 w-full md:w-auto"
+                  onClick={() => work_video_link1 !== null && window.open(work_video_link1)}
                />
                <img
                   src={Img2}
                   alt="Img-2"
                   className="md:mr-3 mt-3 md:mt-0 w-full md:w-auto"
+                  onClick={() => work_video_link2 !== null && window.open(work_video_link2)}
                />
                <img
                   src={Img3}
                   alt="Img-1"
                   className="md:mr-3 mt-3 md:mt-0 w-full md:w-auto"
+                  onClick={() => work_video_link3 !== null && window.open(work_video_link3)}
                />
             </div>
          </div>
@@ -156,27 +179,21 @@ const SingleProfile = () => {
             <div className="border border-dashed border-[#939CA3] p-4 mt-4 text-center md:text-left ">
                <div className="md:flex flex-wrap md:pb-3">
                   <p className="md:pr-20 text-[#939CA3] font-semibold text-sm ">
-                     Architecture
+                     {work_profile_accerditation1 !== null && work_profile_accerditation1}
                   </p>
                   <p className="md:pr-20 text-[#939CA3] font-semibold text-sm pt-3 md:pt-0">
-                     Residencial Design
-                  </p>
-                  <p className="md:pr-20 text-[#939CA3] font-semibold text-sm pt-3 md:pt-0">
-                     Landscaping
-                  </p>
-                  <p className="md:pr-20 text-[#939CA3] font-semibold text-sm pt-3 md:pt-0">
-                     Office Design
+                     {work_profile_accerditation2 !== null && work_profile_accerditation2}
                   </p>
                </div>
                <div className="md:flex flex-wrap md:pt-3">
                   <p className="md:pr-20 text-[#939CA3] font-semibold text-sm pt-3 md:pt-0">
-                     Comercial Design
+                     {work_profile_accerditation3 !== null && work_profile_accerditation3}
                   </p>
                   <p className="md:pr-20 text-[#939CA3] font-semibold text-sm pt-3 md:pt-0">
-                     Interier Design
+                     {work_profile_accerditation4 !== null && work_profile_accerditation4}
                   </p>
                   <p className="md:pr-20 text-[#939CA3] font-semibold text-sm pt-3 md:pt-0">
-                     Resturent Design
+                     {work_profile_accerditation5 !== null && work_profile_accerditation5}
                   </p>
                </div>
             </div>
@@ -190,19 +207,19 @@ const SingleProfile = () => {
                   Company
                </p>
                <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-                  ATG
+                  {name_of_organisation}
                </p>
                <p className="text-[#08090A] font-medium text-xl md:text-2xl">
                   Years in business
                </p>
                <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-                  8 years
+                  {years_in_business} years
                </p>
                <p className="text-[#08090A] font-medium text-xl md:text-2xl">
                   Company Size
                </p>
                <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-                  60-100 Emploeys
+                  {organisation_size}
                </p>
             </div>
             <div>
@@ -210,7 +227,7 @@ const SingleProfile = () => {
                   Company website
                </p>
                <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-                  www.atg.com
+                  {organisation_website}
                </p>
                <p className="text-[#08090A] font-medium text-xl md:text-2xl">
                   Description
