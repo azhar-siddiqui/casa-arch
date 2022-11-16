@@ -6,7 +6,6 @@ import { blogsServicesApi } from "./services/blogs";
 import userReducer from './slices/user'
 import userStepperReducer from './slices/userStepper'
 import professionalAuthReducer from "./slices/professionalauthSlice";
-import professionalReducer from "./slices/professional";
 import { professionalOauthApi } from "./services/professionalOauthApiServices";
 import { professionalServicesApi } from "./services/professionalServices";
 import { checkPointsApi } from "./services/CheckPoints";
@@ -17,7 +16,7 @@ export const store = configureStore({
   reducer: {
     user: userReducer,
     userStepper: userStepperReducer,
-    professional: professionalReducer,
+    professional: professionalAuthReducer,
     professionalAuth: professionalAuthReducer,
     [getInTouchApi.reducerPath]: getInTouchApi.reducer,
     [userServicesApi.reducerPath]: userServicesApi.reducer,
