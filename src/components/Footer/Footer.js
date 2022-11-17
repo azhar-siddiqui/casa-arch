@@ -51,6 +51,21 @@ const Footer = () => {
               Casa Architects believe in designing buildings that reflect the
               time in which they are built.
             </p>
+            <div className="network">
+              <h5>Follow us</h5>
+              <img src={Rectangle} alt="Rectangle" width={"64px"} />
+              <div className="FollowUs flex mt-2">
+                <Link to="/" target="_blank" onClick={()=>window.open('https://instagram.com/casaarch.in?igshid=YmMyMTA2M2Y=')} >
+                  <img src={Instagram} alt="googleLogo" />
+                </Link>
+                <Link to="/" target="_blank">
+                  <img src={Twitter} alt="twitterLogo" />
+                </Link>
+                <Link to="/" target="_blank">
+                  <img src={Facebook} alt="facebookLogo" />
+                </Link>
+              </div>
+            </div>
           </div>
           <div className="respod">
             <div

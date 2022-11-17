@@ -28,6 +28,9 @@ module.exports = {
         '601': '601px',
         '494': '494px',
      },
+     letterSpacing:{
+      '2': '2px'
+     }
     },
   },
   plugins: [],

@@ -122,6 +122,8 @@ const ProfessionalSignUp = (props) => {
           <Modal
             setVisible={setVisibleForProfessionalSignUp}
             classNameModal={"pt-15"}
+            className='text-xs'
+
             ModalTitle="Tell us about yourself"
             description="You're one step away from seeing our Architecture
                 leads"

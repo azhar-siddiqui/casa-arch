@@ -207,7 +207,7 @@ export default function StartDesigningQuestions({ setStartDesigningQuestionsActi
                                     onClick={handleStepperIncrement}
                                     disabled={
                                        currentStepValue[currentStep].name === 'location' ?
-                                          values.location === '' ? true : false
+                                          values.location === '' || values.location.length > 30 ? true : false
                                           : currentStepValue[currentStep].name === 'email' ?
                                              values.email === '' ? true : false
                                              : false

@@ -110,6 +110,7 @@ export default function OtpVerificationFrame({setVisibleForUserLogin, setVisible
                classNameModal={"pt-[110px] flex-col"}
                ModalTitle="OTP verification"
                description={`Please enter your OTP that sent to ${forgotPasswordEmail}`}
+               className='pt-2'
                body={
                   <>
                      <InputField

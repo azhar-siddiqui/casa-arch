@@ -5,7 +5,7 @@ a {
 .footerMainContainer {
   background: #08090a;
   width: 100%;
-  height: 400px;
+  /* height: 400px; */
   /* height: 386px; */
   padding: 20px 108px;
 }
@@ -180,6 +180,14 @@ a {
   margin-left: 15px;
 }
 
+.secFooter .network {
+ position: static;
+}
+
+.respod .network{
+  display: none;
+}
+
 @media screen and (max-width: 1000px) {
   .footerMainContainer {
     padding: 20px 20px;
@@ -238,4 +246,12 @@ a {
   .webLinks a {
     font-size: 14px;
   }
+  
+.secFooter .network {
+  display: none;
+}
+
+.respod .network{
+   display: block;
+ }
 }

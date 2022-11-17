@@ -112,7 +112,8 @@ const UserSignUpFrame = (props) => {
       }) => (
         <Modal
           setVisible={setVisibleForUserSignUp}
-          classNameModal={"pt-[110px]"}
+          classNameModal={"pt-[110px] px:"}
+          className='text-xs pt-2 pb:5'
           ModalTitle="Create your account"
           description="Sign up to get started!"
           body={
@@ -230,14 +231,14 @@ const UserSignUpFrame = (props) => {
                   />
                 )}
                 <span
-                  className={`ml-3 font-medium ${rememberMeCheck === true ? `text-black` : `text-primaryGray`
+                  className={`ml-3 font-medium ${rememberMeCheck === true ? `text-black` : `text-primaryGray text-sm`
                     }  `}
                 >
                   I agree with the <span className="text-primaryOrange underline"> Terms of services  </span> {'  '} and {'  '} <span className="text-primaryOrange underline"> Privacy Policy </span>
                 </span>
               </p>
               <ButtonField
-                className="bg-primaryOrange text-white hover:text-primaryOrange border border-primaryOrange hover:bg-white hover font-medium w-full px-6 py-4 outline-none focus:outline-none ease-linear transition-all duration-150"
+                className="bg-primaryOrange text-white hover:text-primaryOrange border border-primaryOrange hover:bg-white hover font-medium w-full px-6 py-3 md:py-4 outline-none focus:outline-none ease-linear transition-all duration-150"
                 type="submit"
                 children="Register now"
                 onClick={() => {

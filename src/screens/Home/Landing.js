@@ -55,6 +55,7 @@ const Landing = () => {
 
   const handlePremiumButtonClick = () => {
     dispatch(updateOpenSubscriptionAfterLogin(true))
+
     if (!Token) {
       dispatch(updateVisibleForPremiumButtonLogin(true))
     } else {
@@ -88,7 +89,7 @@ const Landing = () => {
 
   return (
     <>
-      <div className="grid grid-cols-1 grid-rows-7 lg:grid-cols-12 grid-flow-row-dense lg:px-24 px-5 py-10">
+      <div className="grid grid-cols-1 grid-rows-7 lg:grid-cols-12 grid-flow-row-dense lg:px-24 px-5 py-10 pt-8 md:pt-16">
         <div className="row-start-1 row-end-2 lg:col-span-5 pb-3">
           <h1 className="text-primaryDark font-medium text-2xl lg:text-5xl ">
             We Help You To Make The Perfect CASA
@@ -121,7 +122,7 @@ const Landing = () => {
               placeholder: "Architect, Interior Designing",
             }}
           />
-          <h1 className="text-primaryDark pt-7 font-medium text-2xl lg:text-5xl text-left">
+          <h1 className="text-primaryDark pt-8 md:pt-12 font-medium text-2xl lg:text-5xl text-left">
             Get In Touch
           </h1>
 
@@ -132,7 +133,7 @@ const Landing = () => {
 
           <ButtonField
             children={"Get in Touch"}
-            className={"bg-primaryOrange py-3 w-36 lg:w-40 "}
+            className={"bg-primaryOrange py-3 w-36 lg:w-40 text-xs md:text-base"}
             onClick={() => {
               setVisibleGetInTouch(true);
             }}
@@ -145,7 +146,7 @@ const Landing = () => {
             <h1 className="text-primaryDark py-2 font-medium text-left md:text-center text-2xl lg:text-5xl">
               Pricing
             </h1>
-            <p className="text-base text-primaryGray font-medium text-justify lg:text-left py-4 leading-5">
+            <p className="text-base text-primaryGray font-medium text-justify lg:text-left py-4 leading-5 pt-2 md:pt-4">
               From the moment you sign up, we'll send you leads for free. You
               only pay to contact customers that you think are the right fit for
               your business.From the moment you sign up, we'll send you leads
@@ -155,15 +156,15 @@ const Landing = () => {
             <ButtonField
               onClick={handlePremiumButtonClick}
               children={"Casa Arch Premium"}
-              className={"bg-primaryOrange py-3 px-4 mt-3 lt:mt-0"}
+              className={"bg-primaryOrange py-3 px-4 mt-3 lt:mt-0  text-xs md:text-base"}
             />
           </>
           )}
 
-        <h1 className="text-primaryDark pt-11 font-medium text-left md:text-center text-2xl lg:text-5xl">
+        <h1 className="text-primaryDark pt-7 md:pt-12 font-medium text-left md:text-center text-2xl lg:text-5xl">
           Discover
         </h1>
-        <p className="text-base text-primaryGray font-medium text-justify lg:text-left py-4 leading-5">
+        <p className="text-base text-primaryGray font-medium text-justify lg:text-left py-4 md:py-5 leading-5">
           From the moment you sign up, we'll send you leads for free. You only
           pay to contact customers that you think are the right fit for your
           business.From the moment you sign up, we'll send you leads for free.
@@ -174,7 +175,7 @@ const Landing = () => {
         <ButtonField
           onClick={handleStartDesign}
           children={"Start Designing"}
-          className={"bg-primaryOrange py-3 px-4 w-44 mt-3 lt:mt-0"}
+          className={"bg-primaryOrange py-3 px-4 w-44 mt-3 lt:mt-0  text-xs md:text-base"}
         />
       </div>
       {visibleGetInTouch && (

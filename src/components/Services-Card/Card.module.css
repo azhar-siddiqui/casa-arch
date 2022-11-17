@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 23.0625rem;
+  height: 21.25rem;
+  text-align: left;
+  background: #ffffff;
+  border: 0.0625rem solid #ced4da;
+}
+
+.img_div {
+  margin-bottom: 1rem;
+  flex: 1;
+}
+
+.img_div > img {
+  width: 100%;
+}
+
+.container > h2 {
+  font-size: 1.25rem;
+  line-height: 1.625rem;
+  color: var(--color-primary);
+  padding-left: 2rem;
+  cursor: pointer;
+  padding-bottom: 1rem;
+}
+
+@media screen and (max-width: 450px) {
+  .container {
+    width: 20.5rem;
+    height: 18.875rem;
+  }
+  .img_div {
+    max-width: 20.6875rem;
+  }
+
+  .container > h2 {
+    font-size: 1rem;
+    line-height: 1.3125rem;
+    padding-left: 0.9375rem;
+  }
+}

@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { getInTouchApi } from "./services/getInTouchServices";
 import { userServicesApi } from "./services/userServices";
+import { blogsServicesApi } from "./services/blogs";
 import userReducer from './slices/user'
 import userStepperReducer from './slices/userStepper'
 import professionalAuthReducer from "./slices/professionalauthSlice";
@@ -24,6 +25,7 @@ export const store = configureStore({
     [checkPointsApi.reducerPath]: checkPointsApi.reducer,
     [proQuestionApi.reducerPath]: proQuestionApi.reducer,
     [customerLeadsApi.reducerPath]: customerLeadsApi.reducer,
+    [blogsServicesApi.reducerPath]: blogsServicesApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -32,7 +34,8 @@ export const store = configureStore({
       professionalServicesApi.middleware,
       checkPointsApi.middleware,
       proQuestionApi.middleware,
-      customerLeadsApi.middleware
+      customerLeadsApi.middleware,
+      blogsServicesApi.middleware,
     ),
 });
 

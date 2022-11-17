@@ -29,24 +29,27 @@ export default function ProfessionalsList() {
 
    const [list, setList] = useState([])
    const { searchedProfessional } = useSelector(state => state.userStepper)
-   console.log(searchedProfessional)
+   // console.log(searchedProfessional)
    const [loading, setLoading] = useState(true)
    const [successModalActive, setSuccessModalActive] = useState(false)
+   const [successEnquiryModal, setSuccessEnquiryModal] = useState(false)
 
-   const architects = useGetArchitectsQuery(undefined, {
-      refetchOnMountOrArgChange: true
-   })
+   const architects = useGetArchitectsQuery()
+   const interiorDesigners = useGetInteriorDesignersQuery()
 
-   const showSuccessModal = ()=>{
+   const showSuccessModal = () => {
       setSuccessModalActive(true)
       setTimeout(() => {
-        setSuccessModalActive(false)
+         setSuccessModalActive(false)
       }, 3000);
    }
 
-   const interiorDesigners = useGetInteriorDesignersQuery(undefined, {
-      refetchOnMountOrArgChange: true
-   })
+   const showEnquirySuccessModal = () => {
+      setSuccessEnquiryModal(true)
+      setTimeout(() => {
+         setSuccessEnquiryModal(false)
+      }, 3000);
+   }
 
    useEffect(() => {
    }, [])
@@ -75,19 +78,25 @@ export default function ProfessionalsList() {
       // console.log(interiorDesigners.data.data)
    }, [interiorDesigners])
 
-   console.log('list', list)
+   // console.log('list', list)
    return (
       <>
          <div className='p-4 max-w-973 md:mx-auto'>
             {list.length > 0 && list.map((prof, idx) => {
-               return <ProfessionalCard key={idx} {...prof} showSuccessModal={showSuccessModal} />
+               return <ProfessionalCard key={idx}
+                  {...prof}
+                  showEnquirySuccessModal={showEnquirySuccessModal}
+                  showSuccessModal={showSuccessModal} />
             })}
          </div>
-         {loading ?
+         {loading && list.length === 0 ?
             <SuccessModal massage='Finding suitable professionals for you' />
             : <></>
          }
          {successModalActive && (
+            <SuccessModal massage='We have sent the mail, the professional will contact you soon' />
+         )}
+         {successEnquiryModal && (
             <SuccessModal massage='We have sent the mail, the professional will contact you soon' />
          )}
       </>
