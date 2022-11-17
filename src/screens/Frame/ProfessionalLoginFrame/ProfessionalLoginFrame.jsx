@@ -39,8 +39,13 @@ const LoginSchema = Yup.object({
 });
 
 const ProfessionalLoginFrame = (props) => {
-  const { setVisibleForProfessionalLogin, setVisibleForProfessionalSignUp, setvisibleForForgotPassword, setCustomerForgotPassword, setProVisible } =
-    props;
+  const {
+    setVisibleForProfessionalLogin,
+    setVisibleForProfessionalSignUp,
+    setvisibleForForgotPassword,
+    setCustomerForgotPassword,
+    setProVisible,
+  } = props;
   const [professionalLogin, ProfessionalLoginResponse] =
     useProfessionalLoginMutation();
 
@@ -62,7 +67,7 @@ const ProfessionalLoginFrame = (props) => {
   const [vpass, setVPass] = useState("password");
   const [rememberMeCheck, setRememberMeCheck] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (ProfessionalLoginResponse.isSuccess) {
@@ -72,6 +77,7 @@ const ProfessionalLoginFrame = (props) => {
       professionalAreaCheckPoint(setToken);
       // professionalServiceCheckPoints(setToken);
       // professionalSubscriptionCheckPoints(setToken);
+      setVisibleForProfessionalLogin(false);
     } else if (ProfessionalLoginResponse.isError) {
       alert("Something went wrong");
     }
@@ -188,10 +194,9 @@ const ProfessionalLoginFrame = (props) => {
       username: values.email,
       password: values.password,
     };
-    professionalLogin(userData)
-    .then(res => {
+    professionalLogin(userData).then((res) => {
       //  setVisibleForProfessionalLogin(false);
-    })
+    });
     // setVisibleForProfessionalLogin(false);
   };
 
@@ -209,15 +214,15 @@ const ProfessionalLoginFrame = (props) => {
   };
 
   const handleForgetLinkClick = () => {
-    setCustomerForgotPassword(false)
-    setvisibleForForgotPassword(true)
+    setCustomerForgotPassword(false);
+    setvisibleForForgotPassword(true);
     setVisibleForProfessionalLogin(false);
   };
 
-  const handleClose =()=>{
+  const handleClose = () => {
     setVisibleForProfessionalLogin(false);
-    dispatch(updateOpenSubscriptionAfterLogin(false))
-  }
+    dispatch(updateOpenSubscriptionAfterLogin(false));
+  };
   return (
     <Formik
       initialValues={initialValues}
@@ -264,7 +269,7 @@ const ProfessionalLoginFrame = (props) => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 forgetLink="Forgot Password?"
-                forgetLinkOnclick={handleForgetLinkClick}                
+                forgetLinkOnclick={handleForgetLinkClick}
                 value={values.password}
                 errorText={
                   errors.password && touched.password ? errors.password : null

@@ -64,6 +64,53 @@ export const customerLeadsApi = createApi({
         };
       },
     }),
+    SearchLeadAddOrRemFav: builder.mutation({
+      query: (body) => {
+        return {
+          url: `${AppConstants.endPoints.search_lead_add_or_remove}`,
+          method: "PATCH",
+          body: body,
+          headers: {
+            Authorization: `Bearer ${body.token}`,
+          },
+        };
+      },
+    }),
+    designLeadAddOrRemFav: builder.mutation({
+      query: (body) => {
+        return {
+          url: `${AppConstants.endPoints.design_lead_add_or_remove}`,
+          method: "PATCH",
+          body: body,
+          headers: {
+            Authorization: `Bearer ${body.token}`,
+          },
+        };
+      },
+    }),
+    ongoingProjectLeadAddOrRemFav: builder.mutation({
+      query: (body) => {
+        return {
+          url: `${AppConstants.endPoints.ongoingProject_lead_add_or_remove}`,
+          method: "PATCH",
+          body: body,
+          headers: {
+            Authorization: `Bearer ${body.token}`,
+          },
+        };
+      },
+    }),
+    SearchLeadFvt: builder.mutation({
+      query: (body) => {
+        return {
+          url: `${AppConstants.endPoints.search_lead_fvt}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${body.token}`,
+          },
+        };
+      },
+    }),
   }),
 });
 
@@ -73,4 +120,8 @@ export const {
   useDesignLeadsMutation,
   useSearchLeadsMutation,
   useOnGoingProjectLeadsMutation,
+  useSearchLeadAddOrRemFavMutation,
+  useDesignLeadAddOrRemFavMutation,
+  useOngoingProjectLeadAddOrRemFavMutation,
+  useSearchLeadFvtMutation,
 } = customerLeadsApi;

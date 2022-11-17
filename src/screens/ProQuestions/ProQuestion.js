@@ -184,7 +184,7 @@ const ProQuestion = () => {
   const getorgdata = () => {
     const data = { fields, orgnization, freelancer, accr };
     const completeFormData = new FormData();
-    console.log(data);
+    console.log("data", data);
 
     const reqPayload = {
       desginer_profile_type: "",

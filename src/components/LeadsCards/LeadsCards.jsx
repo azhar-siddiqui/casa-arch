@@ -23,9 +23,9 @@ const LeadsCards = () => {
     <>
       <div className="lg:pl-24 w-full lg:w-[416px] h-screen overflow-auto">
         <p className="text-center text-sm font-semibold text-[#939CA3] py-5 border-b border-[#939CA3]">
-          Showing all {data?.data.length} Leads
+          Showing all {data?.data?.length} Leads
         </p>
-        {data?.data.map((value) => (
+        {data?.data?.map((value) => (
           <Link to={`/leadsListing/${value.id}`} key={value.id}>
             <div className="p-3 pb-0 lg:p-0">
               <div className="border border-[#939CA3] w-full h-[181px] p-4  border-l-4 border-l-[#F36C25] lg:border-t-0 lg:border-r-0">

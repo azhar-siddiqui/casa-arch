@@ -19,12 +19,9 @@ const initialValues = {
 const SignUpSchema = Yup.object({
   name: Yup.string()
     .required("This field is required.")
-    .max(20, 'Maximum 20 characters allowed')
+    .max(20, "Maximum 20 characters allowed")
     .min(2, "Minimum 2 characters required.")
-    .matches(
-      /^[a-zA-Z\s]*$/,
-      "Name must only contain letters"
-    ),
+    .matches(/^[a-zA-Z\s]*$/, "Name must only contain letters"),
   email: Yup.string()
     .email("Please Enter Valid Email")
     .matches(
@@ -43,12 +40,11 @@ const SignUpSchema = Yup.object({
     .required("This field is required.")
     .oneOf([Yup.ref("password"), null], "Passwords must match"),
   company_name: Yup.string().required("This field is required."),
-  company_website: Yup.string()
-    .matches(
-      // /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
-      /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
-      "Invalid Website URL"
-    )
+  company_website: Yup.string().matches(
+    // /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
+    /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
+    "Invalid Website URL"
+  ),
 });
 
 const ProfessionalSignUp = (props) => {
@@ -218,7 +214,9 @@ const ProfessionalSignUp = (props) => {
                   onBlur={handleBlur}
                   value={values.company_website}
                   errorText={
-                    errors.company_website && touched.company_website ? errors.company_website : null
+                    errors.company_website && touched.company_website
+                      ? errors.company_website
+                      : null
                   }
                 />
               </>
