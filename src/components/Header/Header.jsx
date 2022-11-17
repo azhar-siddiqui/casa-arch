@@ -388,7 +388,7 @@ const navigate = useNavigate()
     <div className="shadow-md w-full relative bg-white z-40">
       <div className="lg:flex items-center justify-between bg-white py-4 lg:px-24 px-5">
         <NavLink to="/" className="flex items-center">
-          <img src={CasaLogo} alt="Logo" />
+          <img src={CasaLogo} alt="Logo" className={styles.navLogo} />
         </NavLink>
 
         <div
@@ -405,7 +405,7 @@ const navigate = useNavigate()
             <li key={i} className="lg:ml-8 text-sm lg:my-0 my-4">
               <NavLink
                 to={link.link}
-                className={`text-primaryDark font-medium text-sm hover:border-b-2 border-primaryOrange`}
+                className={`text-primaryDark tracking-2 font-medium text-sm hover:border-b-2 border-primaryOrange`}
               >
                 {link.name}
               </NavLink>

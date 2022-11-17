@@ -1,6 +1,6 @@
 // import { useState } from "react";
 import { useEffect } from "react";
-import Cross from "../../assets/ModalIcon/Cross.svg";
+import Cross from "../../assets/ModalIcon/cross-img.svg";
 import "./Modal.css";
 
 export default function Modal(props) {
@@ -13,8 +13,10 @@ export default function Modal(props) {
     className,
     footer,
     secondModalVisible,
-    secondModalBody
+    secondModalBody,
     // checkValue,
+    footerClassName,
+    maxWidthClass
   } = props;
 
   //disable body scroll if modal open
@@ -50,7 +52,7 @@ export default function Modal(props) {
             {/*body*/}
             <div className="relative px-4 sm:px-5 flex-auto">{body}</div>
             {/*footer*/}
-            <div className="p-6">{footer}</div>
+            <div className={`p-6 ${footerClassName} `}>{footer}</div>
           </div>
         </div>
 

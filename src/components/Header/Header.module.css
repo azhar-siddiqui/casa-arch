@@ -136,6 +136,10 @@
 }
 
 @media screen and (max-width: 450px) {
+  .navLogo{
+    max-width: 51px;
+  }
+  
   ::placeholder {
     font-weight: 600;
     font-size: 0.75rem;

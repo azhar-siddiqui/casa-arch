@@ -40,7 +40,8 @@ const SearchBar = (prop) => {
           <img src={SearchFiledImg} alt="SearchIcons" />
         </span>
         <input
-          className={`search ${searchTxt.length === 0 ? "disable" : "inputActive"
+          className={`search placeholder:text-sm 
+          ${searchTxt.length === 0 ? "disable" : "inputActive"
             } ${className} `}
           {...inputProp}
           onChange={handleFilter}

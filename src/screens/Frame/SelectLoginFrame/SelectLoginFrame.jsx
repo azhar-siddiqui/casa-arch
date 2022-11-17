@@ -39,7 +39,7 @@ const SelectLoginFrame = (props) => {
               <ButtonField
                 children="Login for Professional"
                 icons={">"}
-                className="flex items-center justify-between text-primaryOrange w-full border border-primaryOrange text-left px-5 py-5 my-8 font-medium md:text-2xl hover:text-white hover:bg-primaryOrange"
+                className="flex items-center justify-between text-primaryOrange w-full border border-primaryOrange text-left px-5 py-5 my-8 font-medium md:text-2xl hover:text-white hover:bg-primaryOrange md:px-10"
                 onClick={handleLoginForProfessional}
               />
             ) :
@@ -49,7 +49,7 @@ const SelectLoginFrame = (props) => {
                     children="Login for Customer"
                     icons={">"}
                     className="flex items-center justify-between text-primaryOrange w-full border 
-             border-primaryOrange text-left px-5 py-5 mt-8 font-medium md:text-2xl hover:text-white hover:bg-primaryOrange"
+             border-primaryOrange text-left px-5 py-5 mt-8 font-medium md:text-2xl hover:text-white hover:bg-primaryOrange md:px-10"
                     onClick={handleLoginForUser}
                   />
                 </>
@@ -60,13 +60,13 @@ const SelectLoginFrame = (props) => {
                       children="Login for Customer"
                       icons={">"}
                       className="flex items-center justify-between text-primaryOrange w-full border 
-               border-primaryOrange text-left px-5 py-5 mt-8 font-medium md:text-2xl hover:text-white hover:bg-primaryOrange"
+               border-primaryOrange text-left px-5 py-5 mt-8 font-medium md:text-2xl hover:text-white hover:bg-primaryOrange md:px-10"
                       onClick={handleLoginForUser}
                     />
                     <ButtonField
                       children="Login for Professional"
                       icons={">"}
-                      className="flex items-center justify-between text-primaryOrange w-full border border-primaryOrange text-left px-5 py-5 my-8 font-medium md:text-2xl hover:text-white hover:bg-primaryOrange"
+                      className="flex items-center justify-between text-primaryOrange w-full border border-primaryOrange text-left px-5 py-5 my-8 font-medium md:text-2xl hover:text-white hover:bg-primaryOrange md:px-10"
                       onClick={handleLoginForProfessional}
                     />
                   </>

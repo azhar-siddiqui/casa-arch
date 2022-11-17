@@ -83,8 +83,9 @@ export default function Subscription({ setVisibleForSubscription }) {
          we will help you find the best Professional for you."
          className="pt-5 font-normal"
          SignUpText=" SignUp now"
+         maxWidthClass='max-w-601'
          body={
-            <div className='max-w-601 mx-auto'>
+            <div className=''>
                <Formik
                   initialValues={initialValues}
                   onSubmit={handleSubmit}
@@ -98,7 +99,7 @@ export default function Subscription({ setVisibleForSubscription }) {
                      errors,
                      touched,
                   }) => (
-                     <div className='p-4' >
+                     <div className='p-0 md:[&>*]:pb-4' >
                         {/* <p className='text-2xl font-bold mb-2'>
                            Subscription
                         </p>

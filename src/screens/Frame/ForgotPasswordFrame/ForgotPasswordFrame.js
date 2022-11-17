@@ -63,6 +63,7 @@ const ForgotPasswordFrame = (props) => {
                      classNameModal={"pt-[110px] flex-col"}
                      ModalTitle="Forgot Password"
                      description="Enter the email address associated with this account.We’ll send OTP verfication."
+                     className='pt-2'
                      body={
                         <>
 

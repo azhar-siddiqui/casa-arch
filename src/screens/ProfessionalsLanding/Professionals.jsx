@@ -72,7 +72,7 @@ const Professionals = () => {
   ];
   return (
     <>
-      <div className="grid grid-cols-1 grid-rows-7 lg:grid-cols-12 grid-flow-row-dense lg:px-24 px-5 py-10">
+      <div className="grid grid-cols-1 grid-rows-7 lg:grid-cols-12 grid-flow-row-dense lg:px-24 px-5 py-10  pt-8 md:pt-16">
         <div className="row-start-1 pb-3 row-end-2 lg:col-span-6">
           <h1 className="text-primaryDark font-medium text-2xl lg:text-5xl ">
             Make your first job and grow your business
@@ -85,7 +85,7 @@ const Professionals = () => {
           <img src={ProLandingImg} alt="ProLandingImg" className="w-full" />
         </div>
 
-        <div className="lg:row-start-2 lg:row-end-3 lg:col-span-5 text-center lg:text-left py-4 lg:py-0">
+        <div className="lg:row-start-2 lg:row-end-3 lg:col-span-5 text-center lg:text-left py-4 lg:py-0 lg:pt-9">
           <p className="text-base text-primaryGray font-semibold py-2 text-justify lg:text-left">
             What services do you offer?
           </p>
@@ -99,6 +99,7 @@ const Professionals = () => {
               placeholder: "Architecture, Interior Designing",
             }}
             onClick={handlePop}
+            buttonClassName='h-9'
           />
         </div>
       </div>

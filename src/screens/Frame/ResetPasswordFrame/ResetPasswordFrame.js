@@ -88,6 +88,7 @@ const ResetPasswordFrame = (props) => {
                classNameModal={"pt-[110px]"}
                ModalTitle="Reset Password"
                description="Enter the new password for your account"
+               className='pt-2'
                body={
                   <>
 

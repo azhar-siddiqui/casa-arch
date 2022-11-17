@@ -164,8 +164,9 @@ const UserLoginFrame = (props) => {
           setVisible={setVisibleForUserLogin}
           ModalTitle="Login"
           description="Welcome back!Please enter your details"
-          className="pt-5 font-normal"
+          className="pt-2 font-normal"
           SignUpText=" SignUp now"
+          footerClassName='px-4 md:px-5'
           body={
             <>
               <InputField
