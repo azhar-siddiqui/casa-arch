@@ -5,20 +5,45 @@ import Img1 from "../../assets/ProfessionalProfileIcons/Img1.svg";
 import Img2 from "../../assets/ProfessionalProfileIcons/Img2.svg";
 import Img3 from "../../assets/ProfessionalProfileIcons/Img3.svg";
 
+const clientTypeList = [
+   'Individual residents',
+   'Commercial groups',
+]
+const professionalTypeList = [
+   (0, 'Architecture'),
+   (1, 'Interior Designer'),
+]
+const propertyTypeList = [
+   'Residential Flats',
+   'Commercial Units',
+   'Farm Houses/Vills',
+   'Professional Cubicles',
+]
+const budgetTypeList = [
+   'Only High Profile (5L and above)',
+   'Not defined'
+]
+
 const SingleProfile = () => {
 
    const { id } = useParams()
    const [fetchProfile, response] = useLazyGetProfessionalProfileQuery()
-   const [profile, setProfile] = useState({})
+   const [profile, setProfile] = useState({
+      work_profile: {},
+      desginer: {}
+   })
 
    useEffect(() => {
       fetchProfile(id)
          .then(res => {
+            // console.log(res)
             setProfile(res.data)
          })
    }, [id])
 
    console.log(profile)
+   if (profile === undefined) return
+
    const {
       work_profile_pic1, work_profile_pic2, work_profile_pic3, work_profile_pic4, work_profile_pic5,
       work_profile_accerditation1, work_profile_accerditation2, work_profile_accerditation3,
@@ -31,12 +56,15 @@ const SingleProfile = () => {
       organisation_size,
       name_of_organisation,
       name_of_business
-   } = profile
+   } = profile.work_profile
+
+   const { name, is_meeting_remotely, pin_code, area,
+      property_type, client_type, budget_type, professional_type } = profile.desginer
 
    return (
       <div className="lg:px-24 px-5 py-10">
          <h1 className="text-[32px] md:text-[64px] font-semibold text-primaryOrange">
-            Vishal Jaiswal
+            {name}
          </h1>
          <div className="md:flex md:justify-between items-start pb-5">
             <div>
@@ -44,19 +72,19 @@ const SingleProfile = () => {
                   Location
                </p>
                <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-                  10th Cross Road, Bengalore - India
+                  {area ? area : '-'}
                </p>
                <p className="text-[#08090A] font-medium text-xl md:text-2xl">
                   Pincode
                </p>
                <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-                  655655
+                  {pin_code}
                </p>
                <p className="text-[#08090A] font-medium text-xl md:text-2xl">
                   Do you prefer meeting remotely
                </p>
                <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-                  Yes
+                  {is_meeting_remotely ? 'Yes' : 'No'}
                </p>
             </div>
             <div>
@@ -64,13 +92,13 @@ const SingleProfile = () => {
                   Where do you serve your customers
                </p>
                <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-                  Chennai
+                  {area ? area : '-'}
                </p>
                <p className="text-[#08090A] font-medium text-xl md:text-2xl">
                   What type of service you are looking for?
                </p>
                <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-                  Product Based
+                  {propertyTypeList[client_type] ? propertyTypeList[client_type] : '-'}
                </p>
             </div>
          </div>
@@ -81,13 +109,13 @@ const SingleProfile = () => {
                   What type of clients are you looking for?
                </p>
                <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-                  Indevidual Residence
+                  {clientTypeList[property_type] ? clientTypeList[property_type] : '-'}
                </p>
                <p className="text-[#08090A] font-medium text-xl md:text-2xl">
                   What kind of properties do you have expertise in?
                </p>
                <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-                  Commercial Units
+                  {propertyTypeList[client_type] ? propertyTypeList[client_type] : '-'}
                </p>
             </div>
             <div>
@@ -95,7 +123,7 @@ const SingleProfile = () => {
                   What is your Budget Scale to work with?
                </p>
                <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-                  Only High Profile
+                  {budgetTypeList[budget_type] ? budgetTypeList[budget_type] : '-'}
                </p>
             </div>
          </div>
@@ -207,19 +235,19 @@ const SingleProfile = () => {
                   Company
                </p>
                <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-                  {name_of_organisation}
+                  {name_of_organisation === null ? '-' : name_of_organisation}
                </p>
                <p className="text-[#08090A] font-medium text-xl md:text-2xl">
                   Years in business
                </p>
                <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-                  {years_in_business} years
+                  {years_in_business === null ? '-' : `${years_in_business} years`}
                </p>
                <p className="text-[#08090A] font-medium text-xl md:text-2xl">
                   Company Size
                </p>
                <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-                  {organisation_size}
+                  {organisation_size === null ? '-' : organisation_size}
                </p>
             </div>
             <div>
@@ -227,7 +255,7 @@ const SingleProfile = () => {
                   Company website
                </p>
                <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-                  {organisation_website}
+                  {organisation_website === null ? '-' : organisation_website}
                </p>
                <p className="text-[#08090A] font-medium text-xl md:text-2xl">
                   Description
