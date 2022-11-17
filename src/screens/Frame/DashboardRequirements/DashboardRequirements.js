@@ -18,14 +18,25 @@ const initialValues = {
 }
 
 const Schema = Yup.object({
-  projectName: Yup.string().required("This field is required."),
-  projectLocation: Yup.string().required("This field is required."),
+  projectName: Yup.string().required("This field is required.")
+    .matches(
+      /^[A-Za-z]+$/,
+      "Project name must only contain letters"
+    )
+    .max(40, "Only 40 characters are allowed"),
+  projectLocation: Yup.string().required("This field is required.")
+    .max(60, "Only 60 characters are allowed")
+    .matches(
+      /[A-Za-z0-9'\.\-\s\,]/,
+      "Project Location must not contain special letters"
+    ),
   projectBudget: Yup.string().required("This field is required."),
   aestheticRequirements: Yup.string().required("This field is required."),
-  projectDetails: Yup.string().required("This field is required."),
+  projectDetails: Yup.string().required("This field is required.")
+    .max(100, "Only 100 characters are allowed"),
 })
 
-export default function DashboardRequirements({displaySuccessModal, setRequirementsVisible, setIsRequirementPosted, requirementValues, budgetValues }) {
+export default function DashboardRequirements({ displaySuccessModal, setRequirementsVisible, setIsRequirementPosted, requirementValues, budgetValues }) {
 
   const { userId } = useSelector(state => state.user)
   const [postRequirements, data] = usePostRequirementsMutation()
