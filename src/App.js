@@ -16,7 +16,11 @@ import PageNotFound from "./screens/PageNotFound/PageNotFound";
 import PrivacyPolicy from "./screens/PrivacyPolicy/PrivacyPolicy";
 import Terms from "./screens/Terms/Terms";
 import RefundPolicy from "./screens/RefundPolicy/RefundPolicy";
-import { updateIsLoggedIn, updateUserId, updateUserType } from "./app/slices/user";
+import {
+  updateIsLoggedIn,
+  updateUserId,
+  updateUserType,
+} from "./app/slices/user";
 import { useDispatch } from "react-redux";
 
 import ProLandingAfterLogin from "./screens/ProLandingAfterLogin/ProLandingAfterLogin";
@@ -24,7 +28,10 @@ import ProfessionalProfile from "./screens/ProfessionalProfile/ProfessionalProfi
 import PrivateRoutes from "./screens/PrivateRoute/PrivateRoutes";
 import Leads from "./screens/Leads/Leads";
 import LeadListing from "./screens/Leads/LeadListing/LeadListing.jsx";
-import { useLazyGetUserIdQuery, useLazyGetUserTypeQuery } from "./app/services/userServices";
+import {
+  useLazyGetUserIdQuery,
+  useLazyGetUserTypeQuery,
+} from "./app/services/userServices";
 import DashboardLeads from "./screens/ProfessionalDashboardLeads/DashboardLeads";
 import SingleProfile from "./screens/SingleProfile/SingleProfile";
 import { SingleBlog } from "./screens/SingleBlog/SingleBlog";
@@ -33,31 +40,29 @@ import SingleService from "./screens/SingleService/SingleService";
 // import ProQuestion from "./screens/ProQuestion/ProQuestion.jsx";
 
 function App() {
-  const [loading, setLoading] = useState(true)
-  const dispatch = useDispatch()
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
   let Token = localStorage.getItem("Token");
   const navigate = useNavigate();
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const location = useLocation();
 
-  const [fetchUserId, result] = useLazyGetUserIdQuery()
-  const [fetchUserType, userTypeFetched] = useLazyGetUserTypeQuery()
+  const [fetchUserId, result] = useLazyGetUserIdQuery();
+  const [fetchUserType, userTypeFetched] = useLazyGetUserTypeQuery();
 
   useEffect(() => {
-    setLoading(true)
-    if (sessionStorage.getItem('access')) {
-      fetchUserId()
-        .then((res) => {
-          dispatch(updateUserId(res.data["user-id"]));
-        })
-      fetchUserType()
-        .then(res => {
-          dispatch(updateUserType(res.data['user-type']))
-          dispatch(updateIsLoggedIn(true))
-        })
+    setLoading(true);
+    if (sessionStorage.getItem("access")) {
+      fetchUserId().then((res) => {
+        dispatch(updateUserId(res.data["user-id"]));
+      });
+      fetchUserType().then((res) => {
+        dispatch(updateUserType(res.data["user-type"]));
+        dispatch(updateIsLoggedIn(true));
+      });
     }
-    setLoading(false)
-  }, [])
+    setLoading(false);
+  }, []);
 
   useEffect(() => {
     const changeWidth = () => {
@@ -69,7 +74,7 @@ function App() {
     };
   }, [screenWidth]);
 
-  if (loading) return <></>
+  if (loading) return <></>;
 
   return (
     <>

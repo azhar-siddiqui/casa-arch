@@ -49,11 +49,11 @@ const initialValueData = {
   phone: "",
   subscriptionPlan: { id: 0, val: "" },
   AreaOfOperation: { id: 0, val: "" },
-  portfolioLink: "",
+  portfolio: "",
   socialMedia: "",
 };
 
-const SubscriptionFrame = () => {
+const SubscriptionFrame = ({ setSubscriptionVisible }) => {
   const [subscription, setSubscriptionPlan] = useState(false);
   const [areaOfOperation, setAreaOfOperation] = useState(false);
 
@@ -67,8 +67,6 @@ const SubscriptionFrame = () => {
   const changeDropdownValue = (e, setFieldValue) => {
     // let name = e.target.className;
     // console.log("name", name);
-
-    console.log(e.currentTarget.getAttribute("name"));
     let value =
       e.currentTarget.firstElementChild.innerText +
       " " +
@@ -88,7 +86,17 @@ const SubscriptionFrame = () => {
       AreaOfOperation: values.AreaOfOperation.val,
       subscriptionPlan: values.subscriptionPlan.val,
     };
-    console.log("Subscription Value", SubscriptionValue);
+
+    let bodydata = {
+      name: SubscriptionValue.name,
+      email: SubscriptionValue.email,
+      phone: SubscriptionValue.phone,
+      portfolio: SubscriptionValue.portfolio,
+      website: SubscriptionValue.socialMedia,
+      area_of_operation: SubscriptionValue.AreaOfOperation,
+      subscription_plan: SubscriptionValue.subscriptionPlan,
+    };
+    console.log("bodydata", bodydata);
   };
 
   return (
@@ -107,7 +115,7 @@ const SubscriptionFrame = () => {
         touched,
       }) => (
         <Modal
-          //   setVisible={}
+          setVisible={setSubscriptionVisible}
           classNameModal={""}
           ModalTitle="Subscription"
           description="Help us UnderStand what Services you are Seeking, and we will help you find the best Professional for you."
@@ -251,18 +259,18 @@ const SubscriptionFrame = () => {
                 </span>
               </>
               <InputField
-                name="portfolioLink"
+                name="portfolio"
                 label="Portfolio Link"
                 placeholder="Enter your Portfolio link"
-                id={"portfolioLink"}
+                id={"portfolio"}
                 className="font-medium"
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.portfolioLink}
+                value={values.portfolio}
                 errorText={
-                  errors.portfolioLink && touched.portfolioLink
-                    ? errors.portfolioLink
+                  errors.portfolio && touched.portfolio
+                    ? errors.portfolio
                     : null
                 }
               />

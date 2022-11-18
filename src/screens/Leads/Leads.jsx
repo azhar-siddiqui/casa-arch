@@ -99,7 +99,7 @@ const Leads = () => {
             children={"Contact Krishna"}
             className="bg-primaryOrange border-2 border-primaryOrange text-[16px] font-medium py-2 px-3  lg:px-4 mr-4"
             onClick={() => {
-              setSubscriptionVisible(!subscriptionVisible);
+              setSubscriptionVisible(true);
             }}
           />
           <ButtonField
@@ -144,7 +144,9 @@ const Leads = () => {
         </div>
       </div>
 
-      {subscriptionVisible && <SubscriptionFrame />}
+      {subscriptionVisible && (
+        <SubscriptionFrame setSubscriptionVisible={setSubscriptionVisible} />
+      )}
     </>
   );
 };
