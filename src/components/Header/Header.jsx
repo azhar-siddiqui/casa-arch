@@ -21,7 +21,12 @@ import {
   useSubmitSteppersMutation,
 } from "../../app/services/userServices";
 import { useDispatch, useSelector } from "react-redux";
-import { updateIsLoggedIn, updateSelectLoginFrameActive, updateUserType, updateVisibleForUserLogin } from "../../app/slices/user";
+import {
+  updateIsLoggedIn,
+  updateSelectLoginFrameActive,
+  updateUserType,
+  updateVisibleForUserLogin,
+} from "../../app/slices/user";
 
 import SuccessModal from "../../components/SuccessModal/SuccessModal";
 import Loc from "../../assets/ModalIcon/loc.svg";
@@ -38,7 +43,10 @@ import ForgotPasswordFrame from "../../screens/Frame/ForgotPasswordFrame/ForgotP
 import OtpVerificationFrame from "../../screens/Frame/OtpVerificationFrame/OtpVerificationFrame";
 import ResetPasswordFrame from "../../screens/Frame/ResetPasswordFrame/ResetPasswordFrame";
 import PremiumButtonLogin from "../../screens/Frame/premiumButtonLogin/PremiumButtonLogin";
-import { updateVisibleForPremiumButtonLogin, updateVisibleForSubscriptionModal } from "../../app/slices/professionalauthSlice";
+import {
+  updateVisibleForPremiumButtonLogin,
+  updateVisibleForSubscriptionModal,
+} from "../../app/slices/professionalauthSlice";
 import Subscription from "../../screens/Frame/Subscription/Subscription";
 import { useProfessionalSignUpPatchMutation } from "../../app/services/professionalOauthApiServices";
 import StartDesignFrame from "../../screens/Frame/StartDesignFrame/StartDesignFrame";
@@ -111,7 +119,7 @@ const Header = () => {
     useProfessionalAreaCheckServiceMutation();
   // const [professionalSignUpPatch, professionalSignUpPatchResponse] =
   //   useProfessionalSignUpPatchMutation();
-const navigate = useNavigate()
+  const navigate = useNavigate();
   let [openMenu, setOpenMenu] = useState(false);
   const [visible, setVisible] = useState(false);
   const [currentStepValue, setCurrentStepValue] = useState(userStepper);
@@ -126,19 +134,22 @@ const navigate = useNavigate()
     useState(false);
   const [visibleForProfessionalSignUp, setVisibleForProfessionalSignUp] =
     useState(false);
-  const [visibleForUserSignUp, setVisibleForUserSignUp] = useState(false)
+  const [visibleForUserSignUp, setVisibleForUserSignUp] = useState(false);
 
   // const [visibleForUserLogin, setVisibleForUserLogin] = useState(false)
-  const { visibleForUserLogin } = useSelector(state => state.user)
-  const [visibleForForgotPassword, setvisibleForForgotPassword] = useState(false)
-  const [visibleForOtpVerification, setVisibleForOtpVerification] = useState(false)
-  const [visibleForResetPassword, setVisibleForResetPassword] = useState(false)
-  const [forgotPasswordEmail, setForgotPasswordEmail] = useState('')
+  const { visibleForUserLogin } = useSelector((state) => state.user);
+  const [visibleForForgotPassword, setvisibleForForgotPassword] =
+    useState(false);
+  const [visibleForOtpVerification, setVisibleForOtpVerification] =
+    useState(false);
+  const [visibleForResetPassword, setVisibleForResetPassword] = useState(false);
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
 
   // const [stepperVisible, setStepperVisible] = useState(false)
-  const { isStepperVisible } = useSelector(state => state.userStepper)
+  const { isStepperVisible } = useSelector((state) => state.userStepper);
   const [successModalVisible, setSuccessModalVisible] = useState(false);
-  const [forgotPasswordSuccessModal, setForgotPasswordSuccessModal] = useState(false)
+  const [forgotPasswordSuccessModal, setForgotPasswordSuccessModal] =
+    useState(false);
 
   const [proVisible, setProVisible] = useState(false);
   const [logoutSucces, setLogoutSuccess] = useState(false);
@@ -146,48 +157,51 @@ const navigate = useNavigate()
   const location = useLocation();
   const [submitNormalUserSteppers, submittedSteppersData] =
     useSubmitSteppersMutation();
-  const { isLoggedIn, userType, userId, selectLoginFrameActive } = useSelector((state) => state.user);
-  const [successfulLoginModal, setSuccessfulLoginModal] = useState(false)
+  const { isLoggedIn, userType, userId, selectLoginFrameActive } = useSelector(
+    (state) => state.user
+  );
+  const [successfulLoginModal, setSuccessfulLoginModal] = useState(false);
   //to determine how forgot password.. customer or professional
-  const [customerForgotPassword, setCustomerForgotPassword] = useState(false)
+  const [customerForgotPassword, setCustomerForgotPassword] = useState(false);
   // login frame when premium button click
-  const { visibleForPremiumButtonLogin, visibleForSubscriptionModal } = useSelector((state) => state.professional);
+  const { visibleForPremiumButtonLogin, visibleForSubscriptionModal } =
+    useSelector((state) => state.professional);
   const setVisibleForPremiumButtonLogin = (bool) => {
-    dispatch(updateVisibleForPremiumButtonLogin(bool))
-  }
+    dispatch(updateVisibleForPremiumButtonLogin(bool));
+  };
 
   // subscription modal
   const setVisibleForSubscription = (bool) => {
-    dispatch(updateVisibleForSubscriptionModal(bool))
-  }
+    dispatch(updateVisibleForSubscriptionModal(bool));
+  };
 
   useEffect(() => {
     if (isLoggedIn) {
-      setSuccessfulLoginModal(true)
+      setSuccessfulLoginModal(true);
       setTimeout(() => {
-        setSuccessfulLoginModal(false)
+        setSuccessfulLoginModal(false);
       }, 3000);
     }
-  }, [isLoggedIn])
+  }, [isLoggedIn]);
 
   let Token = localStorage.getItem("Token");
   useEffect(() => {
     if (Token) {
-      setSuccessfulLoginModal(true)
+      setSuccessfulLoginModal(true);
       setTimeout(() => {
-        setSuccessfulLoginModal(false)
+        setSuccessfulLoginModal(false);
       }, 2000);
     }
-  }, [Token])
+  }, [Token]);
 
   const dispatch = useDispatch();
 
   const setStepperVisible = (bool) => {
-    dispatch(updateIsStepperVisible(bool))
+    dispatch(updateIsStepperVisible(bool));
   };
 
   const setVisibleForUserLogin = (bool) => {
-    dispatch(updateVisibleForUserLogin(bool))
+    dispatch(updateVisibleForUserLogin(bool));
   };
 
   let LinksUrl = [
@@ -213,12 +227,12 @@ const navigate = useNavigate()
     }
 
     if (isLoggedIn) {
-      setDashboardButtonVisible(true)
+      setDashboardButtonVisible(true);
     } else {
       setDashboardButtonVisible(false);
     }
-    if (isLoggedIn && userType === 'Customer') {
-      setProButtonVisible(false)
+    if (isLoggedIn && userType === "Customer") {
+      setProButtonVisible(false);
     }
   }, [location, isLoggedIn]);
 
@@ -306,26 +320,26 @@ const navigate = useNavigate()
       };
       console.log(reqBody);
       submitNormalUserSteppers(reqBody)
-        .then(res => {
+        .then((res) => {
           if (res.data) {
-            console.log('submitted')
-            navigate('/professionals/list')
+            console.log("submitted");
+            navigate("/professionals/list");
           }
         })
-        .catch(err => {
-          console.log(err.response)
-        })
+        .catch((err) => {
+          console.log(err.response);
+        });
       setCurrentStep(0);
-      setStepperVisible(false)
+      setStepperVisible(false);
     }
   };
 
   const handleLogout = () => {
-    sessionStorage.removeItem('access')
-    dispatch(updateIsLoggedIn(false))
-    dispatch(updateUserType(''))
-    navigate('/')
-  }
+    sessionStorage.removeItem("access");
+    dispatch(updateIsLoggedIn(false));
+    dispatch(updateUserType(""));
+    navigate("/");
+  };
   const incCount = () => {
     if (count !== data.length - 1) {
       setCount(count + 1);
@@ -337,13 +351,13 @@ const navigate = useNavigate()
       if (fields.preference === "Yes") {
         let t = (fields.preference = true);
         setFields({ ...fields, preference: t });
+        console.log("fields==>", fields);
         professionalService(fields);
         if (professionalServiceResponse.isSuccess) {
           setProVisible(false);
           navigate("/professionals/questions");
           console.log("professionalServiceResponse");
         }
-
         if (submittedSteppersData.isError) {
           setProVisible(true);
         }
@@ -398,8 +412,9 @@ const navigate = useNavigate()
           <img src={MenuIcon} alt="MenuIcon" />
         </div>
         <ul
-          className={`lg:flex lg:items-center lg:pb-0 pb-12 absolute lg:static bg-white lg:z-auto z-[-1] left-0 w-full lg:w-auto lg:pl-0 pl-5 transition-all duration-500 ease-in ${openMenu ? "top-20 " : "top-[-490px]"
-            }`}
+          className={`lg:flex lg:items-center lg:pb-0 pb-12 absolute lg:static bg-white lg:z-auto z-[-1] left-0 w-full lg:w-auto lg:pl-0 pl-5 transition-all duration-500 ease-in ${
+            openMenu ? "top-20 " : "top-[-490px]"
+          }`}
         >
           {LinksUrl.map((link, i) => (
             <li key={i} className="lg:ml-8 text-sm lg:my-0 my-4">
@@ -468,7 +483,7 @@ const navigate = useNavigate()
       )}
       {selectLoginFrameActive && (
         <SelectLoginFrame
-          setVisible={()=>dispatch(updateSelectLoginFrameActive(false))}
+          setVisible={() => dispatch(updateSelectLoginFrameActive(false))}
           setProButtonVisible={setProButtonVisible}
           setVisibleForProfessionalLogin={setVisibleForProfessionalLogin}
           setVisibleForUserLogin={setVisibleForUserLogin}
@@ -487,13 +502,11 @@ const navigate = useNavigate()
       {visibleForSubscriptionModal && (
         <Subscription
           setVisibleForSubscription={setVisibleForSubscription}
-        // setVisibleForUserLogin={setVisibleForUserLogin}
+          // setVisibleForUserLogin={setVisibleForUserLogin}
         />
       )}
 
-      {successfulLoginModal && (
-        <SuccessModal massage='Successful Login' />
-      )}
+      {successfulLoginModal && <SuccessModal massage="Successful Login" />}
 
       {visibleForUserLogin && (
         <UserLoginFrame
@@ -518,7 +531,11 @@ const navigate = useNavigate()
           setvisibleForForgotPassword={setvisibleForForgotPassword}
           setVisibleForOtpVerification={setVisibleForOtpVerification}
           setForgotPasswordEmail={setForgotPasswordEmail}
-          setVisibleForUserLogin={customerForgotPassword ? setVisibleForUserLogin : setVisibleForProfessionalLogin}
+          setVisibleForUserLogin={
+            customerForgotPassword
+              ? setVisibleForUserLogin
+              : setVisibleForProfessionalLogin
+          }
         />
       )}
       {visibleForOtpVerification && (
@@ -526,13 +543,21 @@ const navigate = useNavigate()
           setVisibleForOtpVerification={setVisibleForOtpVerification}
           forgotPasswordEmail={forgotPasswordEmail}
           setVisibleForResetPassword={setVisibleForResetPassword}
-          setVisibleForUserLogin={customerForgotPassword ? setVisibleForUserLogin : setVisibleForProfessionalLogin}
+          setVisibleForUserLogin={
+            customerForgotPassword
+              ? setVisibleForUserLogin
+              : setVisibleForProfessionalLogin
+          }
         />
       )}
       {visibleForResetPassword && (
         <ResetPasswordFrame
           setVisibleForResetPassword={setVisibleForResetPassword}
-          setVisibleForUserLogin={customerForgotPassword ? setVisibleForUserLogin : setVisibleForProfessionalLogin}
+          setVisibleForUserLogin={
+            customerForgotPassword
+              ? setVisibleForUserLogin
+              : setVisibleForProfessionalLogin
+          }
         />
       )}
 
@@ -599,12 +624,11 @@ const navigate = useNavigate()
                             onBlur={handleBlur}
                             isLast={
                               idx ===
-                                currentStepValue[currentStep].preference.length -
+                              currentStepValue[currentStep].preference.length -
                                 1
                                 ? true
                                 : false
                             }
-                            // value={}
                             errorText={
                               errors.name && touched.name ? errors.name : null
                             }
@@ -622,7 +646,6 @@ const navigate = useNavigate()
                     type={currentStepValue[currentStep].type}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    // value={}
                     errorText={errors.name && touched.name ? errors.name : null}
                   />
                 )
@@ -630,7 +653,7 @@ const navigate = useNavigate()
               footer={
                 <div className="flex items-center justify-between">
                   {currentStep > 0 ||
-                    currentStep > currentStepValue.length - 1 ? (
+                  currentStep > currentStepValue.length - 1 ? (
                     <>
                       <ButtonField
                         className="py-3 text-primaryGray   font-medium  outline-none focus:outline-none "
@@ -662,16 +685,19 @@ const navigate = useNavigate()
                       children="Continue"
                       onClick={handleStepperIncrement}
                       disabled={
-                        currentStepValue[currentStep].name === 'pincode' ?
-                          values.pincode < 99999 || values.pincode > 1000000 ? true : false
-                          : currentStepValue[currentStep].name === 'email' ?
-                            values.email === '' ? true : false
+                        currentStepValue[currentStep].name === "pincode"
+                          ? values.pincode < 99999 || values.pincode > 1000000
+                            ? true
                             : false
+                          : currentStepValue[currentStep].name === "email"
+                          ? values.email === ""
+                            ? true
+                            : false
+                          : false
                       }
                     >
                       Continue
                     </button>
-
                   )}
                 </div>
               }
@@ -683,34 +709,34 @@ const navigate = useNavigate()
         <SuccessModal massage={"Switching to professional account"} />
       )}
 
-      {
-        successModalVisible && (
-          <SuccessModal massage={"Professional User created SuccessFully"} />
-        )
-      }
-      {
-        forgotPasswordSuccessModal && (
-          <SuccessModal
-            massage={
-              <div className="text-center px-2">
-                <p className="mx-auto font-medium text-lg lg:text-2xl text-primaryExtraLightGray mb-2">
-                  Password Reset
-                </p>
-                <p className="font-bold text-sm text-black">
-                  Your password has been Reset successfully
-                  Click below to Login
-                </p >
-                <ButtonField className="bg-primaryOrange py-2 px-6 hover:border-solid border-2 border-primaryOrange hover:bg-white hover:text-primaryOrange leading-normal w-full text-normal font-semibold mt-51"
-                  onClick={() => setForgotPasswordSuccessModal(false)} >
-                  Continue
-                </ButtonField>
-              </div>
-            }
-            hideFooter={true} />
-        )
-      }
+      {successModalVisible && (
+        <SuccessModal massage={"Professional User created SuccessFully"} />
+      )}
+
+      {forgotPasswordSuccessModal && (
+        <SuccessModal
+          massage={
+            <div className="text-center px-2">
+              <p className="mx-auto font-medium text-lg lg:text-2xl text-primaryExtraLightGray mb-2">
+                Password Reset
+              </p>
+              <p className="font-bold text-sm text-black">
+                Your password has been Reset successfully Click below to Login
+              </p>
+              <ButtonField
+                className="bg-primaryOrange py-2 px-6 hover:border-solid border-2 border-primaryOrange hover:bg-white hover:text-primaryOrange leading-normal w-full text-normal font-semibold mt-51"
+                onClick={() => setForgotPasswordSuccessModal(false)}
+              >
+                Continue
+              </ButtonField>
+            </div>
+          }
+          hideFooter={true}
+        />
+      )}
 
       {logoutSucces && <SuccessModal massage="Logout Successfully" />}
+
       {successModalVisible === false && (
         <>
           {proVisible && (
@@ -731,7 +757,7 @@ const navigate = useNavigate()
                         <h2 className={styles.question}>{currData.heading}</h2>
                         <div className={styles.input_div}>
                           {currData.type === "text" ||
-                            currData.type === "email" ? (
+                          currData.type === "email" ? (
                             <>
                               {currData.imgLink && (
                                 <img src={currData.imgLink} alt="location" />
@@ -742,19 +768,20 @@ const navigate = useNavigate()
                                 value={fields[currData.name]}
                                 name={currData.name}
                                 placeholder={currData.placeholder}
-                                id={`${currData.name === "pincode"
-                                  ? styles.loc_inp
-                                  : ""
-                                  }`}
+                                id={`${
+                                  currData.name === "pincode"
+                                    ? styles.loc_inp
+                                    : ""
+                                }`}
                                 className={styles.text_inp}
                                 autoComplete="off"
                               />
                             </>
                           ) : (
                             <>
-                              {currData.options.map((ele) => {
+                              {currData.options.map((ele, i) => {
                                 return (
-                                  <React.Fragment key={ele.indexOf()}>
+                                  <React.Fragment key={i}>
                                     <input
                                       type="checkbox"
                                       aria-hidden
@@ -772,10 +799,11 @@ const navigate = useNavigate()
                                         );
                                       }}
                                       style={{
-                                        borderColor: `${fields[currData.name] === ele
-                                          ? "#F36C25"
-                                          : ""
-                                          }`,
+                                        borderColor: `${
+                                          fields[currData.name] === ele
+                                            ? "#F36C25"
+                                            : ""
+                                        }`,
                                       }}
                                       className={styles.checkbox_label}
                                     >
@@ -785,12 +813,12 @@ const navigate = useNavigate()
                                       <p
                                         className={styles.checkbox_text}
                                         style={{
-                                          color: `${fields[currData.name] === ele
-                                            ? ""
-                                            : "#939CA3"
-                                            }`,
+                                          color: `${
+                                            fields[currData.name] === ele
+                                              ? ""
+                                              : "#939CA3"
+                                          }`,
                                         }}
-                                      // className={styles.checkbox_label}
                                       >
                                         {ele}
                                       </p>
@@ -812,7 +840,7 @@ const navigate = useNavigate()
                         onClick={incCount}
                         disabled={
                           currData.name &&
-                            fields[`${currData.name}`].length === 0
+                          fields[`${currData.name}`].length === 0
                             ? true
                             : false
                         }
@@ -820,7 +848,6 @@ const navigate = useNavigate()
                         Continue
                       </button>
                     </div>
-
                   </div>
                 </div>
               </div>

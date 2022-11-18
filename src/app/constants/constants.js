@@ -14,6 +14,10 @@ export const AppConstants = {
     customer_details_lead: "customer-details-all",
     design_leads_all: "design-leads-all/",
     search_leads_all: "search-leads-all/",
+    search_lead_add_or_remove: "search-leads-arf/",
+    search_lead_fvt: "search-leads-cfl/",
     project_leads_all: "project-leads-all",
+    design_lead_add_or_remove: "design-leads-arf/",
+    ongoingProject_lead_add_or_remove: "project-leads-arf/",
   },
 };

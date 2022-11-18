@@ -83,7 +83,12 @@ const SubscriptionFrame = () => {
   };
 
   const handleSubmit = (values) => {
-    console.log("Subscription Value", values);
+    let SubscriptionValue = {
+      ...values,
+      AreaOfOperation: values.AreaOfOperation.val,
+      subscriptionPlan: values.subscriptionPlan.val,
+    };
+    console.log("Subscription Value", SubscriptionValue);
   };
 
   return (
@@ -103,7 +108,7 @@ const SubscriptionFrame = () => {
       }) => (
         <Modal
           //   setVisible={}
-          classNameModal={"pt-[310px]"}
+          classNameModal={""}
           ModalTitle="Subscription"
           description="Help us UnderStand what Services you are Seeking, and we will help you find the best Professional for you."
           body={

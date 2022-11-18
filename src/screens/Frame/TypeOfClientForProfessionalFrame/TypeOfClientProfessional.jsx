@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useProjectChoiceMutation } from "../../../app/services/proQuestion";
 import { CCheckbox } from "../../../components/CircularCheckbox/CCheckbox";
 import Modal from "../../../components/Modal/Modal";
@@ -63,6 +64,7 @@ const TypeOfClientProfessional = ({ SetVisibleTypeOfClient }) => {
       setCount(count - 1);
     } else return;
   };
+  const navigate = useNavigate();
   useEffect(() => {
     if (projectChoiceResponse.isSuccess) {
       setsuccessVisible(true);
@@ -70,6 +72,7 @@ const TypeOfClientProfessional = ({ SetVisibleTypeOfClient }) => {
         SetVisibleTypeOfClient(false);
         setsuccessVisible(false);
       }, 2000);
+      navigate("/leadsListing/1");
     } else if (projectChoiceResponse.isError) {
       // SetVisibleTypeOfClient(true);
       setsuccessVisible(false);
