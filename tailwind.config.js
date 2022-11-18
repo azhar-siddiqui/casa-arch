@@ -17,6 +17,7 @@ module.exports = {
         primaryRed: '#DD4B39'
       },
       spacing: {
+        '3.5': '14px',
         '4.5': '17.5px',
         '15': '60px',
         '51': '51px',

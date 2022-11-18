@@ -146,7 +146,7 @@ const Landing = () => {
             <h1 className="text-primaryDark py-2 font-medium text-left md:text-center text-2xl lg:text-5xl">
               Pricing
             </h1>
-            <p className="text-base text-primaryGray font-medium text-justify lg:text-left py-4 leading-5 pt-2 md:pt-4">
+            <p className="text-base text-primaryGray font-medium text-justify lg:text-left py-4 leading-5 pt-1 md:pt-4">
               From the moment you sign up, we'll send you leads for free. You
               only pay to contact customers that you think are the right fit for
               your business.From the moment you sign up, we'll send you leads
@@ -164,7 +164,7 @@ const Landing = () => {
         <h1 className="text-primaryDark pt-7 md:pt-12 font-medium text-left md:text-center text-2xl lg:text-5xl">
           Discover
         </h1>
-        <p className="text-base text-primaryGray font-medium text-justify lg:text-left py-4 md:py-5 leading-5">
+        <p className="text-base text-primaryGray font-medium text-justify lg:text-left py-3 md:py-5 leading-5">
           From the moment you sign up, we'll send you leads for free. You only
           pay to contact customers that you think are the right fit for your
           business.From the moment you sign up, we'll send you leads for free.
@@ -199,7 +199,11 @@ const Landing = () => {
       )}
 
       {successModalActive && (
-        <SuccessModal massage='We have sent the mail, the professional will contact you soon' />
+        <SuccessModal massage={
+          <span className="inline-block text-center px-3">
+            We have sent the mail, the professional will contact you soon
+          </span>
+        } />
       )}
       {/* <StartDesignFrame /> */}
     </>

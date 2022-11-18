@@ -95,7 +95,7 @@ a {
   font-weight: 600;
   font-size: 20px;
   color: #ffffff;
-  padding-bottom: 10px;
+  padding-bottom: 4px;
 }
 .subscrition2 h5 {
   font-weight: 600;
@@ -254,4 +254,15 @@ a {
 .respod .network{
    display: block;
  }
+ .contactContainer > p {
+  padding-top: 4px;
+  padding-right: 10px;
+}
+.webLinks h5 {
+  padding-bottom: 4px;
+}
+
+.webLinks a {
+  padding-top: 12px;
+}
 }

@@ -407,7 +407,7 @@ const Header = () => {
 
         <div
           onClick={() => setOpenMenu(!openMenu)}
-          className="text-3xl absolute right-8 top-6 cursor-pointer lg:hidden"
+          className={`text-3xl absolute right-8 cursor-pointer lg:hidden ${styles.hamburgerMenu}`}
         >
           <img src={MenuIcon} alt="MenuIcon" />
         </div>

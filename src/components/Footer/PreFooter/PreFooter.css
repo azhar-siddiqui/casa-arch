@@ -49,4 +49,8 @@ li a {
     width: 100%;
     text-align: end;
   }
+  
+.preFooterContainer > p {
+ text-align: center;
+}
 }

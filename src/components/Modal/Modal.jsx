@@ -16,7 +16,7 @@ export default function Modal(props) {
     secondModalBody,
     // checkValue,
     footerClassName,
-    maxWidthClass
+    headerClassName
   } = props;
 
   //disable body scroll if modal open
@@ -38,7 +38,7 @@ export default function Modal(props) {
             {/*header*/}
             <div className="p-4 sm:p-5 pb-0">
               <div className="flex items-center justify-between ">
-                <h3 className="font-semibold text-2xl md:text-[32px]">
+                <h3 className={`${headerClassName} font-semibold text-2xl md:text-[32px]`}>
                   {ModalTitle ? ModalTitle : ""}
                 </h3>
                 <button className="" onClick={() => setVisible(false)}>

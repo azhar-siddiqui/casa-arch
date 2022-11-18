@@ -41,14 +41,14 @@ const PremiumButtonLogin = (props) => {
     <>
       <Modal
         setVisible={handleClose}
-        description="Select among the following?"
+        description="Are you a professional?"
         className="md:text-2xl"
         body={
           <>
             <ButtonField
               children="Login"
               icons={">"}
-              className="flex items-center justify-between text-primaryOrange w-full border border-primaryOrange text-left px-5 py-5 my-8 font-medium md:text-2xl hover:text-white hover:bg-primaryOrange"
+              className="flex items-center justify-between text-primaryOrange w-full border border-primaryOrange text-left px-5 py-5 mt-4 md:mt-0 font-medium md:text-2xl hover:text-white hover:bg-primaryOrange"
               onClick={handleLoginForProfessional}
             />
 
@@ -56,7 +56,7 @@ const PremiumButtonLogin = (props) => {
               children="Join as Professional"
               icons={">"}
               className="flex items-center justify-between text-primaryOrange w-full border 
-               border-primaryOrange text-left px-5 py-5 mt-8 font-medium md:text-2xl hover:text-white hover:bg-primaryOrange"
+               border-primaryOrange text-left px-5 py-5 mt-8 md:mb-4 font-medium md:text-2xl hover:text-white hover:bg-primaryOrange"
               onClick={handleJoinAsProfessional}
             />
           </>

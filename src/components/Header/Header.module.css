@@ -134,7 +134,11 @@
   color: #6d747a;
   cursor: pointer;
 }
+.hamburgerMenu{
+  top: 50%;
+  transform: translateY(-40%);
 
+}
 @media screen and (max-width: 450px) {
   .navLogo{
     max-width: 51px;

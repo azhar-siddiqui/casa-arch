@@ -79,9 +79,10 @@ export default function Subscription({ setVisibleForSubscription }) {
       <Modal
          setVisible={setVisibleForSubscription}
          ModalTitle="Subscription"
+         headerClassName='mt-0 md:mt-4'
          description="Help us UnderStand what Services you are Seeking, and 
          we will help you find the best Professional for you."
-         className="pt-5 font-normal"
+         className="pt-2 md:pt-2 text-sm md:text-base font-normal"
          SignUpText=" SignUp now"
          maxWidthClass='max-w-601'
          body={

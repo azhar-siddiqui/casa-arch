@@ -85,7 +85,7 @@ const Footer = () => {
             <div className="network">
               <h5>Follow us</h5>
               <img src={Rectangle} alt="Rectangle" width={"64px"} />
-              <div className="FollowUs flex mt-2">
+              <div className="FollowUs flex mt-3.5">
                 <Link to="/" target="_blank" onClick={()=>window.open('https://instagram.com/casaarch.in?igshid=YmMyMTA2M2Y=')} >
                   <img src={Instagram} alt="googleLogo" />
                 </Link>
@@ -99,7 +99,7 @@ const Footer = () => {
             </div>
           </div>
           <div className="subscrition2">
-            <h5>Subscribe</h5>
+            <h5 className="mb-1">Subscribe</h5>
             <img src={Rectangle} alt="Rectangle" width={"64px"} />
             <p>
               Dont miss to subscribe for our newsletter <br />

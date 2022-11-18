@@ -49,7 +49,7 @@ const SelectLoginFrame = (props) => {
                     children="Login for Customer"
                     icons={">"}
                     className="flex items-center justify-between text-primaryOrange w-full border 
-             border-primaryOrange text-left px-5 py-5 mt-8 font-medium md:text-2xl hover:text-white hover:bg-primaryOrange md:px-10"
+             border-primaryOrange text-left px-5 py-5 mt-4 md:mt-0 font-medium md:text-2xl hover:text-white hover:bg-primaryOrange md:px-10"
                     onClick={handleLoginForUser}
                   />
                 </>
@@ -60,7 +60,7 @@ const SelectLoginFrame = (props) => {
                       children="Login for Customer"
                       icons={">"}
                       className="flex items-center justify-between text-primaryOrange w-full border 
-               border-primaryOrange text-left px-5 py-5 mt-8 font-medium md:text-2xl hover:text-white hover:bg-primaryOrange md:px-10"
+               border-primaryOrange text-left px-5 py-5  mt-4 md:mt-0 font-medium md:text-2xl hover:text-white hover:bg-primaryOrange md:px-10"
                       onClick={handleLoginForUser}
                     />
                     <ButtonField

@@ -21,14 +21,14 @@ const schema = Yup.object({
       .required("This field is required."),
 });
 
-export default function OtpVerificationFrame({setVisibleForUserLogin, setVisibleForOtpVerification, forgotPasswordEmail, setVisibleForResetPassword }) {
+export default function OtpVerificationFrame({ setVisibleForUserLogin, setVisibleForOtpVerification, forgotPasswordEmail, setVisibleForResetPassword }) {
 
    const [verifyOtp, verifyOtpResponse] = useVerifyOtpMutation()
    const [resendOtp, resendOtpData] = useResendOtpMutation()
    const [successModalVisible, setsuccessModalVisible] = useState(false)
    const [loading, setLoading] = useState(false)
    const [loadingIconActive, setLoadingIconActive] = useState(false)
-   const [loadingIcon, setLoadingIcon] = useState({src: Loading, toSpin: true})
+   const [loadingIcon, setLoadingIcon] = useState({ src: Loading, toSpin: true })
 
 
    const handleResendOtp = async (values) => {
@@ -58,17 +58,17 @@ export default function OtpVerificationFrame({setVisibleForUserLogin, setVisible
       if (otp.length === 4) {
          setLoadingIconActive(true)
          verifyOtp(reqBody)
-         .then(res => {
-            console.log(res)
-            if (res.data.status === 400) {
-               setLoadingIcon({src: WrongIcon, toSpin: false})
-               return
-            } else {
-               setLoadingIcon({src: CorrectIcon, toSpin: false})
-            }
-         })
-      }else{
-         setLoadingIcon({src: Loading, toSpin: true})
+            .then(res => {
+               console.log(res)
+               if (res.data.status === 400) {
+                  setLoadingIcon({ src: WrongIcon, toSpin: false })
+                  return
+               } else {
+                  setLoadingIcon({ src: CorrectIcon, toSpin: false })
+               }
+            })
+      } else {
+         setLoadingIcon({ src: Loading, toSpin: true })
          setLoadingIconActive(false)
       }
    }
@@ -109,7 +109,13 @@ export default function OtpVerificationFrame({setVisibleForUserLogin, setVisible
                setVisible={setVisibleForOtpVerification}
                classNameModal={"pt-[110px] flex-col"}
                ModalTitle="OTP verification"
-               description={`Please enter your OTP that sent to ${forgotPasswordEmail}`}
+               description={
+                  <>
+                     Please enter the OTP that was sent to <span className="inline-block text-black font-semibold">
+                        {forgotPasswordEmail}
+                     </span>
+                  </>
+               }
                className='pt-2'
                body={
                   <>
@@ -148,7 +154,7 @@ export default function OtpVerificationFrame({setVisibleForUserLogin, setVisible
                         }}
                      />
                      <ButtonField
-                        className="text-primaryOrange underline bg-white px-6 py-1 mt-5 mb-2 font-medium outline-none focus:outline-none ease-linear transition-all duration-150"                        
+                        className="text-primaryOrange underline bg-white px-6 py-1 mt-5 mb-2 font-medium outline-none focus:outline-none ease-linear transition-all duration-150"
                         type="button"
                         children="Back to Login"
                         onClick={() => {
