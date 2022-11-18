@@ -78,6 +78,7 @@ const ProfessionalLoginFrame = (props) => {
       // professionalServiceCheckPoints(setToken);
       // professionalSubscriptionCheckPoints(setToken);
       setVisibleForProfessionalLogin(false);
+      navigate("/professionals/landing");
     } else if (ProfessionalLoginResponse.isError) {
       alert("Something went wrong");
     }
