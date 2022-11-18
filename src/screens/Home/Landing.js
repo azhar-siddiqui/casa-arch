@@ -51,9 +51,9 @@ const Landing = () => {
     }, 3000);
   }
 
-  let Token = localStorage.getItem("Token");
-
+  
   const handlePremiumButtonClick = () => {
+  let Token = localStorage.getItem("Token");
     dispatch(updateOpenSubscriptionAfterLogin(true))
 
     if (!Token) {
