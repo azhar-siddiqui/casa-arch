@@ -15,12 +15,13 @@ const InputField = (props) => {
     forgetLink,
     forgetLinkOnclick,
     LoadingIcon,
-    loadingIconActive
+    loadingIconActive,
+    labelClassName
   } = props;
   const inputRef = useRef();
   return (
     <div className="w-full pt-4">
-      <div className="flex items-center justify-between">
+      <div className={`flex items-center justify-between ${labelClassName ? labelClassName : ''} `}>
         <label htmlFor={name}>{label}</label>
         <p className="text-primaryGray cursor-pointer" onClick={forgetLinkOnclick} >{forgetLink}</p>
       </div>

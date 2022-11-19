@@ -20,6 +20,7 @@ module.exports = {
         '3.5': '14px',
         '4.5': '17.5px',
         '15': '60px',
+        '45': '45px',
         '51': '51px',
         '220': '220px'
       },
@@ -31,6 +32,9 @@ module.exports = {
      },
      letterSpacing:{
       '2': '2px'
+     },
+     fontSize:{
+      '11.33': '11.3778px',
      }
     },
   },

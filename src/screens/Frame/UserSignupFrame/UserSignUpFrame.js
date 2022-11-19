@@ -10,6 +10,7 @@ import Check from "../../../assets/ModalIcon/Right.svg";
 import BlankCheck from "../../../assets/ModalIcon/blank.svg";
 import FacebookIcon from "../../../assets/socialIcons/fb.svg";
 import GoogleIcon from "../../../assets/socialIcons/google.svg";
+import { GoogleLogin } from 'react-google-login'
 
 const initialValues = {
   first_name: "",
@@ -73,7 +74,7 @@ const UserSignUpFrame = (props) => {
           alert('User registered! login to continue')
           alert('Email is already registered. Please login to continue')
           return
-        }else{
+        } else {
           setVisibleForUserLogin(true)
           setVisibleForUserSignUp(false)
         }
@@ -96,6 +97,24 @@ const UserSignUpFrame = (props) => {
     }
   };
 
+  const responseGoogle = async (googleData) => {
+    // let data = {
+    //   client_id: process.env.REACT_APP_CLIENT_ID,
+    //   client_secret: process.env.REACT_APP_CLIENT_SECRET,
+    //   grant_type: "convert_token",
+    //   backend: "google-oauth2",
+    //   token: googleData.accessToken, // which will get from google
+    // };
+    console.log(googleData)
+    // const res = await axios.post(`${domain}/social-auth/convert-token/`, data)
+    // let response_data = await res.data
+    // let token = JSON.stringify(response_data);
+    // sessionStorage.setItem("access", token);
+    // console.log(response_data)
+    // setAuth(res.data);
+    // window.location.reload();
+  }
+
   return (
     <Formik
       initialValues={initialValues}
@@ -112,7 +131,7 @@ const UserSignUpFrame = (props) => {
       }) => (
         <Modal
           setVisible={setVisibleForUserSignUp}
-          classNameModal={"pt-[110px] px:"}
+          classNameModal={"pt-16 px:"}
           className='text-xs pt-2 pb:5'
           ModalTitle="Create your account"
           description="Sign up to get started!"
@@ -238,7 +257,7 @@ const UserSignUpFrame = (props) => {
                 </span>
               </p>
               <ButtonField
-                className="bg-primaryOrange text-white hover:text-primaryOrange border border-primaryOrange hover:bg-white hover font-medium w-full px-6 py-3 md:py-4 outline-none focus:outline-none ease-linear transition-all duration-150"
+                className="bg-primaryOrange text-white hover:text-primaryOrange border border-primaryOrange hover:bg-white hover font-medium w-full px-6 py-2 md:py-4 outline-none focus:outline-none ease-linear transition-all duration-150 h-45 md:h-auto"
                 type="submit"
                 children="Register now"
                 onClick={() => {
@@ -247,31 +266,70 @@ const UserSignUpFrame = (props) => {
               />
               <div className="flex items-center my-4 md:my-7">
                 <div className="flex-1  border-b border-slate-700"></div>
-                <p className="text-xl px-5 md:px-8 font-semibold">Or</p>
+                <p className="text-sm md:text-base px-5 md:px-8 font-semibold">Or</p>
                 <div className="flex-1  border-b border-slate-700"></div>
               </div>
               <div className="flex items-center">
-                <ButtonField
-                  className="flex items-center text-white bg-primaryBlue border border-primaryBlue hover:bg-primaryBlue hover:text-white w-full px-2 py-1  outline-none focus:outline-none ease-linear transition-all duration-150 mr-3 text-sm md:px-4 md:py-4 md:font-medium md:text-lg md:mr-8"
-                  type="button"
-                  children={
-                    <>
-                      <img className="mr-1 md:mr-4" src={FacebookIcon} />
-                      Login via Facebook
-                    </>
-                  }
+                {/* 
+                <GoogleLogin
+                  clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                  buttonText="Sign up with Google"
+                  onSuccess={responseGoogle}
+                  onFailure={err => console.log(err)}
+
+                  cookiePolicy={"single_host_origin"}
+                  render={(renderProps) => {
+                    return ( */}
+                <>
+                  <ButtonField
+                    className="flex items-center  justify-center text-white bg-primaryBlue border border-primaryBlue hover:bg-primaryBlue hover:text-white w-full px-2 py-1  outline-none focus:outline-none ease-linear transition-all duration-150 mr-3 text-11.33 md:px-4 md:py-4 md:font-medium md:text-lg md:mr-8"
+                    type="button"
+                    // onClick={renderProps.onClick}
+                    children={
+                      <>
+                        <img className="mr-1 md:mr-4" src={FacebookIcon} />
+                        Login via Facebook
+                      </>
+                    }
+                  />
+                </>
+                {/* );
+                  }}
+                /> */}
+                <GoogleLogin
+                  clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                  buttonText="Sign up with Google"
+                  onSuccess={responseGoogle}
+                  onFailure={err => console.log(err)}
+                  cookiePolicy={"single_host_origin"}
+                  render={(renderProps) => {
+                    return (
+                      <>
+                        <ButtonField
+                          className="flex items-center justify-center text-white  bg-primaryRed border border-primaryRed hover:bg-primaryRed hover:text-white w-full px-2 py-1 font-medium outline-none focus:outline-none ease-linear transition-all duration-150 text-11.33
+                          md:px-4 md:py-4 md:font-medium md:text-lg"
+                          type="button"
+                          onClick={renderProps.onClick}
+                          children={
+                            <>
+                              <img className="mr-1 md:mr-4" src={GoogleIcon} />
+                              Login via Google
+                            </>
+                          }
+                        />
+                      </>
+                    );
+                  }}
                 />
-                <ButtonField
+
+                {/* <ButtonField
                   className="flex items-center text-white  bg-primaryRed border border-primaryRed hover:bg-primaryRed hover:text-white w-full px-2 py-1 font-medium outline-none focus:outline-none ease-linear transition-all duration-150 text-sm
                   md:px-4 md:py-4 md:font-medium md:text-lg"
                   type="button"
                   children={
-                    <>
-                      <img className="mr-1 md:mr-4" src={GoogleIcon} />
-                      Login via Google
-                    </>
+
                   }
-                />
+                /> */}
               </div>
             </>
           }

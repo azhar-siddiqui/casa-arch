@@ -1,4 +1,7 @@
 import React, { useRef } from "react";
+import styles from './styles.module.css'
+import DownArrow from '../../assets/down-arrow.svg'
+
 const InputSelect = (props) => {
   const {
     type,
@@ -12,12 +15,13 @@ const InputSelect = (props) => {
     label,
     handleViewPassword,
     forgetLink,
-    optionData
+    optionData,
+    labelClassName
   } = props;
   const inputRef = useRef();
   return (
     <div className="w-full pt-4">
-      <div className="flex items-center justify-between">
+       <div className={`flex items-center justify-between ${labelClassName ? labelClassName : ''} `}>
         <label htmlFor={name}>{label}</label>
         <p className="text-primaryGray cursor-pointer">{forgetLink}</p>
       </div>
@@ -39,8 +43,8 @@ const InputSelect = (props) => {
           id={id}
           name={name}
           value={value}
-          className={`outline-none border-2 py-2.5 px-6 w-full ${props?.className
-            } ${props?.errorText ? `border-red-700` : `border-primaryLight`}`}
+          className={`outline-none border py-2.5 px-6 w-full ${props?.className
+            } ${props?.errorText ? `border-red-700` : `border-primaryLight`} ${styles.select} `}
           autoComplete="off"
           onChange={onChange}
           onBlur={onBlur}
@@ -51,6 +55,7 @@ const InputSelect = (props) => {
             </option>
           })}
         </select>
+          <img src={DownArrow} className={styles.icon} />
       </div>
       {props?.errorText && (
         <div className="text-red-700">{props?.errorText}</div>
