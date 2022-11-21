@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useProfessionalProfileMutation } from "../../app/services/professionalOauthApiServices";
 import Img1 from "../../assets/ProfessionalProfileIcons/Img1.svg";
 import Img2 from "../../assets/ProfessionalProfileIcons/Img2.svg";
 import Img3 from "../../assets/ProfessionalProfileIcons/Img3.svg";
 const ProfessionalProfile = () => {
+  let Token = localStorage.getItem("Token");
+  const [professionalDashboard, professionalResponse] =
+    useProfessionalProfileMutation();
+  console.log("professionalResponse", professionalResponse?.data);
+  useEffect(() => {
+    professionalDashboard({ token: Token });
+  }, []);
+
   return (
     <div className="lg:px-24 px-5 py-10">
       <h1 className="text-[32px] md:text-[64px] font-semibold text-primaryOrange">
-        Vishal Jaiswal
+        {professionalResponse?.data?.name
+          ? professionalResponse?.data?.name
+          : "Vishal Jaiswal"}
       </h1>
       <div className="md:flex md:justify-between items-start pb-5">
         <div>
@@ -20,13 +31,15 @@ const ProfessionalProfile = () => {
             Pincode
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            655655
+            {professionalResponse?.data?.pin_code}
           </p>
           <p className="text-[#08090A] font-medium text-xl md:text-2xl">
             Do you prefer meeting remotely
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            Yes
+            {professionalResponse?.data?.is_meeting_remotely === true
+              ? "Yes"
+              : "No"}
           </p>
         </div>
         <div>
@@ -51,13 +64,13 @@ const ProfessionalProfile = () => {
             What type of clients are you looking for?
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            Indevidual Residence
+            {professionalResponse?.data?.client_type}
           </p>
           <p className="text-[#08090A] font-medium text-xl md:text-2xl">
             What kind of properties do you have expertise in?
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            Commercial Units
+            {professionalResponse?.data?.property_type}
           </p>
         </div>
         <div>
@@ -65,7 +78,7 @@ const ProfessionalProfile = () => {
             What is your Budget Scale to work with?
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            Only High Profile
+            {professionalResponse?.data?.budget_type}
           </p>
         </div>
       </div>
@@ -75,19 +88,30 @@ const ProfessionalProfile = () => {
         </h1>
         <div className="border border-dashed  border-[#939CA3] p-4 md:flex flex-wrap">
           <img
-            src={Img1}
+            src={professionalResponse?.data?.work_profile_pic1}
             alt="Img-1"
-            className="md:mr-3 mt-3 md:mt-0 w-full md:w-auto"
+            className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
           />
+
           <img
-            src={Img2}
+            src={professionalResponse?.data?.work_profile_pic2}
             alt="Img-2"
-            className="md:mr-3 mt-3 md:mt-0 w-full md:w-auto"
+            className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
           />
           <img
-            src={Img3}
+            src={professionalResponse?.data?.work_profile_pic3}
             alt="Img-1"
-            className="md:mr-3 mt-3 md:mt-0 w-full md:w-auto"
+            className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
+          />
+          <img
+            src={professionalResponse?.data?.work_profile_pic4}
+            alt="Img-2"
+            className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
+          />
+          <img
+            src={professionalResponse?.data?.work_profile_pic5}
+            alt="Img-1"
+            className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
           />
         </div>
       </div>
@@ -96,21 +120,51 @@ const ProfessionalProfile = () => {
           Videos of past work
         </h1>
         <div className="border border-dashed  border-[#939CA3] p-4 md:flex flex-wrap">
-          <img
-            src={Img1}
-            alt="Img-1"
-            className="md:mr-3 mt-3 md:mt-0 w-full md:w-auto"
-          />
-          <img
-            src={Img2}
-            alt="Img-2"
-            className="md:mr-3 mt-3 md:mt-0 w-full md:w-auto"
-          />
-          <img
-            src={Img3}
-            alt="Img-1"
-            className="md:mr-3 mt-3 md:mt-0 w-full md:w-auto"
-          />
+          <video
+            controls
+            className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
+          >
+            <source
+              src={professionalResponse?.data?.work_video_link1}
+              type="video/mp4"
+            ></source>
+          </video>
+          <video
+            controls
+            className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
+          >
+            <source
+              src={professionalResponse?.data?.work_video_link2}
+              type="video/mp4"
+            ></source>
+          </video>
+          <video
+            controls
+            className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
+          >
+            <source
+              src={professionalResponse?.data?.work_video_link3}
+              type="video/mp4"
+            ></source>
+          </video>
+          <video
+            controls
+            className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
+          >
+            <source
+              src={professionalResponse?.data?.work_video_link4}
+              type="video/mp4"
+            ></source>
+          </video>
+          <video
+            controls
+            className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
+          >
+            <source
+              src={professionalResponse?.data?.work_video_link5}
+              type="video/mp4"
+            ></source>
+          </video>
         </div>
       </div>
       <div className="border border-[#CED4DA] p-4 my-5">
@@ -158,19 +212,19 @@ const ProfessionalProfile = () => {
             Company
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            ATG
+            {professionalResponse?.data?.company_website}
           </p>
           <p className="text-[#08090A] font-medium text-xl md:text-2xl">
             Years in business
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            8 years
+            {professionalResponse?.data?.years_in_business} years
           </p>
           <p className="text-[#08090A] font-medium text-xl md:text-2xl">
             Company Size
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            60-100 Emploeys
+            {professionalResponse?.data?.organisation_size} Emploeys
           </p>
         </div>
         <div>
@@ -178,15 +232,13 @@ const ProfessionalProfile = () => {
             Company website
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            www.atg.com
+            {professionalResponse?.data?.websites}
           </p>
           <p className="text-[#08090A] font-medium text-xl md:text-2xl">
             Description
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            Lorem ipsum is placeholder text commonly used in the <br /> graphic,
-            print, and publishing industries for previewing <br /> layouts and
-            visual mockups.
+            {professionalResponse?.data?.description}
           </p>
         </div>
       </div>

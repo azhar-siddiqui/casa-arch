@@ -61,6 +61,17 @@ export const professionalOauthApi = createApi({
         };
       },
     }),
+    professionalProfile: builder.mutation({
+      query: (body) => {
+        return {
+          url: `${AppConstants.endPoints.professional_profile}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${body.token}`,
+          },
+        };
+      },
+    }),
   }),
 });
 
@@ -69,4 +80,5 @@ export const {
   useProfessionalLoginMutation,
   useProfessionalTypeMutation,
   useProfessionalSignUpPatchMutation,
+  useProfessionalProfileMutation,
 } = professionalOauthApi;

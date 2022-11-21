@@ -19,5 +19,7 @@ export const AppConstants = {
     project_leads_all: "project-leads-all",
     design_lead_add_or_remove: "design-leads-arf/",
     ongoingProject_lead_add_or_remove: "project-leads-arf/",
+    professional_payment: "professional-subscriber/",
+    professional_profile: "professional-work-profile-token",
   },
 };

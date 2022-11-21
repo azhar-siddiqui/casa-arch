@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./SubscriptionFrame.module.css";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -7,6 +7,7 @@ import Modal from "../../../components/Modal/Modal";
 import ButtonField from "../../../components/ButtonsFields/ButtonField";
 import SubDropIcon from "../../../assets/SubscriptionPlanIcon/SubscriptionDownIcon.svg";
 import SubUpIcon from "../../../assets/SubscriptionPlanIcon/SubscriptionUpIcon.svg";
+import { useProfessionalSubscribeMutation } from "../../../app/services/professionalServices";
 
 const subscriptionValues = [
   {
@@ -54,15 +55,17 @@ const initialValueData = {
 };
 
 const SubscriptionFrame = ({ setSubscriptionVisible }) => {
+  let Token = localStorage.getItem("Token");
   const [subscription, setSubscriptionPlan] = useState(false);
   const [areaOfOperation, setAreaOfOperation] = useState(false);
-
   const toggleDropDownSubscription = () => {
     subscription ? setSubscriptionPlan(false) : setSubscriptionPlan(true);
   };
   const toggleDropDownAreaOIfOperation = () => {
     areaOfOperation ? setAreaOfOperation(false) : setAreaOfOperation(true);
   };
+  const [professionalpayment, professionalpaymentResponse] =
+    useProfessionalSubscribeMutation();
 
   const changeDropdownValue = (e, setFieldValue) => {
     // let name = e.target.className;
@@ -71,7 +74,6 @@ const SubscriptionFrame = ({ setSubscriptionVisible }) => {
       e.currentTarget.firstElementChild.innerText +
       " " +
       e.currentTarget.lastElementChild.innerText;
-    console.log(value);
     let id = parseInt(e.currentTarget.id);
     if (e.currentTarget.getAttribute("name") === "subscriptionPlan") {
       setFieldValue("subscriptionPlan", { id: id, val: value });
@@ -86,6 +88,26 @@ const SubscriptionFrame = ({ setSubscriptionVisible }) => {
       AreaOfOperation: values.AreaOfOperation.val,
       subscriptionPlan: values.subscriptionPlan.val,
     };
+    let getIndex = (val, array) => {
+      let idx = 0;
+      array.map((item) => {
+        if (item.val === val) {
+          idx = item.id;
+        }
+      });
+      return idx;
+    };
+
+    const getSubIndex = (val, array) => {
+      let idx = 0;
+      array.map((item) => {
+        let str = `${item.val[0]} ${item.val[1]}`;
+        if (str === val) {
+          idx = item.id;
+        }
+      });
+      return idx;
+    };
 
     let bodydata = {
       name: SubscriptionValue.name,
@@ -93,11 +115,25 @@ const SubscriptionFrame = ({ setSubscriptionVisible }) => {
       phone: SubscriptionValue.phone,
       portfolio: SubscriptionValue.portfolio,
       website: SubscriptionValue.socialMedia,
-      area_of_operation: SubscriptionValue.AreaOfOperation,
-      subscription_plan: SubscriptionValue.subscriptionPlan,
+      area_of_operation: getIndex(
+        SubscriptionValue.AreaOfOperation.trim(),
+        areaOfOperationValues
+      ),
+      subscription_type: getSubIndex(
+        SubscriptionValue.subscriptionPlan,
+        subscriptionValues
+      ),
     };
+    professionalpayment({ body: bodydata, token: Token });
     console.log("bodydata", bodydata);
   };
+
+  useEffect(() => {
+    console.log("professionalpaymentResponse", professionalpaymentResponse);
+  }, [
+    professionalpaymentResponse.isSuccess,
+    professionalpaymentResponse.isError,
+  ]);
 
   return (
     <Formik
