@@ -29,13 +29,14 @@ module.exports = {
         '1224': '1224px',
         '601': '601px',
         '494': '494px',
-     },
-     letterSpacing:{
-      '2': '2px'
-     },
-     fontSize:{
-      '11.33': '11.3778px',
-     }
+      },
+      letterSpacing: {
+        '2': '2px'
+      },
+      fontSize: {
+        '11.33': '11.3778px',
+        '32': '32px'
+      }
     },
   },
   plugins: [],

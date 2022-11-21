@@ -163,7 +163,16 @@ export const userServicesApi = createApi({
             },
          })
       }),
-
+      socialLogin: builder.mutation({
+         query: (body) => ({
+            url: `/user-convert-token/`,
+            method: "POST",
+            body: body,
+            // headers: {
+            //    "Authorization": `Bearer ${sessionStorage.getItem('access')}`
+            // },
+         })
+      }),
    }),
 });
 
@@ -187,5 +196,7 @@ export const {
    useResetPasswordMutation,
    useEnquireMutation,
    useProjectChoicesMutation,
-   useLazyGetProfessionalProfileQuery
+   useLazyGetProfessionalProfileQuery,
+
+   useSocialLoginMutation
 } = userServicesApi;

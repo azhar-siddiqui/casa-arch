@@ -381,7 +381,7 @@ const Header = () => {
     // navigate("/professionals/questions");
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   const handleProfessionalLogout = () => {
     setLogoutSuccess(true);
@@ -398,6 +398,11 @@ const Header = () => {
     } else return;
   };
 
+  const showForgotPasswordSuccess = ()=>{
+    // setVisible(true)
+    setForgotPasswordSuccessModal(true)
+  }
+
   return (
     <div className="shadow-md w-full relative bg-white z-40">
       <div className="lg:flex items-center justify-between bg-white py-4 lg:px-24 px-5">
@@ -412,9 +417,8 @@ const Header = () => {
           <img src={MenuIcon} alt="MenuIcon" />
         </div>
         <ul
-          className={`lg:flex lg:items-center lg:pb-0 pb-12 absolute lg:static bg-white lg:z-auto z-[-1] left-0 w-full lg:w-auto lg:pl-0 pl-5 transition-all duration-500 ease-in ${
-            openMenu ? "top-20 " : "top-[-490px]"
-          }`}
+          className={`lg:flex lg:items-center lg:pb-0 pb-12 absolute lg:static bg-white lg:z-auto z-[-1] left-0 w-full lg:w-auto lg:pl-0 pl-5 transition-all duration-500 ease-in ${openMenu ? "top-20 " : "top-[-490px]"
+            }`}
         >
           {LinksUrl.map((link, i) => (
             <li key={i} className="lg:ml-8 text-sm lg:my-0 my-4">
@@ -502,7 +506,7 @@ const Header = () => {
       {visibleForSubscriptionModal && (
         <Subscription
           setVisibleForSubscription={setVisibleForSubscription}
-          // setVisibleForUserLogin={setVisibleForUserLogin}
+        // setVisibleForUserLogin={setVisibleForUserLogin}
         />
       )}
 
@@ -553,6 +557,7 @@ const Header = () => {
       {visibleForResetPassword && (
         <ResetPasswordFrame
           setVisibleForResetPassword={setVisibleForResetPassword}
+          showForgotPasswordSuccess={showForgotPasswordSuccess}
           setVisibleForUserLogin={
             customerForgotPassword
               ? setVisibleForUserLogin
@@ -624,7 +629,7 @@ const Header = () => {
                             onBlur={handleBlur}
                             isLast={
                               idx ===
-                              currentStepValue[currentStep].preference.length -
+                                currentStepValue[currentStep].preference.length -
                                 1
                                 ? true
                                 : false
@@ -653,7 +658,7 @@ const Header = () => {
               footer={
                 <div className="flex items-center justify-between">
                   {currentStep > 0 ||
-                  currentStep > currentStepValue.length - 1 ? (
+                    currentStep > currentStepValue.length - 1 ? (
                     <>
                       <ButtonField
                         className="py-3 text-primaryGray   font-medium  outline-none focus:outline-none "
@@ -690,10 +695,10 @@ const Header = () => {
                             ? true
                             : false
                           : currentStepValue[currentStep].name === "email"
-                          ? values.email === ""
-                            ? true
+                            ? values.email === ""
+                              ? true
+                              : false
                             : false
-                          : false
                       }
                     >
                       Continue
@@ -757,7 +762,7 @@ const Header = () => {
                         <h2 className={styles.question}>{currData.heading}</h2>
                         <div className={styles.input_div}>
                           {currData.type === "text" ||
-                          currData.type === "email" ? (
+                            currData.type === "email" ? (
                             <>
                               {currData.imgLink && (
                                 <img src={currData.imgLink} alt="location" />
@@ -768,11 +773,10 @@ const Header = () => {
                                 value={fields[currData.name]}
                                 name={currData.name}
                                 placeholder={currData.placeholder}
-                                id={`${
-                                  currData.name === "pincode"
+                                id={`${currData.name === "pincode"
                                     ? styles.loc_inp
                                     : ""
-                                }`}
+                                  }`}
                                 className={styles.text_inp}
                                 autoComplete="off"
                               />
@@ -799,11 +803,10 @@ const Header = () => {
                                         );
                                       }}
                                       style={{
-                                        borderColor: `${
-                                          fields[currData.name] === ele
+                                        borderColor: `${fields[currData.name] === ele
                                             ? "#F36C25"
                                             : ""
-                                        }`,
+                                          }`,
                                       }}
                                       className={styles.checkbox_label}
                                     >
@@ -813,11 +816,10 @@ const Header = () => {
                                       <p
                                         className={styles.checkbox_text}
                                         style={{
-                                          color: `${
-                                            fields[currData.name] === ele
+                                          color: `${fields[currData.name] === ele
                                               ? ""
                                               : "#939CA3"
-                                          }`,
+                                            }`,
                                         }}
                                       >
                                         {ele}
@@ -840,7 +842,7 @@ const Header = () => {
                         onClick={incCount}
                         disabled={
                           currData.name &&
-                          fields[`${currData.name}`].length === 0
+                            fields[`${currData.name}`].length === 0
                             ? true
                             : false
                         }

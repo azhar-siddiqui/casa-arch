@@ -80,10 +80,10 @@ export default function DashboardRequirements({ displaySuccessModal, setRequirem
           touched,
         }) => (
           <div className='p-4 border' >
-            <p className='text-2xl font-bold mb-2'>
+            <p className='text-2xl mt-3 md:text-32 font-bold mb-2'>
               Project Requirements
             </p>
-            <p className='text-xs text-slate-500 mb-3 font-semibold md:pr-16' >
+            <p className='text-sm md:text-base text-primaryGray mb-3 font-semibold md:pr-16' >
               Help us UnderStand what Services you are Seeking, and we will help you find the best Professional for you.
             </p>
             <InputField
@@ -92,7 +92,7 @@ export default function DashboardRequirements({ displaySuccessModal, setRequirem
               placeholder="Project Name"
               id={"projectname"}
               className="font-medium"
-              labelClassName='pb-1'
+              labelClassName='pt-2'
               type="text"
               onChange={handleChange}
               onBlur={handleBlur}
@@ -105,7 +105,7 @@ export default function DashboardRequirements({ displaySuccessModal, setRequirem
               placeholder="Project Location"
               id={"projectLocation"}
               className="font-medium"
-              labelClassName='pb-1'
+              labelClassName='pt-2'
               type="text"
               onChange={handleChange}
               onBlur={handleBlur}
@@ -118,7 +118,7 @@ export default function DashboardRequirements({ displaySuccessModal, setRequirem
               placeholder="Enter your Project Budget"
               id={"projectBudget"}
               className="font-medium"
-              labelClassName='pb-1'
+              labelClassName='pt-2'
               type="number"
               onChange={handleChange}
               onBlur={handleBlur}
@@ -132,7 +132,7 @@ export default function DashboardRequirements({ displaySuccessModal, setRequirem
               optionData={requirementValues}
               placeholder="Aesthetic Requirements"
               id={"aestheticRequirements"}
-              labelClassName='pb-1'
+              labelClassName='pt-2'
               className="font-medium"
               type="text"
               onChange={handleChange}
@@ -146,7 +146,7 @@ export default function DashboardRequirements({ displaySuccessModal, setRequirem
               placeholder="Project Details"
               id={"projectDetails"}
               className="font-medium mt-2"
-              labelClassName='pb-1.5 inline-block'
+              labelClassName='pt-2 pb-1 inline-block'
               borderClass='border'
               type="text"
               onChange={handleChange}

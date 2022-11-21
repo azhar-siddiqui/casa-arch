@@ -5,12 +5,13 @@ import Modal from "../../../components/Modal/Modal";
 import InputField from "../../../components/InputField/InputField";
 import ButtonField from "../../../components/ButtonsFields/ButtonField";
 import EyeIcon from "../../../assets/InputFieldIcons/EyeIcon.svg";
-import { useJoinUserMutation } from "../../../app/services/userServices";
+import { useJoinUserMutation, useSocialLoginMutation } from "../../../app/services/userServices";
 import Check from "../../../assets/ModalIcon/Right.svg";
 import BlankCheck from "../../../assets/ModalIcon/blank.svg";
 import FacebookIcon from "../../../assets/socialIcons/fb.svg";
 import GoogleIcon from "../../../assets/socialIcons/google.svg";
 import { GoogleLogin } from 'react-google-login'
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 
 const initialValues = {
   first_name: "",
@@ -66,6 +67,8 @@ const UserSignUpFrame = (props) => {
   const [vpass, setVPass] = useState("password");
   const [vpassConfirm, setVPassConfirm] = useState("password");
   const [rememberMeCheck, setRememberMeCheck] = useState(false)
+  const [socialLogin, socialLoginResp] = useSocialLoginMutation()
+
   const handleSubmit = async (values) => {
     console.log("Value", values);
     await createUser(values)
@@ -98,14 +101,20 @@ const UserSignUpFrame = (props) => {
   };
 
   const responseGoogle = async (googleData) => {
-    // let data = {
-    //   client_id: process.env.REACT_APP_CLIENT_ID,
-    //   client_secret: process.env.REACT_APP_CLIENT_SECRET,
-    //   grant_type: "convert_token",
-    //   backend: "google-oauth2",
-    //   token: googleData.accessToken, // which will get from google
-    // };
+    let data = {
+      client_id: process.env.GOOGLE_CLIENT_ID,
+      client_secret: process.env.GOOGLE_CLIENT_SECRET,
+      grant_type: "convert_token",
+      backend: "google-oauth2",
+      token: googleData.accessToken, // which will get from google
+    };
+    console.log(data)
     console.log(googleData)
+    socialLogin(data)
+      .then(res => {
+        console.log(res)
+      })
+
     // const res = await axios.post(`${domain}/social-auth/convert-token/`, data)
     // let response_data = await res.data
     // let token = JSON.stringify(response_data);
@@ -114,6 +123,11 @@ const UserSignUpFrame = (props) => {
     // setAuth(res.data);
     // window.location.reload();
   }
+  const responseFacebook = async (fbData) => {
+    console.log(fbData)
+
+  }
+
 
   return (
     <Formik
@@ -270,34 +284,40 @@ const UserSignUpFrame = (props) => {
                 <div className="flex-1  border-b border-slate-700"></div>
               </div>
               <div className="flex items-center">
-                {/* 
-                <GoogleLogin
-                  clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                  buttonText="Sign up with Google"
-                  onSuccess={responseGoogle}
-                  onFailure={err => console.log(err)}
 
-                  cookiePolicy={"single_host_origin"}
-                  render={(renderProps) => {
-                    return ( */}
-                <>
-                  <ButtonField
-                    className="flex items-center  justify-center text-white bg-primaryBlue border border-primaryBlue hover:bg-primaryBlue hover:text-white w-full px-2 py-1  outline-none focus:outline-none ease-linear transition-all duration-150 mr-3 text-11.33 md:px-4 md:py-4 md:font-medium md:text-lg md:mr-8"
-                    type="button"
-                    // onClick={renderProps.onClick}
-                    children={
-                      <>
-                        <img className="mr-1 md:mr-4" src={FacebookIcon} />
-                        Login via Facebook
-                      </>
-                    }
-                  />
-                </>
-                {/* );
-                  }}
+                {/* <ButtonField
+                  className="flex items-center  justify-center text-white bg-primaryBlue border border-primaryBlue hover:bg-primaryBlue hover:text-white w-full px-2 py-1  outline-none focus:outline-none ease-linear transition-all duration-150 mr-3 text-11.33 md:px-4 md:py-4 md:font-medium md:text-lg md:mr-8"
+                  type="button"
+                  // onClick={renderProps.onClick}
+                  children={
+                    <>
+                      <img className="mr-1 md:mr-4" src={FacebookIcon} />
+                      Login via Facebook
+                    </>
+                  }
                 /> */}
+
+                <FacebookLogin
+                  appId={process.env.REACT_APP_CLIENT_ID}
+                  autoLoad
+                  callback={responseFacebook}
+                  render={renderProps => (
+                    <ButtonField
+                      className="flex items-center  justify-center text-white bg-primaryBlue border border-primaryBlue hover:bg-primaryBlue hover:text-white w-full px-2 py-1  outline-none focus:outline-none ease-linear transition-all duration-150 mr-3 text-11.33 md:px-4 md:py-4 md:font-medium md:text-lg md:mr-8"
+                      type="button"
+                      onClick={renderProps.onClick}
+                      children={
+                        <>
+                          <img className="mr-1 md:mr-4" src={FacebookIcon} />
+                          Login via Facebook
+                        </>
+                      }
+                    />
+                  )}
+                />
+
                 <GoogleLogin
-                  clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                  clientId={process.env.REACT_APP_CLIENT_ID}
                   buttonText="Sign up with Google"
                   onSuccess={responseGoogle}
                   onFailure={err => console.log(err)}

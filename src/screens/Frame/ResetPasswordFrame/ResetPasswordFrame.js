@@ -28,7 +28,7 @@ const schema = Yup.object({
 
 const ResetPasswordFrame = (props) => {
    const [resetPassword, resetPasswordResponse] = useResetPasswordMutation()
-   const { setVisibleForResetPassword, setForgotPasswordSuccessModal, setVisibleForUserLogin } = props;
+   const { setVisibleForResetPassword, setForgotPasswordSuccessModal, setVisibleForUserLogin, showForgotPasswordSuccess } = props;
    const [vpass, setVPass] = useState("password");
    const [vpassConfirm, setVPassConfirm] = useState("password");
    const [loading, setLoading] = useState(false)
