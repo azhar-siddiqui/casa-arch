@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useGetProjectDetailsQuery, useLazyGetUserIdQuery } from '../../app/services/userServices'
-import { updateUserId } from '../../app/slices/user'
+import { updateUserId, updateUserName } from '../../app/slices/user'
 import Requirement from '../../components/Requirement/Requirement'
 import SuccessModal from '../../components/SuccessModal/SuccessModal'
 import DashboardRequirements from '../Frame/DashboardRequirements/DashboardRequirements'
@@ -35,6 +35,7 @@ export default function Dashboard() {
             .then(res => {
                if (res.error) return
                dispatch(updateUserId(res.data['user-id']))
+               dispatch(updateUserName(res.data.name))
             })
    }, [isLoggedIn])
 

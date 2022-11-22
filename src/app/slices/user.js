@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isLoggedIn: false,
   userType: '',
+  userName: '',
   userId: '',
   visibleForUserLogin: false,
   redirectToSteppers: false,
@@ -20,6 +21,9 @@ const user = createSlice({
     },
     updateUserType: (state, { payload }) => {
       state.userType = payload;
+    },
+    updateUserName: (state, { payload }) => {
+      state.userName = payload;
     },
     updateUserId: (state, { payload }) => {
       state.userId = payload;
@@ -43,5 +47,5 @@ const user = createSlice({
   },
 });
 
-export const { updateIsLoggedIn, updateUserType, updateUserId, updateVisibleForUserLogin, updateRedirectToSteppers, updateRedirectToStartDesignQuestions, updateStartDesigningQuestionsActive, updateSelectLoginFrameActive } = user.actions;
+export const { updateIsLoggedIn, updateUserType, updateUserName, updateUserId, updateVisibleForUserLogin, updateRedirectToSteppers, updateRedirectToStartDesignQuestions, updateStartDesigningQuestionsActive, updateSelectLoginFrameActive } = user.actions;
 export default user.reducer;

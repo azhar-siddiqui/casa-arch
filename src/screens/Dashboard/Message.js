@@ -5,12 +5,11 @@ import { useSelector } from 'react-redux'
 
 export default function Message({ handleClick, setRequirements, isRequirementPosted }) {
 
-   const { isLoggedIn } = useSelector(state => state.user)
+   const { isLoggedIn, userName } = useSelector(state => state.user)
 
    const projectDetails = useGetProjectDetailsQuery(isLoggedIn, {
       refetchOnMountOrArgChange: true
    })
-
 
    useEffect(() => {
       if (projectDetails.data === undefined) return
@@ -24,7 +23,7 @@ export default function Message({ handleClick, setRequirements, isRequirementPos
             <p className='text-2xl font-medium mb-3'>
                Hello,
                <span className='text-primaryOrange'>
-                  {" "} KARTHIKEYAN R
+                  {" "} {userName}
                </span>
             </p>
             <p className='font-medium text-sm text-slate-500 mb-6'>
