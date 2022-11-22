@@ -181,7 +181,7 @@ export default function StartDesigningQuestions({ setStartDesigningQuestionsActi
                      )
                   }
                   footer={
-                     <div className="flex items-center justify-between">
+                     <div className={`flex items-center ${currentStep === 0 ? 'justify-end' : 'justify-between'}`}>
                         {currentStep > 0 ||
                            currentStep > currentStepValue.length - 1 ? (
                            <>

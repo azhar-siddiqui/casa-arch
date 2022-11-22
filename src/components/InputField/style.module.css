@@ -1,0 +1,6 @@
+.iconLeft{
+   position: absolute;
+   top: 50%;
+   left: 1rem;
+   transform: translateY(calc(-50% + 5px));
+}

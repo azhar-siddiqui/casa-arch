@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import styles from './style.module.css'
 
 const InputField = (props) => {
   const {
@@ -16,7 +17,8 @@ const InputField = (props) => {
     forgetLinkOnclick,
     LoadingIcon,
     loadingIconActive,
-    labelClassName
+    labelClassName,
+    IconLeft
   } = props;
   const inputRef = useRef();
   return (
@@ -26,6 +28,10 @@ const InputField = (props) => {
         <p className="text-primaryGray cursor-pointer" onClick={forgetLinkOnclick} >{forgetLink}</p>
       </div>
       <div className="relative flex items-center pt-3">
+        {
+          IconLeft &&
+          <img src={IconLeft} className={`${styles.iconLeft}`} />
+        }
         <input
           ref={inputRef}
           type={type}

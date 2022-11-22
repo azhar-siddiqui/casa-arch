@@ -33,6 +33,7 @@ import Loc from "../../assets/ModalIcon/loc.svg";
 import { CCheckbox } from "../CircularCheckbox/CCheckbox";
 import styles from "./Header.module.css";
 import Corss from "../../assets/ModalIcon/Cross.svg";
+import PincodeIcon from "../../assets/pincode.svg";
 import {
   useProfessionalAreaCheckServiceMutation,
   useProfessionalServiceMutation,
@@ -80,7 +81,7 @@ const userStepper = [
   },
   {
     step: 2,
-    title: "What type of service your’e looking for?",
+    title: "What type of service are you looking for?",
     type: "radio",
     name: "service",
     preference: ["Interior Design", "Architecture Design"],
@@ -647,16 +648,20 @@ const Header = () => {
                     name={currentStepValue[currentStep].name}
                     placeholder={currentStepValue[currentStep].placeholder}
                     id={currentStepValue[currentStep].name}
-                    className="font-medium"
+                    className={`font-medium ${currentStepValue[currentStep].name === "pincode" ? styles.inputField : ''}`}
                     type={currentStepValue[currentStep].type}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     errorText={errors.name && touched.name ? errors.name : null}
+                    IconLeft={currentStepValue[currentStep].name === "pincode" ? PincodeIcon : false}
+
                   />
                 )
               }
               footer={
-                <div className="flex items-center justify-between">
+                <div className={`flex items-center
+                ${currentStepValue[currentStep].name === "pincode" ? 'justify-end' : 'justify-between'}
+                `}>
                   {currentStep > 0 ||
                     currentStep > currentStepValue.length - 1 ? (
                     <>
