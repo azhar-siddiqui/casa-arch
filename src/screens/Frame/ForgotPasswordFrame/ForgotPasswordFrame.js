@@ -32,7 +32,7 @@ const ForgotPasswordFrame = (props) => {
          .then(res => {
             setLoading(false)
             console.log(res)
-            if (res.status === 400) {
+            if (res.data.status === 400) {
                alert('No such email')
                return
             }

@@ -84,12 +84,12 @@ export default function DashboardRequirements({ displaySuccessModal, setRequirem
               Project Requirements
             </p>
             <p className='text-sm md:text-base text-primaryGray mb-3 font-semibold md:pr-16' >
-              Help us UnderStand what Services you are Seeking, and we will help you find the best Professional for you.
+              Help us understand what services you are seeking, and we will help you find the best Professional for you.
             </p>
             <InputField
               name="projectName"
               label="Project Name"
-              placeholder="Project Name"
+              placeholder="Enter your Project Name"
               id={"projectname"}
               className="font-medium"
               labelClassName='pt-2'
@@ -102,7 +102,7 @@ export default function DashboardRequirements({ displaySuccessModal, setRequirem
             <InputField
               name="projectLocation"
               label="Project Location"
-              placeholder="Project Location"
+              placeholder="Enter your Project Location"
               id={"projectLocation"}
               className="font-medium"
               labelClassName='pt-2'
@@ -143,7 +143,7 @@ export default function DashboardRequirements({ displaySuccessModal, setRequirem
             <TextAreaFields
               name="projectDetails"
               label="Project Details"
-              placeholder="Project Details"
+              placeholder="Write your Project details..."
               id={"projectDetails"}
               className="font-medium mt-2"
               labelClassName='pt-2 pb-1 inline-block'

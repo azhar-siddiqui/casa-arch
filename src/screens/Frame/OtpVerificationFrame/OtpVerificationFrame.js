@@ -85,6 +85,7 @@ export default function OtpVerificationFrame({ setVisibleForUserLogin, setVisibl
                alert('Wrong otp')
                return
             } else {
+               setVisibleForOtpVerification(false)
                setVisibleForResetPassword(true)
             }
 

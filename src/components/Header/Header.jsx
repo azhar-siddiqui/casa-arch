@@ -557,7 +557,7 @@ const Header = () => {
       {visibleForResetPassword && (
         <ResetPasswordFrame
           setVisibleForResetPassword={setVisibleForResetPassword}
-          showForgotPasswordSuccess={showForgotPasswordSuccess}
+          setForgotPasswordSuccessModal={setForgotPasswordSuccessModal}
           setVisibleForUserLogin={
             customerForgotPassword
               ? setVisibleForUserLogin

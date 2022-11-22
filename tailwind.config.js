@@ -14,7 +14,8 @@ module.exports = {
         primaryLightGray: "#939CA3",
         primaryExtraLightGray: "#7C8691",
         primaryBlue: '#1877F2',
-        primaryRed: '#DD4B39'
+        primaryRed: '#DD4B39',
+        whiteDark: '#F8F9FA'
       },
       spacing: {
         '3.5': '14px',
@@ -36,6 +37,9 @@ module.exports = {
       fontSize: {
         '11.33': '11.3778px',
         '32': '32px'
+      },
+      borderWidth: {
+        '1.5': '1.5px'
       }
     },
   },

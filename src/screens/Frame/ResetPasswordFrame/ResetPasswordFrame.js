@@ -28,7 +28,7 @@ const schema = Yup.object({
 
 const ResetPasswordFrame = (props) => {
    const [resetPassword, resetPasswordResponse] = useResetPasswordMutation()
-   const { setVisibleForResetPassword, setForgotPasswordSuccessModal, setVisibleForUserLogin, showForgotPasswordSuccess } = props;
+   const { setVisibleForResetPassword, setForgotPasswordSuccessModal, setVisibleForUserLogin } = props;
    const [vpass, setVPass] = useState("password");
    const [vpassConfirm, setVPassConfirm] = useState("password");
    const [loading, setLoading] = useState(false)
@@ -43,12 +43,14 @@ const ResetPasswordFrame = (props) => {
          .then(res => {
             setLoading(false)
             console.log(res)
-            if (res.status === 400) {
-               alert('Something went wrong')
-               return
-            }else{
-               // setVisibleForResetPassword(false)
-               // setForgotPasswordSuccessModal(false)
+            if (res.error) {
+               if (res.error.status >= 400) {
+                  alert('Something went wrong')
+                  return
+               }
+            } else {
+               setVisibleForResetPassword(false)
+               setForgotPasswordSuccessModal(true)
             }
          })
    };
@@ -139,7 +141,7 @@ const ResetPasswordFrame = (props) => {
                         }}
                      />
                      <ButtonField
-                        className="text-primaryOrange underline bg-white px-6 py-1 mt-5 mb-2 font-medium outline-none focus:outline-none ease-linear transition-all duration-150"                        
+                        className="text-primaryOrange underline bg-white px-6 py-1 mt-5 mb-2 font-medium outline-none focus:outline-none ease-linear transition-all duration-150"
                         type="button"
                         children="Back to Login"
                         onClick={() => {

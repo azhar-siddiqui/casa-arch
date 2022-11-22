@@ -146,7 +146,7 @@ const UserSignUpFrame = (props) => {
         <Modal
           setVisible={setVisibleForUserSignUp}
           classNameModal={"pt-16 px:"}
-          className='text-xs pt-2 pb:5'
+          className='text-xs md:text-base pt-2 md:pt-3 pb:5'
           ModalTitle="Create your account"
           description="Sign up to get started!"
           body={

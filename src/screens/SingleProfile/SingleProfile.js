@@ -71,19 +71,19 @@ const SingleProfile = () => {
                <p className="text-[#08090A] font-medium text-xl md:text-2xl">
                   Location
                </p>
-               <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
+               <p className="text-[#08090A] font-normal text-[16px] md:text-xl pb-4 md:pb-6">
                   {area ? area : '-'}
                </p>
                <p className="text-[#08090A] font-medium text-xl md:text-2xl">
                   Pincode
                </p>
-               <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-                  {pin_code}
+               <p className="text-[#08090A] font-normal text-[16px] md:text-xl pb-4 md:pb-6">
+                  {pin_code ? pin_code : '-'}
                </p>
                <p className="text-[#08090A] font-medium text-xl md:text-2xl">
                   Do you prefer meeting remotely
                </p>
-               <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
+               <p className="text-[#08090A] font-normal text-[16px] md:text-xl pb-4 md:pb-6">
                   {is_meeting_remotely ? 'Yes' : 'No'}
                </p>
             </div>
@@ -91,13 +91,13 @@ const SingleProfile = () => {
                <p className="text-[#08090A] font-medium text-xl md:text-2xl">
                   Where do you serve your customers
                </p>
-               <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
+               <p className="text-[#08090A] font-normal text-[16px] md:text-xl pb-4 md:pb-6">
                   {area ? area : '-'}
                </p>
                <p className="text-[#08090A] font-medium text-xl md:text-2xl">
                   What type of service you are looking for?
                </p>
-               <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
+               <p className="text-[#08090A] font-normal text-[16px] md:text-xl pb-4 md:pb-6">
                   {propertyTypeList[client_type] ? propertyTypeList[client_type] : '-'}
                </p>
             </div>
@@ -108,13 +108,13 @@ const SingleProfile = () => {
                <p className="text-[#08090A] font-medium text-xl md:text-2xl">
                   What type of clients are you looking for?
                </p>
-               <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
+               <p className="text-[#08090A] font-normal text-[16px] md:text-xl pb-4 md:pb-6">
                   {clientTypeList[property_type] ? clientTypeList[property_type] : '-'}
                </p>
                <p className="text-[#08090A] font-medium text-xl md:text-2xl">
                   What kind of properties do you have expertise in?
                </p>
-               <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
+               <p className="text-[#08090A] font-normal text-[16px] md:text-xl pb-4 md:pb-6">
                   {propertyTypeList[client_type] ? propertyTypeList[client_type] : '-'}
                </p>
             </div>
@@ -122,7 +122,7 @@ const SingleProfile = () => {
                <p className="text-[#08090A] font-medium text-xl md:text-2xl">
                   What is your Budget Scale to work with?
                </p>
-               <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
+               <p className="text-[#08090A] font-normal text-[16px] md:text-xl pb-4 md:pb-6">
                   {budgetTypeList[budget_type] ? budgetTypeList[budget_type] : '-'}
                </p>
             </div>
@@ -175,8 +175,58 @@ const SingleProfile = () => {
             <h1 className="text-[#08090A] font-medium text-xl md:text-2xl pb-4">
                Videos of past work
             </h1>
-            <div className="border border-dashed  border-[#939CA3] p-4 md:flex flex-wrap">
-               <img
+            <div className="border border-dashed border-[#939CA3] p-2 md:p-6 bg-whiteDark">
+               {
+                  work_video_link1 !== null &&
+                  <div className="border border-1.5 p-4 md:py-4 md:px-6 bg-white mb-2 last:mb-0">
+                     <p>
+                        <a href={work_video_link1} target="_blank">
+                           {work_video_link1}
+                        </a>
+                     </p>
+                  </div>
+               }
+               {
+                  work_video_link2 !== null &&
+                  <div className="border border-1.5 p-4 md:py-4 md:px-6 bg-white mb-2 last:mb-0">
+                     <p>
+                        <a href={work_video_link2} target='_blank'>
+                           {work_video_link2}
+                        </a>
+                     </p>
+                  </div>
+               }
+               {
+                  work_video_link3 !== null &&
+                  <div className="border border-1.5 p-4 md:py-4 md:px-6 bg-white mb-2 last:mb-0">
+                     <p>
+                        <a href={work_video_link3} target='_blank'>
+                           {work_video_link3}
+                        </a>
+                     </p>
+                  </div>
+               }
+               {
+                  work_video_link4 !== null &&
+                  <div className="border border-1.5 p-4 md:py-4 md:px-6 bg-white mb-2 last:mb-0">
+                     <p>
+                        <a href={work_video_link4} target='_blank'>
+                           {work_video_link4}
+                        </a>
+                     </p>
+                  </div>
+               }
+               {
+                  work_video_link5 !== null &&
+                  <div className="border border-1.5 p-4 md:py-4 md:px-6 bg-white mb-2 last:mb-0">
+                     <p>
+                        <a href={work_video_link5} target='_blank'>
+                           {work_video_link5}
+                        </a>
+                     </p>
+                  </div>
+               }
+               {/* <img
                   src={Img1}
                   alt="Img-1"
                   className="md:mr-3 mt-3 md:mt-0 w-full md:w-auto"
@@ -193,7 +243,7 @@ const SingleProfile = () => {
                   alt="Img-1"
                   className="md:mr-3 mt-3 md:mt-0 w-full md:w-auto"
                   onClick={() => work_video_link3 !== null && window.open(work_video_link3)}
-               />
+               /> */}
             </div>
          </div>
          <div className="border border-[#CED4DA] p-4 my-5">
@@ -234,19 +284,19 @@ const SingleProfile = () => {
                <p className="text-[#08090A] font-medium text-xl md:text-2xl">
                   Company
                </p>
-               <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
+               <p className="text-[#08090A] font-normal text-[16px] md:text-xl pb-4 md:pb-6">
                   {name_of_organisation === null ? '-' : name_of_organisation}
                </p>
                <p className="text-[#08090A] font-medium text-xl md:text-2xl">
                   Years in business
                </p>
-               <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
+               <p className="text-[#08090A] font-normal text-[16px] md:text-xl pb-4 md:pb-6">
                   {years_in_business === null ? '-' : `${years_in_business} years`}
                </p>
                <p className="text-[#08090A] font-medium text-xl md:text-2xl">
                   Company Size
                </p>
-               <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
+               <p className="text-[#08090A] font-normal text-[16px] md:text-xl pb-4 md:pb-6">
                   {organisation_size === null ? '-' : organisation_size}
                </p>
             </div>
@@ -254,13 +304,13 @@ const SingleProfile = () => {
                <p className="text-[#08090A] font-medium text-xl md:text-2xl">
                   Company website
                </p>
-               <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
+               <p className="text-[#08090A] font-normal text-[16px] md:text-xl pb-4 md:pb-6">
                   {organisation_website === null ? '-' : organisation_website}
                </p>
                <p className="text-[#08090A] font-medium text-xl md:text-2xl">
                   Description
                </p>
-               <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
+               <p className="text-[#08090A] font-normal text-[16px] md:text-xl pb-4 md:pb-6">
                   Lorem ipsum is placeholder text commonly used in the <br /> graphic,
                   print, and publishing industries for previewing <br /> layouts and
                   visual mockups.
