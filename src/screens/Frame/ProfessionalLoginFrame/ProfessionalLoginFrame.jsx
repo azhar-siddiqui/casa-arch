@@ -21,7 +21,7 @@ import {
 } from "../../../app/services/CheckPoints";
 
 const initialValues = {
-  email: "test1@test.com",
+  email: "bacelonamessi@gmail.com",
   password: "Test@1234",
 };
 

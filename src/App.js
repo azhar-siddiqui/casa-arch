@@ -80,7 +80,7 @@ function App() {
     <>
       <Header />
       <Routes>
-        <Route path="/" element={<Landing />} />
+        <Route path="/" element={Token ? <Professionals /> : <Landing />} />
         <Route path="/blogs" element={<Blog />} />
         <Route path="/services" element={<Services />} />
         <Route path="/service/:id" element={<SingleService />} />
