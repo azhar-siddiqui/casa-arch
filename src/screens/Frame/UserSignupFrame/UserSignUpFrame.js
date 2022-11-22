@@ -303,7 +303,7 @@ const UserSignUpFrame = (props) => {
                   callback={responseFacebook}
                   render={renderProps => (
                     <ButtonField
-                      className="flex items-center  justify-center text-white bg-primaryBlue border border-primaryBlue hover:bg-primaryBlue hover:text-white w-full px-2 py-1  outline-none focus:outline-none ease-linear transition-all duration-150 mr-3 text-11.33 md:px-4 md:py-4 md:font-medium md:text-lg md:mr-8"
+                      className="flex items-center  justify-center text-white bg-primaryBlue border border-primaryBlue hover:bg-primaryBlue hover:text-white w-full px-1 md:px-2 py-1  outline-none focus:outline-none ease-linear transition-all duration-150 mr-3  text-[9.75px] md:px-4 md:py-4 md:font-medium md:text-lg md:mr-8"
                       type="button"
                       onClick={renderProps.onClick}
                       children={
@@ -326,13 +326,13 @@ const UserSignUpFrame = (props) => {
                     return (
                       <>
                         <ButtonField
-                          className="flex items-center justify-center text-white  bg-primaryRed border border-primaryRed hover:bg-primaryRed hover:text-white w-full px-2 py-1 font-medium outline-none focus:outline-none ease-linear transition-all duration-150 text-11.33
+                          className="flex items-center justify-center text-white  bg-primaryRed border border-primaryRed hover:bg-primaryRed hover:text-white w-full px-2 py-1 font-medium outline-none focus:outline-none ease-linear transition-all duration-150 text-[9.75px]
                           md:px-4 md:py-4 md:font-medium md:text-lg"
                           type="button"
                           onClick={renderProps.onClick}
                           children={
                             <>
-                              <img className="mr-1 md:mr-4" src={GoogleIcon} />
+                              <img className="mr-[6px] md:mr-4" src={GoogleIcon} />
                               Login via Google
                             </>
                           }
