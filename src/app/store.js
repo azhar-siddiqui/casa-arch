@@ -30,6 +30,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       getInTouchApi.middleware,
+      userServicesApi.middleware,
       professionalOauthApi.middleware,
       professionalServicesApi.middleware,
       checkPointsApi.middleware,

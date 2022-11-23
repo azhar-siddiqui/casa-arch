@@ -730,18 +730,19 @@ const Header = () => {
               <p className="mx-auto font-medium text-lg lg:text-2xl text-primaryExtraLightGray mb-2">
                 Password Reset
               </p>
-              <p className="font-bold text-sm text-black">
+              <p className="font-bold text-sm text-black max-w-[290px] mx-auto">
                 Your password has been Reset successfully Click below to Login
               </p>
               <ButtonField
-                className="bg-primaryOrange py-2 px-6 hover:border-solid border-2 border-primaryOrange hover:bg-white hover:text-primaryOrange leading-normal w-full text-normal font-semibold mt-51"
-                onClick={() => setForgotPasswordSuccessModal(false)}
+                className="bg-primaryOrange py-2 px-6 hover:border-solid border-2 border-primaryOrange hover:bg-white hover:text-primaryOrange leading-normal w-full text-normal font-semibold mt-[10px] md:mt-[39px] md:w-[398px]"
+                onClick={() => {setForgotPasswordSuccessModal(false);setVisible(true)}}
               >
                 Continue
               </ButtonField>
             </div>
           }
           hideFooter={true}
+          maxWidthClass='max-w-[494px] w-[494px] px-2'
         />
       )}
 
