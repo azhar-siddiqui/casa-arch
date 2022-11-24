@@ -97,9 +97,9 @@ const ResetPasswordFrame = (props) => {
                      <InputField
                         handleViewPassword={handleViewPass}
                         name="password"
-                        label="Password"
+                        label="New Password"
                         EyeIcon={EyeIcon}
-                        placeholder="Enter your Password"
+                        placeholder="Enter your New password"
                         id={"password"}
                         className="font-medium "
                         type={vpass}
@@ -115,7 +115,7 @@ const ResetPasswordFrame = (props) => {
                         name="confirmPassword"
                         label="Confirm password"
                         EyeIcon={EyeIcon}
-                        placeholder="Enter your Confirm password"
+                        placeholder="Confirm you new password"
                         id={"confirmPassword"}
                         className="font-medium"
                         type={vpassConfirm}
