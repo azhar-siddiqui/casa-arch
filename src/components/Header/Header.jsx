@@ -257,8 +257,8 @@ const Header = () => {
 
   const data = [
     {
-      heading: "Where do you serve your customers",
-      placeholder: "Area,City,State...",
+      heading: "Where do you serve your customers ?",
+      placeholder: "Area, City, State...",
       type: "text",
       name: "loc",
     },

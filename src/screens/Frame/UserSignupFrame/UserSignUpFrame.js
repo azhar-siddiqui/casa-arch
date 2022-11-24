@@ -33,7 +33,7 @@ const SignUpSchema = Yup.object({
     .max(20, 'Maximum 20 characters allowed')
     .min(2, "Minimum 2 characters required.")
     .matches(
-      /^[a-zA-Z\s]*$/,
+      /^[a-zA-Z]*$/,
       "Name must only contain letters"
     ),
   last_name: Yup.string()
@@ -41,7 +41,7 @@ const SignUpSchema = Yup.object({
     .max(20, 'Maximum 20 characters allowed')
     .min(2, "Minimum 2 characters required.")
     .matches(
-      /^[a-zA-Z\s]*$/,
+      /^[a-zA-Z]*$/,
       "Name must only contain letters"
     ),
   email: Yup.string()
@@ -350,8 +350,8 @@ const UserSignUpFrame = (props) => {
                   }
                 /> */}
                 <FacebookLogin
-                  appId={process.env.REACT_APP_CLIENT_ID}
-                  autoLoad
+                  appId='3258956814394095'
+                  // autoLoad
                   callback={responseFacebook}
                   render={renderProps => (
                     <ButtonField
