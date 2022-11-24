@@ -35,11 +35,13 @@ const Schema = Yup.object({
          "Please enter a valid email address"
       )
       .required("This field is required."),
-   phone: Yup.number()
-      .typeError("That doesn't look like a phone number")
-      .positive("A phone number can't start with a minus")
-      .integer("A phone number can't include a decimal point")
-      .min(8, "The Number Should be 10 digits")
+   phone: Yup.string()
+      // .typeError("That doesn't look like a phone number")
+      // .positive("A phone number can't start with a minus")
+      // .integer("A phone number can't include a decimal point")
+      .min(8, "Phone Number should be minimum 10 digits")
+      .max(20, "Phone Number should be maximum 20 digits")
+      .matches(/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/, 'Please enter a valid phone number')
       .required("A phone number is required"),
    subscriptionPlan: Yup.string().required("This field is required."),
    areaOfOperation: Yup.string().required("This field is required."),
