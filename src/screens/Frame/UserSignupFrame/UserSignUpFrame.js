@@ -116,8 +116,8 @@ const UserSignUpFrame = (props) => {
     let data = {
       // client_id: '150404684965-tqdd3gsmve64v2o63c86kc9igp7bq4ih.apps.googleusercontent.com',
       // client_secret: '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',
-      client_id: 'UdThkc0gacVAjr1Ua2r40WEPIkCqFiGflbYhugiO',
-      client_secret: 'hWjGOC2e1Yxpblt138PujZfpoAUqVIDZWTGyI6zTXFoZluv6qUwKY0qrCRI4GYS1ND7PvqnZ8RGwIOEePoVv63nK16sF3o7SPmts43b8sICinCTRBqEmEiPeCQiStdRO',
+      client_id: 'Immucq4FCvfr93KsJc8wTYt1Z1zTNbPR0iuD3TcE',
+      client_secret: '0u3kVQpS0JpU3NaQHr4tiCn6o70JrUCbeSI7Xf6oRt5NXIfW69YrshDdAnWS833YY7xJNaq3qUb8LC8895nBewmaBw9NjbU5bSfv3F8TBCKpQ7uieHvTxpaYj0R2Hm0o',
       grant_type: "convert_token",
       backend: "google-oauth2",
       token: googleData.accessToken, // which will get from google
@@ -309,7 +309,7 @@ const UserSignUpFrame = (props) => {
                     </>
                   }
                 /> */}
-                {/* <FacebookLogin
+                 <FacebookLogin
                   appId={process.env.REACT_APP_CLIENT_ID}
                   autoLoad
                   callback={responseFacebook}
@@ -326,7 +326,7 @@ const UserSignUpFrame = (props) => {
                       }
                     />
                   )}
-                /> */}
+                /> 
 
                 <GoogleLogin
                   // clientId={process.env.GOOGLE_CLIENT_ID}
