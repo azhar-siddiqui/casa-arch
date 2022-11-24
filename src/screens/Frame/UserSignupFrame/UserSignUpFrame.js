@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import Modal from "../../../components/Modal/Modal";
@@ -12,6 +12,7 @@ import FacebookIcon from "../../../assets/socialIcons/fb.svg";
 import GoogleIcon from "../../../assets/socialIcons/google.svg";
 import { GoogleLogin } from 'react-google-login'
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+import { gapi } from 'gapi-script';
 
 const initialValues = {
   first_name: "",
@@ -100,10 +101,23 @@ const UserSignUpFrame = (props) => {
     }
   };
 
+  useEffect(() => {
+    console.log('q')
+    const initClient = () => {
+      gapi.client.init({
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        scope: ''
+      });
+    };
+    gapi.load('client:auth2', initClient);
+  });
+
   const responseGoogle = async (googleData) => {
     let data = {
-      client_id: process.env.GOOGLE_CLIENT_ID,
-      client_secret: process.env.GOOGLE_CLIENT_SECRET,
+      // client_id: '150404684965-tqdd3gsmve64v2o63c86kc9igp7bq4ih.apps.googleusercontent.com',
+      // client_secret: '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',
+      client_id: 'UdThkc0gacVAjr1Ua2r40WEPIkCqFiGflbYhugiO',
+      client_secret: 'hWjGOC2e1Yxpblt138PujZfpoAUqVIDZWTGyI6zTXFoZluv6qUwKY0qrCRI4GYS1ND7PvqnZ8RGwIOEePoVv63nK16sF3o7SPmts43b8sICinCTRBqEmEiPeCQiStdRO',
       grant_type: "convert_token",
       backend: "google-oauth2",
       token: googleData.accessToken, // which will get from google
@@ -284,7 +298,6 @@ const UserSignUpFrame = (props) => {
                 <div className="flex-1  border-b border-slate-700"></div>
               </div>
               <div className="flex items-center">
-
                 {/* <ButtonField
                   className="flex items-center  justify-center text-white bg-primaryBlue border border-primaryBlue hover:bg-primaryBlue hover:text-white w-full px-2 py-1  outline-none focus:outline-none ease-linear transition-all duration-150 mr-3 text-11.33 md:px-4 md:py-4 md:font-medium md:text-lg md:mr-8"
                   type="button"
@@ -296,8 +309,7 @@ const UserSignUpFrame = (props) => {
                     </>
                   }
                 /> */}
-
-                <FacebookLogin
+                {/* <FacebookLogin
                   appId={process.env.REACT_APP_CLIENT_ID}
                   autoLoad
                   callback={responseFacebook}
@@ -314,10 +326,11 @@ const UserSignUpFrame = (props) => {
                       }
                     />
                   )}
-                />
+                /> */}
 
                 <GoogleLogin
-                  clientId={process.env.REACT_APP_CLIENT_ID}
+                  // clientId={process.env.GOOGLE_CLIENT_ID}
+                  clientId='150404684965-tqdd3gsmve64v2o63c86kc9igp7bq4ih.apps.googleusercontent.com'
                   buttonText="Sign up with Google"
                   onSuccess={responseGoogle}
                   onFailure={err => console.log(err)}

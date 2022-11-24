@@ -13,7 +13,6 @@ const initialValues = {
 };
 
 const schema = Yup.object({
-
    password: Yup.string()
       .min(8, "Minimum 8 digits required.")
       .required("This field is required.")
@@ -28,7 +27,7 @@ const schema = Yup.object({
 
 const ResetPasswordFrame = (props) => {
    const [resetPassword, resetPasswordResponse] = useResetPasswordMutation()
-   const { setVisibleForResetPassword, setForgotPasswordSuccessModal, setVisibleForUserLogin } = props;
+   const { setVisibleForResetPassword, setForgotPasswordSuccessModal, setVisibleForUserLogin, forgotPasswordEmail } = props;
    const [vpass, setVPass] = useState("password");
    const [vpassConfirm, setVPassConfirm] = useState("password");
    const [loading, setLoading] = useState(false)
@@ -37,6 +36,7 @@ const ResetPasswordFrame = (props) => {
       console.log(values)
       setLoading(true)
       resetPassword({
+         check_email: forgotPasswordEmail,
          new_password: values.password,
          confirm_password: values.password
       })

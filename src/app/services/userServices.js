@@ -165,7 +165,7 @@ export const userServicesApi = createApi({
       }),
       socialLogin: builder.mutation({
          query: (body) => ({
-            url: `/user-convert-token/`,
+            url: `/user-convert-token`,
             method: "POST",
             body: body,
             // headers: {
