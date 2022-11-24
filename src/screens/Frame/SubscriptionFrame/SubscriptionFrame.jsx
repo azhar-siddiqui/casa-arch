@@ -30,7 +30,7 @@ const areaOfOperationValues = [
     val: "Interior Design",
   },
 ];
-
+ 
 const SignUpSchema = Yup.object({
   name: Yup.string().required("This field is required."),
   email: Yup.string()
