@@ -58,10 +58,9 @@ const UserLoginFrame = (props) => {
       setVisibleForUserLogin(false);
       dispatch(updateIsLoggedIn(true))
       sessionStorage.setItem('access', data.access_token)
-      redirectToSteppers && dispatch(updateIsStepperVisible(true))
       fetchUserId()
-        .then((res) => {
-          console.log(res.data);
+      .then((res) => {
+        console.log(res.data);
           dispatch(updateUserId(res.data["user-id"]));
         })
       fetchUserType()
@@ -72,6 +71,7 @@ const UserLoginFrame = (props) => {
             alert('Cant login as the account is registered as Professional')
             return
           }
+          redirectToSteppers && dispatch(updateIsStepperVisible(true))
           dispatch(updateUserType(res.data['user-type']))
         })
         .catch(err => {

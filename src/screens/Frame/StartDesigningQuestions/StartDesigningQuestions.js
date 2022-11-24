@@ -60,13 +60,15 @@ const userStepperSchema = Yup.object({
    rooms: Yup.string().required("This field is required."),
 });
 
+let locationRegex = /^[a-zA-Z\s]*$/
+
 export default function StartDesigningQuestions({ setStartDesigningQuestionsActive, showSuccessModal }) {
 
    const [currentStepValue, setCurrentStepValue] = useState(userStepper);
    const [currentStep, setCurrentStep] = useState(0);
    const { isLoggedIn, userType, userId } = useSelector((state) => state.user);
    const [submitProjectChoices, response] = useProjectChoicesMutation()
-
+   // console.log(currentStep)
    const handleStepperIncrement = () => {
       setCurrentStep(currentStep + 1);
    };
@@ -207,7 +209,8 @@ export default function StartDesigningQuestions({ setStartDesigningQuestionsActi
                                     onClick={handleStepperIncrement}
                                     disabled={
                                        currentStepValue[currentStep].name === 'location' ?
-                                          values.location === '' || values.location.length > 30 ? true : false
+                                          values.location !== '' && locationRegex.test(values.location) ?
+                                             false : true
                                           : currentStepValue[currentStep].name === 'email' ?
                                              values.email === '' ? true : false
                                              : false
@@ -223,7 +226,8 @@ export default function StartDesigningQuestions({ setStartDesigningQuestionsActi
                               onClick={handleStepperIncrement}
                               disabled={
                                  currentStepValue[currentStep].name === 'location' ?
-                                    values.location === '' ? true : false
+                                    values.location !== '' && locationRegex.test(values.location) ?
+                                       false : true
                                     : currentStepValue[currentStep].name === 'email' ?
                                        values.email === '' ? true : false
                                        : false

@@ -20,7 +20,7 @@ const initialValues = {
 const Schema = Yup.object({
   projectName: Yup.string().required("This field is required.")
     .matches(
-      /^[A-Za-z]+$/,
+      /^[a-zA-Z\s]*$/,
       "Project name must only contain letters"
     )
     .max(40, "Only 40 characters are allowed"),

@@ -8,7 +8,7 @@ import TextAreaFields from '../../../components/TextAreaFields/TextAreaFields';
 import InputSelect from '../../../components/InputSelect/InputSelect';
 import { useSelector } from 'react-redux';
 import Modal from '../../../components/Modal/Modal';
-import { useProfessionalSubscribeMutation } from '../../../app/services/professionalServices';
+import { useSubscribeMutation } from '../../../app/services/professionalServices';
 import { useNavigate } from 'react-router-dom';
 
 const initialValues = {
@@ -22,13 +22,33 @@ const initialValues = {
 }
 
 const Schema = Yup.object({
-   name: Yup.string().required("This field is required."),
-   email: Yup.string().required("This field is required."),
-   phone: Yup.number().required("This field is required."),
+   name: Yup.string().required("This field is required.")
+      .matches(
+         /^[a-zA-Z\s]*$/,
+         "Project name must only contain letters"
+      )
+      .max(40, "Only 40 characters are allowed"),
+   email: Yup.string()
+      .email("Please Enter Valid Email")
+      .matches(
+         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+         "Please enter a valid email address"
+      )
+      .required("This field is required."),
+   phone: Yup.number()
+      .typeError("That doesn't look like a phone number")
+      .positive("A phone number can't start with a minus")
+      .integer("A phone number can't include a decimal point")
+      .min(8, "The Number Should be 10 digits")
+      .required("A phone number is required"),
    subscriptionPlan: Yup.string().required("This field is required."),
    areaOfOperation: Yup.string().required("This field is required."),
-   portfolioLink: Yup.string().required("This field is required."),
-   socialMediaLink: Yup.string().required("This field is required."),
+   portfolioLink: Yup.string()
+      .matches(/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi,
+         "Enter a valid portfolio link"),
+   socialMediaLink: Yup.string()
+      .matches(/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi,
+         "Enter a valid portfolio link"),
 })
 
 const subscriptionPlans = [
@@ -41,11 +61,11 @@ const areaOfOperations = [
 export default function Subscription({ setVisibleForSubscription }) {
 
    const { userId } = useSelector(state => state.user)
-   const [subscribe, subscribeResponse] = useProfessionalSubscribeMutation()
+   const [subscribe, subscribeResponse] = useSubscribeMutation()
    const navigate = useNavigate()
 
    const handleSubmit = async (values) => {
-      // console.log("Value", values)
+      console.log("Value", values)
 
       const body = {
          name: values.name,
