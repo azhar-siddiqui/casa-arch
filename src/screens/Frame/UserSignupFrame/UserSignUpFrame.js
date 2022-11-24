@@ -5,7 +5,7 @@ import Modal from "../../../components/Modal/Modal";
 import InputField from "../../../components/InputField/InputField";
 import ButtonField from "../../../components/ButtonsFields/ButtonField";
 import EyeIcon from "../../../assets/InputFieldIcons/EyeIcon.svg";
-import { useJoinUserMutation, useSocialLoginMutation } from "../../../app/services/userServices";
+import { useJoinUserMutation, useLazyGetUserIdQuery, useLazyGetUserTypeQuery, useSocialLoginMutation } from "../../../app/services/userServices";
 import Check from "../../../assets/ModalIcon/Right.svg";
 import BlankCheck from "../../../assets/ModalIcon/blank.svg";
 import FacebookIcon from "../../../assets/socialIcons/fb.svg";
@@ -13,6 +13,10 @@ import GoogleIcon from "../../../assets/socialIcons/google.svg";
 import { GoogleLogin } from 'react-google-login'
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import { gapi } from 'gapi-script';
+import { useDispatch, useSelector } from "react-redux";
+import { updateIsLoggedIn, updateUserId, updateUserType } from "../../../app/slices/user";
+import { updateIsStepperVisible } from "../../../app/slices/userStepper";
+import { useNavigate } from "react-router-dom";
 
 const initialValues = {
   first_name: "",
@@ -69,6 +73,11 @@ const UserSignUpFrame = (props) => {
   const [vpassConfirm, setVPassConfirm] = useState("password");
   const [rememberMeCheck, setRememberMeCheck] = useState(false)
   const [socialLogin, socialLoginResp] = useSocialLoginMutation()
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const [fetchUserId, result] = useLazyGetUserIdQuery()
+  const [fetchUserType, userTypeFetched] = useLazyGetUserTypeQuery()
+  const { redirectToSteppers } = useSelector(state => state.user)
 
   const handleSubmit = async (values) => {
     console.log("Value", values);
@@ -112,6 +121,13 @@ const UserSignUpFrame = (props) => {
     gapi.load('client:auth2', initClient);
   });
 
+  const handleLogout = () => {
+    sessionStorage.removeItem("access");
+    dispatch(updateIsLoggedIn(false));
+    dispatch(updateUserType(""));
+    navigate("/");
+  };
+
   const responseGoogle = async (googleData) => {
     let data = {
       // client_id: '150404684965-tqdd3gsmve64v2o63c86kc9igp7bq4ih.apps.googleusercontent.com',
@@ -122,11 +138,35 @@ const UserSignUpFrame = (props) => {
       backend: "google-oauth2",
       token: googleData.accessToken, // which will get from google
     };
-    console.log(data)
-    console.log(googleData)
+    // console.log(data)
+    const accessToken = googleData.accessToken
+    // console.log(accessToken)
     socialLogin(data)
       .then(res => {
-        console.log(res)
+        console.log(res.data.access_token)
+        dispatch(updateIsLoggedIn(true))
+        sessionStorage.setItem('access', res.data.access_token)
+        fetchUserId(accessToken)
+          .then((res) => {
+            console.log(res.data);
+            dispatch(updateUserId(res.data["user-id"]));
+          })
+        fetchUserType(accessToken)
+          .then(res => {
+            console.log(res)
+            setVisibleForUserSignUp(false)
+            if (res.data['user-type'] === 'Professional') {
+              handleLogout()
+              alert('Cant login as the account is registered as Professional')
+              return
+            }
+            redirectToSteppers && dispatch(updateIsStepperVisible(true))
+            dispatch(updateUserType(res.data['user-type']))
+          })
+          .catch(err => {
+            console.log(err.response)
+          })
+
       })
 
     // const res = await axios.post(`${domain}/social-auth/convert-token/`, data)
@@ -309,7 +349,7 @@ const UserSignUpFrame = (props) => {
                     </>
                   }
                 /> */}
-                 <FacebookLogin
+                <FacebookLogin
                   appId={process.env.REACT_APP_CLIENT_ID}
                   autoLoad
                   callback={responseFacebook}
@@ -326,7 +366,7 @@ const UserSignUpFrame = (props) => {
                       }
                     />
                   )}
-                /> 
+                />
 
                 <GoogleLogin
                   // clientId={process.env.GOOGLE_CLIENT_ID}
