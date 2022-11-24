@@ -154,7 +154,7 @@ const SubscriptionFrame = ({ setSubscriptionVisible }) => {
           setVisible={setSubscriptionVisible}
           classNameModal={""}
           ModalTitle="Subscription"
-          description="Help us UnderStand what Services you are Seeking, and we will help you find the best Professional for you."
+          description="Help us understand what services you are seeking, and we will help you find the best Professional for you."
           body={
             <>
               <InputField

@@ -15,6 +15,8 @@ const Professionals = () => {
     { id: 2, type: "Interior" },
   ];
 
+  const [successModalVisible , setSuccessModalVisible ] = useState(false)
+  const [proVisible, setProVisible] = useState(false)
   const handleFilter = (e) => {
     const searchWord = e.target.value || e.currentTarget.textContent;
     setSearchTxt(searchWord);
@@ -111,6 +113,8 @@ const Professionals = () => {
       {visibleForProfessionalSignUp && (
         <ProfessionalSignUp
           setVisibleForProfessionalSignUp={setVisibleForProfessionalSignUp}
+          setProVisible={setProVisible}
+          setSuccessModalVisible={setSuccessModalVisible}
         />
       )}
     </>
