@@ -21,10 +21,16 @@ const Footer = () => {
   const [disabled, setDisabled] = useState(false)
 
   const onSubmit = () => {
-    // subscribe({email})
-    // .then(res => {
-    //   console.log(res)
-    // })
+    subscribe({ email })
+      .then(res => {
+        console.log(res)
+        if(res.data){
+          if(res.data['status code'] === 200){
+            alert('Email sent')
+          }
+        }
+        setEmail('')
+      })
   }
 
   const validateEmail = (email) => {
@@ -36,7 +42,7 @@ const Footer = () => {
     let res = validateEmail(email)
     setDisabled(!res)
   }, [email])
-  
+
   return (
     <>
       <div className="footerMainContainer">
@@ -134,7 +140,9 @@ const Footer = () => {
               <input type="text" placeholder="Email Address"
                 value={email}
                 onChange={e => setEmail(e.target.value)} />
-              <button className="subscriptionBtn" disabled={disabled} onClick={onSubmit} >
+              <button className="subscriptionBtn"
+                disabled={disabled}
+                onClick={onSubmit} >
                 <img src={Subscription} alt="subscriptbtn" />
               </button>
             </div>
