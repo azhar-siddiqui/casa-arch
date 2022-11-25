@@ -138,7 +138,7 @@ export default function OtpVerificationFrame({ setVisibleForUserLogin, setVisibl
                      />
 
                      <p className="text-right text-primaryOrange font-semibold mt-2">
-                        <span onClick={handleResendOtp}>
+                        <span onClick={handleResendOtp} className='cursor-pointer'>
                            Resend the Otp
                         </span>
                      </p>
