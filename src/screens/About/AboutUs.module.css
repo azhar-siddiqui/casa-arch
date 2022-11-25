@@ -11,7 +11,7 @@
   margin-top: 0.125rem;
 }
 .about_us_details {
-  padding: 1.875rem 0;
+  padding: 1.875rem 3rem;
 }
 
 .about_us_details p {
@@ -50,5 +50,8 @@
   }
   .big_device {
     display: none;
+  }
+  .about_us_details {
+    padding: 1.875rem 0rem;
   }
 }

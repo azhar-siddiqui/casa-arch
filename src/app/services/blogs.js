@@ -36,7 +36,13 @@ export const blogsServicesApi = createApi({
             method: "GET",
          }),
       }),
-
+      subscribeNewsletter: builder.mutation({
+         query: (body) => ({
+            url: `/newsletter/`,
+            method: "POST",
+            body: body,
+         })
+      }),
 
    }),
 });
@@ -45,5 +51,6 @@ export const {
    useLazyGetBlogsQuery,
    useLazyGetSingleBlogQuery,
    useLazyGetServicesQuery,
-   useLazyGetSingleServiceQuery
+   useLazyGetSingleServiceQuery,
+   useSubscribeNewsletterMutation
 } = blogsServicesApi;

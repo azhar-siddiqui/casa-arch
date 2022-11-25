@@ -426,6 +426,7 @@ const Header = () => {
               <NavLink
                 to={link.link}
                 className={`text-primaryDark tracking-2 font-medium text-sm hover:border-b-2 border-primaryOrange`}
+                 onClick={() => setOpenMenu(false)}
               >
                 {link.name}
               </NavLink>

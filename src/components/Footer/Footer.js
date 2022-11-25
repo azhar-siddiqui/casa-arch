@@ -11,8 +11,32 @@ import Facebook from "../../assets/FooterIcons/Facebook.svg";
 import Subscription from "../../assets/FooterIcons/Vector-3.svg";
 import { Link, NavLink } from "react-router-dom";
 import PreFooter from "./PreFooter/PreFooter";
+import { useSubscribeNewsletterMutation } from "../../app/services/blogs";
+import { useEffect, useState } from "react";
 
 const Footer = () => {
+
+  const [email, setEmail] = useState('')
+  const [subscribe, subscribeResp] = useSubscribeNewsletterMutation()
+  const [disabled, setDisabled] = useState(false)
+
+  const onSubmit = () => {
+    // subscribe({email})
+    // .then(res => {
+    //   console.log(res)
+    // })
+  }
+
+  const validateEmail = (email) => {
+    const regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    return regex.test(email)
+  };
+
+  useEffect(() => {
+    let res = validateEmail(email)
+    setDisabled(!res)
+  }, [email])
+  
   return (
     <>
       <div className="footerMainContainer">
@@ -55,7 +79,7 @@ const Footer = () => {
               <h5>Follow us</h5>
               <img src={Rectangle} alt="Rectangle" width={"64px"} />
               <div className="FollowUs flex mt-2">
-                <Link to="/" target="_blank" onClick={()=>window.open('https://instagram.com/casaarch.in?igshid=YmMyMTA2M2Y=')} >
+                <Link to="/" target="_blank" onClick={() => window.open('https://instagram.com/casaarch.in?igshid=YmMyMTA2M2Y=')} >
                   <img src={Instagram} alt="googleLogo" />
                 </Link>
                 <Link to="/" target="_blank">
@@ -86,7 +110,7 @@ const Footer = () => {
               <h5>Follow us</h5>
               <img src={Rectangle} alt="Rectangle" width={"64px"} />
               <div className="FollowUs flex mt-3.5">
-                <Link to="/" target="_blank" onClick={()=>window.open('https://instagram.com/casaarch.in?igshid=YmMyMTA2M2Y=')} >
+                <Link to="/" target="_blank" onClick={() => window.open('https://instagram.com/casaarch.in?igshid=YmMyMTA2M2Y=')} >
                   <img src={Instagram} alt="googleLogo" />
                 </Link>
                 <Link to="/" target="_blank">
@@ -105,12 +129,16 @@ const Footer = () => {
               Dont miss to subscribe for our newsletter <br />
               and stay updated for your projects.
             </p>
+
             <div className="subscriptionContainer">
-              <input type="text" placeholder="Email Address" />
-              <button className="subscriptionBtn">
+              <input type="text" placeholder="Email Address"
+                value={email}
+                onChange={e => setEmail(e.target.value)} />
+              <button className="subscriptionBtn" disabled={disabled} onClick={onSubmit} >
                 <img src={Subscription} alt="subscriptbtn" />
               </button>
             </div>
+
           </div>
         </div>
       </div>
