@@ -12,7 +12,6 @@ import SuccessModal from "../../components/SuccessModal/SuccessModal";
 
 const ProQuestion = () => {
   let Token = localStorage.getItem("Token");
-  console.log(Token);
   const [visibleSuccess, SetVisibleSuccess] = useState(false);
   const [visibleTypeOfClient, SetVisibleTypeOfClient] = useState(false);
   const [checkedName, setcheckedName] = useState("");
@@ -336,8 +335,16 @@ const ProQuestion = () => {
     setFields(fieldsCpy);
   };
 
-  const handleDeleteVideo = (id) => {
-    alert(id);
+  const handleDeleteVideo = (index) => {
+    console.log(index);
+    let fieldsCpy = { ...fields };
+    fieldsCpy = {
+      ...fields,
+      [video.name]: fieldsCpy[video.name].filter(
+        (photo, fieldIndex) => fieldIndex !== index
+      ),
+    };
+    setFields(fieldsCpy);
   };
 
   const handleCheckboxChange = (val) => {
@@ -445,6 +452,7 @@ const ProQuestion = () => {
                     className={`absolute invisible cursor-pointer text-base md:text-lg`}
                     id={photo.name}
                     name={photo.name}
+                    accept="image/*"
                   />
                   {fields[photo.name].length !== 0 &&
                     fields[photo.name].map((currFile, index) => {
@@ -457,6 +465,7 @@ const ProQuestion = () => {
                               src={currFile}
                               className={`opacity-100 block w-full h-full transition ease duration-500 hover:opacity-30 hover:cursor-pointer mb-2 md:mb-0`}
                               alt="img__"
+                              accept="image/*"
                             />
                             <div
                               className={`transition ease duration-500 opacity-0 text-center hover:opacity-100 ${styles.delete_icon_container}`}
@@ -519,6 +528,7 @@ const ProQuestion = () => {
             >
               {fields[video.name].length !== 0 &&
                 fields[video.name].map((currFile, i) => {
+                  console.log("currFile", currFile, i);
                   return (
                     <React.Fragment key={i}>
                       <div className={styles.uploaded_img}>
@@ -537,7 +547,7 @@ const ProQuestion = () => {
                             className={`w-24 cursor-pointer ${styles.delete_icon_img}`}
                             alt="delete_icon"
                             onClick={() => {
-                              handleDeleteVideo(currFile.id);
+                              handleDeleteVideo(i);
                             }}
                           />
                         </div>
@@ -713,6 +723,7 @@ const ProQuestion = () => {
               {options.desc}
             </p>
             {options.option.map((opt, i) => {
+              console.log(opt);
               return (
                 <React.Fragment key={i}>
                   <input
