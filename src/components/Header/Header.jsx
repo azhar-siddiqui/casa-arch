@@ -257,14 +257,14 @@ const Header = () => {
 
   const data = [
     {
-      heading: "Where do you serve your customers",
-      placeholder: "Area,City,State...",
+      heading: "Where do you serve your customers ?",
+      placeholder: "Area, City, State...",
       type: "text",
       name: "loc",
     },
     {
       heading: "Enter your pincode",
-      type: "text",
+      type: "number",
       name: "pincode",
       placeholder: "Pincode",
       imgLink: Loc,
@@ -352,12 +352,10 @@ const Header = () => {
       if (fields.preference === "Yes") {
         let t = (fields.preference = true);
         setFields({ ...fields, preference: t });
-        console.log("fields==>", fields);
         professionalService(fields);
         if (professionalServiceResponse.isSuccess) {
           setProVisible(false);
           navigate("/professionals/questions");
-          console.log("professionalServiceResponse");
         }
         if (submittedSteppersData.isError) {
           setProVisible(true);
@@ -374,7 +372,6 @@ const Header = () => {
         }
       }
     }
-
     setDetailsVisible(true);
     setTimeout(() => {
       setDetailsVisible(false);
@@ -382,7 +379,7 @@ const Header = () => {
     // navigate("/professionals/questions");
   };
 
-  useEffect(() => { }, []);
+  useEffect(() => {}, []);
 
   const handleProfessionalLogout = () => {
     setLogoutSuccess(true);
@@ -399,10 +396,10 @@ const Header = () => {
     } else return;
   };
 
-  const showForgotPasswordSuccess = ()=>{
+  const showForgotPasswordSuccess = () => {
     // setVisible(true)
-    setForgotPasswordSuccessModal(true)
-  }
+    setForgotPasswordSuccessModal(true);
+  };
 
   return (
     <div className="shadow-md w-full relative bg-white z-40">
@@ -418,8 +415,9 @@ const Header = () => {
           <img src={MenuIcon} alt="MenuIcon" />
         </div>
         <ul
-          className={`lg:flex lg:items-center lg:pb-0 pb-12 absolute lg:static bg-white lg:z-auto z-[-1] left-0 w-full lg:w-auto lg:pl-0 pl-5 transition-all duration-500 ease-in ${openMenu ? "top-20 " : "top-[-490px]"
-            }`}
+          className={`lg:flex lg:items-center lg:pb-0 pb-12 absolute lg:static bg-white lg:z-auto z-[-1] left-0 w-full lg:w-auto lg:pl-0 pl-5 transition-all duration-500 ease-in ${
+            openMenu ? "top-20 " : "top-[-490px]"
+          }`}
         >
           {LinksUrl.map((link, i) => (
             <li key={i} className="lg:ml-8 text-sm lg:my-0 my-4">
@@ -507,7 +505,7 @@ const Header = () => {
       {visibleForSubscriptionModal && (
         <Subscription
           setVisibleForSubscription={setVisibleForSubscription}
-        // setVisibleForUserLogin={setVisibleForUserLogin}
+          // setVisibleForUserLogin={setVisibleForUserLogin}
         />
       )}
 
@@ -631,7 +629,7 @@ const Header = () => {
                             onBlur={handleBlur}
                             isLast={
                               idx ===
-                                currentStepValue[currentStep].preference.length -
+                              currentStepValue[currentStep].preference.length -
                                 1
                                 ? true
                                 : false
@@ -649,22 +647,35 @@ const Header = () => {
                     name={currentStepValue[currentStep].name}
                     placeholder={currentStepValue[currentStep].placeholder}
                     id={currentStepValue[currentStep].name}
-                    className={`font-medium ${currentStepValue[currentStep].name === "pincode" ? styles.inputField : ''}`}
+                    className={`font-medium ${
+                      currentStepValue[currentStep].name === "pincode"
+                        ? styles.inputField
+                        : ""
+                    }`}
                     type={currentStepValue[currentStep].type}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     errorText={errors.name && touched.name ? errors.name : null}
-                    IconLeft={currentStepValue[currentStep].name === "pincode" ? PincodeIcon : false}
-
+                    IconLeft={
+                      currentStepValue[currentStep].name === "pincode"
+                        ? PincodeIcon
+                        : false
+                    }
                   />
                 )
               }
               footer={
-                <div className={`flex items-center
-                ${currentStepValue[currentStep].name === "pincode" ? 'justify-end' : 'justify-between'}
-                `}>
+                <div
+                  className={`flex items-center
+                ${
+                  currentStepValue[currentStep].name === "pincode"
+                    ? "justify-end"
+                    : "justify-between"
+                }
+                `}
+                >
                   {currentStep > 0 ||
-                    currentStep > currentStepValue.length - 1 ? (
+                  currentStep > currentStepValue.length - 1 ? (
                     <>
                       <ButtonField
                         className="py-3 text-primaryGray   font-medium  outline-none focus:outline-none "
@@ -701,10 +712,10 @@ const Header = () => {
                             ? true
                             : false
                           : currentStepValue[currentStep].name === "email"
-                            ? values.email === ""
-                              ? true
-                              : false
+                          ? values.email === ""
+                            ? true
                             : false
+                          : false
                       }
                     >
                       Continue
@@ -736,14 +747,17 @@ const Header = () => {
               </p>
               <ButtonField
                 className="bg-primaryOrange py-2 px-6 hover:border-solid border-2 border-primaryOrange hover:bg-white hover:text-primaryOrange leading-normal w-full text-normal font-semibold mt-[10px] md:mt-[39px] md:w-[398px]"
-                onClick={() => {setForgotPasswordSuccessModal(false);setVisible(true)}}
+                onClick={() => {
+                  setForgotPasswordSuccessModal(false);
+                  setVisible(true);
+                }}
               >
                 Continue
               </ButtonField>
             </div>
           }
           hideFooter={true}
-          maxWidthClass='max-w-[494px] w-[494px] px-2'
+          maxWidthClass="max-w-[494px] w-[494px] px-2"
         />
       )}
 
@@ -769,7 +783,8 @@ const Header = () => {
                         <h2 className={styles.question}>{currData.heading}</h2>
                         <div className={styles.input_div}>
                           {currData.type === "text" ||
-                            currData.type === "email" ? (
+                          currData.type === "number" ||
+                          currData.type === "email" ? (
                             <>
                               {currData.imgLink && (
                                 <img src={currData.imgLink} alt="location" />
@@ -780,10 +795,11 @@ const Header = () => {
                                 value={fields[currData.name]}
                                 name={currData.name}
                                 placeholder={currData.placeholder}
-                                id={`${currData.name === "pincode"
+                                id={`${
+                                  currData.name === "pincode"
                                     ? styles.loc_inp
                                     : ""
-                                  }`}
+                                }`}
                                 className={styles.text_inp}
                                 autoComplete="off"
                               />
@@ -800,7 +816,6 @@ const Header = () => {
                                       id={currData.name}
                                       autoComplete="off"
                                     />
-
                                     <label
                                       htmlFor={currData.name}
                                       onClick={() => {
@@ -810,10 +825,11 @@ const Header = () => {
                                         );
                                       }}
                                       style={{
-                                        borderColor: `${fields[currData.name] === ele
+                                        borderColor: `${
+                                          fields[currData.name] === ele
                                             ? "#F36C25"
                                             : ""
-                                          }`,
+                                        }`,
                                       }}
                                       className={styles.checkbox_label}
                                     >
@@ -823,10 +839,11 @@ const Header = () => {
                                       <p
                                         className={styles.checkbox_text}
                                         style={{
-                                          color: `${fields[currData.name] === ele
+                                          color: `${
+                                            fields[currData.name] === ele
                                               ? ""
                                               : "#939CA3"
-                                            }`,
+                                          }`,
                                         }}
                                       >
                                         {ele}
@@ -849,7 +866,7 @@ const Header = () => {
                         onClick={incCount}
                         disabled={
                           currData.name &&
-                            fields[`${currData.name}`].length === 0
+                          fields[`${currData.name}`].length === 0
                             ? true
                             : false
                         }
