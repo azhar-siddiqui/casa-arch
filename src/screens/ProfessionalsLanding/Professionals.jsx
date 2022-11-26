@@ -98,7 +98,7 @@ const Professionals = () => {
             filterDropData={filterDropData}
             inputProp={{
               type: "text",
-              placeholder: "Architecture, Interior Designing",
+              placeholder: "Architect, Interior Designing",
             }}
             onClick={handlePop}
             buttonClassName='h-9'

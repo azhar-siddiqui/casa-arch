@@ -24,8 +24,8 @@ const Footer = () => {
     subscribe({ email })
       .then(res => {
         console.log(res)
-        if(res.data){
-          if(res.data['status code'] === 200){
+        if (res.data) {
+          if (res.data['status code'] === 200) {
             alert('Email sent')
           }
         }
@@ -61,14 +61,20 @@ const Footer = () => {
             <img src={Call} alt="CallIcon" />
             <div className="contactContainer ">
               <h3 className="call">Call us</h3>
-              <p>+91 9090909090</p>
+              <a className="cursor-pointer text-white inline-block pt-[10px]"
+                href="tel:9090909090">
+                +91 9090909090
+              </a>
             </div>
           </div>
           <div className="locationDetails">
             <img src={Mail} alt="mailIcon" />
             <div className="contactContainer">
               <h3 className="call">Mail</h3>
-              <p>casaarch@gmail.com</p>
+              <a className="cursor-pointer text-white inline-block pt-[10px]"
+                href="mailto:casaarch@gmail.com">
+                casaarch@gmail.com
+              </a>
             </div>
           </div>
         </div>
