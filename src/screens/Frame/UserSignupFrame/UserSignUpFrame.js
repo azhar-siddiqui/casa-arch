@@ -186,6 +186,7 @@ const UserSignUpFrame = (props) => {
       backend: "facebook",
       token: fbData.accessToken, // which will get from google
     };
+    const accessToken = fbData.accessToken
 
     socialLogin(data)
       .then(res => {
