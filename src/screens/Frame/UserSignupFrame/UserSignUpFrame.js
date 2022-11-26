@@ -179,6 +179,41 @@ const UserSignUpFrame = (props) => {
   }
   const responseFacebook = async (fbData) => {
     console.log(fbData)
+    let data = {
+      client_id: 'Immucq4FCvfr93KsJc8wTYt1Z1zTNbPR0iuD3TcE',
+      client_secret: '0u3kVQpS0JpU3NaQHr4tiCn6o70JrUCbeSI7Xf6oRt5NXIfW69YrshDdAnWS833YY7xJNaq3qUb8LC8895nBewmaBw9NjbU5bSfv3F8TBCKpQ7uieHvTxpaYj0R2Hm0o',
+      grant_type: "convert_token",
+      backend: "facebook",
+      token: fbData.accessToken, // which will get from google
+    };
+
+    socialLogin(data)
+      .then(res => {
+        console.log(res.data.access_token)
+        dispatch(updateIsLoggedIn(true))
+        sessionStorage.setItem('access', res.data.access_token)
+        fetchUserId(accessToken)
+          .then((res) => {
+            console.log(res.data);
+            dispatch(updateUserId(res.data["user-id"]));
+          })
+        fetchUserType(accessToken)
+          .then(res => {
+            console.log(res)
+            setVisibleForUserSignUp(false)
+            if (res.data['user-type'] === 'Professional') {
+              handleLogout()
+              alert('Cant login as the account is registered as Professional')
+              return
+            }
+            redirectToSteppers && dispatch(updateIsStepperVisible(true))
+            dispatch(updateUserType(res.data['user-type']))
+          })
+          .catch(err => {
+            console.log(err.response)
+          })
+
+      })
 
   }
 
