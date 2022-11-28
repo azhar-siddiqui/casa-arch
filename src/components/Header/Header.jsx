@@ -51,6 +51,7 @@ import {
 import Subscription from "../../screens/Frame/Subscription/Subscription";
 import { useProfessionalSignUpPatchMutation } from "../../app/services/professionalOauthApiServices";
 import StartDesignFrame from "../../screens/Frame/StartDesignFrame/StartDesignFrame";
+import Swal from "sweetalert2";
 
 // import SelectLoginFrame from "../../screens/Frame/SelectLoginFrame/SelectLoginFrame";
 
@@ -343,8 +344,13 @@ const Header = () => {
   };
   const incCount = () => {
     if (count !== data.length - 1) {
-      setCount(count + 1);
+      if (/^[a-zA-Z]+$/.test(fields.loc)) {
+        setCount(count + 1);
+      } else {
+        Swal.fire("Aw Snap!", "Please enter a valid city name", "error");
+      }
     } else {
+      setProVisible(false);
       // console.log("Fields1", fields);
       // navigate("/professionals/questions");
       // setProVisible(false);
@@ -424,7 +430,7 @@ const Header = () => {
               <NavLink
                 to={link.link}
                 className={`text-primaryDark tracking-2 font-medium text-sm hover:border-b-2 border-primaryOrange`}
-                 onClick={() => setOpenMenu(false)}
+                onClick={() => setOpenMenu(false)}
               >
                 {link.name}
               </NavLink>
@@ -432,14 +438,26 @@ const Header = () => {
           ))}
 
           {Token ? (
-            <li>
-              <ButtonField
-                className="lg:ml-8 hover:bg-primaryOrange border-solid border-2 border-primaryOrange py-2 px-6 h-11 ease-linear duration-300 text-primaryOrange hover:text-white lg:my-0 my-3 w-11/12 lg:w-32"
-                onClick={handleProfessionalLogout}
-              >
-                Logout
-              </ButtonField>
-            </li>
+            <>
+              <li>
+                <ButtonField
+                  className="lg:ml-8 hover:bg-primaryOrange border-solid border-2 border-primaryOrange py-2 px-6 h-11 ease-linear duration-300 text-primaryOrange hover:text-white lg:my-0 my-3 w-11/12 lg:w-32"
+                  onClick={handleProfessionalLogout}
+                >
+                  Logout
+                </ButtonField>
+              </li>
+              <li>
+                <ButtonField
+                  className="lg:ml-8 bg-primaryOrange border-solid border-2 border-primaryOrange py-2 px-6 h-11 ease-linear duration-300 text-white lg:my-0 my-3 w-11/12 lg:w-32"
+                  onClick={() => {
+                    navigate("/professionals/myprofile");
+                  }}
+                >
+                  Dashboard
+                </ButtonField>
+              </li>
+            </>
           ) : (
             <li>
               <ButtonField

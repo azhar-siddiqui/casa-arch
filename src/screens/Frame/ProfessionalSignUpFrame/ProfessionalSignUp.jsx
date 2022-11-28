@@ -15,13 +15,14 @@ const initialValues = {
   company_name: "",
   company_website: "",
 };
-
+// .matches(/^\s*[\S]+(\s[\S]+)+\s*$/gms,'Please enter your full name.')
 const SignUpSchema = Yup.object({
   name: Yup.string()
     .required("This field is required.")
     .max(20, "Maximum 20 characters allowed")
     .min(2, "Minimum 2 characters required.")
-    .matches(/^[a-zA-Z\s]*$/, "Name must only contain letters"),
+    // .matches(/^[a-zA-Z\s]*$/, "Name must only contain letters"),
+    .matches(/^\s*[\S]+(\s[\S]+)+\s*$/gms, "Please enter your full Name."),
   email: Yup.string()
     .email("Please Enter Valid Email")
     .matches(
@@ -122,8 +123,8 @@ const ProfessionalSignUp = (props) => {
           <Modal
             setVisible={setVisibleForProfessionalSignUp}
             classNameModal={"pt-15"}
-            className='text-xs md:text-base pt-2 pr-2 md:pr-0'
-            headerClassName='pt-0 md:pt-4'
+            className="text-xs md:text-base pt-2 pr-2 md:pr-0"
+            headerClassName="pt-0 md:pt-4"
             ModalTitle="Tell us about yourself"
             description="You're one step away from seeing our Architecture
                 leads"
@@ -131,7 +132,7 @@ const ProfessionalSignUp = (props) => {
               <>
                 <InputField
                   name="name"
-                  label="Name"
+                  label="Full Name"
                   placeholder="Enter your Name"
                   id={"name"}
                   className="font-medium"

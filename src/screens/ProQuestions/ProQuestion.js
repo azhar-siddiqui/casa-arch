@@ -9,6 +9,7 @@ import TypeOfClientProfessional from "../Frame/TypeOfClientForProfessionalFrame/
 import SubscriptionFrame from "../Frame/SubscriptionFrame/SubscriptionFrame";
 import { useProQuestionMutation } from "../../app/services/proQuestion";
 import SuccessModal from "../../components/SuccessModal/SuccessModal";
+import Swal from "sweetalert2";
 
 const ProQuestion = () => {
   let Token = localStorage.getItem("Token");
@@ -171,6 +172,7 @@ const ProQuestion = () => {
 
   useEffect(() => {
     if (proQuestionresp.isSuccess) {
+      Swal.fire("Success!", "Saved Successfully!", "success");
       SetVisibleSuccess(true);
       setTimeout(() => {
         SetVisibleSuccess(false);
@@ -180,10 +182,37 @@ const ProQuestion = () => {
     }
   }, [proQuestionresp.isSuccess, proQuestionresp.isError]);
 
+  const validateBeforeProceeding = () => {
+    if (
+      fields.video.length > 0 &&
+      fields.photo.length > 0 &&
+      accr.length > 0 &&
+      checkedName !== ""
+    ) {
+      return true;
+    } else {
+      !checkedName !== "" &&
+        Swal.fire(
+          "Aw Snap!",
+          "Please select at least one of the following.",
+          "error"
+        );
+      !accr.length > 0 &&
+        Swal.fire(
+          "Aw Snap!",
+          "Please select at least one Accreditation",
+          "error"
+        );
+      !fields.video.length > 0 &&
+        Swal.fire("Aw Snap!", "Please upload at least one video", "error");
+      !fields.photo.length > 0 &&
+        Swal.fire("Aw Snap!", "Please add at least one photo", "error");
+      return false;
+    }
+  };
+
   const getorgdata = () => {
-    const data = { fields, orgnization, freelancer, accr };
     const completeFormData = new FormData();
-    console.log("data", data);
 
     const reqPayload = {
       desginer_profile_type: "",
@@ -276,7 +305,10 @@ const ProQuestion = () => {
       "work_profile_accerditation8",
       reqPayload.work_profile_accerditation8
     );
-    proQuestion({ completeFormData: completeFormData, Token: Token });
+
+    if (validateBeforeProceeding()) {
+      proQuestion({ completeFormData: completeFormData, Token: Token });
+    }
   };
 
   const handleImgFileUpload = (e) => {
@@ -301,12 +333,17 @@ const ProQuestion = () => {
 
   const handleAccrValue = (e) => {
     const { value, checked } = e.target;
+    const checkIcon =
+      e.currentTarget.parentNode.querySelector(".material-icons");
+
     if (checked) {
       setAccr((pre) => [...pre, value]);
+      checkIcon.innerText = "check_circle_outline";
     } else {
       setAccr((pre) => {
         return [...pre.filter((accr) => accr !== value)];
       });
+      checkIcon.innerText = "radio_button_unchecked";
     }
   };
 
@@ -605,11 +642,15 @@ const ProQuestion = () => {
                     value="Architecture"
                     className="h-5 w-5 rounded-full cursor-pointer"
                     onChange={handleAccrValue}
+                    hidden
                   />
                   <label
                     htmlFor="Architecture"
-                    className="ml-3 font-semibold text-primaryLightGray mr-10"
+                    className="ml-3 font-semibold text-primaryLightGray mr-10 flex items-center"
                   >
+                    <span className="material-icons text-red-500 mr-2">
+                      radio_button_unchecked
+                    </span>
                     Architecture
                   </label>
                 </li>
@@ -621,11 +662,15 @@ const ProQuestion = () => {
                     value="Residential Design"
                     className="h-5 w-5 rounded-full cursor-pointer"
                     onChange={handleAccrValue}
+                    hidden
                   />
                   <label
                     htmlFor="ResidentialDesign"
-                    className="ml-3 font-semibold text-primaryLightGray mr-10"
+                    className="ml-3 font-semibold text-primaryLightGray mr-10 flex items-center"
                   >
+                    <span className="material-icons text-red-500 mr-2">
+                      radio_button_unchecked
+                    </span>
                     Residential Design
                   </label>
                 </li>
@@ -637,11 +682,15 @@ const ProQuestion = () => {
                     value="Landscaping"
                     className="h-5 w-5 rounded-full cursor-pointer"
                     onChange={handleAccrValue}
+                    hidden
                   />
                   <label
                     htmlFor="Landscaping"
-                    className="ml-3 font-semibold text-primaryLightGray mr-10"
+                    className="ml-3 font-semibold text-primaryLightGray mr-10 flex items-center"
                   >
+                    <span className="material-icons text-red-500 mr-2">
+                      radio_button_unchecked
+                    </span>
                     Landscaping
                   </label>
                 </li>
@@ -653,11 +702,15 @@ const ProQuestion = () => {
                     value="Office Design"
                     className="h-5 w-5 rounded-full cursor-pointer"
                     onChange={handleAccrValue}
+                    hidden
                   />
                   <label
                     htmlFor="OfficeDesign"
-                    className="ml-3 font-semibold text-primaryLightGray mr-10"
+                    className="ml-3 font-semibold text-primaryLightGray mr-10 flex items-center"
                   >
+                    <span className="material-icons text-red-500 mr-2">
+                      radio_button_unchecked
+                    </span>{" "}
                     Office Design
                   </label>
                 </li>
@@ -671,11 +724,15 @@ const ProQuestion = () => {
                     value="Commercial Design"
                     className="h-5 w-5 rounded-full cursor-pointer"
                     onChange={handleAccrValue}
+                    hidden
                   />
                   <label
                     htmlFor="CommercialDesign"
-                    className="ml-3 font-semibold text-primaryLightGray mr-10"
+                    className="ml-3 font-semibold text-primaryLightGray mr-10 flex items-center"
                   >
+                    <span className="material-icons text-red-500 mr-2">
+                      radio_button_unchecked
+                    </span>
                     Commercial Design
                   </label>
                 </li>
@@ -687,11 +744,15 @@ const ProQuestion = () => {
                     value="Interior Design"
                     className="h-5 w-5 rounded-full cursor-pointer"
                     onChange={handleAccrValue}
+                    hidden
                   />
                   <label
                     htmlFor="InteriorDesign"
-                    className="ml-3 font-semibold text-primaryLightGray mr-10"
+                    className="ml-3 font-semibold text-primaryLightGray mr-10 flex items-center"
                   >
+                    <span className="material-icons text-red-500 mr-2">
+                      radio_button_unchecked
+                    </span>{" "}
                     Interior Design
                   </label>
                 </li>
@@ -703,11 +764,15 @@ const ProQuestion = () => {
                     value="Restaurant Design"
                     className="h-5 w-5 rounded-full cursor-pointer"
                     onChange={handleAccrValue}
+                    hidden
                   />
                   <label
                     htmlFor="RestaurantDesign"
-                    className="ml-3 font-semibold text-primaryLightGray mr-10"
+                    className="ml-3 font-semibold text-primaryLightGray mr-10 flex items-center"
                   >
+                    <span className="material-icons text-red-500 mr-2">
+                      radio_button_unchecked
+                    </span>{" "}
                     Restaurant Design
                   </label>
                 </li>
