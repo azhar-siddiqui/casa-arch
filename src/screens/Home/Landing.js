@@ -101,11 +101,11 @@ const Landing = () => {
         </div>
         <div className="relative lg:row-start-1 lg:row-end-7 lg:col-start-7 lg:col-end-12">
           <img src={LandingImg} alt="LandingImg" className="w-full" />
-          <img
+          {/* <img
             src={Vector}
             alt="Vector"
             className="absolute hidden lg:block VectorImg"
-          />
+          /> */}
         </div>
         <div className="lg:row-start-2 lg:row-end-3 lg:col-span-5 text-center lg:text-left py-4 lg:py-0">
           <p className="text-base text-primaryGray font-semibold py-2 text-justify lg:text-left">

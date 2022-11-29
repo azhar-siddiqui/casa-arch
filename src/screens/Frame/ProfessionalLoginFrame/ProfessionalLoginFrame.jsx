@@ -21,8 +21,8 @@ import {
 } from "../../../app/services/CheckPoints";
 
 const initialValues = {
-  email: "bacelonamessi@gmail.com",
-  password: "Test@1234",
+  email: "",
+  password: "",
 };
 
 const LoginSchema = Yup.object({

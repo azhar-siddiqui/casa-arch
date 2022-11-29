@@ -11,7 +11,7 @@ const Professionals = () => {
   const [visibleForProfessionalSignUp, setVisibleForProfessionalSignUp] =
     useState(false);
   const dorpItem = [
-    { id: 1, type: "Architecture" },
+    { id: 1, type: "Architect" },
     { id: 2, type: "Interior" },
   ];
 
@@ -98,7 +98,7 @@ const Professionals = () => {
             filterDropData={filterDropData}
             inputProp={{
               type: "text",
-              placeholder: "Architecture, Interior Designing",
+              placeholder: "Architect, Interior Designing",
             }}
             onClick={handlePop}
             buttonClassName='h-9'

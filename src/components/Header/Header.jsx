@@ -442,7 +442,10 @@ const Header = () => {
               <li>
                 <ButtonField
                   className="lg:ml-8 hover:bg-primaryOrange border-solid border-2 border-primaryOrange py-2 px-6 h-11 ease-linear duration-300 text-primaryOrange hover:text-white lg:my-0 my-3 w-11/12 lg:w-32"
-                  onClick={handleProfessionalLogout}
+                  onClick={() => {
+                    handleProfessionalLogout();
+                    setOpenMenu(false);
+                  }}
                 >
                   Logout
                 </ButtonField>
@@ -463,6 +466,7 @@ const Header = () => {
               <ButtonField
                 className="lg:ml-8 hover:bg-primaryOrange border-solid border-2 border-primaryOrange py-2 px-6 h-11 ease-linear duration-300 text-primaryOrange hover:text-white lg:my-0 my-3 w-11/12 lg:w-32"
                 onClick={() => {
+                  setOpenMenu(false);
                   !isLoggedIn ? setVisible(!visible) : handleLogout();
                 }}
               >
@@ -477,7 +481,10 @@ const Header = () => {
             <li>
               {proButtonVisible && userType !== "Customer" && !isLoggedIn && (
                 <Link to="/professionals">
-                  <ButtonField className="lg:ml-8 bg-primaryOrange py-2 px-6 h-11 hover:border-solid border-2 border-primaryOrange hover:bg-white hover:text-primaryOrange lg:my-0 my-3 w-11/12 lg:w-auto">
+                  <ButtonField
+                    className="lg:ml-8 bg-primaryOrange py-2 px-6 h-11 hover:border-solid border-2 border-primaryOrange hover:bg-white hover:text-primaryOrange lg:my-0 my-3 w-11/12 lg:w-auto"
+                    onClick={() => setOpenMenu(false)}
+                  >
                     Join as a Professional
                   </ButtonField>
                 </Link>
@@ -487,7 +494,10 @@ const Header = () => {
           <li>
             {dashboardButtonVisible && (
               <Link to="/dashboard">
-                <ButtonField className="lg:ml-8 bg-primaryOrange py-2 px-6 h-11 hover:border-solid border-2 border-primaryOrange hover:bg-white hover:text-primaryOrange lg:my-0 my-3 w-11/12 lg:w-auto">
+                <ButtonField
+                  className="lg:ml-8 bg-primaryOrange py-2 px-6 h-11 hover:border-solid border-2 border-primaryOrange hover:bg-white hover:text-primaryOrange lg:my-0 my-3 w-11/12 lg:w-auto"
+                  onClick={() => setOpenMenu(false)}
+                >
                   Dashboard
                 </ButtonField>
               </Link>

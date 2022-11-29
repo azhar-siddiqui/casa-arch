@@ -11,6 +11,8 @@ import { useLazyGetUserIdQuery, useLazyGetUserTypeQuery, useLoginUserMutation } 
 import { useDispatch, useSelector } from "react-redux";
 import { updateIsLoggedIn, updateToken, updateUserId, updateUserType } from "../../../app/slices/user";
 import { updateIsStepperVisible } from "../../../app/slices/userStepper";
+import FacebookButton from "../../../components/SocialLogin/FacebookButton";
+import GoogleButton from "../../../components/SocialLogin/GoogleButton";
 
 const initialValues = {
   email: "",
@@ -59,8 +61,8 @@ const UserLoginFrame = (props) => {
       dispatch(updateIsLoggedIn(true))
       sessionStorage.setItem('access', data.access_token)
       fetchUserId()
-      .then((res) => {
-        console.log(res.data);
+        .then((res) => {
+          console.log(res.data);
           dispatch(updateUserId(res.data["user-id"]));
         })
       fetchUserType()
@@ -249,6 +251,16 @@ const UserLoginFrame = (props) => {
                   SignUp now
                 </span>
               </p>
+              <div className="flex items-center my-4 md:my-7">
+                <div className="flex-1  border-b border-slate-700"></div>
+                <p className="text-sm md:text-base px-5 md:px-8 font-semibold">Or</p>
+                <div className="flex-1  border-b border-slate-700"></div>
+              </div>
+              <div className="flex items-center">
+                <FacebookButton setVisible={setVisibleForUserLogin} handleLogout={handleLogout} />
+                <GoogleButton setVisible={setVisibleForUserLogin} handleLogout={handleLogout} />
+              </div>
+
             </>
           }
         />

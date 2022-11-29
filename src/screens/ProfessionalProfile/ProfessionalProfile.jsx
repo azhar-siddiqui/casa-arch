@@ -17,7 +17,7 @@ const ProfessionalProfile = () => {
       <h1 className="text-[32px] md:text-[64px] font-semibold text-primaryOrange">
         {professionalResponse?.data?.name
           ? professionalResponse?.data?.name
-          : "Vishal Jaiswal"}
+          : ""}
       </h1>
       <div className="md:flex md:justify-between items-start pb-5">
         <div>
