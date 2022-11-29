@@ -133,7 +133,7 @@ const Landing = () => {
 
           <ButtonField
             children={"Get in Touch"}
-            className={"bg-primaryOrange py-3 w-36 lg:w-40 text-xs md:text-base"}
+            className={"bg-primaryOrange py-[12.5px] w-[135px] md:w-auto md:py-3 w-36 lg:w-40 text-sm md:text-base"}
             onClick={() => {
               setVisibleGetInTouch(true);
             }}
@@ -175,7 +175,7 @@ const Landing = () => {
         <ButtonField
           onClick={handleStartDesign}
           children={"Start Designing"}
-          className={"bg-primaryOrange py-3 px-4 w-44 mt-3 lt:mt-0  text-xs md:text-base"}
+          className={"bg-primaryOrange py-[12.5px] w-[165px]  md:py-3 px-4 w-44 mt-3 lt:mt-0  text-sm md:text-base"}
         />
       </div>
       {visibleGetInTouch && (
