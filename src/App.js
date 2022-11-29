@@ -19,7 +19,7 @@ import RefundPolicy from "./screens/RefundPolicy/RefundPolicy";
 import {
   updateIsLoggedIn,
   updateUserId,
-  updateUserType,
+  updateUserType
 } from "./app/slices/user";
 import { useDispatch } from "react-redux";
 
@@ -30,7 +30,7 @@ import Leads from "./screens/Leads/Leads";
 import LeadListing from "./screens/Leads/LeadListing/LeadListing.jsx";
 import {
   useLazyGetUserIdQuery,
-  useLazyGetUserTypeQuery,
+  useLazyGetUserTypeQuery
 } from "./app/services/userServices";
 import DashboardLeads from "./screens/ProfessionalDashboardLeads/DashboardLeads";
 import SingleProfile from "./screens/SingleProfile/SingleProfile";

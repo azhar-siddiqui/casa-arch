@@ -13,7 +13,7 @@ const initialValues = {
   password: "",
   confirmPassword: "",
   company_name: "",
-  company_website: "",
+  company_website: ""
 };
 // .matches(/^\s*[\S]+(\s[\S]+)+\s*$/gms,'Please enter your full name.')
 const SignUpSchema = Yup.object({
@@ -45,7 +45,7 @@ const SignUpSchema = Yup.object({
     // /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
     /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
     "Invalid Website URL"
-  ),
+  )
 });
 
 const ProfessionalSignUp = (props) => {
@@ -53,7 +53,7 @@ const ProfessionalSignUp = (props) => {
   const {
     setVisibleForProfessionalSignUp,
     setSuccessModalVisible,
-    setProVisible,
+    setProVisible
   } = props;
   const [signUpProfessionalSignUp, professionalSignUpResponse] =
     useProfessionalSignUpMutation();
@@ -81,7 +81,7 @@ const ProfessionalSignUp = (props) => {
     }
   }, [
     professionalSignUpResponse.isSuccess,
-    professionalSignUpResponse.isError,
+    professionalSignUpResponse.isError
   ]);
 
   const handleSubmit = (values) => {
@@ -118,7 +118,7 @@ const ProfessionalSignUp = (props) => {
           handleSubmit,
           values,
           errors,
-          touched,
+          touched
         }) => (
           <Modal
             setVisible={setVisibleForProfessionalSignUp}

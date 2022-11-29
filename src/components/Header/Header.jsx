@@ -18,14 +18,14 @@ import UserSignUpFrame from "../../screens/Frame/UserSignupFrame/UserSignUpFrame
 import {
   useLazyGetQuestionsQuery,
   useLazyGetUserIdQuery,
-  useSubmitSteppersMutation,
+  useSubmitSteppersMutation
 } from "../../app/services/userServices";
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateIsLoggedIn,
   updateSelectLoginFrameActive,
   updateUserType,
-  updateVisibleForUserLogin,
+  updateVisibleForUserLogin
 } from "../../app/slices/user";
 
 import SuccessModal from "../../components/SuccessModal/SuccessModal";
@@ -36,7 +36,7 @@ import Corss from "../../assets/ModalIcon/Cross.svg";
 import PincodeIcon from "../../assets/pincode.svg";
 import {
   useProfessionalAreaCheckServiceMutation,
-  useProfessionalServiceMutation,
+  useProfessionalServiceMutation
 } from "../../app/services/professionalServices";
 import UserLoginFrame from "../../screens/Frame/UserLoginFrame";
 import { updateIsStepperVisible } from "../../app/slices/userStepper";
@@ -46,12 +46,13 @@ import ResetPasswordFrame from "../../screens/Frame/ResetPasswordFrame/ResetPass
 import PremiumButtonLogin from "../../screens/Frame/premiumButtonLogin/PremiumButtonLogin";
 import {
   updateVisibleForPremiumButtonLogin,
-  updateVisibleForSubscriptionModal,
+  updateVisibleForSubscriptionModal
 } from "../../app/slices/professionalauthSlice";
 import Subscription from "../../screens/Frame/Subscription/Subscription";
 import { useProfessionalSignUpPatchMutation } from "../../app/services/professionalOauthApiServices";
 import StartDesignFrame from "../../screens/Frame/StartDesignFrame/StartDesignFrame";
 import Swal from "sweetalert2";
+import { useProfessionalServiceCheckPointsMutation } from "../../app/services/CheckPoints";
 
 // import SelectLoginFrame from "../../screens/Frame/SelectLoginFrame/SelectLoginFrame";
 
@@ -60,7 +61,7 @@ const initialValuesUserStepper = {
   service: "Interior Design",
   property: "Residential House",
   rooms: "More than one room",
-  email: "",
+  email: ""
 };
 
 const userStepperSchema = Yup.object({
@@ -68,7 +69,7 @@ const userStepperSchema = Yup.object({
   service: Yup.string().required("This field is required."),
   property: Yup.string().required("This field is required."),
   rooms: Yup.string().required("This field is required."),
-  email: Yup.string().required("This field is required."),
+  email: Yup.string().required("This field is required.")
 });
 
 const userStepper = [
@@ -78,49 +79,49 @@ const userStepper = [
     type: "number",
     placeholder: "Pincode",
     name: "pincode",
-    value: 0,
+    value: 0
   },
   {
     step: 2,
     title: "What type of service are you looking for?",
     type: "radio",
     name: "service",
-    preference: ["Interior Design", "Architecture Design"],
+    preference: ["Interior Design", "Architecture Design"]
   },
   {
     step: 3,
     title: "What kind of property is this?",
     type: "radio",
     name: "property",
-    preference: [
-      "Residential House",
-      "Commercial Property",
-      "Residential Flat",
-    ],
+    preference: ["Residential House", "Commercial Property", "Residential Flat"]
   },
   {
     step: 4,
     title: "Which rooms need designing?",
     type: "radio",
     name: "rooms",
-    preference: ["Only one room", "More than one room", "Complete property"],
+    preference: ["Only one room", "More than one room", "Complete property"]
   },
   {
     step: 5,
     title: "Enter your email for sending quotation.",
     type: "text",
     name: "email",
-    placeholder: "Email address",
-  },
+    placeholder: "Email address"
+  }
 ];
 
 const Header = () => {
   const [professionalService, professionalServiceResponse] =
     useProfessionalServiceMutation();
-  const [professionalAreaCheckService, ProfessionalAreaCheckServiceResponse] =
+  const [professionalAreaCheckService, professionalAreaCheckServiceResponse] =
     useProfessionalAreaCheckServiceMutation();
   // const [professionalSignUpPatch, professionalSignUpPatchResponse] =
   //   useProfessionalSignUpPatchMutation();
+  const [
+    professionalServiceCheckPoints,
+    professionalServiceCheckPointsResponse
+  ] = useProfessionalServiceCheckPointsMutation();
   const navigate = useNavigate();
   let [openMenu, setOpenMenu] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -207,11 +208,11 @@ const Header = () => {
   };
 
   let LinksUrl = [
-    { name: "HOME", link: "/" },
+    { name: "HOME", link: Token ? "/professionals/landing" : "/" },
     { name: "SERVICE", link: "/services" },
     { name: "BLOG", link: "/blogs" },
     { name: "ABOUT US", link: "/about" },
-    { name: "CONTACT US", link: "/contact" },
+    { name: "CONTACT US", link: "/contact" }
   ];
 
   useEffect(() => {
@@ -243,7 +244,7 @@ const Header = () => {
   const [fields, setFields] = useState({
     loc: "",
     pincode: "",
-    preference: "",
+    preference: false
   });
 
   const [count, setCount] = useState(0);
@@ -253,7 +254,7 @@ const Header = () => {
     name: "",
     options: [],
     imgLink: "",
-    placeholder: "",
+    placeholder: ""
   });
 
   const data = [
@@ -261,26 +262,63 @@ const Header = () => {
       heading: "Where do you serve your customers ?",
       placeholder: "Area, City, State...",
       type: "text",
-      name: "loc",
+      name: "loc"
     },
     {
       heading: "Enter your pincode",
       type: "number",
       name: "pincode",
       placeholder: "Pincode",
-      imgLink: Loc,
+      imgLink: Loc
     },
     {
       heading: "Do you prefer meeting remotely",
       type: "checkbox",
       name: "preference",
-      options: ["Yes", "No"],
-    },
+      options: ["Yes", "No"]
+    }
   ];
+
+  useEffect(() => {
+    if (Token) {
+      professionalAreaCheckService({
+        token: Token
+      });
+    }
+  }, []);
 
   useEffect(() => {
     setCurrData(data[count]);
   }, [count]);
+
+  useEffect(() => {
+    if (professionalServiceCheckPointsResponse.isSuccess) {
+    }
+  }, [professionalServiceCheckPointsResponse.isSuccess]);
+
+  useEffect(() => {
+    if (professionalAreaCheckServiceResponse.isSuccess) {
+      if (
+        professionalAreaCheckServiceResponse.data?.area === null ||
+        professionalAreaCheckServiceResponse.data?.pin_code === null ||
+        professionalAreaCheckServiceResponse.data?.is_meeting_remotely === false
+      ) {
+        setProVisible(true);
+        setFields({
+          loc: professionalAreaCheckServiceResponse.data?.area,
+          pincode: professionalAreaCheckServiceResponse.data?.pin_code,
+          preference:
+            professionalAreaCheckServiceResponse.data?.is_meeting_remotely
+        });
+        navigate("/professionals/questions");
+      } else {
+        setProVisible(false);
+        professionalServiceCheckPoints({
+          token: Token
+        });
+      }
+    }
+  }, [professionalAreaCheckServiceResponse.isSuccess]);
 
   const handleChange = (e) => {
     let { name, value } = e.target;
@@ -304,7 +342,7 @@ const Header = () => {
       let postData = userStepper.map((stepper) => {
         return {
           question: stepper.title,
-          choice: values[stepper.name],
+          choice: values[stepper.name]
         };
       });
       console.log(currentStepValue);
@@ -318,7 +356,7 @@ const Header = () => {
         property_type: currentStepValue[2].preference.indexOf(
           postData[2].choice
         ),
-        email: postData[4].choice,
+        email: postData[4].choice
       };
       console.log(reqBody);
       submitNormalUserSteppers(reqBody)
@@ -342,12 +380,13 @@ const Header = () => {
     dispatch(updateUserType(""));
     navigate("/");
   };
+
   const incCount = () => {
     if (count !== data.length - 1) {
       if (/^[a-zA-Z]+$/.test(fields.loc)) {
         setCount(count + 1);
       } else {
-        Swal.fire("Aw Snap!", "Please enter a valid city name", "error");
+        Swal.fire("Please enter a valid city name.", "", "error");
       }
     } else {
       setProVisible(false);
@@ -385,8 +424,6 @@ const Header = () => {
     // navigate("/professionals/questions");
   };
 
-  useEffect(() => {}, []);
-
   const handleProfessionalLogout = () => {
     setLogoutSuccess(true);
     setTimeout(() => {
@@ -410,7 +447,10 @@ const Header = () => {
   return (
     <div className="shadow-md w-full relative bg-white z-40">
       <div className="lg:flex items-center justify-between bg-white py-4 lg:px-24 px-5">
-        <NavLink to="/" className="flex items-center">
+        <NavLink
+          to={Token ? "/professionals/landing" : "/"}
+          className="flex items-center"
+        >
           <img src={CasaLogo} alt="Logo" className={styles.navLogo} />
         </NavLink>
 
@@ -624,7 +664,7 @@ const Header = () => {
             handleSubmit,
             values,
             errors,
-            touched,
+            touched
           }) => (
             <Modal
               setVisible={setStepperVisible}
@@ -799,14 +839,14 @@ const Header = () => {
               <div className={styles.main_div}>
                 <div className={styles.popup}>
                   <div className={styles.popup_body}>
-                    <div
+                    {/* <div
                       className={styles.cross}
                       onClick={() => {
                         setProVisible(false);
                       }}
                     >
                       <img src={Corss} alt="cross" />
-                    </div>
+                    </div> */}
                     {
                       <>
                         <h2 className={styles.question}>{currData.heading}</h2>
@@ -858,7 +898,7 @@ const Header = () => {
                                           fields[currData.name] === ele
                                             ? "#F36C25"
                                             : ""
-                                        }`,
+                                        }`
                                       }}
                                       className={styles.checkbox_label}
                                     >
@@ -872,7 +912,7 @@ const Header = () => {
                                             fields[currData.name] === ele
                                               ? ""
                                               : "#939CA3"
-                                          }`,
+                                          }`
                                         }}
                                       >
                                         {ele}
@@ -895,7 +935,7 @@ const Header = () => {
                         onClick={incCount}
                         disabled={
                           currData.name &&
-                          fields[`${currData.name}`].length === 0
+                          fields[`${currData.name}`]?.length === 0
                             ? true
                             : false
                         }
