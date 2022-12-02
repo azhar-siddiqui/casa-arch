@@ -495,6 +495,7 @@ const Header = () => {
                   className="lg:ml-8 bg-primaryOrange border-solid border-2 border-primaryOrange py-2 px-6 h-11 ease-linear duration-300 text-white lg:my-0 my-3 w-11/12 lg:w-32"
                   onClick={() => {
                     navigate("/professionals/myprofile");
+                    setOpenMenu(false)
                   }}
                 >
                   Dashboard
