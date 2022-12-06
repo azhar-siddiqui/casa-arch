@@ -16,16 +16,17 @@ export default function Modal(props) {
     secondModalBody,
     // checkValue,
     footerClassName,
-    headerClassName
+    headerClassName,
+    img,
   } = props;
 
   //disable body scroll if modal open
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = 'unset';
-    }
-  }, [])
+      document.body.style.overflow = "unset";
+    };
+  }, []);
 
   return (
     <>
@@ -38,11 +39,13 @@ export default function Modal(props) {
             {/*header*/}
             <div className="p-4 sm:p-5 pb-0">
               <div className="flex items-center justify-between ">
-                <h3 className={`${headerClassName} font-semibold text-2xl md:text-[32px]`}>
+                <h3
+                  className={`${headerClassName} font-semibold text-2xl md:text-[32px]`}
+                >
                   {ModalTitle ? ModalTitle : ""}
                 </h3>
                 <button className="" onClick={() => setVisible(false)}>
-                  <img src={Cross} alt="CrossImg" />
+                  {img ? img : <img src={Cross} alt="CrossImg" />}
                 </button>
               </div>
               <p className={`text-primaryGray font-medium  ${className}`}>
@@ -56,13 +59,11 @@ export default function Modal(props) {
           </div>
         </div>
 
-        {
-          secondModalVisible &&
-          <div className='mx-auto bg-white w-full px-5 max-w-601'>
+        {secondModalVisible && (
+          <div className="mx-auto bg-white w-full px-5 max-w-601">
             {secondModalBody}
           </div>
-        }
-
+        )}
       </div>
 
       <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
