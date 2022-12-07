@@ -18,7 +18,7 @@ const ProQuestion = () => {
   const [checkedName, setcheckedName] = useState("");
   const [fields, setFields] = useState({
     photo: [],
-    video: []
+    video: [],
   });
   const [proQuestion, proQuestionresp] = useProQuestionMutation();
 
@@ -27,13 +27,13 @@ const ProQuestion = () => {
     companySize: "",
     yearOfBusiness: "",
     companyWebSite: "",
-    companyDesc: ""
+    companyDesc: "",
   });
 
   const [freelancer, setFreelancer] = useState({
     NameOfBusiness: "",
     Portfolio: "",
-    Websites: ""
+    Websites: "",
   });
   const [accr, setAccr] = useState([]);
 
@@ -57,35 +57,35 @@ const ProQuestion = () => {
             Change: (e) => {
               setOrgnization({
                 ...orgnization,
-                companyName: e.target.value
+                companyName: e.target.value,
               });
-            }
+            },
           },
           {
             name: "size",
             heading: "Company size",
             placeholder: "Enter company size",
-            type: "text",
+            type: "number",
             value: orgnization.companySize,
             Change: (e) => {
               setOrgnization({
                 ...orgnization,
-                companySize: e.target.value
+                companySize: e.target.value,
               });
-            }
+            },
           },
           {
             name: "years",
             heading: "Years in business",
             placeholder: "Enter name of the organization",
-            type: "text",
+            type: "number",
             value: orgnization.yearOfBusiness,
             Change: (e) => {
               setOrgnization({
                 ...orgnization,
-                yearOfBusiness: e.target.value
+                yearOfBusiness: e.target.value,
               });
-            }
+            },
           },
           {
             name: "companyWeb",
@@ -96,9 +96,9 @@ const ProQuestion = () => {
             Change: (e) => {
               setOrgnization({
                 ...orgnization,
-                companyWebSite: e.target.value
+                companyWebSite: e.target.value,
               });
-            }
+            },
           },
           {
             name: "companyDesc",
@@ -109,11 +109,11 @@ const ProQuestion = () => {
             Change: (e) => {
               setOrgnization({
                 ...orgnization,
-                companyDesc: e.target.value
+                companyDesc: e.target.value,
               });
-            }
-          }
-        ]
+            },
+          },
+        ],
       },
 
       {
@@ -129,9 +129,9 @@ const ProQuestion = () => {
             Change: (e) => {
               setFreelancer({
                 ...freelancer,
-                NameOfBusiness: e.target.value
+                NameOfBusiness: e.target.value,
               });
-            }
+            },
           },
           {
             name: "portfolio",
@@ -142,9 +142,9 @@ const ProQuestion = () => {
             Change: (e) => {
               setFreelancer({
                 ...freelancer,
-                Portfolio: e.target.value
+                Portfolio: e.target.value,
               });
-            }
+            },
           },
           {
             name: "websites",
@@ -155,19 +155,19 @@ const ProQuestion = () => {
             Change: (e) => {
               setFreelancer({
                 ...freelancer,
-                Websites: e.target.value
+                Websites: e.target.value,
               });
-            }
-          }
-        ]
-      }
-    ]
+            },
+          },
+        ],
+      },
+    ],
   };
 
   const [popup, setPopup] = useState({
     status: false,
     name: "",
-    initialVal: ""
+    initialVal: "",
   });
 
   useEffect(() => {
@@ -184,14 +184,38 @@ const ProQuestion = () => {
 
   const validateBeforeProceeding = () => {
     if (
-      fields.video.length > 0 &&
-      fields.photo.length > 0 &&
-      accr.length > 0 &&
-      checkedName !== ""
+      (fields.video.length > 0 &&
+        fields.photo.length > 0 &&
+        accr.length > 0 &&
+        checkedName !== "" &&
+        orgnization.companyName !== "" &&
+        orgnization.companySize !== "" &&
+        orgnization.yearOfBusiness !== "" &&
+        orgnization.companyWebSite !== "" &&
+        orgnization.companyDesc !== "") ||
+      (freelancer.NameOfBusiness !== "" &&
+        freelancer.Portfolio !== "" &&
+        freelancer.Websites !== "")
     ) {
       return true;
     } else {
-      !checkedName !== "" &&
+      !freelancer.NameOfBusiness === "" &&
+        Swal.fire("Please Fill Name Of Business", "", "error");
+      !freelancer.Portfolio === "" &&
+        Swal.fire("Please Fill Portfolio", "", "error");
+      !freelancer.Websites === "" &&
+        Swal.fire("Please Fill Websites", "", "error");
+      !orgnization.companyName === "" &&
+        Swal.fire("Please Fill Company Name.", "", "error");
+      !orgnization.companySize === "" &&
+        Swal.fire("Please Fill Company Size", "", "error");
+      !orgnization.yearOfBusiness === "" &&
+        Swal.fire("Please Fill ", "", "error");
+      !orgnization.companyWebSite === "" &&
+        Swal.fire("Please Fill Year Of Business", "", "error");
+      !orgnization.companyDesc === "" &&
+        Swal.fire("Please Fill Company Desc", "", "error") &&
+        !checkedName !== "" &&
         Swal.fire("Please select at least one of the following.", "", "error");
       !accr.length > 0 &&
         Swal.fire("Please select at least one Accreditation.", "", "error");
@@ -205,7 +229,6 @@ const ProQuestion = () => {
 
   const getorgdata = () => {
     const completeFormData = new FormData();
-
     const reqPayload = {
       desginer_profile_type: "",
       name_of_organization: orgnization.companyName,
@@ -233,7 +256,7 @@ const ProQuestion = () => {
       work_profile_accerditation5: accr[4],
       work_profile_accerditation6: accr[5],
       work_profile_accerditation7: accr[6],
-      work_profile_accerditation8: accr[7]
+      work_profile_accerditation8: accr[7],
     };
 
     completeFormData.append(
@@ -306,12 +329,11 @@ const ProQuestion = () => {
   const handleImgFileUpload = (e) => {
     // const { name } = e.target;
     let fieldsCpy = { ...fields };
-    console.log("fieldsCpy Img", fieldsCpy);
     fieldsCpy = {
       ...fields,
       [photo.name]: fields[photo.name].concat(
         URL.createObjectURL(e.target.files[0])
-      )
+      ),
     };
     const maxPhotoLength = fieldsCpy[photo.name].length;
 
@@ -343,12 +365,12 @@ const ProQuestion = () => {
     if (nam !== "accreditation") {
       setFields({
         ...fields,
-        [nam]: fields[nam].concat(value)
+        [nam]: fields[nam].concat(value),
       });
     } else {
       setFields({
         ...fields,
-        [nam]: value
+        [nam]: value,
       });
     }
   };
@@ -359,19 +381,18 @@ const ProQuestion = () => {
       ...fields,
       [photo.name]: fieldsCpy[photo.name].filter(
         (photo, fieldIndex) => fieldIndex !== index
-      )
+      ),
     };
     setFields(fieldsCpy);
   };
 
   const handleDeleteVideo = (index) => {
-    console.log(index);
     let fieldsCpy = { ...fields };
     fieldsCpy = {
       ...fields,
       [video.name]: fieldsCpy[video.name].filter(
         (photo, fieldIndex) => fieldIndex !== index
-      )
+      ),
     };
     setFields(fieldsCpy);
   };
@@ -389,13 +410,13 @@ const ProQuestion = () => {
       setPopup({
         status: popup.status ? false : true,
         name: val,
-        initialVal: fields[val] && fields[val].length === 0 ? "" : fields[val]
+        initialVal: fields[val] && fields[val].length === 0 ? "" : fields[val],
       });
     } else {
       setPopup({
         status: popup.status ? false : true,
         name: val,
-        initialVal: ""
+        initialVal: "",
       });
     }
   };
@@ -411,14 +432,14 @@ const ProQuestion = () => {
     name: "video",
     heading: "Add YouTube/Google drive link",
     placeholder: "eg:https://www.youtube.com/watch?v=cuGPFq_GI10...",
-    type: "text"
+    type: "text",
   };
 
   let popupDataAcc = {
     name: "accreditation",
     heading: " Name of accreditation",
     placeholder: "Enter your name of accrediation",
-    type: "text"
+    type: "text",
   };
 
   let photo = {
@@ -426,7 +447,7 @@ const ProQuestion = () => {
     title: "Photos of Past Work",
     desc: "Showcase what your business can do for certain services, photos are often what customers look for first.Maximum 5 photos of the latest 5 projects can be uploaded.",
     linkDesc: "Click to upload the photos",
-    type: "file"
+    type: "file",
   };
 
   let video = {
@@ -434,7 +455,7 @@ const ProQuestion = () => {
     title: "Videos of Past Work",
     desc: "Showcase what your business can do for certain services, photos are often what customers look for first.Maximum 5 Videos of the latest 5 projects can be uploaded.",
     linkDesc: "Click to upload the videos",
-    type: "file"
+    type: "file",
   };
 
   return (
@@ -459,6 +480,7 @@ const ProQuestion = () => {
           </p>
         </div>
         <div className="lg:px-24">
+          {/* Photo Div Start */}
           <div className="border border-[#CED4DA] px-5 py-4 mt-5">
             <h1 className="font-semibold text-2xl">Photos of past work</h1>
             <p className="font-medium text-primaryLightGray pt-1 pb-4 text-base text-justify md:text-left d-none md:block">
@@ -538,6 +560,7 @@ const ProQuestion = () => {
               )}
             </div>
           </div>
+          {/* Photo Div End */}
 
           {/* Video Div Start */}
           <div
@@ -557,7 +580,6 @@ const ProQuestion = () => {
             >
               {fields[video.name].length !== 0 &&
                 fields[video.name].map((currFile, i) => {
-                  console.log("currFile", currFile, i);
                   return (
                     <React.Fragment key={i}>
                       <div className={styles.uploaded_img}>
@@ -613,7 +635,6 @@ const ProQuestion = () => {
               )}
             </div>
           </div>
-
           {/* Video Div End */}
 
           <div className="sm:p-6 bg-white border border-[#CED4DA] px-5 py-4 mt-5">
@@ -780,7 +801,6 @@ const ProQuestion = () => {
               {options.desc}
             </p>
             {options.option.map((opt, i) => {
-              console.log(opt);
               return (
                 <React.Fragment key={i}>
                   <input

@@ -91,6 +91,7 @@ const TypeOfClientProfessional = ({ SetVisibleTypeOfClient }) => {
         setVisible={SetVisibleTypeOfClient}
         description={`${currStepperData.heading}`}
         className="text-[16px] sm:text-[32px] "
+        img=" "
         body={
           <>
             {currStepperData.options.map((ele, i) => {
@@ -157,12 +158,13 @@ const TypeOfClientProfessional = ({ SetVisibleTypeOfClient }) => {
               <button
                 className={styles.btn}
                 onClick={incCount}
-                disabled={
-                  currStepperData.name &&
-                  currStepperData[`${currStepperData.name}`]?.length === 0
-                    ? true
-                    : false
-                }
+                disabled={currStepperData.options.length === 3 ? true : false}
+                // disabled={
+                //   currStepperData.name &&
+                //   currStepperData[`${currStepperData.name}`]?.length === 0
+                //     ? true
+                //     : false
+                // }
               >
                 Next
               </button>

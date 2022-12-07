@@ -11,12 +11,12 @@ export const professionalServicesApi = createApi({
       query: (body) => {
         const data = {
           area: body.loc,
-          pin_code: body.pincode,
+          pin_code: parseInt(body.pincode),
           is_meeting_remotely: body.preference,
         };
-        console.log("professionalServicesApi body", data);
+        console.log("data", data);
         return {
-          url: `${AppConstants.endPoints.professional_signup}`,
+          url: `${AppConstants.endPoints.professional_signup_patch}`,
           method: "PATCH",
           body: data,
           headers: {
@@ -56,7 +56,6 @@ export const professionalServicesApi = createApi({
         },
       }),
     }),
-
   }),
 });
 
@@ -64,5 +63,5 @@ export const {
   useProfessionalServiceMutation,
   useProfessionalAreaCheckServiceMutation,
   useProfessionalSubscribeMutation,
-  useSubscribeMutation
+  useSubscribeMutation,
 } = professionalServicesApi;

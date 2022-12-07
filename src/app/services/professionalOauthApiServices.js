@@ -17,7 +17,6 @@ export const professionalOauthApi = createApi({
           password: body.password,
         };
         return {
-          // url: `${AppConstants.professional_signup}`,
           url: `${AppConstants.endPoints.professional_signup}`,
           method: "POST",
           body: data,
@@ -29,9 +28,7 @@ export const professionalOauthApi = createApi({
     }),
     professionalLogin: builder.mutation({
       query: (body) => {
-        console.log("professionalOauthApi Login body", body);
         return {
-          // url: `${AppConstants.professional_signup}`,
           url: `${AppConstants.endPoints.professional_Login}`,
           method: "POST",
           body: body,
@@ -51,6 +48,7 @@ export const professionalOauthApi = createApi({
     }),
     professionalSignUpPatch: builder.mutation({
       query: (payload) => {
+        console.log("payload", payload);
         return {
           url: `${AppConstants.endPoints.professional_signup_patch}`,
           method: "PATCH",
