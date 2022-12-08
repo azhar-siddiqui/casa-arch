@@ -3,11 +3,15 @@ import { Link } from "react-router-dom";
 import { useCustomerDetailsLeadsMutation } from "../../app/services/leadsServices";
 import Loc from "../../assets/LeadsIcons/Loc.svg";
 import SuccessModal from "../SuccessModal/SuccessModal";
+import { useParams } from "react-router-dom";
 const LeadsCards = () => {
   const [customerDetailsLeads, { isSuccess, isError, data }] =
     useCustomerDetailsLeadsMutation();
   const [visible, setVisible] = useState(true);
   let Token = localStorage.getItem("Token");
+
+  const param = useParams();
+  console.log("Param", param);
 
   useEffect(() => {
     if (isSuccess) {
@@ -25,10 +29,19 @@ const LeadsCards = () => {
         <p className="text-center text-sm font-semibold text-[#939CA3] py-5 border-b border-[#939CA3]">
           Showing all {data?.data?.length} Leads
         </p>
+        {/*  */}
         {data?.data?.map((value) => (
           <Link to={`/leadsListing/${value.id}`} key={value.id}>
+            {console.log("value.id", value.id)}
+            {console.log("param", param)}
             <div className="p-3 pb-0 lg:p-0">
-              <div className="border border-[#939CA3] w-full h-[181px] p-4  border-l-4 border-l-[#F36C25] lg:border-t-0 lg:border-r-0">
+              <div
+                className={`border-b border-[#939CA3] w-full h-[181px] p-4  lg:border-t-0 lg:border-r-0 ${
+                  parseInt(param.id) === value.id
+                    ? "border-l-4 border-l-[#F36C25]"
+                    : "border-l-0"
+                }`}
+              >
                 <h1 className="text-[20px] font-semibold">{value.name}</h1>
                 <p className="text-[16px] font-normal text-[#000000]">
                   {value.design_type === 1
