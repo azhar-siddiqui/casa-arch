@@ -37,6 +37,9 @@ const ProQuestion = () => {
   });
   const [accr, setAccr] = useState([]);
 
+  let websiteRegx =
+    /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
+
   const options = {
     name: "selection",
     title: "Select one of the following:",
@@ -77,7 +80,7 @@ const ProQuestion = () => {
           {
             name: "years",
             heading: "Years in business",
-            placeholder: "Enter name of the organization",
+            placeholder: "Enter Years in business",
             type: "number",
             value: orgnization.yearOfBusiness,
             Change: (e) => {
@@ -258,6 +261,12 @@ const ProQuestion = () => {
       work_profile_accerditation7: accr[6],
       work_profile_accerditation8: accr[7],
     };
+    if (
+      orgnization.companyWebSite.length > 0 &&
+      !websiteRegx.test(orgnization.companyWebSite)
+    ) {
+      return Swal.fire("Please Enter Valid Company website", "", "error");
+    }
 
     completeFormData.append(
       "desginer_profile_type",

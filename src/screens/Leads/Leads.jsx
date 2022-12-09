@@ -12,10 +12,8 @@ import SubscriptionFrame from "../Frame/SubscriptionFrame/SubscriptionFrame";
 const Leads = () => {
   const [customerDetailsLead, customerDetailsReponse] =
     useCustomerDetailsLeadMutation();
-  console.log(customerDetailsReponse);
   const param = useParams();
   const navigate = useNavigate();
-
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [subscriptionVisible, setSubscriptionVisible] = useState(false);
 
