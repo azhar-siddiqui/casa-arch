@@ -261,6 +261,19 @@ const ProQuestion = () => {
       work_profile_accerditation7: accr[6],
       work_profile_accerditation8: accr[7],
     };
+    //added two
+    if (
+      freelancer.Portfolio.length > 0 &&
+      !websiteRegx.test(freelancer.Portfolio)
+    ) {
+      return Swal.fire("Please Enter Valid Portfolio", "", "error");
+    }
+    if (
+      freelancer.Websites.length > 0 &&
+      !websiteRegx.test(freelancer.Websites)
+    ) {
+      return Swal.fire("Please Enter Valid Website", "", "error");
+    }
     if (
       orgnization.companyWebSite.length > 0 &&
       !websiteRegx.test(orgnization.companyWebSite)
