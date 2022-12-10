@@ -314,7 +314,7 @@ const Header = () => {
           preference:
             professionalAreaCheckServiceResponse.data?.is_meeting_remotely,
         });
-        navigate("/professionals/questions");
+        // navigate("/professionals/questions");
       } else {
         setProVisible(false);
         professionalServiceCheckPoints({
@@ -408,14 +408,13 @@ const Header = () => {
       }
     } else {
       setProVisible(false);
-
       if (fields.preference === "Yes") {
         let t = (fields.preference = true);
         setFields({ ...fields, preference: t });
         professionalService(fields);
         if (professionalServiceResponse.isSuccess) {
           setProVisible(false);
-          navigate("/professionals/questions");
+          // navigate("/professionals/questions");
         }
         if (submittedSteppersData.isError) {
           setProVisible(true);
@@ -424,21 +423,20 @@ const Header = () => {
       if (fields.preference === "No") {
         let f = (fields.preference = false);
         setFields({ ...fields, preference: f });
-
         professionalService(fields);
-
         setProVisible(false);
-        navigate("/professionals/questions");
+        // navigate("/professionals/questions");
         if (submittedSteppersData.isError) {
           setProVisible(true);
         }
       }
+      navigate("/professionals/questions");
     }
     setDetailsVisible(true);
     setTimeout(() => {
       setDetailsVisible(false);
     }, 2000);
-    navigate("/professionals/questions");
+    // navigate("/professionals/questions");
   };
 
   const handleProfessionalLogout = () => {
@@ -511,7 +509,7 @@ const Header = () => {
                 <ButtonField
                   className="lg:ml-8 bg-primaryOrange border-solid border-2 border-primaryOrange py-2 px-6 h-11 ease-linear duration-300 text-white lg:my-0 my-3 w-11/12 lg:w-32"
                   onClick={() => {
-                    navigate("/professionals/myprofile");
+                    navigate("professionals/dashboardleads");
                     setOpenMenu(false)
                   }}
                 >
@@ -551,7 +549,7 @@ const Header = () => {
           )}
           <li>
             {dashboardButtonVisible && (
-              <Link to="/dashboard">
+              <Link to="/professionals/dashboardleads">
                 <ButtonField
                   className="lg:ml-8 bg-primaryOrange py-2 px-6 h-11 hover:border-solid border-2 border-primaryOrange hover:bg-white hover:text-primaryOrange lg:my-0 my-3 w-11/12 lg:w-auto"
                   onClick={() => setOpenMenu(false)}

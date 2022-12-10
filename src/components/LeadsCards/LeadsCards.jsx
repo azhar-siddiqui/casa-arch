@@ -11,7 +11,6 @@ const LeadsCards = () => {
   let Token = localStorage.getItem("Token");
 
   const param = useParams();
-  console.log("Param", param);
 
   useEffect(() => {
     if (isSuccess) {
@@ -32,8 +31,6 @@ const LeadsCards = () => {
         {/*  */}
         {data?.data?.map((value) => (
           <Link to={`/leadsListing/${value.id}`} key={value.id}>
-            {console.log("value.id", value.id)}
-            {console.log("param", param)}
             <div className="p-3 pb-0 lg:p-0">
               <div
                 className={`border-b border-[#939CA3] w-full h-[181px] p-4  lg:border-t-0 lg:border-r-0 ${

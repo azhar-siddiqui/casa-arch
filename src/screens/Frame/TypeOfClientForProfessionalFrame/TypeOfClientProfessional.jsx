@@ -58,6 +58,11 @@ const TypeOfClientProfessional = ({ SetVisibleTypeOfClient }) => {
     if (count !== data.length - 1) {
       setCount(count + 1);
     } else return;
+
+    console.log("COunt", count);
+    console.log("modalFields", modalFields);
+    console.log("currStepperData", currStepperData.name);
+    console.log("Object.keys(modalFields).length", Object.keys(modalFields));
   };
   const decCount = () => {
     if (count > 0) {
@@ -81,10 +86,11 @@ const TypeOfClientProfessional = ({ SetVisibleTypeOfClient }) => {
 
   let Token = localStorage.getItem("Token");
   const handleGetData = () => {
-    console.log("incCount", modalFields);
+    // console.log("handleGetData", modalFields);
     projectChoice({ modalFields: modalFields, Token: Token });
   };
-
+  // console.log(currStepperData.options.length);
+  // console.log(currStepperData.options);
   return (
     <>
       <Modal
@@ -151,6 +157,11 @@ const TypeOfClientProfessional = ({ SetVisibleTypeOfClient }) => {
                 onClick={() => {
                   handleGetData();
                 }}
+                disabled={
+                  count === 2 && Object.keys(modalFields).length !== 3
+                    ? true
+                    : false
+                }
               >
                 Continue
               </button>
@@ -158,7 +169,15 @@ const TypeOfClientProfessional = ({ SetVisibleTypeOfClient }) => {
               <button
                 className={styles.btn}
                 onClick={incCount}
-                disabled={currStepperData.options.length === 3 ? true : false}
+                disabled={
+                  count === 0 && Object.keys(modalFields).length !== 1
+                    ? true
+                    : count === 1 && Object.keys(modalFields).length !== 2
+                    ? true
+                    : count === 2 && Object.keys(modalFields).length !== 3
+                    ? true
+                    : false
+                }
                 // disabled={
                 //   currStepperData.name &&
                 //   currStepperData[`${currStepperData.name}`]?.length === 0
