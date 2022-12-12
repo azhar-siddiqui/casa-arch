@@ -29,10 +29,7 @@ const DashboardLeads = () => {
     useOnGoingProjectLeadsMutation();
 
   const [searchLeadFvt, searchLeadFvtResponse] = useSearchLeadFvtMutation();
-  // console.log("searchLeadFvtResponse", searchLeadFvtResponse.data);
-  // console.log("searchLeadResponse", searchLeadResponse.data);
 
-  // Search Lead Fvt and all
   useEffect(() => {
     searchLead({ token: Token });
   }, [addorRemoveFavResponse.isSuccess]);

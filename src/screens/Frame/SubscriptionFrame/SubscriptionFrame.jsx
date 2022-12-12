@@ -7,7 +7,8 @@ import Modal from "../../../components/Modal/Modal";
 import ButtonField from "../../../components/ButtonsFields/ButtonField";
 import SubDropIcon from "../../../assets/SubscriptionPlanIcon/SubscriptionDownIcon.svg";
 import SubUpIcon from "../../../assets/SubscriptionPlanIcon/SubscriptionUpIcon.svg";
-import { useProfessionalSubscribeMutation } from "../../../app/services/professionalServices";
+import { useProfessionalSubscriberMutation } from "../../../app/services/professionalServices";
+import { useNavigate } from "react-router-dom";
 
 const subscriptionValues = [
   {
@@ -65,7 +66,7 @@ const SubscriptionFrame = ({ setSubscriptionVisible }) => {
     areaOfOperation ? setAreaOfOperation(false) : setAreaOfOperation(true);
   };
   const [professionalpayment, professionalpaymentResponse] =
-    useProfessionalSubscribeMutation();
+    useProfessionalSubscriberMutation();
 
   const changeDropdownValue = (e, setFieldValue) => {
     // let name = e.target.className;
@@ -81,6 +82,13 @@ const SubscriptionFrame = ({ setSubscriptionVisible }) => {
       setFieldValue("AreaOfOperation", { id: id, val: value });
     }
   };
+
+  const navigate = useNavigate();
+
+  console.log(
+    "professionalPaymentResponse==>",
+    professionalpaymentResponse?.data?.msg
+  );
 
   const handleSubmit = (values) => {
     let SubscriptionValue = {
@@ -125,11 +133,14 @@ const SubscriptionFrame = ({ setSubscriptionVisible }) => {
       ),
     };
     professionalpayment({ body: bodydata, token: Token });
-    console.log("bodydata", bodydata);
+    console.log("bodydata", professionalpayment);
   };
 
   useEffect(() => {
     console.log("professionalpaymentResponse", professionalpaymentResponse);
+    if (professionalpaymentResponse?.data?.msg !== undefined) {
+      window.open(professionalpaymentResponse?.data?.msg);
+    }
   }, [
     professionalpaymentResponse.isSuccess,
     professionalpaymentResponse.isError,

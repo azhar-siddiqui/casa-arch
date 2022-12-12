@@ -36,7 +36,7 @@ export const professionalServicesApi = createApi({
         };
       },
     }),
-    professionalSubscribe: builder.mutation({
+    professionalSubscriber: builder.mutation({
       query: (body) => ({
         url: `${AppConstants.endPoints.professional_payment}`,
         method: "POST",
@@ -62,6 +62,6 @@ export const professionalServicesApi = createApi({
 export const {
   useProfessionalServiceMutation,
   useProfessionalAreaCheckServiceMutation,
-  useProfessionalSubscribeMutation,
+  useProfessionalSubscriberMutation,
   useSubscribeMutation,
 } = professionalServicesApi;

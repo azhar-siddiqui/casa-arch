@@ -78,32 +78,24 @@ const ProfessionalLoginFrame = (props) => {
       // professionalServiceCheckPoints(setToken);
       // professionalSubscriptionCheckPoints(setToken);
       setVisibleForProfessionalLogin(false);
-      navigate("/professionals/landing");
+
+      if (ProfessionalAreaCheckPointResponse?.data?.["area"] !== null) {
+        navigate("/professionals/landing");
+      } else {
+        window.location.reload();
+      }
     } else if (ProfessionalLoginResponse.isError) {
       alert("Something went wrong");
     }
-  }, [
-    ProfessionalLoginResponse.isSuccess,
-    ProfessionalLoginResponse.isError,
-    // ProfessionalAreaCheckPointResponse.isSuccess,
-    // ProfessionalAreaCheckPointResponse.isError,
-    // ProfessionalServiceCheckPointsResponse.isSuccess,
-    // ProfessionalServiceCheckPointsResponse.isError,
-  ]);
+  }, [ProfessionalLoginResponse.isSuccess, ProfessionalLoginResponse.isError]);
 
   useEffect(() => {
     if (ProfessionalLoginTypeResponse.isSuccess) {
       if (ProfessionalLoginTypeResponse.data["user-type"] === "Professional") {
-        // ;
-        console.log("Type Professional");
         if (ProfessionalServiceCheckPointsResponse.isSuccess) {
           if (
             ProfessionalServiceCheckPointsResponse.data.client_type === null
           ) {
-            console.log(
-              "ProfessionalServiceCheckPointsResponse",
-              ProfessionalServiceCheckPointsResponse.data
-            );
             navigate("professionals/questions");
           } else {
             navigate("/");
@@ -125,9 +117,7 @@ const ProfessionalLoginFrame = (props) => {
     if (ProfessionalAreaCheckPointResponse.isSuccess) {
       console.log("Type Professional isSuccess");
       if (ProfessionalAreaCheckPointResponse.data["area"] === null) {
-        // sjdkjsfkjhd
         setProVisible(true);
-        console.log("area");
       } else {
         setProVisible(false);
       }
@@ -157,32 +147,19 @@ const ProfessionalLoginFrame = (props) => {
   ]);
 
   // useEffect(() => {
-  //   if (ProfessionalLoginTypeResponse.isSuccess) {
-  //     if (ProfessionalLoginTypeResponse.data["user-type"] === "Professional") {
-  //       setVisibleForProfessionalLogin(false);
-  //       navigate("/professionals/landing");
-  //       console.log("work2");
-  //     }
-  //   } else if (ProfessionalLoginTypeResponse.isError) {
-  //     alert("outside error");
-  //   }
-  // }, [
-  //   ProfessionalLoginTypeResponse.isSuccess,
-  //   ProfessionalLoginTypeResponse.isError,
-  // ]);
-
-  // useEffect(() => {
-  //   if (ProfessionalAreaCheckPointResponse.isSuccess) {
-  //     if (ProfessionalAreaCheckPointResponse.data["area"] === null) {
-  //       setProVisible(true);
-  //       console.log("work");
-  //     } else {
-  //       setProVisible(false);
-  //     }
+  //   if (
+  //     ProfessionalAreaCheckPointResponse.isSuccess &&
+  //     ProfessionalServiceCheckPointsResponse.isSuccess &&
+  //     ProfessionalLoginTypeResponse.isSuccess
+  //   ) {
   //   }
   // }, [
   //   ProfessionalAreaCheckPointResponse.isSuccess,
   //   ProfessionalAreaCheckPointResponse.isError,
+  //   ProfessionalServiceCheckPointsResponse.isSuccess,
+  //   ProfessionalServiceCheckPointsResponse.isError,
+  //   ProfessionalLoginTypeResponse.isSuccess,
+  //   ProfessionalLoginTypeResponse.isError,
   // ]);
 
   const handleSubmit = (values) => {
