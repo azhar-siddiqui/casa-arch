@@ -36,9 +36,15 @@ const ProQuestion = () => {
     Websites: "",
   });
   const [accr, setAccr] = useState([]);
-
-  let websiteRegx =
-    /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
+  
+  function isUrlValid(userInput) {
+    var res = userInput.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+    if(res == null)
+        return false;
+    else
+        return true;
+}
+  const websiteRegx = new RegExp("^(https?://)?(www\\.)?([-a-z0-9]{1,63}\\.)*?[a-z0-9][-a-z0-9]{0,61}[a-z0-9]\\.[a-z]{2,6}(/[-\\w@\\+\\.~#\\?&/=%]*)?$", "g");
 
   const options = {
     name: "selection",
@@ -261,24 +267,23 @@ const ProQuestion = () => {
       work_profile_accerditation7: accr[6],
       work_profile_accerditation8: accr[7],
     };
-    //added two
-    if (
-      freelancer.Portfolio.length > 0 &&
-      !websiteRegx.test(freelancer.Portfolio)
-    ) {
-      return Swal.fire("Please Enter Valid Portfolio", "", "error");
+    //added two 
+    if (freelancer.Portfolio.length > 0) {
+      if (isUrlValid(freelancer.Portfolio) === false) {
+        // console.log(websiteRegx.test(freelancer.Portfolio));
+        return Swal.fire("Please Enter Valid Portfolio", "", "error")
+      }
     }
-    if (
-      freelancer.Websites.length > 0 &&
-      !websiteRegx.test(freelancer.Websites)
-    ) {
-      return Swal.fire("Please Enter Valid Website", "", "error");
+    if (freelancer.Websites.length > 0 ) {
+      if (isUrlValid(freelancer.Websites) === false) {
+        // console.log(websiteRegx.test(freelancer.Websites));
+        return Swal.fire("Please Enter Valid Website", "", "error");
+      }
     }
-    if (
-      orgnization.companyWebSite.length > 0 &&
-      !websiteRegx.test(orgnization.companyWebSite)
-    ) {
-      return Swal.fire("Please Enter Valid Company website", "", "error");
+    if (orgnization.companyWebSite.length > 0) {
+      if (isUrlValid(orgnization.companyWebSite) === false) {
+        return Swal.fire("Please Enter Valid Company website", "", "error");
+      }
     }
 
     completeFormData.append(
@@ -511,11 +516,10 @@ const ProQuestion = () => {
               latest 5 projects can be uploaded.
             </p>
             <div
-              className={`w-full min-h-[178px] py-4 px-5 border border-dashed  border-primaryLightGray flex flex-wrap items-center mt-3 md:mt-0${
-                fields[photo.name].length === 0
+              className={`w-full min-h-[178px] py-4 px-5 border border-dashed  border-primaryLightGray flex flex-wrap items-center mt-3 md:mt-0${fields[photo.name].length === 0
                   ? " justify-center"
                   : "justify-start "
-              } `}
+                } `}
             >
               {photo.name === "photo" && (
                 <>
@@ -594,11 +598,10 @@ const ProQuestion = () => {
             </p>
 
             <div
-              className={`w-full h-[178px] py-4 px-5 border border-dashed  border-primaryLightGray flex flex-wrap items-center mt-3 md:mt-0${
-                fields[video.name].length === 0
+              className={`w-full h-[178px] py-4 px-5 border border-dashed  border-primaryLightGray flex flex-wrap items-center mt-3 md:mt-0${fields[video.name].length === 0
                   ? " justify-center"
                   : "justify-start "
-              } `}
+                } `}
             >
               {fields[video.name].length !== 0 &&
                 fields[video.name].map((currFile, i) => {
@@ -838,9 +841,8 @@ const ProQuestion = () => {
                   />
                   <label
                     htmlFor={opt.name}
-                    className={`${styles.options_label} ${
-                      checkedName === opt.name ? styles.options_label_open : ""
-                    }`}
+                    className={`${styles.options_label} ${checkedName === opt.name ? styles.options_label_open : ""
+                      }`}
                   >
                     <CCheckbox checked={checkedName === opt.name} />
                     <p>{opt.question}</p>
