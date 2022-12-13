@@ -21,8 +21,8 @@ import {
 } from "../../../app/services/CheckPoints";
 
 const initialValues = {
-  email: "",
-  password: "",
+  email: "asdfw@gmail.com",
+  password: "Test@1234",
 };
 
 const LoginSchema = Yup.object({
@@ -69,25 +69,42 @@ const ProfessionalLoginFrame = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  const fetch = async () => {
     if (ProfessionalLoginResponse.isSuccess) {
       let setToken = ProfessionalLoginResponse.data.access_token;
       localStorage.setItem("Token", setToken);
-      professionalLoginType(setToken);
-      professionalAreaCheckPoint(setToken);
+      await professionalLoginType(setToken);
+      await professionalAreaCheckPoint(setToken);
+      // await professionalServiceCheckPoints(setToken);
       // professionalServiceCheckPoints(setToken);
       // professionalSubscriptionCheckPoints(setToken);
+      // if(ProfessionalLoginResponse.isSuccess)
       setVisibleForProfessionalLogin(false);
 
-      if (ProfessionalAreaCheckPointResponse?.data?.["area"] !== null) {
+      if (ProfessionalLoginResponse.isSuccess !== true) return
+      if (ProfessionalAreaCheckPointResponse.isSuccess !== true) return
+
+      if (ProfessionalAreaCheckPointResponse?.data?.area !== null) {
         navigate("/professionals/landing");
       } else {
-        window.location.reload();
+        // window.location.reload();
       }
     } else if (ProfessionalLoginResponse.isError) {
       alert("Something went wrong");
     }
-  }, [ProfessionalLoginResponse.isSuccess, ProfessionalLoginResponse.isError]);
+  }
+
+  useEffect(() => {
+    fetch()
+  }, [
+    ProfessionalLoginResponse.isSuccess,
+    ProfessionalLoginResponse.isError,
+
+    ProfessionalAreaCheckPointResponse.isSuccess,
+    ProfessionalAreaCheckPointResponse.isError,
+  ]);
+
+  // console.log(ProfessionalAreaCheckPointResponse)
 
   useEffect(() => {
     if (ProfessionalLoginTypeResponse.isSuccess) {
@@ -131,7 +148,7 @@ const ProfessionalLoginFrame = (props) => {
 
   useEffect(() => {
     if (ProfessionalServiceCheckPointsResponse.isSuccess) {
-      console.log("Type Professional isSuccess");
+      // console.log("Type Professional isSuccess", ProfessionalServiceCheckPointsResponse);
       if (ProfessionalServiceCheckPointsResponse.data["client_type"] === null) {
         setProVisible(true);
         console.log("area");
@@ -276,19 +293,17 @@ const ProfessionalLoginFrame = (props) => {
                   />
                 )}
                 <span
-                  className={`ml-3 font-medium ${
-                    rememberMeCheck === true ? `text-black` : `text-primaryGray`
-                  }  `}
+                  className={`ml-3 font-medium ${rememberMeCheck === true ? `text-black` : `text-primaryGray`
+                    }  `}
                 >
                   Remember me
                 </span>
               </p>
               <ButtonField
-                className={` w-full px-6 py-3 ${
-                  rememberMeCheck === false
-                    ? `bg-primaryExtraLight text-white border border-primaryExtraLight`
-                    : `bg-primaryOrange hover:text-primaryOrange text-white  border border-primaryOrange hover:bg-white font-medium w-full px-6 py-3 outline-none focus:outline-none ease-linear transition-all duration-150`
-                }`}
+                className={` w-full px-6 py-3 ${rememberMeCheck === false
+                  ? `bg-primaryExtraLight text-white border border-primaryExtraLight`
+                  : `bg-primaryOrange hover:text-primaryOrange text-white  border border-primaryOrange hover:bg-white font-medium w-full px-6 py-3 outline-none focus:outline-none ease-linear transition-all duration-150`
+                  }`}
                 type="submit"
                 children="Login now"
                 disabled={rememberMeCheck === false ? true : false}

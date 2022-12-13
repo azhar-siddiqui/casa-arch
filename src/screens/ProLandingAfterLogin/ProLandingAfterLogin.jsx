@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useProfessionalServiceCheckPointsMutation } from "../../app/services/CheckPoints";
 import {
   updateOpenSubscriptionAfterLogin,
   updateVisibleForPremiumButtonLogin,
@@ -16,6 +17,24 @@ const ProLandingAfterLogin = () => {
   const { openSubscriptionAfterLogin } = useSelector(
     (state) => state.professional
   );
+  const navigate = useNavigate()
+
+  const [
+    professionalServiceCheckPoints,
+    ProfessionalServiceCheckPointsResponse,
+  ] = useProfessionalServiceCheckPointsMutation();
+
+ 
+  useEffect(() => {
+    professionalServiceCheckPoints(Token)
+    .then(res => {
+      console.log(res);
+      if (res.data?.client_type === null) {
+        // navigate("/professionals/questions");
+      } 
+    })
+    
+  }, []);
 
   const handlePremiumButtonClick = () => {
     dispatch(updateOpenSubscriptionAfterLogin(true));
@@ -75,9 +94,9 @@ const ProLandingAfterLogin = () => {
             <ButtonField
               children={"Get in Touch"}
               className={"bg-primaryOrange py-3 w-36 lg:w-40 "}
-              // onClick={() => {
-              //   setVisibleGetInTouch(true);
-              // }}
+            // onClick={() => {
+            //   setVisibleGetInTouch(true);
+            // }}
             />
           </div>
         </div>
