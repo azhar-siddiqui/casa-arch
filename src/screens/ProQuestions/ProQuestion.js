@@ -20,6 +20,7 @@ const ProQuestion = () => {
     photo: [],
     video: [],
   });
+  const [photos, setPhotos] = useState([])
   const [proQuestion, proQuestionresp] = useProQuestionMutation();
 
   const [orgnization, setOrgnization] = useState({
@@ -352,9 +353,10 @@ const ProQuestion = () => {
       proQuestion({ completeFormData: completeFormData, Token: Token });
     }
   };
-
+// console.log(fields);
   const handleImgFileUpload = (e) => {
     // const { name } = e.target;
+    console.log(photo);
     let fieldsCpy = { ...fields };
     fieldsCpy = {
       ...fields,
@@ -367,7 +369,7 @@ const ProQuestion = () => {
     if (maxPhotoLength <= 5) {
       setFields(fieldsCpy);
     } else {
-      alert("faild");
+      alert("failed");
       return;
     }
   };

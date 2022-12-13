@@ -69,7 +69,9 @@ const TypeOfClientProfessional = ({ SetVisibleTypeOfClient }) => {
       setCount(count - 1);
     } else return;
   };
+
   const navigate = useNavigate();
+
   useEffect(() => {
     if (projectChoiceResponse.isSuccess) {
       setsuccessVisible(true);
@@ -86,9 +88,16 @@ const TypeOfClientProfessional = ({ SetVisibleTypeOfClient }) => {
 
   let Token = localStorage.getItem("Token");
   const handleGetData = () => {
-    // console.log("handleGetData", modalFields);
-    projectChoice({ modalFields: modalFields, Token: Token });
+    // console.log(modalFields);
+    const body = {
+      client_type: data[0].options.indexOf(modalFields.typeOfClients),
+      property_type: data[1].options.indexOf(modalFields.typeOfProperties),
+      budget_type: data[2].options.indexOf(modalFields.budget),
+    }
+    console.log(body);
+    projectChoice({ modalFields: body, Token: Token });
   };
+
   // console.log(currStepperData.options.length);
   // console.log(currStepperData.options);
   return (

@@ -72,6 +72,7 @@ const ProfessionalLoginFrame = (props) => {
   const fetch = async () => {
     if (ProfessionalLoginResponse.isSuccess) {
       let setToken = ProfessionalLoginResponse.data.access_token;
+      console.log(ProfessionalLoginResponse.data);
       localStorage.setItem("Token", setToken);
       await professionalLoginType(setToken);
       await professionalAreaCheckPoint(setToken);

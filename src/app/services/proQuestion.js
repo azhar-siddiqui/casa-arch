@@ -23,8 +23,8 @@ export const proQuestionApi = createApi({
     ProjectChoice: builder.mutation({
       query: (payload) => {
         return {
-          url: `${AppConstants.endPoints.customer_project_choices}`,
-          method: "POST",
+          url: `professional-popup/`,
+          method: "PATCH",
           body: payload.modalFields,
           headers: {
             Authorization: `Bearer ${payload.Token}`,
@@ -32,6 +32,7 @@ export const proQuestionApi = createApi({
         };
       },
     }),
+
   }),
 });
 

@@ -30,7 +30,7 @@ const ProLandingAfterLogin = () => {
     .then(res => {
       console.log(res);
       if (res.data?.client_type === null) {
-        // navigate("/professionals/questions");
+        navigate("/professionals/questions");
       } 
     })
     
