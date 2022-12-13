@@ -549,7 +549,7 @@ const Header = () => {
           )}
           <li>
             {dashboardButtonVisible && (
-              <Link to="/professionals/dashboardleads">
+              <Link to={userType !== "Customer" ? "/professionals/dashboardleads" : '/dashboard' }>
                 <ButtonField
                   className="lg:ml-8 bg-primaryOrange py-2 px-6 h-11 hover:border-solid border-2 border-primaryOrange hover:bg-white hover:text-primaryOrange lg:my-0 my-3 w-11/12 lg:w-auto"
                   onClick={() => setOpenMenu(false)}
@@ -559,6 +559,7 @@ const Header = () => {
               </Link>
             )}
           </li>
+          
         </ul>
       </div>
       {visible && (

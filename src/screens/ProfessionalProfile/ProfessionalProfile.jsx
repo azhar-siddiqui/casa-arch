@@ -3,6 +3,26 @@ import { useProfessionalProfileMutation } from "../../app/services/professionalO
 import Img1 from "../../assets/ProfessionalProfileIcons/Img1.svg";
 import Img2 from "../../assets/ProfessionalProfileIcons/Img2.svg";
 import Img3 from "../../assets/ProfessionalProfileIcons/Img3.svg";
+
+const clientTypeList = [
+  'Individual residents',
+  'Commercial groups',
+]
+const professionalTypeList = [
+  (0, 'Architecture'),
+  (1, 'Interior Designer'),
+]
+const propertyTypeList = [
+  'Residential Flats',
+  'Commercial Units',
+  'Farm Houses/Vills',
+  'Professional Cubicles',
+]
+const budgetTypeList = [
+  'Only High Profile (5L and above)',
+  'Not defined'
+]
+
 const ProfessionalProfile = () => {
   let Token = localStorage.getItem("Token");
   const [professionalDashboard, professionalResponse] =
@@ -11,12 +31,13 @@ const ProfessionalProfile = () => {
   useEffect(() => {
     professionalDashboard({ token: Token });
   }, []);
+console.log(professionalResponse);
 
   return (
     <div className="lg:px-24 px-5 py-10">
       <h1 className="text-[32px] md:text-[64px] font-semibold text-primaryOrange">
-        {professionalResponse?.data?.name
-          ? professionalResponse?.data?.name
+        {professionalResponse?.data?.data?.name
+          ? professionalResponse?.data?.data?.name
           : ""}
       </h1>
       <div className="md:flex md:justify-between items-start pb-5">
@@ -25,19 +46,19 @@ const ProfessionalProfile = () => {
             Location
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            10th Cross Road, Bengalore - India
+            {professionalResponse?.data?.data?.area}
           </p>
           <p className="text-[#08090A] font-medium text-xl md:text-2xl">
             Pincode
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            {professionalResponse?.data?.pin_code}
+            {professionalResponse?.data?.data?.pin_code}
           </p>
           <p className="text-[#08090A] font-medium text-xl md:text-2xl">
             Do you prefer meeting remotely
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            {professionalResponse?.data?.is_meeting_remotely === true
+            {professionalResponse?.data?.data?.is_meeting_remotely === true
               ? "Yes"
               : "No"}
           </p>
@@ -64,13 +85,13 @@ const ProfessionalProfile = () => {
             What type of clients are you looking for?
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            {professionalResponse?.data?.client_type}
+            {professionalResponse?.data?.data?.client_type === null ? '-' : clientTypeList[professionalResponse?.data?.data?.client_type]}
           </p>
           <p className="text-[#08090A] font-medium text-xl md:text-2xl">
             What kind of properties do you have expertise in?
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            {professionalResponse?.data?.property_type}
+            {professionalResponse?.data?.data?.property_type === null ? '-' : propertyTypeList[professionalResponse?.data?.data?.property_type] }
           </p>
         </div>
         <div>
@@ -78,7 +99,7 @@ const ProfessionalProfile = () => {
             What is your Budget Scale to work with?
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            {professionalResponse?.data?.budget_type}
+            {professionalResponse?.data?.data?.budget_type === null ? '-' : budgetTypeList[professionalResponse?.data?.data?.budget_type] }
           </p>
         </div>
       </div>

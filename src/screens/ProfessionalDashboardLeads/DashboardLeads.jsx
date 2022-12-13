@@ -29,6 +29,8 @@ const DashboardLeads = () => {
     useOnGoingProjectLeadsMutation();
 
   const [searchLeadFvt, searchLeadFvtResponse] = useSearchLeadFvtMutation();
+  const [designFavActive, setDesignFavActive] = useState('All')
+  const [ongoingProjectsActive, setOngoingProjectsActive] = useState('All')
 
   useEffect(() => {
     searchLead({ token: Token });
@@ -59,7 +61,7 @@ const DashboardLeads = () => {
   }, [addorRemoveOngoingFavResponse.isSuccess]);
 
   const [searchLeadValue, setSearchLeadValue] = useState("");
-
+  
   // const handleSelect = (e) => {
   //   console.log(e);
   //   console.log(searchLeadValue);
@@ -171,6 +173,7 @@ const DashboardLeads = () => {
                   name=""
                   id=""
                   className="outline-none p-2 rounded-md cursor-pointer mr-4"
+                  onChange={e => setDesignFavActive(e.target.value)}
                 >
                   <option value="All" className="p-2">
                     All
@@ -180,63 +183,67 @@ const DashboardLeads = () => {
                   </option>
                 </select>
               </div>
-              {designLeadResponse?.data?.data.map((SearchLeads) => (
-                <div
-                  className="px-5 pt-5 border-b border-[#CED4DA]"
-                  key={SearchLeads.id}
-                >
-                  <div className="flex justify-between items-center">
-                    <h1 className="text-[#08090A] font-semibold text-2xl w-full">
-                      {SearchLeads.name}
-                    </h1>
-                    {SearchLeads.is_designer_fav === true ? (
-                      <button
-                        onClick={() => {
-                          addorRemoveDesignFav({
-                            token: Token,
-                            id: SearchLeads.id,
-                            task: "remove",
-                          });
-                        }}
-                      >
-                        <img src={OrangeStar} alt="OrangeStar" />
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => {
-                          addorRemoveDesignFav({
-                            token: Token,
-                            id: SearchLeads.id,
-                            task: "add",
-                          });
-                        }}
-                      >
-                        <img src={OutlineStar} alt="OutlineStar" />
-                      </button>
-                    )}
-                  </div>
-                  <h2 className="text-[20px] font-normal">
-                    {SearchLeads.design_type === ""
-                      ? "Interior Design"
-                      : SearchLeads.design_type}
-                  </h2>
-                  <p className="text-[#939CA3] text-base font-normal pt-5">
-                    Create new interiors/{SearchLeads.property_type} / <br />
-                    {SearchLeads.rooms === null
-                      ? "One Room"
-                      : SearchLeads.rooms}
-                  </p>
-                  <p className="text-[#939CA3] text-base font-normal pt-2">
-                    Mobile No - 123458784
-                  </p>
-                  <span className="flex items-center">
-                    <img src={Location} alt="Location" />
-                    <p className="text-[#939CA3] text-base font-normal pl-3 py-5">
-                      {SearchLeads.location}
-                    </p>
-                  </span>
-                </div>
-              ))}
+              {designLeadResponse?.data?.data.map((SearchLeads) => {
+                return designFavActive === 'Favourite' && SearchLeads.is_designer_fav === true || designFavActive === 'All' ?
+                  (
+                    <div
+                      className="px-5 pt-5 border-b border-[#CED4DA]"
+                      key={SearchLeads.id}
+                    >
+                      <div className="flex justify-between items-center">
+                        <h1 className="text-[#08090A] font-semibold text-2xl w-full">
+                          {SearchLeads.name}
+                        </h1>
+                        {SearchLeads.is_designer_fav === true ? (
+                          <button
+                            onClick={() => {
+                              addorRemoveDesignFav({
+                                token: Token,
+                                id: SearchLeads.id,
+                                task: "remove",
+                              });
+                            }}
+                          >
+                            <img src={OrangeStar} alt="OrangeStar" />
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => {
+                              addorRemoveDesignFav({
+                                token: Token,
+                                id: SearchLeads.id,
+                                task: "add",
+                              });
+                            }}
+                          >
+                            <img src={OutlineStar} alt="OutlineStar" />
+                          </button>
+                        )}
+                      </div>
+                      <h2 className="text-[20px] font-normal">
+                        {SearchLeads.design_type === ""
+                          ? "Interior Design"
+                          : SearchLeads.design_type}
+                      </h2>
+                      <p className="text-[#939CA3] text-base font-normal pt-5">
+                        Create new interiors/{SearchLeads.property_type} / <br />
+                        {SearchLeads.rooms === null
+                          ? "One Room"
+                          : SearchLeads.rooms}
+                      </p>
+                      <p className="text-[#939CA3] text-base font-normal pt-2">
+                        Mobile No - 123458784
+                      </p>
+                      <span className="flex items-center">
+                        <img src={Location} alt="Location" />
+                        <p className="text-[#939CA3] text-base font-normal pl-3 py-5">
+                          {SearchLeads.location}
+                        </p>
+                      </span>
+                    </div>
+                  )
+                  : <></>
+              })}
             </div>
           </div>
         </div>
@@ -252,6 +259,7 @@ const DashboardLeads = () => {
                 name=""
                 id=""
                 className="outline-none p-2 rounded-md cursor-pointer mr-4"
+                onChange={e => setOngoingProjectsActive(e.target.value)}
               >
                 <option value="All" className="p-2">
                   All
@@ -261,63 +269,65 @@ const DashboardLeads = () => {
                 </option>
               </select>
             </div>
-            {ongoingProjectResponse?.data?.data.map((ongoingProject) => (
-              <div
-                className="px-5 pt-5 border-b border-[#CED4DA]"
-                key={ongoingProject.id}
-              >
-                <div className="flex justify-between items-center">
-                  <h1 className="text-[#08090A] font-semibold text-2xl w-full">
-                    {ongoingProject.project_name}
-                  </h1>
-                  {ongoingProject.is_designer_fav === true ? (
-                    <button
-                      onClick={() => {
-                        addorRemoveOngoingFav({
-                          token: Token,
-                          id: ongoingProject.id,
-                          task: "remove",
-                        });
-                      }}
-                    >
-                      <img src={OrangeStar} alt="OrangeStar" />
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => {
-                        addorRemoveOngoingFav({
-                          token: Token,
-                          id: ongoingProject.id,
-                          task: "add",
-                        });
-                      }}
-                    >
-                      <img src={OutlineStar} alt="OutlineStar" />
-                    </button>
-                  )}
-                </div>
-                <span className="flex items-center">
-                  <h2 className="text-[20px] font-normal text-[#6D747A] pr-2">
-                    {ongoingProject.location === null
-                      ? "Chennai"
-                      : ongoingProject.location}
-                  </h2>
-                  <img src={Dot} alt="Dot" />
-                  <h2 className="text-[20px] font-normal text-[#6D747A] px-2">
-                    {ongoingProject.project_budget}
-                  </h2>
-                  <img src={Dot} alt="Dot" />
-                  <h2 className="text-[20px] font-normal text-[#6D747A] pl-2">
-                    {ongoingProject.aesthetic_req}
-                  </h2>
-                </span>
-                <p className="text-[#939CA3] text-base font-normal pt-1 pb-3">
-                  Text description provided by the architects. nursery The
-                  Learning Tree in Romford, for leading childcare and education
-                  company, Storal Learning.
-                </p>
-              </div>
-            ))}
+            {ongoingProjectResponse?.data?.data.map((ongoingProject) => {
+              return ongoingProjectsActive === 'Favourite' && ongoingProject.is_designer_fav === true || ongoingProjectsActive === 'All' ?
+                <div
+                  className="px-5 pt-5 border-b border-[#CED4DA]"
+                  key={ongoingProject.id}
+                >
+                  <div className="flex justify-between items-center">
+                    <h1 className="text-[#08090A] font-semibold text-2xl w-full">
+                      {ongoingProject.project_name}
+                    </h1>
+                    {ongoingProject.is_designer_fav === true ? (
+                      <button
+                        onClick={() => {
+                          addorRemoveOngoingFav({
+                            token: Token,
+                            id: ongoingProject.id,
+                            task: "remove",
+                          });
+                        }}
+                      >
+                        <img src={OrangeStar} alt="OrangeStar" />
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => {
+                          addorRemoveOngoingFav({
+                            token: Token,
+                            id: ongoingProject.id,
+                            task: "add",
+                          });
+                        }}
+                      >
+                        <img src={OutlineStar} alt="OutlineStar" />
+                      </button>
+                    )}
+                  </div>
+                  <span className="flex items-center">
+                    <h2 className="text-[20px] font-normal text-[#6D747A] pr-2">
+                      {ongoingProject.location === null
+                        ? "Chennai"
+                        : ongoingProject.location}
+                    </h2>
+                    <img src={Dot} alt="Dot" />
+                    <h2 className="text-[20px] font-normal text-[#6D747A] px-2">
+                      {ongoingProject.project_budget}
+                    </h2>
+                    <img src={Dot} alt="Dot" />
+                    <h2 className="text-[20px] font-normal text-[#6D747A] pl-2">
+                      {ongoingProject.aesthetic_req}
+                    </h2>
+                  </span>
+                  <p className="text-[#939CA3] text-base font-normal pt-1 pb-3">
+                    Text description provided by the architects. nursery The
+                    Learning Tree in Romford, for leading childcare and education
+                    company, Storal Learning.
+                  </p>
+                </div> : <></>
+
+            })}
           </div>
         </div>
       </div>
