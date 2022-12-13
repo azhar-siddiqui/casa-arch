@@ -19,6 +19,13 @@ const DashboardLeads = () => {
   const [filteredSearchLeads, setFilteredSearchLeads] = useState([]);
   const [searchLead, searchLeadResponse] = useSearchLeadsMutation();
   const [designLead, designLeadResponse] = useDesignLeadsMutation();
+
+  const [designLeadsData, setDesignLeadsData] = useState([])
+  const [filteredDesignLeadsData, setFilteredDesignLeadsData] = useState([])
+
+  const [ongoingProjectsData, setOngoingProjectsData] = useState([])
+  const [filteredOngoingProjectsData, setFilteredOngoingProjectsData] = useState([])
+
   const [addorRemoveFav, addorRemoveFavResponse] =
     useSearchLeadAddOrRemFavMutation();
   const [addorRemoveDesignFav, addorRemoveDesignFavResponse] =
@@ -53,15 +60,41 @@ const DashboardLeads = () => {
   }, [searchLeadFvtResponse.isSuccess, searchLeadFvtResponse.isError]);
 
   useEffect(() => {
-    designLead({ token: Token });
+    designLead({ token: Token })
+      .then(res => {
+        setDesignLeadsData(res.data.data)
+      })
   }, [addorRemoveDesignFavResponse.isSuccess]);
 
   useEffect(() => {
-    ongoingProject({ token: Token });
+    if (designFavActive === 'All') {
+      setFilteredDesignLeadsData(designLeadsData)
+    } else {
+      let temp = designLeadsData.filter(item => item.is_designer_fav === true)
+      setFilteredDesignLeadsData(temp)
+    }
+  }, [designFavActive, designLeadsData])
+
+  //ongoing projs
+  useEffect(() => {
+    ongoingProject({ token: Token })
+      .then(res => {
+        setOngoingProjectsData(res.data.data)
+      })
   }, [addorRemoveOngoingFavResponse.isSuccess]);
 
+  useEffect(() => {
+    if (ongoingProjectsActive === 'All') {
+      setFilteredOngoingProjectsData(ongoingProjectsData)
+    } else {
+      let temp = ongoingProjectsData.filter(item => item.is_designer_fav === true)
+      setFilteredOngoingProjectsData(temp)
+    }
+  }, [ongoingProjectsActive, ongoingProjectsData])
+
+
   const [searchLeadValue, setSearchLeadValue] = useState("");
-  
+
   // const handleSelect = (e) => {
   //   console.log(e);
   //   console.log(searchLeadValue);
@@ -183,66 +216,65 @@ const DashboardLeads = () => {
                   </option>
                 </select>
               </div>
-              {designLeadResponse?.data?.data.map((SearchLeads) => {
-                return designFavActive === 'Favourite' && SearchLeads.is_designer_fav === true || designFavActive === 'All' ?
-                  (
-                    <div
-                      className="px-5 pt-5 border-b border-[#CED4DA]"
-                      key={SearchLeads.id}
-                    >
-                      <div className="flex justify-between items-center">
-                        <h1 className="text-[#08090A] font-semibold text-2xl w-full">
-                          {SearchLeads.name}
-                        </h1>
-                        {SearchLeads.is_designer_fav === true ? (
-                          <button
-                            onClick={() => {
-                              addorRemoveDesignFav({
-                                token: Token,
-                                id: SearchLeads.id,
-                                task: "remove",
-                              });
-                            }}
-                          >
-                            <img src={OrangeStar} alt="OrangeStar" />
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() => {
-                              addorRemoveDesignFav({
-                                token: Token,
-                                id: SearchLeads.id,
-                                task: "add",
-                              });
-                            }}
-                          >
-                            <img src={OutlineStar} alt="OutlineStar" />
-                          </button>
-                        )}
-                      </div>
-                      <h2 className="text-[20px] font-normal">
-                        {SearchLeads.design_type === ""
-                          ? "Interior Design"
-                          : SearchLeads.design_type}
-                      </h2>
-                      <p className="text-[#939CA3] text-base font-normal pt-5">
-                        Create new interiors/{SearchLeads.property_type} / <br />
-                        {SearchLeads.rooms === null
-                          ? "One Room"
-                          : SearchLeads.rooms}
-                      </p>
-                      <p className="text-[#939CA3] text-base font-normal pt-2">
-                        Mobile No - 123458784
-                      </p>
-                      <span className="flex items-center">
-                        <img src={Location} alt="Location" />
-                        <p className="text-[#939CA3] text-base font-normal pl-3 py-5">
-                          {SearchLeads.location}
-                        </p>
-                      </span>
+              {filteredDesignLeadsData.length >= 1 && filteredDesignLeadsData.map((SearchLeads) => {
+                return (
+                  <div
+                    className="px-5 pt-5 border-b border-[#CED4DA]"
+                    key={SearchLeads.id}
+                  >
+                    <div className="flex justify-between items-center">
+                      <h1 className="text-[#08090A] font-semibold text-2xl w-full">
+                        {SearchLeads.name}
+                      </h1>
+                      {SearchLeads.is_designer_fav === true ? (
+                        <button
+                          onClick={() => {
+                            addorRemoveDesignFav({
+                              token: Token,
+                              id: SearchLeads.id,
+                              task: "remove",
+                            });
+                          }}
+                        >
+                          <img src={OrangeStar} alt="OrangeStar" />
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => {
+                            addorRemoveDesignFav({
+                              token: Token,
+                              id: SearchLeads.id,
+                              task: "add",
+                            });
+                          }}
+                        >
+                          <img src={OutlineStar} alt="OutlineStar" />
+                        </button>
+                      )}
                     </div>
-                  )
-                  : <></>
+                    <h2 className="text-[20px] font-normal">
+                      {SearchLeads.design_type === ""
+                        ? "Interior Design"
+                        : SearchLeads.design_type}
+                    </h2>
+                    <p className="text-[#939CA3] text-base font-normal pt-5">
+                      Create new interiors/{SearchLeads.property_type} / <br />
+                      {SearchLeads.rooms === null
+                        ? "One Room"
+                        : SearchLeads.rooms}
+                    </p>
+                    <p className="text-[#939CA3] text-base font-normal pt-2">
+                      Mobile No - 123458784
+                    </p>
+                    <span className="flex items-center">
+                      <img src={Location} alt="Location" />
+                      <p className="text-[#939CA3] text-base font-normal pl-3 py-5">
+                        {SearchLeads.location}
+                      </p>
+                    </span>
+                  </div>
+                )
+
               })}
             </div>
           </div>
@@ -269,8 +301,8 @@ const DashboardLeads = () => {
                 </option>
               </select>
             </div>
-            {ongoingProjectResponse?.data?.data.map((ongoingProject) => {
-              return ongoingProjectsActive === 'Favourite' && ongoingProject.is_designer_fav === true || ongoingProjectsActive === 'All' ?
+            {filteredOngoingProjectsData.length >= 1 && filteredOngoingProjectsData.map((ongoingProject) => {
+              return (
                 <div
                   className="px-5 pt-5 border-b border-[#CED4DA]"
                   key={ongoingProject.id}
@@ -325,7 +357,8 @@ const DashboardLeads = () => {
                     Learning Tree in Romford, for leading childcare and education
                     company, Storal Learning.
                   </p>
-                </div> : <></>
+                </div>
+              )
 
             })}
           </div>
