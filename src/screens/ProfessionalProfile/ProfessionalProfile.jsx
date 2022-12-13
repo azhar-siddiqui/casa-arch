@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useProfessionalProfileMutation } from "../../app/services/professionalOauthApiServices";
+import { useProfessionalImagesMutation, useProfessionalProfileMutation } from "../../app/services/professionalOauthApiServices";
 import Img1 from "../../assets/ProfessionalProfileIcons/Img1.svg";
 import Img2 from "../../assets/ProfessionalProfileIcons/Img2.svg";
 import Img3 from "../../assets/ProfessionalProfileIcons/Img3.svg";
@@ -26,10 +26,16 @@ const budgetTypeList = [
 const ProfessionalProfile = () => {
   let Token = localStorage.getItem("Token");
   const [professionalDashboard, professionalResponse] = useProfessionalProfileMutation();
+  const [professionalImages, professionalImagesResp] = useProfessionalImagesMutation();
   // console.log("professionalResponse", professionalResponse?.data);
-  useEffect(() => {
-    professionalDashboard({ token: Token });
-  }, []);
+  
+  // useEffect(() => {
+  //   professionalDashboard({ token: Token });
+  //   professionalImages({ token: Token })
+  //   .then(res => {
+  //     console.log(res);
+  //   })
+  // }, []);
 
   return (
     <div className="lg:px-24 px-5 py-10">

@@ -6,7 +6,8 @@ const initialState = {
   userId: "",
   visibleForPremiumButtonLogin: false,
   visibleForSubscriptionModal: false,
-  openSubscriptionAfterLogin: false
+  openSubscriptionAfterLogin: false,
+  leadsIdToRemove: null
 };
 
 export const professionalAuthSlice = createSlice({
@@ -31,11 +32,15 @@ export const professionalAuthSlice = createSlice({
     updateOpenSubscriptionAfterLogin: (state, { payload }) => {
       state.openSubscriptionAfterLogin = payload;
     },
+    updateLeadsIdToRemove: (state, { payload }) => {
+      state.leadsIdToRemove = payload.id;
+    },
+
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { updateIsLoggedIn, updateUserType, updateUserId, updateVisibleForPremiumButtonLogin, updateVisibleForSubscriptionModal, updateOpenSubscriptionAfterLogin } =
+export const { updateIsLoggedIn, updateUserType, updateUserId, updateVisibleForPremiumButtonLogin, updateVisibleForSubscriptionModal, updateOpenSubscriptionAfterLogin, updateLeadsIdToRemove } =
 professionalAuthSlice.actions;
 
 export default professionalAuthSlice.reducer;

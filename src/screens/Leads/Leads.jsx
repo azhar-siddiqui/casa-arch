@@ -9,6 +9,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useCustomerDetailsLeadMutation } from "../../app/services/leadsServices";
 import Subscription from "../Frame/Subscription/Subscription";
 import SubscriptionFrame from "../Frame/SubscriptionFrame/SubscriptionFrame";
+import { useDispatch, useSelector } from "react-redux";
+import { updateLeadsIdToRemove } from "../../app/slices/professionalauthSlice";
 const Leads = () => {
   const [customerDetailsLead, customerDetailsReponse] =
     useCustomerDetailsLeadMutation();
@@ -16,6 +18,7 @@ const Leads = () => {
   const navigate = useNavigate();
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [subscriptionVisible, setSubscriptionVisible] = useState(false);
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const changeWidth = () => {
@@ -38,6 +41,9 @@ const Leads = () => {
     return number.join("");
   };
 
+  const removeLead = () => {
+    dispatch(updateLeadsIdToRemove({id : customerDetailsReponse.data.data.id}))
+  }
   const hiddenEmail = (value = "") => {
     let email = value.toString().split("@");
     let newemail = email[0].split("");
@@ -103,6 +109,7 @@ const Leads = () => {
           <ButtonField
             children={"Not Interested"}
             className="border-2 border-primaryOrange text-[16px] font-medium py-2 px-3 lg:px-4 text-primaryOrange"
+            onClick={removeLead}
           />
           <h1 className="w-full border-b border-[#939CA3] pt-5 pb-1 text-[#08090A] font-semibold text-[20px] ">
             Details

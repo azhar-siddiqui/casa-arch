@@ -22,5 +22,6 @@ export const AppConstants = {
     ongoingProject_lead_add_or_remove: "project-leads-arf/",
     professional_payment: "professional-subscriber/",
     professional_profile: "professional-work-profile-token",
+    professional_images: "professional-profile-images/",
   },
 };
