@@ -25,8 +25,7 @@ const budgetTypeList = [
 
 const ProfessionalProfile = () => {
   let Token = localStorage.getItem("Token");
-  const [professionalDashboard, professionalResponse] =
-    useProfessionalProfileMutation();
+  const [professionalDashboard, professionalResponse] = useProfessionalProfileMutation();
   console.log("professionalResponse", professionalResponse?.data);
   useEffect(() => {
     professionalDashboard({ token: Token });
@@ -68,7 +67,7 @@ console.log(professionalResponse);
             Where do you serve your customers
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            Chennai
+          {professionalResponse?.data?.data?.area}
           </p>
           <p className="text-[#08090A] font-medium text-xl md:text-2xl">
             What type of service you are looking for?
@@ -109,28 +108,28 @@ console.log(professionalResponse);
         </h1>
         <div className="border border-dashed  border-[#939CA3] p-4 md:flex flex-wrap">
           <img
-            src={professionalResponse?.data?.work_profile_pic1}
+            src={professionalResponse?.data?.data?.work_profile_pic1}
             alt="Img-1"
             className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
           />
 
           <img
-            src={professionalResponse?.data?.work_profile_pic2}
+            src={professionalResponse?.data?.data?.work_profile_pic2}
             alt="Img-2"
             className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
           />
           <img
-            src={professionalResponse?.data?.work_profile_pic3}
+            src={professionalResponse?.data?.data?.work_profile_pic3}
             alt="Img-1"
             className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
           />
           <img
-            src={professionalResponse?.data?.work_profile_pic4}
+            src={professionalResponse?.data?.data?.work_profile_pic4}
             alt="Img-2"
             className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
           />
           <img
-            src={professionalResponse?.data?.work_profile_pic5}
+            src={professionalResponse?.data?.data?.work_profile_pic5}
             alt="Img-1"
             className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
           />
@@ -146,7 +145,7 @@ console.log(professionalResponse);
             className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
           >
             <source
-              src={professionalResponse?.data?.work_video_link1}
+              src={professionalResponse?.data?.data?.work_video_link1}
               type="video/mp4"
             ></source>
           </video>
@@ -155,7 +154,7 @@ console.log(professionalResponse);
             className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
           >
             <source
-              src={professionalResponse?.data?.work_video_link2}
+              src={professionalResponse?.data?.data?.work_video_link2}
               type="video/mp4"
             ></source>
           </video>
@@ -164,7 +163,7 @@ console.log(professionalResponse);
             className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
           >
             <source
-              src={professionalResponse?.data?.work_video_link3}
+              src={professionalResponse?.data?.data?.work_video_link3}
               type="video/mp4"
             ></source>
           </video>
@@ -173,7 +172,7 @@ console.log(professionalResponse);
             className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
           >
             <source
-              src={professionalResponse?.data?.work_video_link4}
+              src={professionalResponse?.data?.data?.work_video_link4}
               type="video/mp4"
             ></source>
           </video>
@@ -182,7 +181,7 @@ console.log(professionalResponse);
             className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
           >
             <source
-              src={professionalResponse?.data?.work_video_link5}
+              src={professionalResponse?.data?.data?.work_video_link5}
               type="video/mp4"
             ></source>
           </video>
@@ -233,19 +232,19 @@ console.log(professionalResponse);
             Company
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            {professionalResponse?.data?.company_website}
+            {professionalResponse?.data?.data?.company_name}
           </p>
           <p className="text-[#08090A] font-medium text-xl md:text-2xl">
             Years in business
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            {professionalResponse?.data?.years_in_business} years
+            {professionalResponse?.data?.data?.years_in_business} years
           </p>
           <p className="text-[#08090A] font-medium text-xl md:text-2xl">
             Company Size
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            {professionalResponse?.data?.organisation_size} Emploeys
+            {professionalResponse?.data?.data?.organisation_size} Employees
           </p>
         </div>
         <div>
@@ -253,13 +252,13 @@ console.log(professionalResponse);
             Company website
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            {professionalResponse?.data?.websites}
+            {professionalResponse?.data?.data?.websites}
           </p>
           <p className="text-[#08090A] font-medium text-xl md:text-2xl">
             Description
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            {professionalResponse?.data?.description}
+            {professionalResponse?.data?.data?.description}
           </p>
         </div>
       </div>
