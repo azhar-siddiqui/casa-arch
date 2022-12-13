@@ -82,7 +82,7 @@ const LeadsCards = () => {
           </Link>
         ))}
       </div>
-      {visible && <SuccessModal massage="Data Is Featching..." />}
+      {visible && <SuccessModal massage="Finding suitable client for you" />}
     </>
   );
 };
