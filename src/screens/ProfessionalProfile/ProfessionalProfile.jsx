@@ -26,11 +26,10 @@ const budgetTypeList = [
 const ProfessionalProfile = () => {
   let Token = localStorage.getItem("Token");
   const [professionalDashboard, professionalResponse] = useProfessionalProfileMutation();
-  console.log("professionalResponse", professionalResponse?.data);
+  // console.log("professionalResponse", professionalResponse?.data);
   useEffect(() => {
     professionalDashboard({ token: Token });
   }, []);
-console.log(professionalResponse);
 
   return (
     <div className="lg:px-24 px-5 py-10">
