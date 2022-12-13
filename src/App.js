@@ -1,6 +1,6 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation, Navigate } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Landing from "./screens/Home/Landing";
@@ -87,7 +87,14 @@ function App() {
         <Route path="/blog/:id" element={<SingleBlog />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route
+          path="/dashboard"
+          element={
+            <RequireAuth loggedIn={sessionStorage.getItem("access") ? true : false}>
+              <Dashboard />
+            </RequireAuth>
+          }
+        />
 
         {screenWidth < 1024 ? (
           <Route path="/leads" element={<LeadListing />} />
@@ -96,13 +103,43 @@ function App() {
           // <Route path="/leadsListing" element={<Leads />} />
         )}
         <Route path="/leadsListing/:id" element={<Leads />} />
-        <Route path="/professionals/list" element={<ProfessionalsList />} />
-        <Route path="/professionals/list/:id" element={<SingleProfile />} />
+        <Route
+          path="/professionals/list"
+          element={
+            <RequireAuth loggedIn={sessionStorage.getItem("access") ? true : false}>
+              <ProfessionalsList />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/professionals/list/:id"
+          element={
+            <RequireAuth loggedIn={sessionStorage.getItem("access") ? true : false}>
+              <SingleProfile />
+            </RequireAuth>
+          }
+        />
         <Route path="/professionals">
           <Route path="" element={<Professionals />} />
           {/* <Route path="/pro_question" element={<ProQuestion />} /> */}
-          <Route path="questions" element={<ProQuestion />} />
-          <Route path="dashboardleads" element={<DashboardLeads />} />
+          <Route
+            path="questions"
+            element={
+              <RequireAuth loggedIn={Token ? true : false}>
+                <ProQuestion />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="dashboardleads"
+            element={
+              <RequireAuth loggedIn={Token ? true : false}>
+                <DashboardLeads />
+              </RequireAuth>
+            }
+          />
+          {/* <Route path="questions" element={<ProQuestion />} /> */}
+          {/* <Route path="dashboardleads" element={<DashboardLeads />} /> */}
           <Route element={<PrivateRoutes />}>
             <Route path="landing" element={<ProLandingAfterLogin />} />
             <Route path="myprofile" element={<ProfessionalProfile />} />
@@ -118,6 +155,10 @@ function App() {
       <Footer />
     </>
   );
+}
+
+export function RequireAuth({ children, loggedIn }) {
+  return loggedIn ? children : <Navigate to="/" />;
 }
 
 export default App;

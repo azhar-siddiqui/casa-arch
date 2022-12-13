@@ -29,13 +29,13 @@ const ProfessionalProfile = () => {
   const [professionalImages, professionalImagesResp] = useProfessionalImagesMutation();
   // console.log("professionalResponse", professionalResponse?.data);
   
-  // useEffect(() => {
-  //   professionalDashboard({ token: Token });
-  //   professionalImages({ token: Token })
-  //   .then(res => {
-  //     console.log(res);
-  //   })
-  // }, []);
+  useEffect(() => {
+    professionalDashboard({ token: Token });
+    // professionalImages({ token: Token })
+    // .then(res => {
+    //   console.log(res);
+    // })
+  }, []);
 
   return (
     <div className="lg:px-24 px-5 py-10">
