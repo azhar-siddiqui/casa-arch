@@ -53,7 +53,7 @@ const ProfessionalSignUp = (props) => {
   const {
     setVisibleForProfessionalSignUp,
     setSuccessModalVisible,
-    setProVisible
+    setProVisible, refreshAfterSignup
   } = props;
   const [signUpProfessionalSignUp, professionalSignUpResponse] =
     useProfessionalSignUpMutation();
@@ -76,6 +76,9 @@ const ProfessionalSignUp = (props) => {
       setTimeout(() => {
         setSuccessModalVisible(false);
       }, 2000);
+      if (refreshAfterSignup) {
+        window.location.reload()
+      }
     } else if (professionalSignUpResponse.isError) {
       alert("Email is already registered. Login to continue");
     }

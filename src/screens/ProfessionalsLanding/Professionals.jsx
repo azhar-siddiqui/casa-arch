@@ -115,6 +115,7 @@ const Professionals = () => {
           setVisibleForProfessionalSignUp={setVisibleForProfessionalSignUp}
           setProVisible={setProVisible}
           setSuccessModalVisible={setSuccessModalVisible}
+          refreshAfterSignup={true}
         />
       )}
     </>
