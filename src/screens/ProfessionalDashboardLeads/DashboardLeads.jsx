@@ -17,8 +17,12 @@ import {
 const DashboardLeads = () => {
   let Token = localStorage.getItem("Token");
   const [filteredSearchLeads, setFilteredSearchLeads] = useState([]);
+
   const [searchLead, searchLeadResponse] = useSearchLeadsMutation();
   const [designLead, designLeadResponse] = useDesignLeadsMutation();
+
+  const [searchLeadsData, setSearchLeadsData] = useState([])
+  const [filteredSearchLeadsData, setFilteredSearchLeadsData] = useState([])
 
   const [designLeadsData, setDesignLeadsData] = useState([])
   const [filteredDesignLeadsData, setFilteredDesignLeadsData] = useState([])
@@ -36,28 +40,43 @@ const DashboardLeads = () => {
     useOnGoingProjectLeadsMutation();
 
   const [searchLeadFvt, searchLeadFvtResponse] = useSearchLeadFvtMutation();
+
+  const [searchLeadFavActive, setSearchLeadFavActive] = useState('All')
   const [designFavActive, setDesignFavActive] = useState('All')
   const [ongoingProjectsActive, setOngoingProjectsActive] = useState('All')
 
   useEffect(() => {
-    searchLead({ token: Token });
+    searchLead({ token: Token })
+      .then(res => {
+        setSearchLeadsData(res.data.data)
+      })
   }, [addorRemoveFavResponse.isSuccess]);
 
   useEffect(() => {
-    if (searchLeadResponse.isSuccess) {
-      setFilteredSearchLeads(searchLeadResponse?.data?.data);
+    if (searchLeadFavActive === 'All') {
+      setFilteredSearchLeadsData(searchLeadsData)
+    } else {
+      let temp = searchLeadsData.filter(item => item.is_designer_fav === true)
+      setFilteredSearchLeadsData(temp)
     }
-  }, [searchLeadResponse.isSuccess, searchLeadResponse.isError]);
+  }, [searchLeadFavActive, searchLeadsData])
+// console.log(filteredSearchLeadsData);
+  // useEffect(() => {
+  //   if (searchLeadResponse.isSuccess) {
+  //     setFilteredSearchLeads(searchLeadResponse?.data?.data);
+  //   }
+  // }, [searchLeadResponse.isSuccess, searchLeadResponse.isError]);
 
-  useEffect(() => {
-    searchLeadFvt({ token: Token });
-  }, []);
+  // useEffect(() => {
+  //   searchLeadFvt({ token: Token });
+  // }, []);
 
-  useEffect(() => {
-    if (searchLeadFvtResponse.isSuccess) {
-      setFilteredSearchLeads(searchLeadFvtResponse.data?.data);
-    }
-  }, [searchLeadFvtResponse.isSuccess, searchLeadFvtResponse.isError]);
+  // useEffect(() => {
+  //   if (searchLeadFvtResponse.isSuccess) {
+  //     setFilteredSearchLeads(searchLeadFvtResponse.data?.data);
+  //   }
+  // }, [searchLeadFvtResponse.isSuccess, searchLeadFvtResponse.isError]);
+
 
   useEffect(() => {
     designLead({ token: Token })
@@ -127,6 +146,7 @@ const DashboardLeads = () => {
                       searchLeadFvt({ token: Token });
                     }
                     setSearchLeadValue(!e.currentTarget.value);
+                    setSearchLeadFavActive(e.target.value)
                   }}
                 >
                   <option value="All" className="p-2">
@@ -138,8 +158,8 @@ const DashboardLeads = () => {
                 </select>
               </div>
               {/* {searchLeadResponse?.data?.data.map((SearchLeads) => ( */}
-              {filteredSearchLeads?.length > 0 &&
-                filteredSearchLeads.map((SearchLeads) => (
+              {filteredSearchLeadsData?.length > 0 &&
+                filteredSearchLeadsData.map((SearchLeads) => (
                   <div
                     className="px-5 pt-5 border-b border-[#CED4DA]"
                     key={SearchLeads.id}
