@@ -430,6 +430,12 @@ const Header = () => {
           setProVisible(true);
         }
       }
+      setFields({
+        loc: '',
+        pincode: '',
+        preference: false
+      })
+      setCount(0)
       navigate("/professionals/questions");
     }
     setDetailsVisible(true);

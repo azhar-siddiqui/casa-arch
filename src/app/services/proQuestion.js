@@ -15,7 +15,7 @@ export const proQuestionApi = createApi({
           body: payload.completeFormData,
           headers: {
             Authorization: `Bearer ${payload.Token}`,
-            // "Content-Type": "multipart/form-data",
+            // "Content-type": "multipart/form-data",
           },
         };
       },

@@ -11,6 +11,7 @@ import { useProQuestionMutation } from "../../app/services/proQuestion";
 import SuccessModal from "../../components/SuccessModal/SuccessModal";
 import Swal from "sweetalert2";
 
+
 const ProQuestion = () => {
   let Token = localStorage.getItem("Token");
   const [visibleSuccess, SetVisibleSuccess] = useState(false);
@@ -237,36 +238,37 @@ const ProQuestion = () => {
     }
   };
 
+  const filterUndefined = val => val === undefined ? null : val
   const getorgdata = () => {
     const completeFormData = new FormData();
     const reqPayload = {
       desginer_profile_type: "",
-      name_of_organization: orgnization.companyName,
-      years_in_business: orgnization.yearOfBusiness,
-      organization_website: orgnization.companyWebSite,
-      organisation_size: orgnization.companySize,
+      name_of_organization: filterUndefined(orgnization.companyName),
+      years_in_business: filterUndefined(orgnization.yearOfBusiness),
+      organization_website: filterUndefined(orgnization.companyWebSite),
+      organisation_size: filterUndefined(orgnization.companySize),
       description: "",
-      name_of_business: freelancer.NameOfBusiness,
-      website: freelancer.Websites,
-      portfolio_url: freelancer.Portfolio,
-      work_video_link1: fields.video[0],
-      work_video_link2: fields.video[1],
-      work_video_link3: fields.video[2],
-      work_video_link4: fields.video[3],
-      work_video_link5: fields.video[4],
-      work_profile_pic1: fields.photo[0],
-      work_profile_pic2: fields.photo[1],
-      work_profile_pic3: fields.photo[2],
-      work_profile_pic4: fields.photo[3],
-      work_profile_pic5: fields.photo[4],
-      work_profile_accerditation1: accr[0],
-      work_profile_accerditation2: accr[1],
-      work_profile_accerditation3: accr[2],
-      work_profile_accerditation4: accr[3],
-      work_profile_accerditation5: accr[4],
-      work_profile_accerditation6: accr[5],
-      work_profile_accerditation7: accr[6],
-      work_profile_accerditation8: accr[7],
+      name_of_business: filterUndefined(freelancer.NameOfBusiness),
+      website: filterUndefined(freelancer.Websites),
+      portfolio_url: filterUndefined(freelancer.Portfolio),
+      work_video_link1: filterUndefined(fields.video[0]),
+      work_video_link2: filterUndefined(fields.video[1]),
+      work_video_link3: filterUndefined(fields.video[2]),
+      work_video_link4: filterUndefined(fields.video[3]),
+      work_video_link5: filterUndefined(fields.video[4]),
+      work_profile_pic1: filterUndefined(fields.photo[0]),
+      work_profile_pic2: filterUndefined(fields.photo[1]),
+      work_profile_pic3: filterUndefined(fields.photo[2]),
+      work_profile_pic4: filterUndefined(fields.photo[3]),
+      work_profile_pic5: filterUndefined(fields.photo[4]),
+      work_profile_accerditation1: filterUndefined(accr[0]),
+      work_profile_accerditation2: filterUndefined(accr[1]),
+      work_profile_accerditation3: filterUndefined(accr[2]),
+      work_profile_accerditation4: filterUndefined(accr[3]),
+      work_profile_accerditation5: filterUndefined(accr[4]),
+      work_profile_accerditation6: filterUndefined(accr[5]),
+      work_profile_accerditation7: filterUndefined(accr[6]),
+      work_profile_accerditation8: filterUndefined(accr[7]),
     };
     //added two 
     if (freelancer.Portfolio.length > 0) {
@@ -348,7 +350,10 @@ const ProQuestion = () => {
       "work_profile_accerditation8",
       reqPayload.work_profile_accerditation8
     );
-
+// Display the values
+for (const value of completeFormData.values()) {
+  console.log(value);
+}
     if (validateBeforeProceeding()) {
       proQuestion({ completeFormData: completeFormData, Token: Token });
     }
@@ -361,7 +366,7 @@ const ProQuestion = () => {
     fieldsCpy = {
       ...fields,
       [photo.name]: fields[photo.name].concat(
-        URL.createObjectURL(e.target.files[0])
+        e.target.files[0]
       ),
     };
     const maxPhotoLength = fieldsCpy[photo.name].length;
@@ -373,7 +378,7 @@ const ProQuestion = () => {
       return;
     }
   };
-
+// console.log(fields);
   const handleAccrValue = (e) => {
     const { value, checked } = e.target;
     const checkIcon =
@@ -541,7 +546,7 @@ const ProQuestion = () => {
                             className={`h-full w-full mr-3 md:mr-6 relative ${styles.uploaded_img}`}
                           >
                             <img
-                              src={currFile}
+                              src={URL.createObjectURL(currFile)}
                               className={`opacity-100 block w-full h-full transition ease duration-500 hover:opacity-30 hover:cursor-pointer mb-2 md:mb-0`}
                               alt="img__"
                               accept="image/*"
