@@ -847,7 +847,7 @@ const ProQuestion = () => {
                       }`}
                   >
                     <CCheckbox checked={checkedName === opt.name} />
-                    <p>{opt.question}</p>
+                    <p className="flex-1" >{opt.question}</p>
                     {checkedName === opt.name && (
                       <div className={styles.up_icon}>
                         <img src={Up} alt="close" />

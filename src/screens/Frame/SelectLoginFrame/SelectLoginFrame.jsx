@@ -39,7 +39,7 @@ const SelectLoginFrame = (props) => {
               <ButtonField
                 children="Login for Professional"
                 icons={">"}
-                className="flex items-center justify-between text-primaryOrange w-full border border-primaryOrange text-left px-5 py-5 my-8 font-medium md:text-2xl hover:text-white hover:bg-primaryOrange md:px-10"
+                className="flex items-center justify-between text-primaryOrange w-full border border-primaryOrange text-left px-5 py-5 my-4 lg:my-8 lg:mt-2 lg:mb-3 font-medium md:text-2xl hover:text-white hover:bg-primaryOrange md:px-10"
                 onClick={handleLoginForProfessional}
               />
             ) :
