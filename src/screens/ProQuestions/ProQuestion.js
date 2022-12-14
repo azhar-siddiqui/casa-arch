@@ -38,14 +38,14 @@ const ProQuestion = () => {
     Websites: "",
   });
   const [accr, setAccr] = useState([]);
-  
+
   function isUrlValid(userInput) {
     var res = userInput.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
-    if(res == null)
-        return false;
+    if (res == null)
+      return false;
     else
-        return true;
-}
+      return true;
+  }
   const websiteRegx = new RegExp("^(https?://)?(www\\.)?([-a-z0-9]{1,63}\\.)*?[a-z0-9][-a-z0-9]{0,61}[a-z0-9]\\.[a-z]{2,6}(/[-\\w@\\+\\.~#\\?&/=%]*)?$", "g");
 
   const options = {
@@ -277,7 +277,7 @@ const ProQuestion = () => {
         return Swal.fire("Please Enter Valid Portfolio", "", "error")
       }
     }
-    if (freelancer.Websites.length > 0 ) {
+    if (freelancer.Websites.length > 0) {
       if (isUrlValid(freelancer.Websites) === false) {
         // console.log(websiteRegx.test(freelancer.Websites));
         return Swal.fire("Please Enter Valid Website", "", "error");
@@ -297,6 +297,7 @@ const ProQuestion = () => {
       "name_of_organization",
       reqPayload.name_of_organization
     );
+    console.log(reqPayload);
 
     completeFormData.append("years_in_business", reqPayload.years_in_business);
     completeFormData.append(
@@ -350,15 +351,14 @@ const ProQuestion = () => {
       "work_profile_accerditation8",
       reqPayload.work_profile_accerditation8
     );
-// Display the values
-for (const value of completeFormData.values()) {
-  console.log(value);
-}
+    // Display the values
+    for (const value of completeFormData.values()) {
+      console.log(value);
+    }
     if (validateBeforeProceeding()) {
       proQuestion({ completeFormData: completeFormData, Token: Token });
     }
   };
-// console.log(fields);
   const handleImgFileUpload = (e) => {
     // const { name } = e.target;
     console.log(photo);
@@ -378,7 +378,7 @@ for (const value of completeFormData.values()) {
       return;
     }
   };
-// console.log(fields);
+  // console.log(fields);
   const handleAccrValue = (e) => {
     const { value, checked } = e.target;
     const checkIcon =
@@ -524,8 +524,8 @@ for (const value of completeFormData.values()) {
             </p>
             <div
               className={`w-full min-h-[178px] py-4 px-5 border border-dashed  border-primaryLightGray flex flex-wrap items-center mt-3 md:mt-0${fields[photo.name].length === 0
-                  ? " justify-center"
-                  : "justify-start "
+                ? " justify-center"
+                : "justify-start "
                 } `}
             >
               {photo.name === "photo" && (
@@ -606,8 +606,8 @@ for (const value of completeFormData.values()) {
 
             <div
               className={`w-full h-[178px] py-4 px-5 border border-dashed  border-primaryLightGray flex flex-wrap items-center mt-3 md:mt-0${fields[video.name].length === 0
-                  ? " justify-center"
-                  : "justify-start "
+                ? " justify-center"
+                : "justify-start "
                 } `}
             >
               {fields[video.name].length !== 0 &&
