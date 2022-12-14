@@ -10,6 +10,7 @@ import SubscriptionFrame from "../Frame/SubscriptionFrame/SubscriptionFrame";
 import { useProQuestionMutation } from "../../app/services/proQuestion";
 import SuccessModal from "../../components/SuccessModal/SuccessModal";
 import Swal from "sweetalert2";
+import { useLazyGetProfessionalUserIdQuery } from "../../app/services/professionalOauthApiServices";
 
 
 const ProQuestion = () => {
@@ -22,8 +23,17 @@ const ProQuestion = () => {
     video: [],
   });
   const [photos, setPhotos] = useState([])
+  const [userId, setUserId] = useState('')
   const [proQuestion, proQuestionresp] = useProQuestionMutation();
+  const [fetchUserId, fetchUserIdRresponse] =   useLazyGetProfessionalUserIdQuery();
 
+  useEffect(() => {
+    fetchUserId()
+    .then(res => {
+      setUserId(res.data['designer-id']);
+    })
+  }, [])
+// console.log(userId);
   const [orgnization, setOrgnization] = useState({
     companyName: "",
     companySize: "",
@@ -31,7 +41,7 @@ const ProQuestion = () => {
     companyWebSite: "",
     companyDesc: "",
   });
-
+// console.log(orgnization);
   const [freelancer, setFreelancer] = useState({
     NameOfBusiness: "",
     Portfolio: "",
@@ -238,7 +248,7 @@ const ProQuestion = () => {
     }
   };
 
-  const filterUndefined = val => val === undefined ? null : val
+  const filterUndefined = val => val === undefined ? '' : val
   const getorgdata = () => {
     const completeFormData = new FormData();
     const reqPayload = {
@@ -247,7 +257,7 @@ const ProQuestion = () => {
       years_in_business: filterUndefined(orgnization.yearOfBusiness),
       organization_website: filterUndefined(orgnization.companyWebSite),
       organisation_size: filterUndefined(orgnization.companySize),
-      description: "",
+      description: filterUndefined(orgnization.companyDesc),
       name_of_business: filterUndefined(freelancer.NameOfBusiness),
       website: filterUndefined(freelancer.Websites),
       portfolio_url: filterUndefined(freelancer.Portfolio),
@@ -288,20 +298,19 @@ const ProQuestion = () => {
         return Swal.fire("Please Enter Valid Company website", "", "error");
       }
     }
-
+    completeFormData.append('designer', userId)
     completeFormData.append(
-      "desginer_profile_type",
+      "designer_profile_type",
       reqPayload.desginer_profile_type
     );
     completeFormData.append(
       "name_of_organization",
       reqPayload.name_of_organization
     );
-    console.log(reqPayload);
 
     completeFormData.append("years_in_business", reqPayload.years_in_business);
     completeFormData.append(
-      "organization_website",
+      "organisation_website",
       reqPayload.organization_website
     );
     completeFormData.append("organisation_size", reqPayload.organisation_size);
@@ -351,6 +360,9 @@ const ProQuestion = () => {
       "work_profile_accerditation8",
       reqPayload.work_profile_accerditation8
     );
+   
+    console.log(reqPayload);
+
     // Display the values
     for (const value of completeFormData.values()) {
       console.log(value);
@@ -361,7 +373,7 @@ const ProQuestion = () => {
   };
   const handleImgFileUpload = (e) => {
     // const { name } = e.target;
-    console.log(photo);
+    // console.log(photo);
     let fieldsCpy = { ...fields };
     fieldsCpy = {
       ...fields,

@@ -81,7 +81,15 @@ export const professionalOauthApi = createApi({
         };
       },
     }),
-    
+    getProfessionalUserId: builder.query({
+      query: () => ({
+         url: `/designer-id`,
+         headers: {
+            "Authorization": `Bearer ${localStorage.getItem('Token')}`
+         },
+      }),
+   }),
+
   }),
 });
 
@@ -91,5 +99,6 @@ export const {
   useProfessionalTypeMutation,
   useProfessionalSignUpPatchMutation,
   useProfessionalProfileMutation,
-  useProfessionalImagesMutation
+  useProfessionalImagesMutation,
+  useLazyGetProfessionalUserIdQuery
 } = professionalOauthApi;

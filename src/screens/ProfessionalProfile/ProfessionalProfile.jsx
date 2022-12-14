@@ -27,8 +27,8 @@ const ProfessionalProfile = () => {
   let Token = localStorage.getItem("Token");
   const [professionalDashboard, professionalResponse] = useProfessionalProfileMutation();
   const [professionalImages, professionalImagesResp] = useProfessionalImagesMutation();
-  // console.log("professionalResponse", professionalResponse?.data);
-  
+  console.log(professionalResponse?.data);
+
   useEffect(() => {
     professionalDashboard({ token: Token });
     // professionalImages({ token: Token })
@@ -37,11 +37,18 @@ const ProfessionalProfile = () => {
     // })
   }, []);
 
+  const getYtId = (link) => {
+    var regExp =
+      /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+    var match = link.match(regExp);
+    return match && match[7].length === 11 ? match[7] : false;
+  };
+  if (professionalResponse.data === undefined) return
   return (
     <div className="lg:px-24 px-5 py-10">
       <h1 className="text-[32px] md:text-[64px] font-semibold text-primaryOrange">
-        {professionalResponse?.data?.data?.name
-          ? professionalResponse?.data?.data?.name
+        {professionalResponse?.data?.name
+          ? professionalResponse?.data?.name
           : ""}
       </h1>
       <div className="md:flex md:justify-between items-start pb-5">
@@ -50,19 +57,19 @@ const ProfessionalProfile = () => {
             Location
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            {professionalResponse?.data?.data?.area}
+            {professionalResponse?.data?.area}
           </p>
           <p className="text-[#08090A] font-medium text-xl md:text-2xl">
             Pincode
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            {professionalResponse?.data?.data?.pin_code}
+            {professionalResponse?.data?.pin_code}
           </p>
           <p className="text-[#08090A] font-medium text-xl md:text-2xl">
             Do you prefer meeting remotely
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            {professionalResponse?.data?.data?.is_meeting_remotely === true
+            {professionalResponse?.data?.is_meeting_remotely === true
               ? "Yes"
               : "No"}
           </p>
@@ -72,7 +79,7 @@ const ProfessionalProfile = () => {
             Where do you serve your customers
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-          {professionalResponse?.data?.data?.area}
+            {professionalResponse?.data?.area}
           </p>
           <p className="text-[#08090A] font-medium text-xl md:text-2xl">
             What type of service you are looking for?
@@ -89,13 +96,13 @@ const ProfessionalProfile = () => {
             What type of clients are you looking for?
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            {professionalResponse?.data?.data?.client_type === null ? '-' : clientTypeList[professionalResponse?.data?.data?.client_type]}
+            {professionalResponse?.data?.client_type}
           </p>
           <p className="text-[#08090A] font-medium text-xl md:text-2xl">
             What kind of properties do you have expertise in?
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            {professionalResponse?.data?.data?.property_type === null ? '-' : propertyTypeList[professionalResponse?.data?.data?.property_type] }
+            {professionalResponse?.data?.property_type}
           </p>
         </div>
         <div>
@@ -103,7 +110,7 @@ const ProfessionalProfile = () => {
             What is your Budget Scale to work with?
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            {professionalResponse?.data?.data?.budget_type === null ? '-' : budgetTypeList[professionalResponse?.data?.data?.budget_type] }
+            {professionalResponse?.data?.budget_type}
           </p>
         </div>
       </div>
@@ -112,32 +119,47 @@ const ProfessionalProfile = () => {
           Photos of past work
         </h1>
         <div className="border border-dashed  border-[#939CA3] p-4 md:flex flex-wrap">
-          <img
-            src={professionalResponse?.data?.data?.work_profile_pic1}
+         
+          { professionalResponse?.data?.work_profile_pic1 &&
+            <img
+            src={professionalResponse?.data?.work_profile_pic1}
             alt="Img-1"
             className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
           />
+          }
 
-          <img
-            src={professionalResponse?.data?.data?.work_profile_pic2}
+          { professionalResponse?.data?.work_profile_pic2 &&
+            <img
+            src={professionalResponse?.data?.work_profile_pic2}
             alt="Img-2"
             className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
           />
-          <img
-            src={professionalResponse?.data?.data?.work_profile_pic3}
+          }
+
+          { professionalResponse?.data?.work_profile_pic3 &&
+            <img
+            src={professionalResponse?.data?.work_profile_pic3}
             alt="Img-1"
             className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
           />
-          <img
-            src={professionalResponse?.data?.data?.work_profile_pic4}
+          }
+
+          { professionalResponse?.data?.work_profile_pic4 &&
+            <img
+            src={professionalResponse?.data?.work_profile_pic4}
             alt="Img-2"
             className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
           />
-          <img
-            src={professionalResponse?.data?.data?.work_profile_pic5}
+          }
+
+          { professionalResponse?.data?.work_profile_pic5 &&
+            <img
+            src={professionalResponse?.data?.work_profile_pic5}
             alt="Img-1"
             className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
           />
+          }
+
         </div>
       </div>
       <div className="border border-[#CED4DA] p-4 mt-5">
@@ -145,12 +167,52 @@ const ProfessionalProfile = () => {
           Videos of past work
         </h1>
         <div className="border border-dashed  border-[#939CA3] p-4 md:flex flex-wrap">
-          <video
+          {professionalResponse?.data?.work_video_link1 &&
+            <div
+              className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
+            >
+              <img src={`https://img.youtube.com/vi/${getYtId(professionalResponse?.data?.work_video_link1)}/mqdefault.jpg`} 
+              onClick={() => window.open(professionalResponse?.data?.work_video_link1)} />
+            </div>
+          }
+          {professionalResponse?.data?.work_video_link2 &&
+            <div
+              className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
+            >
+              <img src={`https://img.youtube.com/vi/${getYtId(professionalResponse?.data?.work_video_link2)}/mqdefault.jpg`}
+               onClick={() => window.open(professionalResponse?.data?.work_video_link2)} />
+            </div>
+          }
+          {professionalResponse?.data?.work_video_link3 &&
+            <div
+              className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
+            >
+              <img src={`https://img.youtube.com/vi/${getYtId(professionalResponse?.data?.work_video_link3)}/mqdefault.jpg`}
+               onClick={() => window.open(professionalResponse?.data?.work_video_link3)} />
+            </div>
+          }
+          {professionalResponse?.data?.work_video_link4 &&
+            <div
+              className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
+            >
+              <img src={`https://img.youtube.com/vi/${getYtId(professionalResponse?.data?.work_video_link4)}/mqdefault.jpg`}
+               onClick={() => window.open(professionalResponse?.data?.work_video_link4)} />
+            </div>
+          }
+          {professionalResponse?.data?.work_video_link5 &&
+            <div
+              className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
+            >
+              <img src={`https://img.youtube.com/vi/${getYtId(professionalResponse?.data?.work_video_link5)}/mqdefault.jpg`}
+               onClick={() => window.open(professionalResponse?.data?.work_video_link5)} />
+            </div>
+          }
+          {/* <video
             controls
             className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
           >
             <source
-              src={professionalResponse?.data?.data?.work_video_link1}
+              src={professionalResponse?.data?.work_video_link2}
               type="video/mp4"
             ></source>
           </video>
@@ -159,7 +221,7 @@ const ProfessionalProfile = () => {
             className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
           >
             <source
-              src={professionalResponse?.data?.data?.work_video_link2}
+              src={professionalResponse?.data?.work_video_link3}
               type="video/mp4"
             ></source>
           </video>
@@ -168,7 +230,7 @@ const ProfessionalProfile = () => {
             className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
           >
             <source
-              src={professionalResponse?.data?.data?.work_video_link3}
+              src={professionalResponse?.data?.work_video_link4}
               type="video/mp4"
             ></source>
           </video>
@@ -177,19 +239,10 @@ const ProfessionalProfile = () => {
             className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
           >
             <source
-              src={professionalResponse?.data?.data?.work_video_link4}
+              src={professionalResponse?.data?.work_video_link5}
               type="video/mp4"
             ></source>
-          </video>
-          <video
-            controls
-            className="md:mr-3 mt-3 md:mt-0 w-full md:w-[216px] md:h-[197px]"
-          >
-            <source
-              src={professionalResponse?.data?.data?.work_video_link5}
-              type="video/mp4"
-            ></source>
-          </video>
+          </video> */}
         </div>
       </div>
       <div className="border border-[#CED4DA] p-4 my-5">
@@ -202,10 +255,38 @@ const ProfessionalProfile = () => {
         </p>
         <div className="border border-dashed border-[#939CA3] p-4 mt-4 text-center md:text-left ">
           <div className="md:flex flex-wrap md:pb-3">
-            <p className="md:pr-20 text-[#939CA3] font-semibold text-sm ">
-              Architecture
-            </p>
-            <p className="md:pr-20 text-[#939CA3] font-semibold text-sm pt-3 md:pt-0">
+            {
+              professionalResponse?.data?.work_profile_accerditation1 &&
+              <p className="md:pr-20 text-[#939CA3] font-semibold text-sm ">
+                {professionalResponse?.data?.work_profile_accerditation1}
+              </p>
+            }
+            {
+              professionalResponse?.data?.work_profile_accerditation2 &&
+              <p className="md:pr-20 text-[#939CA3] font-semibold text-sm ">
+                {professionalResponse?.data?.work_profile_accerditation2}
+              </p>
+            }
+            {
+              professionalResponse?.data?.work_profile_accerditation3 &&
+              <p className="md:pr-20 text-[#939CA3] font-semibold text-sm ">
+                {professionalResponse?.data?.work_profile_accerditation3}
+              </p>
+            }
+            {
+              professionalResponse?.data?.work_profile_accerditation4 &&
+              <p className="md:pr-20 text-[#939CA3] font-semibold text-sm ">
+                {professionalResponse?.data?.work_profile_accerditation4}
+              </p>
+            }
+            {
+              professionalResponse?.data?.work_profile_accerditation5 &&
+              <p className="md:pr-20 text-[#939CA3] font-semibold text-sm ">
+                {professionalResponse?.data?.work_profile_accerditation5}
+              </p>
+            }
+
+            {/* <p className="md:pr-20 text-[#939CA3] font-semibold text-sm pt-3 md:pt-0">
               Residencial Design
             </p>
             <p className="md:pr-20 text-[#939CA3] font-semibold text-sm pt-3 md:pt-0">
@@ -213,9 +294,9 @@ const ProfessionalProfile = () => {
             </p>
             <p className="md:pr-20 text-[#939CA3] font-semibold text-sm pt-3 md:pt-0">
               Office Design
-            </p>
+            </p> */}
           </div>
-          <div className="md:flex flex-wrap md:pt-3">
+          {/* <div className="md:flex flex-wrap md:pt-3">
             <p className="md:pr-20 text-[#939CA3] font-semibold text-sm pt-3 md:pt-0">
               Comercial Design
             </p>
@@ -225,7 +306,7 @@ const ProfessionalProfile = () => {
             <p className="md:pr-20 text-[#939CA3] font-semibold text-sm pt-3 md:pt-0">
               Resturent Design
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
       <h1 className="text-[#08090A] font-medium text-xl md:text-2xl">
@@ -237,19 +318,19 @@ const ProfessionalProfile = () => {
             Company
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            {professionalResponse?.data?.data?.company_name}
+            {professionalResponse?.data?.company_name}
           </p>
           <p className="text-[#08090A] font-medium text-xl md:text-2xl">
             Years in business
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            {professionalResponse?.data?.data?.years_in_business} years
+            {professionalResponse?.data?.years_in_business} years
           </p>
           <p className="text-[#08090A] font-medium text-xl md:text-2xl">
             Company Size
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            {professionalResponse?.data?.data?.organisation_size} Employees
+            {professionalResponse?.data?.organisation_size} Employees
           </p>
         </div>
         <div>
@@ -257,13 +338,13 @@ const ProfessionalProfile = () => {
             Company website
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            {professionalResponse?.data?.data?.websites}
+            {professionalResponse?.data?.organisation_website}
           </p>
           <p className="text-[#08090A] font-medium text-xl md:text-2xl">
             Description
           </p>
           <p className="text-[#08090A] font-normal text-[16px] md:text-xl md:pb-4">
-            {professionalResponse?.data?.data?.description}
+            {professionalResponse?.data?.description}
           </p>
         </div>
       </div>

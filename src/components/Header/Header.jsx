@@ -824,7 +824,11 @@ const Header = () => {
       )}
 
       {successModalVisible && (
-        <SuccessModal massage={"Professional User created SuccessFully"} />
+        <SuccessModal massage={
+          <p className="text-center">
+            Professional User created SuccessFully
+          </p>
+      } />
       )}
 
       {forgotPasswordSuccessModal && (
