@@ -10,9 +10,18 @@ import { useDispatch, useSelector } from "react-redux";
 import SuccessModal from "../../components/SuccessModal/SuccessModal";
 import { updateIsStepperVisible } from "../../app/slices/userStepper";
 import Subscription from "../Frame/Subscription/Subscription";
-import { updateOpenSubscriptionAfterLogin, updateVisibleForPremiumButtonLogin, updateVisibleForSubscriptionModal } from "../../app/slices/professionalauthSlice";
+import {
+  updateOpenSubscriptionAfterLogin,
+  updateVisibleForPremiumButtonLogin,
+  updateVisibleForSubscriptionModal,
+} from "../../app/slices/professionalauthSlice";
 import StartDesignFrame from "../Frame/StartDesignFrame/StartDesignFrame";
-import { updateRedirectToSteppers, updateRedirectToStartDesignQuestions, updateVisibleForUserLogin, updateSelectLoginFrameActive } from "../../app/slices/user";
+import {
+  updateRedirectToSteppers,
+  updateRedirectToStartDesignQuestions,
+  updateVisibleForUserLogin,
+  updateSelectLoginFrameActive,
+} from "../../app/slices/user";
 import StartDesigningQuestions from "../Frame/StartDesigningQuestions/StartDesigningQuestions";
 
 const Landing = () => {
@@ -20,48 +29,52 @@ const Landing = () => {
   const [filterDropData, setFilterDropData] = useState([]);
   const [visibleGetInTouch, setVisibleGetInTouch] = useState(false);
   const [successModalVisible, setSuccessModalVisible] = useState(false);
-  const [pricingSubscriptionMoadl, setPricingSubscriptionMoadl] = useState(false)
+  const [pricingSubscriptionMoadl, setPricingSubscriptionMoadl] =
+    useState(false);
 
-  const [startDesigningQuestionsActive, setStartDesigningQuestionsActive] = useState(false)
-  const [successModalActive, setSuccessModalActive] = useState(false)
-  const { isLoggedIn, userType, redirectToStartDesignQuestions } = useSelector((state) => state.user);
-  const dispatch = useDispatch()
+  const [startDesigningQuestionsActive, setStartDesigningQuestionsActive] =
+    useState(false);
+  const [successModalActive, setSuccessModalActive] = useState(false);
+  const { isLoggedIn, userType, redirectToStartDesignQuestions } = useSelector(
+    (state) => state.user
+  );
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isLoggedIn && redirectToStartDesignQuestions) {
       setTimeout(() => {
-        setStartDesigningQuestionsActive(true)
-        dispatch(updateRedirectToStartDesignQuestions(false))
+        setStartDesigningQuestionsActive(true);
+        dispatch(updateRedirectToStartDesignQuestions(false));
       }, 3000);
     }
-  }, [isLoggedIn])
+  }, [isLoggedIn]);
 
   const handleStartDesign = (e) => {
     if (!isLoggedIn) {
-      dispatch(updateSelectLoginFrameActive(true))
-      dispatch(updateRedirectToStartDesignQuestions(true))
+      dispatch(updateSelectLoginFrameActive(true));
+      dispatch(updateRedirectToStartDesignQuestions(true));
     } else {
-      if (userType === 'Customer') return setStartDesigningQuestionsActive(true)
+      if (userType === "Customer")
+        return setStartDesigningQuestionsActive(true);
     }
-  }
+  };
   const showSuccessModal = () => {
-    setSuccessModalActive(true)
+    setSuccessModalActive(true);
     setTimeout(() => {
-      setSuccessModalActive(false)
+      setSuccessModalActive(false);
     }, 3000);
-  }
+  };
 
-  
   const handlePremiumButtonClick = () => {
-  let Token = localStorage.getItem("Token");
-    dispatch(updateOpenSubscriptionAfterLogin(true))
+    let Token = localStorage.getItem("Token");
+    dispatch(updateOpenSubscriptionAfterLogin(true));
 
     if (!Token) {
-      dispatch(updateVisibleForPremiumButtonLogin(true))
+      dispatch(updateVisibleForPremiumButtonLogin(true));
     } else {
-      dispatch(updateVisibleForSubscriptionModal(true))
+      dispatch(updateVisibleForSubscriptionModal(true));
     }
-  }
+  };
 
   const dorpItem = [
     { id: 1, type: "Architect" },
@@ -92,7 +105,7 @@ const Landing = () => {
       <div className="grid grid-cols-1 grid-rows-7 lg:grid-cols-12 grid-flow-row-dense lg:px-24 px-5 py-10 pt-8 md:pt-16">
         <div className="row-start-1 row-end-2 lg:col-span-5 pb-3">
           <h1 className="text-primaryDark font-medium text-2xl lg:text-5xl ">
-            We Help You To Make The Perfect CASA
+            We Help You To Make The Perfect Interior
           </h1>
           <p className="text-base text-primaryGray font-medium pt-4 text-justify lg:text-left">
             Interior design is an art and science of enhancing the interior of
@@ -133,7 +146,9 @@ const Landing = () => {
 
           <ButtonField
             children={"Get in Touch"}
-            className={"bg-primaryOrange py-[12.5px] w-[135px] md:w-auto md:py-3 w-36 lg:w-40 text-sm md:text-base"}
+            className={
+              "bg-primaryOrange py-[12.5px] w-[135px] md:w-auto md:py-3 w-36 lg:w-40 text-sm md:text-base"
+            }
             onClick={() => {
               setVisibleGetInTouch(true);
             }}
@@ -141,8 +156,10 @@ const Landing = () => {
         </div>
       </div>
       <div className="text-center pt-0 sm:pt-5  lg:pt-14 mx-auto max-w-5xl mb-10 px-5 lg:px-0">
-        {isLoggedIn === true && userType === 'Customer' ? <></> :
-          (<>
+        {isLoggedIn === true && userType === "Customer" ? (
+          <></>
+        ) : (
+          <>
             <h1 className="text-primaryDark py-2 font-medium text-left md:text-center text-2xl lg:text-5xl">
               Pricing
             </h1>
@@ -156,10 +173,12 @@ const Landing = () => {
             <ButtonField
               onClick={handlePremiumButtonClick}
               children={"Casa Arch Premium"}
-              className={"bg-primaryOrange py-3 px-4 mt-3 lt:mt-0  text-xs md:text-base"}
+              className={
+                "bg-primaryOrange py-3 px-4 mt-3 lt:mt-0  text-xs md:text-base"
+              }
             />
           </>
-          )}
+        )}
 
         <h1 className="text-primaryDark pt-7 md:pt-12 font-medium text-left md:text-center text-2xl lg:text-5xl">
           Discover
@@ -175,7 +194,9 @@ const Landing = () => {
         <ButtonField
           onClick={handleStartDesign}
           children={"Start Designing"}
-          className={"bg-primaryOrange py-[12.5px] w-[165px]  md:py-3 px-4 w-44 mt-3 lt:mt-0  text-sm md:text-base"}
+          className={
+            "bg-primaryOrange py-[12.5px] w-[165px]  md:py-3 px-4 w-44 mt-3 lt:mt-0  text-sm md:text-base"
+          }
         />
       </div>
       {visibleGetInTouch && (
@@ -195,15 +216,20 @@ const Landing = () => {
       )}
 
       {startDesigningQuestionsActive && (
-        <StartDesigningQuestions showSuccessModal={showSuccessModal} setStartDesigningQuestionsActive={setStartDesigningQuestionsActive} />
+        <StartDesigningQuestions
+          showSuccessModal={showSuccessModal}
+          setStartDesigningQuestionsActive={setStartDesigningQuestionsActive}
+        />
       )}
 
       {successModalActive && (
-        <SuccessModal massage={
-          <span className="inline-block text-center px-3">
-            We have sent the mail, the professional will contact you soon
-          </span>
-        } />
+        <SuccessModal
+          massage={
+            <span className="inline-block text-center px-3">
+              We have sent the mail, the professional will contact you soon
+            </span>
+          }
+        />
       )}
       {/* <StartDesignFrame /> */}
     </>

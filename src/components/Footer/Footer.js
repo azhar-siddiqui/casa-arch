@@ -15,33 +15,32 @@ import { useSubscribeNewsletterMutation } from "../../app/services/blogs";
 import { useEffect, useState } from "react";
 
 const Footer = () => {
-
-  const [email, setEmail] = useState('')
-  const [subscribe, subscribeResp] = useSubscribeNewsletterMutation()
-  const [disabled, setDisabled] = useState(false)
+  const [email, setEmail] = useState("");
+  const [subscribe, subscribeResp] = useSubscribeNewsletterMutation();
+  const [disabled, setDisabled] = useState(false);
 
   const onSubmit = () => {
-    subscribe({ email })
-      .then(res => {
-        console.log(res)
-        if (res.data) {
-          if (res.data['status code'] === 200) {
-            alert('Email sent')
-          }
+    subscribe({ email }).then((res) => {
+      console.log(res);
+      if (res.data) {
+        if (res.data["status code"] === 200) {
+          alert("Email sent");
         }
-        setEmail('')
-      })
-  }
+      }
+      setEmail("");
+    });
+  };
 
   const validateEmail = (email) => {
-    const regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    return regex.test(email)
+    const regex =
+      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    return regex.test(email);
   };
 
   useEffect(() => {
-    let res = validateEmail(email)
-    setDisabled(!res)
-  }, [email])
+    let res = validateEmail(email);
+    setDisabled(!res);
+  }, [email]);
 
   return (
     <>
@@ -51,18 +50,17 @@ const Footer = () => {
             <img src={LocationIcon} alt="locationIcon" />
             <div className="contactContainer">
               <h3>Find us</h3>
-              <p>
-                59, green park colony, near 48 chamber,
-                <br /> civil lines Jhansi, Uttar Pradesh, India 284001
-              </p>
+              <p>Pune</p>
             </div>
           </div>
           <div className="locationDetails center">
             <img src={Call} alt="CallIcon" />
             <div className="contactContainer ">
               <h3 className="call">Call us</h3>
-              <a className="cursor-pointer text-white inline-block pt-[10px]"
-                href="tel:9090909090">
+              <a
+                className="cursor-pointer text-white inline-block pt-[10px]"
+                href="tel:9090909090"
+              >
                 +91 9090909090
               </a>
             </div>
@@ -71,9 +69,11 @@ const Footer = () => {
             <img src={Mail} alt="mailIcon" />
             <div className="contactContainer">
               <h3 className="call">Mail</h3>
-              <a className="cursor-pointer text-white inline-block pt-[10px]"
-                href="mailto:casaarch@gmail.com">
-                casaarch@gmail.com
+              <a
+                className="cursor-pointer text-white inline-block pt-[10px]"
+                href="mailto:abc@gmail.com"
+              >
+                abc@gmail.com
               </a>
             </div>
           </div>
@@ -81,17 +81,21 @@ const Footer = () => {
         <div className="contactDetailsContainerSecond">
           <div className="secFooter">
             <NavLink to="/" className="footerLogo">
-              <img src={CasaLogo} alt="casaLogo" />
+              LOGO
             </NavLink>
             <p>
-              Casa Architects believe in designing buildings that reflect the
-              time in which they are built.
+              Architects believe in designing buildings that reflect the time in
+              which they are built.
             </p>
             <div className="network">
               <h5>Follow us</h5>
               <img src={Rectangle} alt="Rectangle" width={"64px"} />
               <div className="FollowUs flex mt-2">
-                <Link to="/" target="_blank" onClick={() => window.open('https://instagram.com/casaarch.in?igshid=YmMyMTA2M2Y=')} >
+                <Link
+                  to="/"
+                  target="_blank"
+                  onClick={() => window.open("https://instagram.com")}
+                >
                   <img src={Instagram} alt="googleLogo" />
                 </Link>
                 <Link to="/" target="_blank">
@@ -122,7 +126,11 @@ const Footer = () => {
               <h5>Follow us</h5>
               <img src={Rectangle} alt="Rectangle" width={"64px"} />
               <div className="FollowUs flex mt-3.5">
-                <Link to="/" target="_blank" onClick={() => window.open('https://instagram.com/casaarch.in?igshid=YmMyMTA2M2Y=')} >
+                <Link
+                  to="/"
+                  target="_blank"
+                  onClick={() => window.open("https://instagram.com")}
+                >
                   <img src={Instagram} alt="googleLogo" />
                 </Link>
                 <Link to="/" target="_blank">
@@ -143,16 +151,20 @@ const Footer = () => {
             </p>
 
             <div className="subscriptionContainer">
-              <input type="text" placeholder="Email Address"
+              <input
+                type="text"
+                placeholder="Email Address"
                 value={email}
-                onChange={e => setEmail(e.target.value)} />
-              <button className="subscriptionBtn"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <button
+                className="subscriptionBtn"
                 disabled={disabled}
-                onClick={onSubmit} >
+                onClick={onSubmit}
+              >
                 <img src={Subscription} alt="subscriptbtn" />
               </button>
             </div>
-
           </div>
         </div>
       </div>

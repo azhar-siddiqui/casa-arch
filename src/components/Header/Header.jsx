@@ -7,9 +7,6 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import InputField from "../InputField/InputField";
 import Modal from "../Modal/Modal";
-// import EyeIcon from "../../assets/InputFieldIcons/EyeIcon.svg";
-// import BlankCheck from "../../assets/ModalIcon/blank.svg";
-// import Check from "../../assets/ModalIcon/Right.svg";
 import ProfessionalLoginFrame from "../../screens/Frame/ProfessionalLoginFrame/ProfessionalLoginFrame";
 import SelectLoginFrame from "../../screens/Frame/SelectLoginFrame/SelectLoginFrame";
 import ProfessionalSignUp from "../../screens/Frame/ProfessionalSignUpFrame/ProfessionalSignUp";
@@ -431,11 +428,11 @@ const Header = () => {
         }
       }
       setFields({
-        loc: '',
-        pincode: '',
-        preference: false
-      })
-      setCount(0)
+        loc: "",
+        pincode: "",
+        preference: false,
+      });
+      setCount(0);
       navigate("/professionals/questions");
     }
     setDetailsVisible(true);
@@ -470,9 +467,9 @@ const Header = () => {
       <div className="lg:flex items-center justify-between bg-white py-4 lg:px-24 px-5">
         <NavLink
           to={Token ? "/professionals/landing" : "/"}
-          className="flex items-center"
+          className="flex items-center font-bold"
         >
-          <img src={CasaLogo} alt="Logo" className={styles.navLogo} />
+          ARCH
         </NavLink>
 
         <div
@@ -516,7 +513,7 @@ const Header = () => {
                   className="lg:ml-8 bg-primaryOrange border-solid border-2 border-primaryOrange py-2 px-6 h-11 ease-linear duration-300 text-white lg:my-0 my-3 w-11/12 lg:w-32"
                   onClick={() => {
                     navigate("professionals/dashboardleads");
-                    setOpenMenu(false)
+                    setOpenMenu(false);
                   }}
                 >
                   Dashboard
@@ -555,7 +552,13 @@ const Header = () => {
           )}
           <li>
             {dashboardButtonVisible && (
-              <Link to={userType !== "Customer" ? "/professionals/dashboardleads" : '/dashboard' }>
+              <Link
+                to={
+                  userType !== "Customer"
+                    ? "/professionals/dashboardleads"
+                    : "/dashboard"
+                }
+              >
                 <ButtonField
                   className="lg:ml-8 bg-primaryOrange py-2 px-6 h-11 hover:border-solid border-2 border-primaryOrange hover:bg-white hover:text-primaryOrange lg:my-0 my-3 w-11/12 lg:w-auto"
                   onClick={() => setOpenMenu(false)}
@@ -565,7 +568,6 @@ const Header = () => {
               </Link>
             )}
           </li>
-          
         </ul>
       </div>
       {visible && (
@@ -824,11 +826,13 @@ const Header = () => {
       )}
 
       {successModalVisible && (
-        <SuccessModal massage={
-          <p className="text-center">
-            Professional User created Successfully
-          </p>
-      } />
+        <SuccessModal
+          massage={
+            <p className="text-center">
+              Professional User created Successfully
+            </p>
+          }
+        />
       )}
 
       {forgotPasswordSuccessModal && (

@@ -45,17 +45,24 @@ const Contact = () => {
           </div>
           <div className={Styles.loc_info}>
             <img src={Location} alt="location" />
-            <p>
-              59, green park colony, near 48 chamber, civil lines Jhansi, Uttar
-              Pradesh, India 284001
-            </p>
+            <p>Pune India</p>
           </div>
           <div className={Styles.loc_info}>
             <img src={Phone} alt="Phone" />
             <p>+91 9090909090</p>
           </div>
           <div className={Styles.loc_img}>
-            <img src={MapImg} alt="location" />
+            {/* <img src={MapImg} alt="location" /> */}
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.508302308668!2d73.87421861468812!3d18.50591838741746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c040a0e98563%3A0x9dd3ef6ef8904dbd!2sAzam%20Campus!5e0!3m2!1sen!2sin!4v1671030990541!5m2!1sen!2sin"
+              // width={360}
+              // height={400}
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="mx-auto w-[300px] md:w-[350px] h-[400px]"
+            />
           </div>
         </div>
         <div>
